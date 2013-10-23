@@ -7,30 +7,30 @@
 		<tr class="header-row taxable">
 			<td>&nbsp;</td>
 
-			<td>Exemption/<br> Taxable Value
+			<td class="text-right">Exemption/<br> Taxable Value
 			</td>
 
-			<td>Exemption/<br> Taxable Value
+			<td class="text-right">Exemption/<br> Taxable Value
 			</td>
 
-			<td>Exemption/<br> Taxable Value
+			<td class="text-right">Exemption/<br> Taxable Value
 			</td>
 		</tr>
 
 		<tr>
 			<td><strong>County:</strong></td>
 
-			<td>{{property.AssessmentInfo.CountyExemptionValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.CountyExemptionValueCurrent
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CountyTaxableValueCurrent
                           | currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.CountyExemptionValuePrior
+			<td class="text-right">{{property.AssessmentInfo.CountyExemptionValuePrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CountyTaxableValuePrior
                           | currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.CountyExemptionValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.CountyExemptionValueTwoPrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CountyTaxableValueTwoPrior
@@ -39,17 +39,17 @@
 
 		<tr>
 			<td><strong>School Board:</strong></td>
-			<td>{{property.AssessmentInfo.SchoolExemptionValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.SchoolExemptionValueCurrent
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.SchoolTaxableValueCurrent
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.SchoolExemptionValuePrior
+			<td class="text-right">{{property.AssessmentInfo.SchoolExemptionValuePrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.SchoolTaxableValuePrior
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.SchoolExemptionValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.SchoolExemptionValueTwoPrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.SchoolTaxableValueTwoPrior
@@ -59,17 +59,17 @@
 
 		<tr>
 			<td><strong>City:</strong></td>
-			<td>{{property.AssessmentInfo.CityExemptionValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.CityExemptionValueCurrent
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CityTaxableValueCurrent
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.CityExemptionValuePrior
+			<td class="text-right">{{property.AssessmentInfo.CityExemptionValuePrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CityTaxableValuePrior
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.CityExemptionValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.CityExemptionValueTwoPrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.CityTaxableValueTwoPrior
@@ -79,17 +79,17 @@
 
 		<tr>
 			<td><strong>Regional:</strong></td>
-			<td>{{property.AssessmentInfo.RegionalExemptionValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.RegionalExemptionValueCurrent
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.RegionalTaxableValueCurrent
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.RegionalExemptionValuePrior
+			<td class="text-right">{{property.AssessmentInfo.RegionalExemptionValuePrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.RegionalTaxableValuePrior
                           | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.RegionalExemptionValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.RegionalExemptionValueTwoPrior
                           | currency:"$"}} 
                           /
                           {{property.AssessmentInfo.RegionalTaxableValueTwoPrior

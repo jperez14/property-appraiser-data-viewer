@@ -9,8 +9,8 @@
 			<td>Year Built</td>
 			<td>Units</td>
 			<td>Use Code</td>
-			<td>Adj Unit Price</td>
-			<td>Depreciated Value</td>
+			<td class="text-right">Adj Unit Price</td>
+			<td class="text-right">Depreciated Value</td>
 		</tr>
 
 		<tr ng-repeat="feature in property.ExtraFeatures | orderBy:'-ActualYearBuilt'">
@@ -18,9 +18,9 @@
 			<td>{{feature.ActualYearBuilt}}</td>
 			<td>{{feature.Units}}</td>
 			<td>{{feature.UseCode}}</td>
-			<td>{{feature.AdjustedUnitPrice
+			<td class="text-right">{{feature.AdjustedUnitPrice
 			| currency:"$"}}</td>
-			<td>{{feature.DepreciatedValue
+			<td class="text-right">{{feature.DepreciatedValue
 			| currency:"$"}}</td>
 		</tr>
 

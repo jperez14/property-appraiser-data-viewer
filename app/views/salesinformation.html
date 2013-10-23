@@ -7,7 +7,7 @@
 		<tr class="header-row">
 			<td>Previous Sale</td>
 
-			<td>Price:</td>
+			<td class="text-right">Price</td>
 
 			<td>OR Book-Page</td>
 
@@ -16,7 +16,7 @@
 
                 <tr ng-repeat="sale in property.SalesInfo | orderBy:'-DateOfSale'">
                   <td>{{sale.DateOfSale}}</td>
-                  <td>{{sale.SalePrice | currency:"$"}}</td>
+                  <td class="text-right">{{sale.SalePrice | currency:"$"}}</td>
                   <td>{{sale.OfficialRecordBook}}-{{sale.OfficialRecordPage}}</td>
                   <td></td>
                 </tr>

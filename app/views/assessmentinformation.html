@@ -6,47 +6,47 @@
 
 		<tr class="header-row">
 			<td>Year:</td>
-			<td>{{property.AssessmentInfo.AssessmentYearCurrent}}</td>
-			<td>{{property.AssessmentInfo.AssessmentYearPrior}}</td>
-			<td>{{property.AssessmentInfo.AssessmentYearTwoPrior}}</td>
+			<td class="text-right">{{property.AssessmentInfo.AssessmentYearCurrent}}</td>
+			<td class="text-right">{{property.AssessmentInfo.AssessmentYearPrior}}</td>
+			<td class="text-right">{{property.AssessmentInfo.AssessmentYearTwoPrior}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Land Value:</strong></td>
-			<td>{{property.AssessmentInfo.LandValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.LandValueCurrent
 			| currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.LandValuePrior | currency:"$"}}</td>
-			<td>{{property.AssessmentInfo.LandValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.LandValuePrior | currency:"$"}}</td>
+			<td class="text-right">{{property.AssessmentInfo.LandValueTwoPrior
 			| currency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Building Value:</strong></td>
-			<td>${{property.AssessmentInfo.BuildingValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.BuildingValueCurrent
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.BuildingValuePrior
+			<td class="text-right">{{property.AssessmentInfo.BuildingValuePrior
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.BuildingValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.BuildingValueTwoPrior
 			| currency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Market Value:</strong></td>
-			<td>${{property.AssessmentInfo.TotalValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.TotalValueCurrent
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.TotalValuePrior
+			<td class="text-right">{{property.AssessmentInfo.TotalValuePrior
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.TotalValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.TotalValueTwoPrior
 			| currency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Assessed Value:</strong></td>
-			<td>${{property.AssessmentInfo.AssessedValueCurrent
+			<td class="text-right">{{property.AssessmentInfo.AssessedValueCurrent
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.AssessedValuePrior
+			<td class="text-right">{{property.AssessmentInfo.AssessedValuePrior
 			| currency:"$"}}</td>
-			<td>${{property.AssessmentInfo.AssessedValueTwoPrior
+			<td class="text-right">{{property.AssessmentInfo.AssessedValueTwoPrior
 			| currency:"$"}}</td>
 		</tr>
 	</table>

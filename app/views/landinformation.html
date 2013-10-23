@@ -12,8 +12,8 @@
 			<td>Use Code</td>
 			<td>Total Adj</td>
 			<td>Units</td>
-			<td>Adj Unit Price</td>
-			<td>Calc Value</td>
+			<td class="text-right">Adj Unit Price</td>
+			<td class="text-right">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="land in property.LandCInfos">
@@ -24,9 +24,9 @@
 			<td>{{land.UseCode}}</td>
 			<td>{{land.TotalAdjustments}}</td>
 			<td>{{land.Units}}</td>
-			<td>{{land.AdjustedUnitPrice
+			<td class="text-right">{{land.AdjustedUnitPrice
 			| currency:"$"}}</td>
-			<td>{{land.CalculatedValue
+			<td class="text-right">{{land.CalculatedValue
 			| currency:"$"}}</td>
 		</tr>
 
