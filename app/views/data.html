@@ -43,9 +43,29 @@
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>
-
+					
 				</div>
 				<!-- /input-group -->
+				<div class="input-group">
+					<input type="text" value="First Name" name="" id="search_box" placeholder="First Name" class="form-control" ng-model='ownerFirstName' ng-click="showError=false">
+					<input type="text" value="Last Name" name="" id="search_box" placeholder="Last Name" class="form-control" ng-model='ownerLastName' ng-click="showError=false">
+					<span class="input-group-btn">
+						<button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getOwnersByName()">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+
+				<div class="input-group">
+					<input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" ng-model='address' ng-click="showError=false">
+					<span class="input-group-btn">
+						<button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getAddressCandidates()">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+
+
 			</div>
 
 			<div class="col-md-3 pull-right col-sm-3
@@ -65,14 +85,18 @@
 
 </div>
 
-<div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div>
-
+<!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
 
 <div class="content main_content_body">
+
+	<div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
 
 	<div class="row">
 		<div class="col-md-12 col-sm-5">
                         <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
+		</div>
+		<div class="col-md-12 col-sm-5">
+                        <div ng-show="ownersList" ng-include="'views/ownerresults.html'"></div>
 		</div>
 	</div>
 
