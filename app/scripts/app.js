@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dataviewer2App', ['ngResource'])
+angular.module('propertySearchApp', ['ngResource'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

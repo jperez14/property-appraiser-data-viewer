@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('dataviewer2App')
-  .controller('MainCtrl', ['$scope', 'propertyService', function ($scope, propService) {
+angular.module('propertySearchApp')
+  .controller('MainCtrl', ['$scope', 'propertySearchService', function ($scope, propertySearchService) {
 
 	$scope.folio = "";
     $scope.property = null;
@@ -20,36 +20,52 @@ angular.module('dataviewer2App')
 	};
 	
 	$scope.getOwnerFolio = function(folioNum){
+
 		console.log("ownerFolio", folioNum);
 		$scope.folio = folioNum.trim().replace(/-/g, "");
 		$scope.getPropertyByFolio();
 	};
+
+
+    $scope.getPropertyByFolio = function(){
+      $scope.property = propertySearchService.getPropertyByFolio($scope.folio);
+    };
+    
+
+//    $scope.getPropertyByFolio = function(){
+//      testme.getPropertyByFolio($scope.folio, function(result){
+//        console.log(result);
+//        $scope.property = result;
+//       });
+//
+//    };
+    
 
     /**
      * Get Property Information with folio 
      * in scope.folio. Assign the information to
      * scope.property.
      */
-    $scope.getPropertyByFolio = function(){
-		clearResults();
-		var address = propService.getFolio($scope.folio).retrieve(
-			function() {
-				if(address.PropertyInfo.FolioNumber == null){
-				  $scope.property = null;
-				  $scope.errorMsg = address.Message;
-				  $scope.showError = true;
-				}else{
-				  var legalDescription = address.LegalDescription.Description.split(",");
-				  address.LegalDescription.Description = legalDescription;
-				  console.log(legalDescription);
-				  $scope.showError = false;
-				  $scope.property = address;
-				}
-			}, function(){
-				$scope.errorMsg = address.Message;
-				$scope.showError = true;
-            });
-    };
+//    $scope.getPropertyByFolio = function(){
+//		clearResults();
+//		var address = propService.getFolio($scope.folio).retrieve(
+//			function() {
+//				if(address.PropertyInfo.FolioNumber == null){
+//				  $scope.property = null;
+//				  $scope.errorMsg = address.Message;
+//				  $scope.showError = true;
+//				}else{
+//				  var legalDescription = address.LegalDescription.Description.split(",");
+//				  address.LegalDescription.Description = legalDescription;
+//				  console.log(legalDescription);
+//				  $scope.showError = false;
+//				  $scope.property = address;
+//				}
+//			}, function(){
+//				$scope.errorMsg = address.Message;
+//				$scope.showError = true;
+//            });
+//    };
 
 	$scope.getOwnersByName = function() {
 		clearResults();

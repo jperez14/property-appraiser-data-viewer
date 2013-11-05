@@ -1,7 +1,7 @@
 /**
 * Remove views from the template cache
 */
-angular.module('dataviewer2App')
+angular.module('propertySearchApp')
   .run(function($rootScope, $templateCache) {
 	$rootScope.$on('$viewContentLoaded', function() {
 		$templateCache.removeAll();
