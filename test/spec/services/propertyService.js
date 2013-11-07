@@ -35,7 +35,7 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo).toEqual({});
   });
 
-  it('map givenProperty.PropertyInfo fields to our model expectedProperty.propertyInfo fields',function(){
+  it('map incoming PropertyInfo fields to our propertyInfo model fields',function(){
     var givenProperty = {PropertyInfo: {
       BathroomCount: 1,
       BedroomCount: 3,
@@ -90,5 +90,7 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
 
   });
+
+
 
 });

@@ -25,17 +25,36 @@ angular.module('propertySearchApp')
     };
 
     /**
-     * it builds the propertyInfo. If data is undefined or null it
-     * returns an empty object {}. When the properties on data are
-     * undefined (the property may not be there) it makes the
+     *
+     **/
+    var buildSiteAddresses = function(data){
+
+      // No data return an empty array.
+      if(isUndefinedOrNull(data))
+        return [];
+
+      var siteAddresses = [];
+      
+      
+    };
+    
+
+    /**
+     * it builds the propertyInfo. 
+     * If data is undefined or null it returns an empty object {}. 
+     * If data is empty object {}, return all fields with value null.
+     * When the properties on data are undefined 
+     * (the property may not be there) it makes the
      * propertyInfo.someproperty = null; 
      **/
     var buildPropertyInfo = function(data){
 
+      // No data return an empty object
       if(isUndefinedOrNull(data))
         return {};
         
-
+      // map fields, and when field does not exists
+      // assign it to null.
       var propertyInfo = {};      
       
       if(typeof data.BathroomCount === "undefined")
