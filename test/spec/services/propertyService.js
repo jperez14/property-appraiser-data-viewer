@@ -11,12 +11,32 @@ describe('Service: propertyService', function () {
     propertyService = _propertyService_;
   }));
 
-  it('should do something', function () {
-    expect(!!propertyService).toBe(true);
+  it('PropertyData null, maps to a full populated object',function(){
+    var property = new propertyService.Property(null);
+    expect(property.propertyInfo.bathroomCount).toBe(null);
+    expect(property.siteAddresses).toEqual([]);
   });
 
-  it('propertyInfo with no property makes it null', function(){
+  it('PropertyData undfined, maps to a full populated object',function(){
+    var property = new propertyService.Property();
+    expect(property.propertyInfo.bathroomCount).toBe(null);
+    expect(property.siteAddresses).toEqual([]);
+  });
+
+  it('PropertyData empty object {}, maps to a full populated object',function(){
+    var property = new propertyService.Property({});
+    expect(property.propertyInfo.bathroomCount).toBe(null);
+    expect(property.siteAddresses).toEqual([]);
+  });
+
+  // test propertyInfo
+  it('PropertyInfoData not exists maps to propertyInfo populated with default values', function(){
     var property = new propertyService.Property({PropertyInfo:{}});
+    expect(property.propertyInfo.bathroomCount).toBe(null);
+  });
+
+  it('PropertyInfoData null maps to propertyInfo populated with default values', function(){
+    var property = new propertyService.Property({PropertyInfo:null});
     expect(property.propertyInfo.bathroomCount).toBe(null);
   });
 
@@ -25,15 +45,6 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo.bathroomCount).toBe(2);
   });
 
-  it('data with no PropertyInfo returns empty object {}', function(){
-    var property = new propertyService.Property({});
-    expect(property.propertyInfo).toEqual({});
-  });
-
-  it('data with PropertyInfo null returns empty object {}', function(){
-    var property = new propertyService.Property({PropertyInfo:null});
-    expect(property.propertyInfo).toEqual({});
-  });
 
   it('map incoming PropertyInfo fields to our propertyInfo model fields',function(){
     var givenProperty = {PropertyInfo: {
@@ -91,6 +102,46 @@ describe('Service: propertyService', function () {
 
   });
 
+  // test siteAddresses
+  it('SiteAddressesData not exists maps to siteAddresses empty array', function(){
+    var property = new propertyService.Property({SiteAddresses:[]});
+    expect(property.siteAddresses).toEqual([]);
+  });
+
+  it('SiteAddressesData null maps to siteAddresses empty array', function(){
+    var property = new propertyService.Property({SiteAddresses:null});
+    expect(property.siteAddresses).toEqual([]);
+  });
 
 
-});
+  it('map incoming SiteAddresses fields to our siteAddresses model fields',function(){
+    var givenProperty = {SiteAddresses: [{
+      Address: "0 1",
+      BuildingNumber: 1,
+      City: "",
+      StreetName: "",
+      StreetNumber: 0,
+      StreetPrefix: " ",
+      StreetSuffix: "",
+      StreetSuffixDirection: " ",
+      Unit: "",
+      Zip: ""}]};
+
+    var expectedProperty = {siteAddresses: [{
+      address: "0 1",
+      buildingNumber: 1,
+      city: "",
+      streetName: "",
+      streetNumber: 0,
+      streetPrefix: " ",
+      streetSuffix: "",
+      streetSuffixDirection: " ",
+      unit: "",
+      zip: ""}]};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.siteAddresses).toEqual(expectedProperty.siteAddresses);
+
+  });
+
+})

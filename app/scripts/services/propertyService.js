@@ -5,6 +5,7 @@ angular.module('propertySearchApp')
 
     //Completed, Message
     var Property = function(data) {
+
       this.propertyInfo = {};
       this.siteAddresses = [];
       this.salesInfo = [];
@@ -20,7 +21,15 @@ angular.module('propertySearchApp')
       this.district = null;
       this.geoParcel = null;
 
-      this.propertyInfo = buildPropertyInfo(data.PropertyInfo)
+      if(isUndefinedOrNull(data)) {
+        this.propertyInfo = buildPropertyInfo({});
+        this.siteAddresses = buildSiteAddresses([]);
+      }
+      else{
+        this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
+        this.siteAddresses = buildSiteAddresses(data.SiteAddresses);
+      }
+
 
     };
 
@@ -29,149 +38,87 @@ angular.module('propertySearchApp')
      **/
     var buildSiteAddresses = function(data){
 
-      // No data return an empty array.
+      // data - return an empty array.
       if(isUndefinedOrNull(data))
         return [];
 
+      var siteAddressAttr = {address:                   "Address",              
+                             buildingNumber:            "BuildingNumber",       
+                             city:                      "City",                 
+                             streetName:                "StreetName",           
+                             streetNumber:              "StreetNumber",         
+                             streetPrefix:              "StreetPrefix",         
+                             streetSuffix:              "StreetSuffix",         
+                             streetSuffixDirection:     "StreetSuffixDirection",
+                             unit:                      "Unit",                 
+                             zip:                       "Zip"}                  
+
       var siteAddresses = [];
-      
-      
+
+      _.each(data, function(originalSiteAddress){
+        var siteAddress = {};            
+        _.each(siteAddressAttr, function(value, key){
+            siteAddress[key] = originalSiteAddress[value]; 
+        });
+        siteAddresses.push(siteAddress);
+      });
+
+      return siteAddresses;
+            
     };
     
 
     /**
      * it builds the propertyInfo. 
-     * If data is undefined or null it returns an empty object {}. 
-     * If data is empty object {}, return all fields with value null.
+     * If data is undefined or null or empty object {} it returns an dafault object
+     * populated with nulls. 
      * When the properties on data are undefined 
      * (the property may not be there) it makes the
      * propertyInfo.someproperty = null; 
      **/
     var buildPropertyInfo = function(data){
-
-      // No data return an empty object
-      if(isUndefinedOrNull(data))
-        return {};
+      
+      var propertyInfoAttr = { bathroomCount:             "BathroomCount",                     
+                              bedroomCount:              "BedroomCount",            
+                              buildingEffectiveArea:     "BuildingEffectiveArea",   
+                              DORCodeCurrent:            "DORCodeCurrent",          
+                              DORDescription:            "DORDescription",          
+                              floorCount:                "FloorCount",              
+                              folioNumber:               "FolioNumber",             
+                              halfBathroomCount:         "HalfBathroomCount",       
+                              hxBaseYear:                "HxBaseYear",              
+                              lotSize:                   "LotSize",                 
+                              neighborhood:              "Neighborhood",            
+                              neighborhoodDescription:   "NeighborhoodDescription", 
+                              percentHomesteadCapped:    "PercentHomesteadCapped",  
+                              platBook:                  "PlatBook",                
+                              platPage:                  "PlatPage",                
+                              primaryZone:               "PrimaryZone",             
+                              primaryZoneDescription:    "PrimaryZoneDescription",  
+                              status:                    "Status",                  
+                              subdivision:               "Subdivision",             
+                              subdivisionDescription:    "SubdivisionDescription",  
+                              unitCount:                 "UnitCount",               
+                              yearBuilt:                 "YearBuilt"}              
         
       // map fields, and when field does not exists
       // assign it to null.
       var propertyInfo = {};      
-      
-      if(typeof data.BathroomCount === "undefined")
-        propertyInfo.bathroomCount = null;
-      else
-        propertyInfo.bathroomCount = data.BathroomCount;        
 
-      if(typeof data.BedroomCount === "undefined")
-        propertyInfo.bedroomCount = null;
-      else
-        propertyInfo.bedroomCount = data.BedroomCount;
-
-      if(typeof data.BuildingEffectiveArea === "undefined")
-        propertyInfo.buildingEffectiveArea = null;
-      else
-        propertyInfo.buildingEffectiveArea = data.BuildingEffectiveArea;
-
-      if(typeof data.DORCodeCurrent === "undefined")
-        propertyInfo.DORCodeCurrent = null;
-      else
-        propertyInfo.DORCodeCurrent = data.DORCodeCurrent;
-
-      if(typeof data.DORDescription === "undefined")
-        propertyInfo.DORDescription = null;
-      else
-        propertyInfo.DORDescription = data.DORDescription;
-
-      if(typeof data.FloorCount === "undefined")
-        propertyInfo.floorCount = null;
-      else
-        propertyInfo.floorCount = data.FloorCount;
-
-      if(typeof data.FolioNumber === "undefined")
-        propertyInfo.folioNumber = null;
-      else
-        propertyInfo.folioNumber = data.FolioNumber;
-
-      if(typeof data.HalfBathroomCount === "undefined")
-        propertyInfo.halfBathroomCount = null;
-      else
-        propertyInfo.halfBathroomCount = data.HalfBathroomCount;
-
-      if(typeof data.HxBaseYear === "undefined")
-        propertyInfo.hxBaseYear = null;
-      else
-        propertyInfo.hxBaseYear = data.HxBaseYear;
-
-      if(typeof data.LotSize === "undefined")
-        propertyInfo.lotSize = null;
-      else
-        propertyInfo.lotSize = data.LotSize;
-
-      if(typeof data.Neighborhood === "undefined")
-        propertyInfo.neighborhood = null;
-      else
-        propertyInfo.neighborhood = data.Neighborhood;
-
-      if(typeof data.NeighborhoodDescription === "undefined")
-        propertyInfo.neighborhoodDescription = null;
-      else
-        propertyInfo.neighborhoodDescription = data.NeighborhoodDescription;
-
-      if(typeof data.PercentHomesteadCapped === "undefined")
-        propertyInfo.percentHomesteadCapped = null;
-      else
-        propertyInfo.percentHomesteadCapped = data.PercentHomesteadCapped;
-
-      if(typeof data.PlatBook === "undefined")
-        propertyInfo.platBook = null;
-      else
-        propertyInfo.platBook = data.PlatBook;
-
-      if(typeof data.PlatPage === "undefined")
-        propertyInfo.platPage = null;
-      else
-        propertyInfo.platPage = data.PlatPage;
-
-      if(typeof data.PrimaryZone === "undefined")
-        propertyInfo.primaryZone = null;
-      else
-        propertyInfo.primaryZone = data.PrimaryZone;
-
-      if(typeof data.PrimaryZoneDescription === "undefined")
-        propertyInfo.primaryZoneDescription = null;
-      else
-        propertyInfo.primaryZoneDescription = data.PrimaryZoneDescription;
-
-      if(typeof data.Status === "undefined")
-        propertyInfo.status = null;
-      else
-        propertyInfo.status = data.Status;
-
-      if(typeof data.Subdivision === "undefined")
-        propertyInfo.subdivision = null;
-      else
-        propertyInfo.subdivision = data.Subdivision;
-
-      if(typeof data.SubdivisionDescription === "undefined")
-        propertyInfo.subdivisionDescription = null;
-      else
-        propertyInfo.subdivisionDescription = data.SubdivisionDescription;
-
-      if(typeof data.UnitCount === "undefined")
-        propertyInfo.unitCount = null;
-      else
-        propertyInfo.unitCount = data.UnitCount;
-
-      if(typeof data.YearBuilt === "undefined")
-        propertyInfo.yearBuilt = null;
-      else
-        propertyInfo.yearBuilt = data.YearBuilt;                  
+      _.each(propertyInfoAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          propertyInfo[key] = null;
+        else if ( _.isUndefined(data[value]))
+          propertyInfo[key] = null;
+        else
+          propertyInfo[key] = data[value]; 
+      });
       
       return propertyInfo
           
     };
 
-    var isUndefinedOrNull = function(val){ return angular.isUndefined(val) || val === null}
+    var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)}
 
     // Public API
     return {
