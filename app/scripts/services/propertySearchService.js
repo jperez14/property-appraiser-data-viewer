@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', function($resource){
+  .service('propertySearchService', ['$resource', 'candidateService', function($resource, candidateService){
   
   var urlBase = "/PaPublicServices/PAGISService.svc/";
 
   var PropertyResource = $resource(urlBase + ":endPoint", 
                                    {endPoint:""},
-                                   {propertyByFolio:{method:'GET'}}
+                                   {propertyByFolio:{method:'GET'},
+								    candidatesByOwner:{method:'GET'},
+									candidatesByAddress:{method:'GET'}
+								   }
                                   );
 
-  
   var propertyByFolio = function(folio, callback){
 
     var endPoint = 'GetPropertySearchByFolio';
@@ -29,9 +31,38 @@ angular.module('propertySearchApp')
 
   };
    
-   
+  var candidatesByOwner = function(ownerName, from, to, callback) {
+	var endPoint = 'GetOwners';
+	var params = {"ownerName":ownerName, "from":from, "to":to, "endPoint":endPoint};
+	var candidates = PropertyResource.candidatesByOwner(params, function() {
+		candidates = new candidateService.Candidates(candidates);
+		if(callback) {
+		  callback(candidates);
+		}
+	}, function() {});
+	
+	return candidates;
 
-  return {getPropertyByFolio:propertyByFolio};
+  };
+   
+  var candidatesByAddress = function(address, unit, from, to, callback){
+	var endPoint = "GetAddress";
+	var params = {"myAddress":address, "myUnit":unit, "from":from, "to":to, "endPoint":endPoint};
+	var candidates = PropertyResource.candidatesByAddress(params, function() {
+		candidates = new candidateService.Candidates(candidates);
+		if(callback) {
+		  callback(candidates);
+		}
+	}, function() {});
+	
+	return candidates;
+
+  };
+  
+  return {getPropertyByFolio:propertyByFolio,
+	      getCandidatesByOwner:candidatesByOwner,
+		  getCandidatesByAddress:candidatesByAddress
+  };
     
 
 }]);
