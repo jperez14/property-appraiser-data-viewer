@@ -25,12 +25,24 @@ describe('Service: propertySearchService', function () {
     ExemptionInfo: {AgDifferentialValueCurrent: 0},
     PropertyInfo: {FolioNumber: "01-3126-042-0370"},
     LegalDescription: {Description: "A,B,C"}
-  }
+  };
+  
+  var mockCandidatesList = {
+	candidates : [{
+		firstOwner : "Barack Obama",
+		secondOwner: "George Bush",
+		thirdOwner: null,
+		folio: "0123456789012",
+		siteAddress:"10 DOWNING ST"
+	}]
+  };
 
   beforeEach(inject(function (_propertySearchService_, _$httpBackend_) {
     propertySearchService = _propertySearchService_;
     $httpBackend = _$httpBackend_;
     $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetPropertySearchByFolio?folioNumber=0131260420370&layerId=4').respond(mockProperty);
+    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetOwners?from=1&ownerName=Michael+Sarasti&to=200').respond(mockCandidatesList);
+    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetAddress?from=1&myAddress=7244+SW+72+St&myUnit=&to=200').respond(mockCandidatesList);
   }));
 
   it('should do something', function () {
@@ -49,12 +61,26 @@ describe('Service: propertySearchService', function () {
       expect(property.PropertyInfo.FolioNumber).toBe("01-3126-042-0370");
       expect(property.LegalDescription.Description).toEqualData(["A","B","C"]);
     });
-
-    $httpBackend.flush();      
-
-
+    $httpBackend.flush();
   });
 
+  it('propertyByOwnerName callback executed', function() {
+	var candidatesList = propertySearchService.getCandidatesByOwner('Michael Sarasti', 1, 200, function(candidates){
+		expect(candidatesList.candidates[0].folio).toBe("0123456789012");
+		expect(candidatesList.candidates[0].firstOwner).toBe("Barack Obama");
+	});
+	$httpBackend.flush();
+  });
+
+  it('propertyByAddress callback executed', function() {
+	var candidatesList = propertySearchService.getCandidatesByAddress('7244 SW 72 St', '', 1, 200, function(candidates){
+		expect(candidatesList.candidates[0].siteAddress).toBe("10 DOWNING ST");
+		expect(candidatesList.candidates[0].secondOwner).toBe("George Bush");
+	});
+	$httpBackend.flush();
+  });
+
+  
 //  it('propertyByFolio noendpoint error', function(){
 //    var property = propertySearchService.getPropertyByFolio('nofolio');
 //    $httpBackend.flush();
