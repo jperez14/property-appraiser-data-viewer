@@ -102,6 +102,308 @@ describe('Service: propertyService', function () {
 
   });
 
+
+  // test mailingAddress
+  it('MailingAddressData not exists maps to mailingAddress populated with default values', function(){
+    var property = new propertyService.Property({MailingAddress:{}});
+    expect(property.mailingAddress.address1).toBe(null);
+  });
+
+  it('MailingAddressData null maps to mailingAddress populated with default values', function(){
+    var property = new propertyService.Property({MailingAddress:null});
+    expect(property.mailingAddress.address1).toBe(null);
+  });
+
+  it('mailingAddress with a property value', function(){
+    var property = new propertyService.Property({MailingAddress:{Address1:"111 NW 1st"}});
+    expect(property.mailingAddress.address1).toBe("111 NW 1st");
+  });
+
+
+  it('map incoming MailingAddress fields to our mailingAddress model fields',function(){
+    var givenProperty = {MailingAddress: {
+      Address1: "200 SW 27th Street",
+      Address2: "",
+      City: "Coral Gables",
+      Country: "",
+      State: "Florida",
+      ZipCode: "33133"
+    }};
+    
+    var expectedProperty = {mailingAddress: {
+      address1: "200 SW 27th Street",
+      address2: "",
+      city: "Coral Gables",
+      country: "",
+      state: "Florida",
+      zipCode: "33133"
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.mailingAddress).toEqual(expectedProperty.mailingAddress);
+
+  });
+
+  // test assessmentInfo
+  it('AssessmentInfoData not exists maps to assessmentInfo populated with default values', function(){
+    var property = new propertyService.Property({AssessmentInfo:{}});
+    expect(property.assessmentInfo.assessedValueCurrent).toBe(null);
+  });
+
+  it('AssessmentInfoData null maps to assessmentInfo populated with default values', function(){
+    var property = new propertyService.Property({AssessmentInfo:null});
+    expect(property.assessmentInfo.assessedValueCurrent).toBe(null);
+  });
+
+  it('assessmentInfo with a property value', function(){
+    var property = new propertyService.Property({AssessmentInfo:{AssessedValueCurrent:2}});
+    expect(property.assessmentInfo.assessedValueCurrent).toBe(2);
+  });
+
+
+  it('map incoming AssessmentInfo fields to our assessmentInfo model fields',function(){
+    var givenProperty = {AssessmentInfo: {
+      AssessedValueCurrent: 70067,
+      AssessedValuePrior: 75395,
+      AssessedValueTwoPrior: 84661,
+      AssessmentYearCurrent: 2013,
+      AssessmentYearPrior: 2012,
+      AssessmentYearTwoPrior: 2011,
+      BuildingValueCurrent: 42252,
+      BuildingValuePrior: 46498,
+      BuildingValueTwoPrior: 50664,
+      CityExemptionValueCurrent: 0,
+      CityExemptionValuePrior: 0,
+      CityExemptionValueTwoPrior: 0,
+      CityTaxableValueCurrent: 70067,
+      CityTaxableValuePrior: 75395,
+      CityTaxableValueTwoPrior: 84661,
+      CountyExemptionValueCurrent: 0,
+      CountyExemptionValuePrior: 0,
+      CountyExemptionValueTwoPrior: 0,
+      CountyTaxableValueCurrent: 70067,
+      CountyTaxableValuePrior: 75395,
+      CountyTaxableValueTwoPrior: 84661,
+      LandValueCurrent: 27815,
+      LandValuePrior: 28897,
+      LandValueTwoPrior: 33997,
+      RegionalExemptionValueCurrent: 0,
+      RegionalExemptionValuePrior: 0,
+      RegionalExemptionValueTwoPrior: 0,
+      RegionalTaxableValueCurrent: 70067,
+      RegionalTaxableValuePrior: 75395,
+      RegionalTaxableValueTwoPrior: 84661,
+      SchoolExemptionValueCurrent: 0,
+      SchoolExemptionValuePrior: 0,
+      SchoolExemptionValueTwoPrior: 0,
+      SchoolTaxableValueCurrent: 70067,
+      SchoolTaxableValuePrior: 75395,
+      SchoolTaxableValueTwoPrior: 84661,
+      TotalValueCurrent: 70067,
+      TotalValuePrior: 75395,
+      TotalValueTwoPrior: 84661
+    }};
+    
+    var expectedProperty = {assessmentInfo: {
+      assessedValueCurrent: 70067,
+      assessedValuePrior: 75395,
+      assessedValueTwoPrior: 84661,
+      assessmentYearCurrent: 2013,
+      assessmentYearPrior: 2012,
+      assessmentYearTwoPrior: 2011,
+      buildingValueCurrent: 42252,
+      buildingValuePrior: 46498,
+      buildingValueTwoPrior: 50664,
+      cityExemptionValueCurrent: 0,
+      cityExemptionValuePrior: 0,
+      cityExemptionValueTwoPrior: 0,
+      cityTaxableValueCurrent: 70067,
+      cityTaxableValuePrior: 75395,
+      cityTaxableValueTwoPrior: 84661,
+      countyExemptionValueCurrent: 0,
+      countyExemptionValuePrior: 0,
+      countyExemptionValueTwoPrior: 0,
+      countyTaxableValueCurrent: 70067,
+      countyTaxableValuePrior: 75395,
+      countyTaxableValueTwoPrior: 84661,
+      landValueCurrent: 27815,
+      landValuePrior: 28897,
+      landValueTwoPrior: 33997,
+      regionalExemptionValueCurrent: 0,
+      regionalExemptionValuePrior: 0,
+      regionalExemptionValueTwoPrior: 0,
+      regionalTaxableValueCurrent: 70067,
+      regionalTaxableValuePrior: 75395,
+      regionalTaxableValueTwoPrior: 84661,
+      schoolExemptionValueCurrent: 0,
+      schoolExemptionValuePrior: 0,
+      schoolExemptionValueTwoPrior: 0,
+      schoolTaxableValueCurrent: 70067,
+      schoolTaxableValuePrior: 75395,
+      schoolTaxableValueTwoPrior: 84661,
+      totalValueCurrent: 70067,
+      totalValuePrior: 75395,
+      totalValueTwoPrior: 84661
+
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.assessmentInfo).toEqual(expectedProperty.assessmentInfo);
+
+  });
+
+  // test exemptionInfo
+  it('ExemptionInfoData not exists maps to exemptionInfo populated with default values', function(){
+    var property = new propertyService.Property({ExemptionInfo:{}});
+    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(null);
+  });
+
+  it('ExemptionInfoData null maps to exemptionInfo populated with default values', function(){
+    var property = new propertyService.Property({ExemptionInfo:null});
+    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(null);
+  });
+
+  it('exemptionInfo with a property value', function(){
+    var property = new propertyService.Property({ExemptionInfo:{AgDifferentialValueCurrent:2}});
+    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(2);
+  });
+
+
+  it('map incoming ExemptionInfo fields to our exemptionInfo model fields',function(){
+    var givenProperty = {ExemptionInfo: {
+      AgDifferentialValueCurrent: 0,
+      AgDifferentialValuePrior: 0,
+      AgDifferentialValueTwoPrior: 0,
+      AssessmentYearCurrent: 2013,
+      AssessmentYearPrior: 2012,
+      AssessmentYearTwoPrior: 2011,
+      CountySecondHomesteadExValueCurrent: 0,
+      CountySecondHomesteadExValuePrior: 0,
+      CountySecondHomesteadExValueTwoPrior: 0,
+      CountySeniorExValueCurrent: 0,
+      CountySeniorExValuePrior: 0,
+      CountySeniorExValueTwoPrior: 0,
+      DisabledExValueCurrent: 0,
+      DisabledExValuePrior: 0,
+      DisabledExValueTwoPrior: 0,
+      HomesteadExValueCurrent: 0,
+      HomesteadExValuePrior: 0,
+      HomesteadExValueTwoPrior: 0,
+      VeteranExValueCurrent: 0,
+      VeteranExValuePrior: 0,
+      VeteranExValueTwoPrior: 0,
+      WidowExValueCurrent: 0,
+      WidowExValuePrior: 0,
+      WidowExValueTwoPrior: 0
+    }};
+    
+    var expectedProperty = {exemptionInfo: {
+      agDifferentialValueCurrent: 0,
+      agDifferentialValuePrior: 0,
+      agDifferentialValueTwoPrior: 0,
+      assessmentYearCurrent: 2013,
+      assessmentYearPrior: 2012,
+      assessmentYearTwoPrior: 2011,
+      countySecondHomesteadExValueCurrent: 0,
+      countySecondHomesteadExValuePrior: 0,
+      countySecondHomesteadExValueTwoPrior: 0,
+      countySeniorExValueCurrent: 0,
+      countySeniorExValuePrior: 0,
+      countySeniorExValueTwoPrior: 0,
+      disabledExValueCurrent: 0,
+      disabledExValuePrior: 0,
+      disabledExValueTwoPrior: 0,
+      homesteadExValueCurrent: 0,
+      homesteadExValuePrior: 0,
+      homesteadExValueTwoPrior: 0,
+      veteranExValueCurrent: 0,
+      veteranExValuePrior: 0,
+      veteranExValueTwoPrior: 0,
+      widowExValueCurrent: 0,
+      widowExValuePrior: 0,
+      widowExValueTwoPrior: 0
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.exemptionInfo).toEqual(expectedProperty.exemptionInfo);
+
+  });
+
+  // test classifiedAgInfo
+  it('ClassifiedAgInfoData not exists maps to classifiedAgInfo populated with default values', function(){
+    var property = new propertyService.Property({ClassifiedAgInfo:{}});
+    expect(property.classifiedAgInfo.acreage).toBe(null);
+  });
+
+  it('ClassifiedAgInfoData null maps to classifiedAgInfo populated with default values', function(){
+    var property = new propertyService.Property({ClassifiedAgInfo:null});
+    expect(property.classifiedAgInfo.acreage).toBe(null);
+  });
+
+  it('classifiedAgInfo with a property value', function(){
+    var property = new propertyService.Property({ClassifiedAgInfo:{Acreage:2}});
+    expect(property.classifiedAgInfo.acreage).toBe(2);
+  });
+
+
+  it('map incoming ClassifiedAgInfo fields to our classifiedAgInfo model fields',function(){
+    var givenProperty = {ClassifiedAgInfo: {
+      Acreage: 0,
+      CalculatedValue: 0,
+      LandCode: null,
+      LandUse: null,
+      UnitPrice: 0
+    }};
+    
+    var expectedProperty = {classifiedAgInfo: {
+      acreage: 0,
+      calculatedValue: 0,
+      landCode: null,
+      landUse: null,
+      unitPrice: 0
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.classifiedAgInfo).toEqual(expectedProperty.classifiedAgInfo);
+
+  });
+
+
+  // test legalDescription
+  it('LegalDescriptionData not exists maps to legalDescription populated with default values', function(){
+    var property = new propertyService.Property({LegalDescription:{}});
+    expect(property.legalDescription.description).toBe(null);
+  });
+
+  it('LegalDescriptionData null maps to legalDescription populated with default values', function(){
+    var property = new propertyService.Property({LegalDescription:null});
+    expect(property.legalDescription.description).toBe(null);
+  });
+
+  it('legalDescription with a property value', function(){
+    var property = new propertyService.Property({LegalDescription:{Description:"Hello You, Hello Me"}});
+    expect(property.legalDescription.description).toBe("Hello You, Hello Me");
+  });
+
+
+  it('map incoming LegalDescription fields to our legalDescription model fields',function(){
+    var givenProperty = {LegalDescription: {
+      Description: "Hello You, Hello Me",
+      Number: null
+    }};
+    
+    var expectedProperty = {legalDescription: {
+      description: "Hello You, Hello Me",
+      parsedDescription:["Hello You","Hello Me"],
+      number: null
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.legalDescription).toEqual(expectedProperty.legalDescription);
+
+  });
+
+
   // test siteAddresses
   it('SiteAddressesData not exists maps to siteAddresses empty array', function(){
     var property = new propertyService.Property({SiteAddresses:[]});

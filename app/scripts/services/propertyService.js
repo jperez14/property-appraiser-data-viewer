@@ -7,22 +7,26 @@ angular.module('propertySearchApp')
     var Property = function(data) {
 
       this.propertyInfo = {};
-      this.legalDescription = {};
       this.mailingAddress = {};
       this.assessmentInfo = {};
       this.classifiedAgInfo = {};
       this.exemptionInfo = {};
+      this.legalDescription = {};
       this.siteAddresses = [];
       this.salesInfo = [];
       this.ownersInfo = [];
       this.extraFeatures = [];
       this.landLines = [];
-
       this.district = null;
       this.geoParcel = null;
 
       if(isUndefinedOrNull(data)) {
         this.propertyInfo = buildPropertyInfo({});
+        this.mailingAddress = buildMailingAddress({});
+        this.assessmentInfo = buildAssessmentInfo({});
+        this.classifiedAgInfo = buildClassifiedAgriculturalInfo({});
+        this.exemptionInfo = buildExemptionInfo({});
+        this.legalDescription = buildLegalDescription({});
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
         this.ownersInfo = buildOwnersInfo([]);
@@ -31,6 +35,11 @@ angular.module('propertySearchApp')
       }
       else{
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
+        this.mailingAddress = buildMailingAddress(data.MailingAddress);
+        this.assessmentInfo = buildAssessmentInfo(data.AssessmentInfo);
+        this.classifiedAgInfo = buildClassifiedAgriculturalInfo(data.ClassifiedAgInfo);
+        this.exemptionInfo = buildExemptionInfo(data.ExemptionInfo);
+        this.legalDescription = buildLegalDescription(data.LegalDescription);
         this.siteAddresses = buildSiteAddresses(data.SiteAddresses);
         this.salesInfo = buildSalesInfo(data.SalesInfo);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
@@ -253,7 +262,8 @@ angular.module('propertySearchApp')
                               subdivision:               "Subdivision",             
                               subdivisionDescription:    "SubdivisionDescription",  
                               unitCount:                 "UnitCount",               
-                              yearBuilt:                 "YearBuilt"}              
+                              yearBuilt:                 "YearBuilt"
+                             };
         
       // map fields, and when field does not exists
       // assign it to null.
@@ -268,7 +278,199 @@ angular.module('propertySearchApp')
           propertyInfo[key] = data[value]; 
       });
       
-      return propertyInfo
+      return propertyInfo;
+          
+    };
+
+    var buildMailingAddress = function(data){
+
+      var mailingAddressAttr = { address1: "Address1",
+                                 address2: "Address2",
+                                 city: "City",
+                                 country: "Country",
+                                 state: "State",
+                                 zipCode: "ZipCode"};              
+        
+      // map fields, and when field does not exists
+      // assign it to null.
+      var mailingAddress = {};      
+
+      _.each(mailingAddressAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          mailingAddress[key] = null;
+        else if ( _.isUndefined(data[value]))
+          mailingAddress[key] = null;
+        else
+          mailingAddress[key] = data[value]; 
+      });
+      
+      return mailingAddress;
+          
+    };
+
+    var buildAssessmentInfo = function(data){
+      
+      var assessmentInfoAttr = {
+        assessedValueCurrent:             "AssessedValueCurrent",            
+        assessedValuePrior:               "AssessedValuePrior",              
+        assessedValueTwoPrior:            "AssessedValueTwoPrior",           
+        assessmentYearCurrent:            "AssessmentYearCurrent",           
+        assessmentYearPrior:              "AssessmentYearPrior",             
+        assessmentYearTwoPrior:           "AssessmentYearTwoPrior",          
+        buildingValueCurrent:             "BuildingValueCurrent",            
+        buildingValuePrior:               "BuildingValuePrior",              
+        buildingValueTwoPrior:            "BuildingValueTwoPrior",           
+        cityExemptionValueCurrent:        "CityExemptionValueCurrent",       
+        cityExemptionValuePrior:          "CityExemptionValuePrior",         
+        cityExemptionValueTwoPrior:       "CityExemptionValueTwoPrior",      
+        cityTaxableValueCurrent:          "CityTaxableValueCurrent",         
+        cityTaxableValuePrior:            "CityTaxableValuePrior",           
+        cityTaxableValueTwoPrior:         "CityTaxableValueTwoPrior",        
+        countyExemptionValueCurrent:      "CountyExemptionValueCurrent",     
+        countyExemptionValuePrior:        "CountyExemptionValuePrior",       
+        countyExemptionValueTwoPrior:     "CountyExemptionValueTwoPrior",    
+        countyTaxableValueCurrent:        "CountyTaxableValueCurrent",       
+        countyTaxableValuePrior:          "CountyTaxableValuePrior",         
+        countyTaxableValueTwoPrior:       "CountyTaxableValueTwoPrior",      
+        landValueCurrent:                 "LandValueCurrent",                
+        landValuePrior:                   "LandValuePrior",                  
+        landValueTwoPrior:                "LandValueTwoPrior",               
+        regionalExemptionValueCurrent:    "RegionalExemptionValueCurrent",   
+        regionalExemptionValuePrior:      "RegionalExemptionValuePrior",     
+        regionalExemptionValueTwoPrior:   "RegionalExemptionValueTwoPrior",  
+        regionalTaxableValueCurrent:      "RegionalTaxableValueCurrent",     
+        regionalTaxableValuePrior:        "RegionalTaxableValuePrior",       
+        regionalTaxableValueTwoPrior:     "RegionalTaxableValueTwoPrior",    
+        schoolExemptionValueCurrent:      "SchoolExemptionValueCurrent",     
+        schoolExemptionValuePrior:        "SchoolExemptionValuePrior",       
+        schoolExemptionValueTwoPrior:     "SchoolExemptionValueTwoPrior",    
+        schoolTaxableValueCurrent:        "SchoolTaxableValueCurrent",       
+        schoolTaxableValuePrior:          "SchoolTaxableValuePrior",         
+        schoolTaxableValueTwoPrior:       "SchoolTaxableValueTwoPrior",      
+        totalValueCurrent:                "TotalValueCurrent",               
+        totalValuePrior:                  "TotalValuePrior",                 
+        totalValueTwoPrior:               "TotalValueTwoPrior"                  
+      };              
+        
+      // map fields, and when field does not exists
+      // assign it to null.
+      var assessmentInfo = {};      
+
+      _.each(assessmentInfoAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          assessmentInfo[key] = null;
+        else if ( _.isUndefined(data[value]))
+          assessmentInfo[key] = null;
+        else
+          assessmentInfo[key] = data[value]; 
+      });
+      
+      return assessmentInfo;
+          
+    };
+
+    var buildClassifiedAgriculturalInfo = function(data){
+      
+      var classifiedAgriculturalInfoAttr = { 
+        acreage:"Acreage",
+        calculatedValue:"CalculatedValue",
+        landCode:"LandCode",
+        landUse:"LandUse",
+        unitPrice:"UnitPrice"
+      };              
+        
+      // map fields, and when field does not exists
+      // assign it to null.
+      var classifiedAgriculturalInfo = {};      
+
+      _.each(classifiedAgriculturalInfoAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          classifiedAgriculturalInfo[key] = null;
+        else if ( _.isUndefined(data[value]))
+          classifiedAgriculturalInfo[key] = null;
+        else
+          classifiedAgriculturalInfo[key] = data[value]; 
+      });
+      
+      return classifiedAgriculturalInfo;
+          
+    };
+
+    var buildExemptionInfo = function(data){
+      
+      var exemptionInfoAttr = { 
+        agDifferentialValueCurrent:"AgDifferentialValueCurrent",
+        agDifferentialValuePrior:"AgDifferentialValuePrior",
+        agDifferentialValueTwoPrior:"AgDifferentialValueTwoPrior",
+        assessmentYearCurrent:"AssessmentYearCurrent",
+        assessmentYearPrior:"AssessmentYearPrior",
+        assessmentYearTwoPrior:"AssessmentYearTwoPrior",
+        countySecondHomesteadExValueCurrent:"CountySecondHomesteadExValueCurrent",
+        countySecondHomesteadExValuePrior:"CountySecondHomesteadExValuePrior",
+        countySecondHomesteadExValueTwoPrior:"CountySecondHomesteadExValueTwoPrior",
+        countySeniorExValueCurrent:"CountySeniorExValueCurrent",
+        countySeniorExValuePrior:"CountySeniorExValuePrior",
+        countySeniorExValueTwoPrior:"CountySeniorExValueTwoPrior",
+        disabledExValueCurrent:"DisabledExValueCurrent",
+        disabledExValuePrior:"DisabledExValuePrior",
+        disabledExValueTwoPrior:"DisabledExValueTwoPrior",
+        homesteadExValueCurrent:"HomesteadExValueCurrent",
+        homesteadExValuePrior:"HomesteadExValuePrior",
+        homesteadExValueTwoPrior:"HomesteadExValueTwoPrior",
+        veteranExValueCurrent:"VeteranExValueCurrent",
+        veteranExValuePrior:"VeteranExValuePrior",
+        veteranExValueTwoPrior:"VeteranExValueTwoPrior",
+        widowExValueCurrent:"WidowExValueCurrent",
+        widowExValuePrior:"WidowExValuePrior",
+        widowExValueTwoPrior:"WidowExValueTwoPrior"
+      };              
+        
+      // map fields, and when field does not exists
+      // assign it to null.
+      var exemptionInfo = {};      
+
+      _.each(exemptionInfoAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          exemptionInfo[key] = null;
+        else if ( _.isUndefined(data[value]))
+          exemptionInfo[key] = null;
+        else
+          exemptionInfo[key] = data[value]; 
+      });
+      
+      return exemptionInfo
+          
+    };
+
+
+    var buildLegalDescription = function(data){
+      
+      var legalDescriptionAttr = {
+        description: "Description",
+        number: "Number"
+      };              
+        
+      // map fields, and when field does not exists
+      // assign it to null.
+      var legalDescription = {};      
+
+      _.each(legalDescriptionAttr, function(value, key){
+        if(isUndefinedOrNull(data))
+          legalDescription[key] = null;
+        else if ( _.isUndefined(data[value]))
+          legalDescription[key] = null;
+        else
+          legalDescription[key] = data[value]; 
+      });
+
+      // Parse description comma separated.
+      if(! _.isNull(legalDescription.description))
+        legalDescription.parsedDescription = _.map(legalDescription.description.split(","), 
+                                                   function(value){return value.trim();});
+      else
+        legalDescription.parsedDescription = [];
+
+      return legalDescription;
           
     };
 
