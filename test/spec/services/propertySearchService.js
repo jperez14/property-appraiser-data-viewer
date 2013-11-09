@@ -29,13 +29,13 @@ describe('Service: propertySearchService', function () {
   };
   
   var mockCandidatesList = {
-	candidates : [{
-		firstOwner : "Barack Obama",
-		secondOwner: "George Bush",
-		thirdOwner: null,
-		folio: "0123456789012",
-		siteAddress:"10 DOWNING ST"
-	}]
+    candidates : [{
+      firstOwner : "Barack Obama",
+      secondOwner: "George Bush",
+      thirdOwner: null,
+      folio: "0123456789012",
+      siteAddress:"10 DOWNING ST"
+    }]
   };
 
   beforeEach(inject(function (_propertySearchService_, _$httpBackend_, _$rootScope_) {
@@ -56,6 +56,9 @@ describe('Service: propertySearchService', function () {
     var property = propertySearchService.getPropertyByFolio('0131260420370');
     property.then(function(myProperty){
       expect(myProperty.propertyInfo.folioNumber).toBe("01-3126-042-0370");
+      expect(myProperty.legalDescription.parsedDescription).toEqual(["A","B","C"]);
+    },function(response){
+      expect(true).toBe(false);
     });
 
     $httpBackend.flush();
@@ -71,26 +74,26 @@ describe('Service: propertySearchService', function () {
   });
 
   it('propertyByOwnerName callback executed', function() {
-	var candidatesList = propertySearchService.getCandidatesByOwner('Michael Sarasti', 1, 200, function(candidates){
-		expect(candidatesList.candidates[0].folio).toBe("0123456789012");
-		expect(candidatesList.candidates[0].firstOwner).toBe("Barack Obama");
-	});
-	$httpBackend.flush();
+    var candidatesList = propertySearchService.getCandidatesByOwner('Michael Sarasti', 1, 200, function(candidates){
+      expect(candidatesList.candidates[0].folio).toBe("0123456789012");
+      expect(candidatesList.candidates[0].firstOwner).toBe("Barack Obama");
+    });
+    $httpBackend.flush();
   });
 
   it('propertyByAddress callback executed', function() {
-	var candidatesList = propertySearchService.getCandidatesByAddress('7244 SW 72 St', '', 1, 200, function(candidates){
-		expect(candidatesList.candidates[0].siteAddress).toBe("10 DOWNING ST");
-		expect(candidatesList.candidates[0].secondOwner).toBe("George Bush");
-	});
-	$httpBackend.flush();
+    var candidatesList = propertySearchService.getCandidatesByAddress('7244 SW 72 St', '', 1, 200, function(candidates){
+      expect(candidatesList.candidates[0].siteAddress).toBe("10 DOWNING ST");
+      expect(candidatesList.candidates[0].secondOwner).toBe("George Bush");
+    });
+    $httpBackend.flush();
   });
 
   
-//  it('propertyByFolio noendpoint error', function(){
-//    var property = propertySearchService.getPropertyByFolio('nofolio');
-//    $httpBackend.flush();
-//    expect(property.PropertyInfo.FolioNumber).toBe("01-3126-042-0370");
-//  });
+  //  it('propertyByFolio noendpoint error', function(){
+  //    var property = propertySearchService.getPropertyByFolio('nofolio');
+  //    $httpBackend.flush();
+  //    expect(property.PropertyInfo.FolioNumber).toBe("01-3126-042-0370");
+  //  });
 
 });

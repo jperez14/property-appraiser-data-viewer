@@ -13,23 +13,6 @@ angular.module('propertySearchApp')
 				     }
                                     );
 
-//    var propertyByFolio = function(folio, callback){
-//
-//      var endPoint = 'GetPropertySearchByFolio';
-//      var params = {folioNumber:folio, layerId:'4', "endPoint":endPoint};         
-//      
-//
-//
-//      var property = PropertyResource.propertyByFolio(params, function(){
-//        var property2 = new propertyService.Property(property);
-//        property = property2;
-//        if(callback){
-//          callback(property);
-//        }
-//      }, function(){});
-//
-//      return property;
-//    };
 
     var propertyByFolio = function(folio, callback){
 
@@ -37,12 +20,14 @@ angular.module('propertySearchApp')
       var params = {folioNumber:folio, layerId:'4', "endPoint":endPoint};         
 
       var deferred = $q.defer();
-      var rawProperty = PropertyResource.propertyByFolio(params, function(){
+      var rawProperty = PropertyResource.propertyByFolio(params, function (){
         deferred.resolve(new propertyService.Property(rawProperty));
-      }, function(){deferred.resolve("hello")});
+      }, function(response){deferred.reject(response)});
 
       return deferred.promise.then(function(property){
         return property;
+      }, function(response){
+        return response;
       });
     };
     
@@ -75,6 +60,7 @@ angular.module('propertySearchApp')
 
     };
     
+    // public API
     return {getPropertyByFolio:propertyByFolio,
 	    getCandidatesByOwner:candidatesByOwner,
 	    getCandidatesByAddress:candidatesByAddress
