@@ -13,14 +13,14 @@
 			<td class="text-right">Depreciated Value</td>
 		</tr>
 
-		<tr ng-repeat="feature in property.ExtraFeatures | orderBy:'-ActualYearBuilt'">
-			<td>{{feature.Description}}</td>
-			<td>{{feature.ActualYearBuilt}}</td>
-			<td>{{feature.Units}}</td>
-			<td>{{feature.UseCode}}</td>
-			<td class="text-right">{{feature.AdjustedUnitPrice
+		<tr ng-repeat="feature in property.extraFeatures | orderBy:'-actualYearBuilt'">
+			<td>{{feature.description}}</td>
+			<td>{{feature.actualYearBuilt}}</td>
+			<td>{{feature.units}}</td>
+			<td>{{feature.useCode}}</td>
+			<td class="text-right">{{feature.adjustedUnitPrice
 			| currency:"$"}}</td>
-			<td class="text-right">{{feature.DepreciatedValue
+			<td class="text-right">{{feature.depreciatedValue
 			| currency:"$"}}</td>
 		</tr>
 

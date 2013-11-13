@@ -4,7 +4,7 @@
 		<tr>
 			<th class="tableHeader">Full Legal Description</th>
 		</tr>
-                <tr ng-repeat="description in property.LegalDescription.Description">
+                <tr ng-repeat="description in property.legalDescription.parsedDescription">
                   <td>{{description}}</td>
                 </tr>  
 	</table>

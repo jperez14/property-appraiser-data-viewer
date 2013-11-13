@@ -10,7 +10,7 @@
 
 		<tr>
 			<td width="50%"><strong>Folio</strong></td>
-			<td>{{property.PropertyInfo.FolioNumber}}</td>
+			<td>{{property.propertyInfo.folioNumber}}</td>
 		</tr>
 
 		<tr>
@@ -18,8 +18,8 @@
 			<td>
                             <div ng-repeat="address
                                            in
-                                           property.SiteAddress">
-                              {{address.Address}}
+                                           property.siteAddresses">
+                              {{address.address}}
                             </div>
                         </td>
 		</tr>
@@ -29,8 +29,8 @@
 			<td>
                             <div ng-repeat="owner
                                            in
-                                           property.OwnerInfos">
-                              {{owner.Name}}
+                                           property.ownersInfo">
+                              {{owner.name}}
                             </div>
                         </td>
 		</tr>
@@ -38,65 +38,65 @@
 		<tr>
 			<td><strong>Mailing Address</strong></td>
 
-			<td>{{property.MailingAddress.Address1}}
-			{{property.MailingAddress.Address2}}
-			{{property.MailingAddress.City}}
-			{{property.MailingAddress.ZipCode}}
-			{{property.MailingAddress.State}}
-			{{property.MailingAddress.Country}}
+			<td>{{property.mailingAddress.address1}}
+			{{property.mailingAddress.address2}}
+			{{property.mailingAddress.city}}
+			{{property.mailingAddress.zipCode}}
+			{{property.mailingAddress.state}}
+			{{property.mailingAddress.country}}
                         </td>
 		</tr>
 
 		<tr>
 			<td><strong>Primary Zone</strong></td>
 
-			<td>{{property.PropertyInfo.PrimaryZone}} 
-                          {{property.PropertyInfo.PrimaryZoneDescription}}</td>
+			<td>{{property.propertyInfo.primaryZone}} 
+                          {{property.propertyInfo.primaryZoneDescription}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Land Use</strong></td>
 
-			<td>{{property.PropertyInfo.DORCodeCurrent}}
-			{{property.PropertyInfo.DORDescription}}</td>
+			<td>{{property.propertyInfo.DORCodeCurrent}}
+			{{property.propertyInfo.DORDescription}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Beds/Bath/Half</strong></td>
 
-			<td>{{property.PropertyInfo.BedroomCount}}
-			/ {{property.PropertyInfo.BathroomCount}}
-			/ {{property.PropertyInfo.HalfBathroomCount}}</td>
+			<td>{{property.propertyInfo.bedroomCount}}
+			/ {{property.propertyInfo.bathroomCount}}
+			/ {{property.propertyInfo.halfBathroomCount}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Floors</strong></td>
 
-			<td>{{property.PropertyInfo.FloorCount}}</td>
+			<td>{{property.propertyInfo.floorCount}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Living Units</strong></td>
 
-			<td>{{property.PropertyInfo.UnitCount}}</td>
+			<td>{{property.propertyInfo.unitCount}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Adjusted Sq. Footage</strong></td>
 
-			<td>{{property.PropertyInfo.BuildingEffectiveArea}}</td>
+			<td>{{property.propertyInfo.buildingEffectiveArea}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Lot Size</strong></td>
 
-			<td>{{property.PropertyInfo.LotSize}} SQ FT</td>
+			<td>{{property.propertyInfo.lotSize}} SQ FT</td>
 		</tr>
 
 		<tr>
 			<td><strong>Year Built</strong></td>
 
-			<td>{{property.PropertyInfo.YearBuilt}}</td>
+			<td>{{property.propertyInfo.yearBuilt}}</td>
 		</tr>
 	</table>
 

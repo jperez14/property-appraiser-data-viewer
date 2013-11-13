@@ -12,12 +12,12 @@
 			<td>Building</td>
 		</tr>
 
-		<tr ng-repeat="site in property.SiteAddress">
-			<td>{{site.StreetNumber}} {{site.StreetPrefix}} {{site.StreetName}} {{site.StreetSuffix}} {{site.StreetSuffixDirection}}</td>
-			<td>{{site.Unit}}</td>
-			<td>{{site.City}}</td>
-			<td>{{site.Zip}}</td>
-			<td>{{site.BuildingNumber}}</td>
+		<tr ng-repeat="site in property.siteAddresses">
+			<td>{{site.streetNumber}} {{site.streetPrefix}} {{site.streetName}} {{site.streetSuffix}} {{site.streetSuffixDirection}}</td>
+			<td>{{site.unit}}</td>
+			<td>{{site.city}}</td>
+			<td>{{site.zip}}</td>
+			<td>{{site.buildingNumber}}</td>
 		</tr>
 
 	</table>

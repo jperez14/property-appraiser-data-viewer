@@ -21,6 +21,7 @@ angular.module('propertySearchApp')
 
       var deferred = $q.defer();
       var rawProperty = PropertyResource.propertyByFolio(params, function (){
+        
         deferred.resolve(new propertyService.Property(rawProperty));
       }, function(response){deferred.reject(response)});
 

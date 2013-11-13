@@ -13,13 +13,13 @@
 			<td>Tenancy</td>
 		</tr>
 
-		<tr ng-repeat="owner in property.OwnerInfos">
-			<td>{{owner.Name}}</td>
-		<!--	<td>{{owner.Description}}</td> -->
-			<td>{{owner.Role}}</td>
-			<td>{{owner.PercentageOwn}}</td>
-			<td>{{owner.MarriedFlag}}</td>
-			<td>{{owner.TenancyCd}}</td>
+		<tr ng-repeat="owner in property.ownersInfo">
+			<td>{{owner.name}}</td>
+		<!--	<td>{{owner.description}}</td> -->
+			<td>{{owner.role}}</td>
+			<td>{{owner.percentageOwn}}</td>
+			<td>{{owner.marriedFlag}}</td>
+			<td>{{owner.tenancyCd}}</td>
 		</tr>
 
 	</table>

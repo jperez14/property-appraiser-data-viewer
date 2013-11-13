@@ -17,6 +17,7 @@ angular.module('propertySearchApp')
       this.ownersInfo = [];
       this.extraFeatures = [];
       this.landLines = [];
+      this.buildingsInfo = [];
       this.district = null;
       this.geoParcel = null;
 
@@ -32,6 +33,7 @@ angular.module('propertySearchApp')
         this.ownersInfo = buildOwnersInfo([]);
         this.extraFeatures = buildExtraFeatures([]);
         this.landLines = buildLandLines([]);
+        this.buildingsInfo = buildBuildingsInfo([]);
       }
       else{
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
@@ -40,14 +42,13 @@ angular.module('propertySearchApp')
         this.classifiedAgInfo = buildClassifiedAgriculturalInfo(data.ClassifiedAgInfo);
         this.exemptionInfo = buildExemptionInfo(data.ExemptionInfo);
         this.legalDescription = buildLegalDescription(data.LegalDescription);
-        this.siteAddresses = buildSiteAddresses(data.SiteAddresses);
+        this.siteAddresses = buildSiteAddresses(data.SiteAddress);
         this.salesInfo = buildSalesInfo(data.SalesInfo);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
         this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
         this.landLines = buildLandLines(data.Landlines);
+        this.buildingsInfo = buildBuildingsInfo(data.buildingInfo);
       }
-
-
     };
 
     var landLineAttr = {
@@ -64,7 +65,26 @@ angular.module('propertySearchApp')
       units:               "Units",            
       useCode:             "UseCode",          
       zone:                "Zone"              
-    };                  
+    };  
+
+    var buildingInfoAttr = {
+      actual:             "Actual",              
+      actualArea:         "ActualArea",          
+      adjustedBasePrice:  "AdjustedBasePrice",   
+      buildingNo:         "BuildingNo",          
+      depreciatedValue:   "DepreciatedValue",    
+      effective:          "Effective",           
+      effectiveArea:      "EffectiveArea",       
+      grossArea:          "GrossArea",           
+      heatedArea:         "HeatedArea",          
+      percentComp:        "PercentComp",         
+      percentageGood:     "PercentageGood",      
+      replacementCostNew: "ReplacementCostNew",  
+      segNo:              "SegNo",               
+      totalAdjustedPoints:"TotalAdjustedPoints", 
+      traversePoints:     "TraversePoints"       
+    };
+    
 
     var extraFeatureAttr = {
       actualYearBuilt:   "ActualYearBuilt",   
@@ -240,12 +260,16 @@ angular.module('propertySearchApp')
 
     var legalDescriptionAttr = {
       description: "Description",
-      number: "Number"
+      number:      "Number"
     };              
 
     
     var buildLandLines = function(data){
       return buildArray(data, landLineAttr);
+    };
+
+    var buildBuildingsInfo = function(data){
+      return buildArray(data, buildingInfoAttr);
     };
 
     var buildExtraFeatures = function(data){
