@@ -1,126 +1,74 @@
-
 <div class="container">  
 
 
-<div class="content">
+  <div class="content">
 
-	<div class="search_area">
-		<div class="row">
+    <div class="search_area">
+      <div class="row">
 
-			<!-- super hackysack!! gave a min col width @ each device width then  -->
-			<div class="col-md-1 col-sm-1 col-xs-1 search_text">
-				<h2>Search</h2>
-			</div>
-
-
-			<div class="col-md-7 col-sm-7 col-xs-12 search_group">
-
-				<div class="input-group">
-
-                                  <!--
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-default dropdown-toggle"
-							id="search_dropdown"
-                                                        data-toggle="dropdown">
-							<span id="search_type_text">Folio</span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" id="search_type">
-							<li><a href="#">Folio</a></li>
-						</ul>
-					</div>
-                                        -->
-					<!-- /btn-group -->
-
-					<!--<input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" onFocus="this.value=''">-->
-					<input type="text" value="Address" name="" id="search_box"
-						placeholder="Folio"
-						class="form-control"
-						ng-model='folio' ng-click="showError=false"> <span
-						class="input-group-btn">
-						<button class="btn btn-default btn-primary" id="search_submit"
-							type="button"
-                                                        ng-click="getPropertyByFolio()">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-					
-				</div>
-				<!-- /input-group -->
-				<div class="input-group">
-					<input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control" ng-model='ownerName' ng-click="showError=false">
-					<span class="input-group-btn">
-						<button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-				</div>
-
-				<div class="input-group">
-					<input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" ng-model='address' ng-click="showError=false">
-					<span class="input-group-btn">
-						<button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</span>
-				</div>
-
-
-			</div>
-
-			<div class="col-md-3 pull-right col-sm-3
-                                    hidden-xs text-right">
-                                <h3>PA DATA VIEWER</h3>
-<!--
-				<a href="https://www.facebook.com/MiamiDadePA"
-				target="_blank"></a> 
-                                <a href="https://twitter.com/MiamiDadePA"
-                                target="_blank"></a>
--->
-			</div>
-
-		</div>
-	</div>
-	<!-- end search_area-->
-
-</div>
-
-<!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
-
-<div class="content main_content_body">
-
-	<div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
-
-	<div class="row">
-		<div class="col-md-12 col-sm-5">
-                        <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
-		</div>
-		<div class="col-md-12 col-sm-5">
-                        <div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>
-		</div>
+	<!-- super hackysack!! gave a min col width @ each device width then  -->
+	<div class="col-md-1 col-sm-1 col-xs-1 search_text">
+	  <h2>Search</h2>
 	</div>
 
-	<div class="row tabular_data">
-		<div class="col-md-6">
-                        <div ng-show="property" ng-include="'views/siteaddress.html'"></div>
-                        <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
-                        <div ng-show="property" ng-include="'views/benefitsinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/salesinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/landinformation.html'"></div>
-		</div>
-		<!-- close first column -->
-
-		<div class="col-md-6">
-                        <div ng-show="property" ng-include="'views/ownerinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/assessmentinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/taxablevalueinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
-                        <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
-                        <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
-		</div>
-
+	<div class="col-md-7 col-sm-7 col-xs-12 search_group">
+          <div ng-include="'views/searchcontrols.html'"></div>
 	</div>
 
-</div>
+	<div class="col-md-3 pull-right col-sm-3
+                    hidden-xs text-right">
+          <h3>PA DATA VIEWER</h3>
+          <!--
+	  <a href="https://www.facebook.com/MiamiDadePA"
+	     target="_blank"></a> 
+          <a href="https://twitter.com/MiamiDadePA"
+             target="_blank"></a>
+          -->
+	</div>
+
+      </div>
+    </div>
+    <!-- end search_area-->
+
+  </div>
+
+  <!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
+
+  <div class="content main_content_body">
+
+    <div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
+
+    <div class="row">
+      <div class="col-md-12 col-sm-5">
+        <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
+      </div>
+      <div class="col-md-12 col-sm-5">
+        <div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>
+      </div>
+    </div>
+
+    <div class="row tabular_data">
+      <div class="col-md-6">
+        <div ng-show="property" ng-include="'views/siteaddress.html'"></div>
+        <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
+        <div ng-show="property" ng-include="'views/benefitsinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/salesinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/landinformation.html'"></div>
+      </div>
+      <!-- close first column -->
+
+      <div class="col-md-6">
+        <div ng-show="property" ng-include="'views/ownerinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/assessmentinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/taxablevalueinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
+        <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
+        <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
+      </div>
+
+    </div>
+
+  </div>
 
 
 </div><!-- /.container -->

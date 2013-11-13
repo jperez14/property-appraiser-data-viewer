@@ -1,0 +1,34 @@
+<!-- /input-group -->
+<div class="input-group">
+  <input type="text" value="Address" name="" id="search_box"
+	 placeholder="Folio"
+	 class="form-control"
+	 ng-model='folio' ng-click="showError=false"> <span
+						         class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit"
+	    type="button"
+            ng-click="getPropertyByFolio()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+<div class="input-group">
+  <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control" ng-model='ownerName' ng-click="showError=false">
+  <span class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+<div class="input-group">
+  <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" ng-model='address' ng-click="showError=false">
+  <span class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+
