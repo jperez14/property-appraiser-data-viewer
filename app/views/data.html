@@ -1,12 +1,133 @@
+<div class="container">
+    
+    <div class="header">
+    <img src="images/banner.jpg" class="img-responsive hidden-xs" alt="Miami-Dade County Property Appraiser">
+    <img src="images/banner-small-device.png" class="img-responsive visible-xs" alt="Miami-Dade County Property Appraiser">
+    </div>
+    
+    <nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul id="site_nav" class="nav navbar-nav">
+        <li><a href="/pa/home.asp" class="two_line_fix">Home</a></li>
+        <li><a href="/pa/exemptions.asp">Exemptions &amp;<br /> Other Benefits</a></li>
+        <li><a href="/pa/real_estate.asp" class="two_line_fix">Real Estate</a></li>
+        <li><a href="/pa/property_tangible.asp">Tangible<br>Personal Property</a></li>
+        <li><a href="/pa/public_records.asp" class="two_line_fix">Public Records</a></li>
+        <li><a href="/pa/online_tools.asp" class="two_line_fix">Online Tools</a></li>
+        <li><a href="/pa/roll-administration.asp">Tax Roll<br>Administration</a></li>
+    </ul>
+
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+	
+</div><!-- /.container -->
+
 <div class="container">  
 
 
   <div class="content">
+  
 
     <div class="search_area">
-      <div class="row">
+    
+    <div class="text-right hidden-xs social-buttons">
+<a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/facebook-search.png"></a>
+<a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/twitter-search.png"></a>
+</div>
+    
+    <!-- Nav tabs -->
+<ul class="nav nav-tabs">
+<li class="active"><a href="#folio" data-toggle="tab">Folio</a></li>
+<li><a href="#owner-name" data-toggle="tab">Owner Name</a></li>
+<li><a href="#address" data-toggle="tab">Address</a></li>
+</ul>
 
-	<!-- super hackysack!! gave a min col width @ each device width then  -->
+
+   
+<div class="row">    
+
+<div class="col-md-1 col-sm-1 col-xs-12 search-text">
+<h2>Search:</h2>
+</div>
+
+
+
+
+<div class="col-md-6 col-sm-7 col-xs-12 text-right">
+
+<!-- Tab panes -->
+<div class="tab-content">
+
+<div class="tab-pane active" id="folio">
+
+<div class="input-group">
+  <input type="text" value="Folio" name="" id="search_box"
+	 placeholder="Folio"
+	 class="form-control"
+	 ng-model='folio' ng-click="showError=false"> <span
+						         class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit"
+	    type="button"
+            ng-click="getPropertyByFolio()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+</div>
+
+<div class="tab-pane" id="owner-name">
+
+<div class="input-group">
+  <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control" ng-model='ownerName' ng-click="showError=false">
+  <span class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+
+</div>
+
+<div class="tab-pane" id="address">
+
+<div class="input-group">
+  <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" ng-model='address' ng-click="showError=false">
+  <span class="input-group-btn">
+    <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+</div> <!-- end row -->
+      
+      
+     <!-- <div class="row">
+      
+     super hackysack!! gave a min col width @ each device width then  
 	<div class="col-md-1 col-sm-1 col-xs-1 search_text">
 	  <h2>Search</h2>
 	</div>
@@ -23,28 +144,56 @@
 	     target="_blank"></a> 
           <a href="https://twitter.com/MiamiDadePA"
              target="_blank"></a>
-          -->
-	</div>
+          
+	</div> 
 
-      </div>
-    </div>
-    <!-- end search_area-->
+      </div>-->
+      
+    </div> <!-- /.end search_area-->
 
   </div>
 
   <!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
+  
+  <script>
+        $( document ).ready(function() {
+			
+			$('.map_area').click(function(){ // this click function is just to attach map... not sure how you would connect this
+				// make the map the height of the property information
+				var prop_info_height = $('.property_info').css('height');
+				$('.map_area').css('height', prop_info_height);
+        	});
+        });
+    </script>
 
   <div class="content main_content_body">
 
     <div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
 
     <div class="row">
-      <div class="col-md-12 col-sm-5">
+      <div class="col-md-4 col-sm-5">
+      <div class="property_info tabular_data">
         <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
       </div>
-      <div class="col-md-12 col-sm-5">
-        <div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>
       </div>
+      <div class="col-md-8 col-sm-7"> <!-- drop map component in this div-->
+        <!--<div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>-->
+        <div ng-show="property" class="map_area">MAP</div>
+      </div>
+    </div>
+    
+    <div class="other_apps" ng-show="property"> 
+    
+    <ul class="row">
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/report-homestead-fraud.png" width="16" height="16" alt="Report Homestead Fraud"> <a href="http://www.miamidade.gov/paportal/HomesteadFraud/HomesteadFraud.aspx" target="_blank">Report Homestead Fraud</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/compare.png" width="16" height="16" alt="Tax Comparison"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp?Fol=1078140080140" target="_blank">Tax Comparison</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/estimator.png" width="16" height="16" alt="Tax Estimator"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp?Fol=1078140080140" target="_blank">Tax Estimator</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch=1078140080140" target="_blank">TRIM Notice</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/1078140080140" target="_blank">View Taxes</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://www.miamidade.gov/pa/online_tools.asp" target="_blank">Additional Online Tools</a></li>
+<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable Sales"> <a href="http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp" target="_blank">Comparable Sales</a></li>
+    </ul>
+    
     </div>
 
     <div class="row tabular_data">
@@ -53,7 +202,6 @@
         <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
         <div ng-show="property" ng-include="'views/benefitsinformation.html'"></div>
         <div ng-show="property" ng-include="'views/salesinformation.html'"></div>
-        <div ng-show="property" ng-include="'views/landinformation.html'"></div>
       </div>
       <!-- close first column -->
 
@@ -62,13 +210,134 @@
         <div ng-show="property" ng-include="'views/assessmentinformation.html'"></div>
         <div ng-show="property" ng-include="'views/taxablevalueinformation.html'"></div>
         <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
-        <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
-        <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
+
       </div>
 
     </div>
+    
+    <div ng-show="property" class="row tabular_data">
 
+      <div class="col-md-12">
+      
+      <!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#current" data-toggle="tab">Current Year</a></li>
+  <li><a href="#prior" data-toggle="tab">Prior Year</a></li>
+  <li><a href="#prior-2" data-toggle="tab">Prior Year 2</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content" style="padding-top:15px;">
+  <div class="tab-pane active" id="current">
+  <p>Current - message to user here...</p>
+  	<div ng-show="property" ng-include="'views/landinformation.html'"></div>
+    <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
+    <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
   </div>
+  <div class="tab-pane" id="prior">
+  <p>Prior - message to user here...</p>
+  	<div ng-show="property" ng-include="'views/landinformation.html'"></div>
+    <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
+    <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
+  </div>
+  <div class="tab-pane" id="prior-2">
+  <p>Prior 2 - message to user here...</p>
+  	<div ng-show="property" ng-include="'views/landinformation.html'"></div>
+    <div ng-show="property" ng-include="'views/extrafeatures.html'"></div>
+    <div ng-show="property" ng-include="'views/buildinginformation.html'"></div>
+  </div>
+</div>
+      
+      </div>
+
+    </div>
+    
+    
+    <div class="disclaimer">
+        <p>The Office of the Property Appraiser and Miami-Dade County are continually editing and updating the tax roll and GIS data to reflect the latest property information and GIS positional accuracy. No warranties, expressed or implied, are provided for data and the positional or thematic accuracy of the data herein, its use, or its interpretation. Although this website is periodically updated, this information may not reflect the data currently on file at Miami-Dade County's systems of record. The Property Appraiser and Miami-Dade County assumes no liability either for any errors, omissions, or inaccuracies in the information provided regardless of the cause of such or for any decision made, action taken, or action not taken by the user in reliance upon any information provided herein.</p>
+        <p>See Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a>.<br>
+        Property information inquiries, comments, and suggestions email: <a href="mailto:pawebmail@miamidade.gov" target="_self">pawebmail@miamidade.gov</a>.<br>
+        GIS inquiries, comments, and suggestions email: <a href="mailto:gis@miamidade.gov" target="_self">gis@miamidade.gov</a>.</p>
+      </div>
+    
+  </div>
+  
+  
+ 
+ <div class="footer_area">
+    
+    	<div class="row">
+        
+        <div class="col-md-2 col-sm-4"><h4>Exemptions &amp; Benefits</h4>
+        	<ul>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_military.asp">Deployed Military</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_disabilities.asp">Disability Exemptions</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_homestead.asp">Homestead</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_institutional.asp">Institutional</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_homestead_senior.asp">Senior Citizens</a></li>
+            </ul>
+            <span><a href="http://www.miamidade.gov/pa/exemptions.asp">More ></a></span>
+        </div>
+        
+        <div class="col-md-2 col-sm-4"><h4>Real Estate</h4>
+        	<ul>
+                <li><a href="http://www.miamidade.gov/pa/property_recertification.asp">40 Yr Building <br />Re-Certification</a></li>
+                <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing Your Assessment</a></li>
+                <li><a href="http://www.miamidade.gov/pa/news_drywall.asp">Defective Drywall</a></li>
+                <li><a href="http://www.miamidade.gov/pa/property_folio_numbers.asp">Folio Numbers</a></li>
+                <li><a href="http://www.miamidade.gov/pa/mortgage-fraud.asp">Mortgage Fraud</a></li>
+            </ul>
+            <span><a href="http://www.miamidade.gov/pa/real_estate.asp">More ></a></span>
+        </div>
+
+        <div class="col-md-2 col-sm-4"><h4>Tangible Personal Property</h4>
+        	<ul>
+                <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing your Assessment</a></li>
+                <li><a href="http://www.miamidade.gov/pa/business_lookup.asp#/">Assessment Information Search</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_tangible.asp">Exemptions</a></li>
+                <li><a href="http://www.miamidade.gov/pa/property_tangible_extension.asp">Extension Requests</a></li>
+                <li><a href="http://www.miamidade.gov/pa/exemptions_tangible_filing.asp">Filing Returns</a></li>
+            </ul>
+            <span><a href="http://www.miamidade.gov/pa/property_tangible.asp">More ></a></span>
+        </div>
+        
+        <hr noshade size="1" class="visible-sm" style="border:1px solid #4d6db4; color:#4d6db4">
+
+        <div class="col-md-2 col-sm-4"><h4>Public Records</h4>
+            <ul>
+                <li><a href="http://www.miamidade.gov/pa/public_records_address_block.asp">Address Blocking</a></li>
+                <li><a href="http://www.miamidade.gov/pa/public_records_name_change.asp">Change of Name</a></li>
+                <li><a href="http://www.miamidade.gov/pa/address_change.asp">Change of Address</a></li>
+                <li><a href="http://www.miamidade.gov/pa/public_records_ownership.asp">Change of Ownership & Title</a></li>
+                <li><a href="http://www.miamidade.gov/pa/public_records_condo.asp">Declaration of Condominium</a></li>
+            </ul>
+			<span><a href="http://www.miamidade.gov/pa/public_records.asp">More ></a></span>
+        </div>
+
+        <div class="col-md-2 col-sm-4"><h4>Online Tools</h4>
+            <ul>
+                <li><a href="http://www.miamidade.gov/pa/property_search.asp">Property Search</a></li>
+                <li><a href="http://www.miamidade.gov/pa/property_sales.asp">Property Sales</a></li>
+                <li><a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp">Tax Estimator</a></li>
+                <li><a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp">Tax Comparison</a></li>
+                <li><a href="https://www.miamidade.gov/PaPortal/AutoOnlineFile/ExemptionOnlineMainMenu.aspx">Homestead Exemption and Portability</a></li>
+            </ul>
+   			<span><a href="http://www.miamidade.gov/pa/online_tools.asp">More ></a></span>
+        </div>
+
+        <div class="col-md-2 col-sm-4"><h4>Tax Roll Administration</h4>
+        	<ul>
+                <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing your Assessment</a></li>
+                <li><a href="http://www.miamidade.gov/pa/reports.asp">Reports</a></li>
+            </ul>
+            <span><a href="http://www.miamidade.gov/pa/roll-administration.asp">More ></a></span>
+        </div>
+        
+        </div>
+    
+    </div> 
+  
+  
 
 
 </div><!-- /.container -->
