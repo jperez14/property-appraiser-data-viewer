@@ -18,9 +18,14 @@ angular.module('propertySearchApp')
       this.extraFeatures = [];
       this.landLines = [];
       this.buildingsInfo = [];
+      this.benefitsInfo = [];
       this.district = null;
       this.geoParcel = null;
+      this.rollYear1 = null;
+      this.rollYear2 = null;
+      this.rollYear3 = null;
 
+      
       if(isUndefinedOrNull(data)) {
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
@@ -34,8 +39,16 @@ angular.module('propertySearchApp')
         this.extraFeatures = buildExtraFeatures([]);
         this.landLines = buildLandLines([]);
         this.buildingsInfo = buildBuildingsInfo([]);
+        this.benefitsInfo = buildBenefitsInfo([]);
       }
       else{
+
+        this.district = data.District;
+        this.geoParcel = data.GeoParcel;
+        this.rollYear1 = 2013;
+        this.rollYear2 = this.rollYear1 - 1;
+        this.rollYear3 = this.rollYear1 - 2;
+
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
         this.mailingAddress = buildMailingAddress(data.MailingAddress);
         this.assessmentInfo = buildAssessmentInfo(data.AssessmentInfo);
@@ -47,9 +60,12 @@ angular.module('propertySearchApp')
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
         this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
         this.landLines = buildLandLines(data.Landlines);
-        this.buildingsInfo = buildBuildingsInfo(data.buildingInfo);
+        this.buildingsInfo = buildBuildingsInfo(data.BuildingInfo);
+        this.benefitsInfo = buildBenefitsInfo(data.BenefitInfo, this.rollYear1);
+
       }
     };
+
 
     var landLineAttr = {
       adjustedUnitPrice:   "AdjustedUnitPrice",
@@ -287,6 +303,45 @@ angular.module('propertySearchApp')
     var buildSiteAddresses = function(data){
       return buildArray(data, siteAddressAttr);      
     };
+
+    var buildBenefitsInfo = function(data, baseYear){
+
+      // data not given - return an empty array.
+      if(isUndefinedOrNull(data))
+        return [];      
+
+      var groupedBenefits = {};
+      var benefit = {};
+
+      // group same type of benefits.
+      _.each(data, function(originalBenefit){
+        benefit = {};
+        if(_.isUndefined(groupedBenefits[originalBenefit.Description])){
+          benefit.description = originalBenefit.Description;
+          benefit.type = originalBenefit.Type;
+          benefit.data = {};
+          benefit.data[originalBenefit.TaxYear] = originalBenefit.Value;
+
+          groupedBenefits[originalBenefit.Description] = benefit;          
+        }else{
+          benefit = groupedBenefits[originalBenefit.Description];
+          benefit.data[originalBenefit.TaxYear] = originalBenefit.Value;
+        }
+
+      });
+
+      // pick from benefit.data the baseYear and two prior
+      _.each(groupedBenefits, function(benefitType, key){
+        benefitType.values = [];
+        benefitType.values.push(benefitType.data[baseYear] || 0);
+        benefitType.values.push(benefitType.data[baseYear-1] || 0);
+        benefitType.values.push(benefitType.data[baseYear-2] || 0);
+      });
+
+      return _.values(groupedBenefits);
+      
+    };
+    
 
     /**
      * it builds the propertyInfo. 

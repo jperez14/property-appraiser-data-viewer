@@ -417,7 +417,7 @@ describe('Service: propertyService', function () {
 
 
   it('map incoming SiteAddresses fields to our siteAddresses model fields',function(){
-    var givenProperty = {SiteAddresses: [{
+    var givenProperty = {SiteAddress: [{
       Address: "0 1",
       BuildingNumber: 1,
       City: "",
@@ -640,6 +640,134 @@ describe('Service: propertyService', function () {
     expect(property.landLines).toEqual(expectedProperty.landLines);
 
   });
+
+
+  //Benefits Info
+  it('BenefitInfoData not exists maps to benefitsInfo empty array', function(){
+    var property = new propertyService.Property({BenefitInfo:[]});
+    expect(property.benefitsInfo).toEqual([]);
+  });
+
+  it('BenefitInfo null maps to benefitsInfo empty array', function(){
+    var property = new propertyService.Property({BenefitInfo:null});
+    expect(property.benefitsInfo).toEqual([]);
+  });
+
+  it('map incoming BenefitsInfo fields to our benefitsInfo model fields',function(){
+    var givenProperty = {BenefitInfo:[
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2011,
+        Type: "Assessment Reduction",
+        Value: 76044
+      },
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2012,
+        Type: "Assessment Reduction",
+        Value: 56004
+      },
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2013,
+        Type: "Assessment Reduction",
+        Value: 31912
+      }]};
+
+    var expectedProperty = {benefitsInfo:[
+      {
+        description: "Save Our Homes",
+        type:"Assessment Reduction",
+        data:{2013:31912, 2012:56004, 2011:76044},
+        values:[31912, 56004, 76044]
+      }
+
+    ]};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
+
+  });
+
+  it('Benefits info missing tax year puts a zero value for that year',function(){
+    var givenProperty = {BenefitInfo:[
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2011,
+        Type: "Assessment Reduction",
+        Value: 76044
+      },
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2013,
+        Type: "Assessment Reduction",
+        Value: 31912
+      }]};
+
+    var expectedProperty = {benefitsInfo:[
+      {
+        description: "Save Our Homes",
+        type:"Assessment Reduction",
+        data:{2013:31912, 2011:76044},
+        values:[31912, 0, 76044]
+      }
+
+    ]};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
+
+  });
+
+  it('Benefits info with more than one description keeps all of them',function(){
+    var givenProperty = {BenefitInfo:[
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2011,
+        Type: "Assessment Reduction",
+        Value: 76044
+      },
+      {
+        Description: "Civilian Disability",
+        TaxYear: 2013,
+        Type: "Exemption",
+        Value: 500
+      },
+      {
+        Description: "Save Our Homes",
+        TaxYear: 2013,
+        Type: "Assessment Reduction",
+        Value: 31912
+      },
+      {
+        Description: "Civilian Disability",
+        TaxYear: 2012,
+        Type: "Exemption",
+        Value: 600
+      }]};
+
+    var expectedProperty = {benefitsInfo:[
+      {
+        description: "Save Our Homes",
+        type:"Assessment Reduction",
+        data:{2013:31912, 2011:76044},
+        values:[31912, 0, 76044]
+      }, {
+        description: "Civilian Disability",
+        type: "Exemption",
+        data:{2012:600, 2013:500},
+        values:[500,600,0]
+      }
+
+
+    ]};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
+
+  });
+
+
 
 
 })

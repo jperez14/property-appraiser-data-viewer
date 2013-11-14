@@ -28,8 +28,6 @@ angular.module('propertySearchApp')
 
 
     $scope.getPropertyByFolio = function(){
-      //      $scope.property = propertySearchService.getPropertyByFolio($scope.folio);
-
       propertySearchService.getPropertyByFolio($scope.folio).then(function(property){
         $scope.property = property;
       });
