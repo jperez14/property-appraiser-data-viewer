@@ -14,86 +14,14 @@
 
 		</tr>
 
-		<tr>
-			<td><strong>Save Our Homes:</strong></td>
-
-			<td>Assessment Reduction</td>
-			<td></td>
-			<td></td>
-			<td></td>
+		<tr ng-repeat="benefit in property.benefitsInfo">
+			<td><strong>{{benefit.description}}</strong></td>
+                        <td>{{benefit.type}}</td>
+                        <td class="text-right">{{benefit.values[0] | currency:"$"}}</td>
+                        <td class="text-right">{{benefit.values[1] | currency:"$"}}</td>
+                        <td class="text-right">{{benefit.values[2] | currency:"$"}}</td>
 		</tr>
 
-		<tr>
-			<td><strong>Homestead:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.homesteadExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.homesteadExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.homesteadExValueTwoPrior
-			| currency:"$"}}</td>
-		</tr>
-
-		<tr>
-			<td><strong>Second Homestead:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.countySecondHomesteadExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.countySecondHomesteadExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.countySecondHomesteadExValueTwoPrior
-			| currency:"$"}}</td>
-		</tr>
-
-		<tr>
-			<td><strong>County Senior:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.countySeniorExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.countySeniorExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.countySeniorExValueTwoPrior
-                        | currency:"$"}}</td>
-		</tr>
-
-		<tr>
-			<td><strong>Disabled:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.disabledExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.disabledExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.disabledExValueTwoPrior
-			| currency:"$"}}</td>
-		</tr>
-
-		<tr>
-			<td><strong>Veteran:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.veteranExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.veteranExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.veteranExValueTwoPrior
-			| currency:"$"}}</td>
-		</tr>
-
-		<tr>
-			<td><strong>Widow:</strong></td>
-
-			<td>Exemption</td>
-                        <td class="text-right">{{property.exemptionInfo.widowExValueCurrent
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.widowExValuePrior
-			| currency:"$"}}</td>
-                        <td class="text-right">{{property.exemptionInfo.widowExValueTwoPrior
-			| currency:"$"}}</td>
-		</tr>
 
 		<tr>
 			<td colspan="5">Note: Not all benefits are applicable to all
