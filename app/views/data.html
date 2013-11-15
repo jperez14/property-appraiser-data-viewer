@@ -1,36 +1,6 @@
 <div class="container">
   
-  <div class="header">
-    <img src="images/banner.jpg" class="img-responsive hidden-xs" alt="Miami-Dade County Property Appraiser">
-    <img src="images/banner-small-device.png" class="img-responsive visible-xs" alt="Miami-Dade County Property Appraiser">
-  </div>
-  
-  <nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul id="site_nav" class="nav navbar-nav">
-        <li><a href="/pa/home.asp" class="two_line_fix">Home</a></li>
-        <li><a href="/pa/exemptions.asp">Exemptions &amp;<br /> Other Benefits</a></li>
-        <li><a href="/pa/real_estate.asp" class="two_line_fix">Real Estate</a></li>
-        <li><a href="/pa/property_tangible.asp">Tangible<br>Personal Property</a></li>
-        <li><a href="/pa/public_records.asp" class="two_line_fix">Public Records</a></li>
-        <li><a href="/pa/online_tools.asp" class="two_line_fix">Online Tools</a></li>
-        <li><a href="/pa/roll-administration.asp">Tax Roll<br>Administration</a></li>
-      </ul>
-
-    </div><!-- /.navbar-collapse -->
-  </nav>
-
+  <div ng-include="'views/header.html'"></div>
   
 </div><!-- /.container -->
 
@@ -74,8 +44,7 @@
 
               <div class="input-group">
                 <input type="text" value="Folio" name="" id="search_box"
-	               placeholder="Folio"
-	               class="form-control"
+	               class="form-control" ui-mask='{{folioMask}}' 
 	               ng-model='folio' ng-click="showError=false"> <span
 						                       class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit"
@@ -151,11 +120,13 @@
       <div class="col-md-4 col-sm-5">
         <div class="property_info tabular_data">
           <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
+		  <div ng-show="candidatesList" ng-include="'views/candidates.html'"></div>
         </div>
       </div>
       <div class="col-md-8 col-sm-7"> <!-- drop map component in this div-->
         <!--<div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>-->
         <div ng-show="property" class="map_area">MAP</div>
+		<div ng-show="candidatesList" class="map_area">MAP</div>
       </div>
     </div>
     
@@ -229,92 +200,10 @@
 
     </div>
     
-    
-    <div class="disclaimer">
-      <p>The Office of the Property Appraiser and Miami-Dade County are continually editing and updating the tax roll and GIS data to reflect the latest property information and GIS positional accuracy. No warranties, expressed or implied, are provided for data and the positional or thematic accuracy of the data herein, its use, or its interpretation. Although this website is periodically updated, this information may not reflect the data currently on file at Miami-Dade County's systems of record. The Property Appraiser and Miami-Dade County assumes no liability either for any errors, omissions, or inaccuracies in the information provided regardless of the cause of such or for any decision made, action taken, or action not taken by the user in reliance upon any information provided herein.</p>
-      <p>See Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a>.<br>
-        Property information inquiries, comments, and suggestions email: <a href="mailto:pawebmail@miamidade.gov" target="_self">pawebmail@miamidade.gov</a>.<br>
-        GIS inquiries, comments, and suggestions email: <a href="mailto:gis@miamidade.gov" target="_self">gis@miamidade.gov</a>.</p>
-    </div>
-    
+    <div ng-include="'views/disclaimer.html'"></div>
+	
   </div>
   
-  
-  
-  <div class="footer_area">
-    
-    <div class="row">
-      
-      <div class="col-md-2 col-sm-4"><h4>Exemptions &amp; Benefits</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_military.asp">Deployed Military</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_disabilities.asp">Disability Exemptions</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_homestead.asp">Homestead</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_institutional.asp">Institutional</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_homestead_senior.asp">Senior Citizens</a></li>
-        </ul>
-        <span><a href="http://www.miamidade.gov/pa/exemptions.asp">More ></a></span>
-      </div>
-      
-      <div class="col-md-2 col-sm-4"><h4>Real Estate</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/property_recertification.asp">40 Yr Building <br />Re-Certification</a></li>
-          <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing Your Assessment</a></li>
-          <li><a href="http://www.miamidade.gov/pa/news_drywall.asp">Defective Drywall</a></li>
-          <li><a href="http://www.miamidade.gov/pa/property_folio_numbers.asp">Folio Numbers</a></li>
-          <li><a href="http://www.miamidade.gov/pa/mortgage-fraud.asp">Mortgage Fraud</a></li>
-        </ul>
-        <span><a href="http://www.miamidade.gov/pa/real_estate.asp">More ></a></span>
-      </div>
-
-      <div class="col-md-2 col-sm-4"><h4>Tangible Personal Property</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing your Assessment</a></li>
-          <li><a href="http://www.miamidade.gov/pa/business_lookup.asp#/">Assessment Information Search</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_tangible.asp">Exemptions</a></li>
-          <li><a href="http://www.miamidade.gov/pa/property_tangible_extension.asp">Extension Requests</a></li>
-          <li><a href="http://www.miamidade.gov/pa/exemptions_tangible_filing.asp">Filing Returns</a></li>
-        </ul>
-        <span><a href="http://www.miamidade.gov/pa/property_tangible.asp">More ></a></span>
-      </div>
-      
-      <hr noshade size="1" class="visible-sm" style="border:1px solid #4d6db4; color:#4d6db4">
-
-      <div class="col-md-2 col-sm-4"><h4>Public Records</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/public_records_address_block.asp">Address Blocking</a></li>
-          <li><a href="http://www.miamidade.gov/pa/public_records_name_change.asp">Change of Name</a></li>
-          <li><a href="http://www.miamidade.gov/pa/address_change.asp">Change of Address</a></li>
-          <li><a href="http://www.miamidade.gov/pa/public_records_ownership.asp">Change of Ownership & Title</a></li>
-          <li><a href="http://www.miamidade.gov/pa/public_records_condo.asp">Declaration of Condominium</a></li>
-        </ul>
-	<span><a href="http://www.miamidade.gov/pa/public_records.asp">More ></a></span>
-      </div>
-
-      <div class="col-md-2 col-sm-4"><h4>Online Tools</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/property_search.asp">Property Search</a></li>
-          <li><a href="http://www.miamidade.gov/pa/property_sales.asp">Property Sales</a></li>
-          <li><a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp">Tax Estimator</a></li>
-          <li><a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp">Tax Comparison</a></li>
-          <li><a href="https://www.miamidade.gov/PaPortal/AutoOnlineFile/ExemptionOnlineMainMenu.aspx">Homestead Exemption and Portability</a></li>
-        </ul>
-   	<span><a href="http://www.miamidade.gov/pa/online_tools.asp">More ></a></span>
-      </div>
-
-      <div class="col-md-2 col-sm-4"><h4>Tax Roll Administration</h4>
-        <ul>
-          <li><a href="http://www.miamidade.gov/pa/appealing_assessment.asp">Appealing your Assessment</a></li>
-          <li><a href="http://www.miamidade.gov/pa/reports.asp">Reports</a></li>
-        </ul>
-        <span><a href="http://www.miamidade.gov/pa/roll-administration.asp">More ></a></span>
-      </div>
-      
-    </div>
-    
-  </div> 
-  
-  
-
+  <div ng-include="'views/footer.html'"></div>
 
 </div><!-- /.container -->

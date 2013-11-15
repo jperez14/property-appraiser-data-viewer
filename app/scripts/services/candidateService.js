@@ -45,7 +45,7 @@ angular.module('propertySearchApp')
         if(isTypeUndefined(el.Strap))
           candidate.folio = null;
         else
-          candidate.folio = el.Strap.trim().replace(/-/g, "");
+          candidate.folio = el.Strap; //.trim().replace(/-/g, "");
 
         if(isTypeUndefinedOrIsEmpty(el.Owner1))
           candidate.firstOwner = null;

@@ -2,13 +2,13 @@
 
 	<div class="list_instructions">
 		<h2 style="float:left; margin-bottom:5px;">Matching Results: {{candidatesList.candidates.length}}</h2>
-		<p style="float:right" class="text-right"><a href="#" style="color:#fff;">Close <span class="glyphicon glyphicon-remove-circle"></span></a></p>
+		<!-- <p style="float:right" class="text-right"><a href="#" style="color:#fff;">Close <span class="glyphicon glyphicon-remove-circle"></span></a></p> -->
 		<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the search results to get more information.</p>
 	</div>
 
 	<div class="results_record" ng-repeat="candidate in candidatesList.candidates">
 		<span class="record_number">{{$index + 1}}</span>
-		<span class="record_folio"><strong>FOLIO:</strong> <a href="" ng-click="getOwnerFolio(owner.Strap)">{{candidate.folio}}</a></span>
+		<span class="record_folio"><strong>FOLIO:</strong> <a href="" ng-click="getCandidateFolio(candidate.folio)">{{candidate.folio}}</a></span>
 		<span class="record_owener"><strong>OWNER:</strong> {{candidate.firstOwner}}</span>
 		<span class="record_owener" ng-show="candidate.secondOwner"><strong>OWNER 2:</strong> {{candidate.secondOwner}}</span>
 		<span class="record_owener" ng-show="candidate.thirdOwner"><strong>OWNER 3:</strong> {{candidate.thirdOwner}}</span>

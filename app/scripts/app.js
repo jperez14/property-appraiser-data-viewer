@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('propertySearchApp', ['ngResource'])
+angular.module('propertySearchApp', ['ngResource', 'ui.mask'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
