@@ -204,6 +204,29 @@ background-color: #eeeeee;
 	font-weight: bold;
 }
 
+.tabular_data .table-section {
+	font-weight: bold;
+	font-size: 11px;
+	color: #666;
+	background-color: #eee;
+	text-transform: uppercase;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.tabular_data .table-section-head {
+	font-weight:bold;
+	padding-left:15px;
+}
+
+.tabular_data table tr.row-stripe > td {
+	background-color: #eeeeee;
+}
+
+.tabular_data table tr.border-bottom > td {
+	border-bottom: 1px solid #eee;
+}
+
 .tabular_data th {
     font-family: 'bebas_neueregular';
     font-size: 24px;
