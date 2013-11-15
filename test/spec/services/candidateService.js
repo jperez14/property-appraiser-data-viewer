@@ -59,7 +59,7 @@ describe('Service: candidateService', function () {
 				secondOwner: "WILLIAM R SCHWARTZ",
 				thirdOwner: null,
 				siteAddress: "2444 OVERBROOK ST",
-				folio: "0141150280470"
+				folio: "01-4115-028-0470"
 			}
 		]
 	};
