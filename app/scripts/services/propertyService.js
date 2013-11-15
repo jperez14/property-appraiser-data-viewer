@@ -10,7 +10,6 @@ angular.module('propertySearchApp')
       this.mailingAddress = {};
       this.assessmentInfo = {};
       this.classifiedAgInfo = {};
-      this.exemptionInfo = {};
       this.legalDescription = {};
       this.siteAddresses = [];
       this.salesInfo = [];
@@ -27,11 +26,17 @@ angular.module('propertySearchApp')
 
       
       if(isUndefinedOrNull(data)) {
+
+        this.district = null;
+        this.geoParcel = null;
+        this.rollYear1 = null;
+        this.rollYear2 = null;
+        this.rollYear3 = null;
+
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
         this.assessmentInfo = buildAssessmentInfo({});
         this.classifiedAgInfo = buildClassifiedAgriculturalInfo({});
-        this.exemptionInfo = buildExemptionInfo({});
         this.legalDescription = buildLegalDescription({});
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
@@ -40,12 +45,13 @@ angular.module('propertySearchApp')
         this.landLines = buildLandLines([]);
         this.buildingsInfo = buildBuildingsInfo([]);
         this.benefitsInfo = buildBenefitsInfo([]);
+
       }
       else{
 
         this.district = data.District;
         this.geoParcel = data.GeoParcel;
-        this.rollYear1 = 2013;
+        this.rollYear1 = data.RollYear1;
         this.rollYear2 = this.rollYear1 - 1;
         this.rollYear3 = this.rollYear1 - 2;
 
@@ -53,15 +59,14 @@ angular.module('propertySearchApp')
         this.mailingAddress = buildMailingAddress(data.MailingAddress);
         this.assessmentInfo = buildAssessmentInfo(data.AssessmentInfo);
         this.classifiedAgInfo = buildClassifiedAgriculturalInfo(data.ClassifiedAgInfo);
-        this.exemptionInfo = buildExemptionInfo(data.ExemptionInfo);
         this.legalDescription = buildLegalDescription(data.LegalDescription);
         this.siteAddresses = buildSiteAddresses(data.SiteAddress);
-        this.salesInfo = buildSalesInfo(data.SalesInfo);
+        this.salesInfo = buildSalesInfo(data.SalesInfos);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
         this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
         this.landLines = buildLandLines(data.Landlines);
-        this.buildingsInfo = buildBuildingsInfo(data.BuildingInfo);
-        this.benefitsInfo = buildBenefitsInfo(data.BenefitInfo, this.rollYear1);
+        this.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
+        this.benefitsInfo = buildBenefitsInfo(data.BenefitInfos, this.rollYear1);
 
       }
     };
@@ -126,7 +131,8 @@ angular.module('propertySearchApp')
       docuementStamps:      "DocuementStamps",        
       etlRunId:             "Etlrun_id",              
       grantee2:             "Grantee2",               
-      granteeName:          "GranteeName",            
+      granteeName:          "GranteeName",     
+      grantor1:             "Grantor1",
       grantor2:             "Grantor2",               
       grantorName:          "GrantorName",            
       lineNumber:           "LineNumber",             
@@ -184,7 +190,8 @@ angular.module('propertySearchApp')
       subdivision:               "Subdivision",             
       subdivisionDescription:    "SubdivisionDescription",  
       unitCount:                 "UnitCount",               
-      yearBuilt:                 "YearBuilt"
+      yearBuilt:                 "YearBuilt",
+      municipality:              "Municipality"
     };
 
     var mailingAddressAttr = {
@@ -244,33 +251,6 @@ angular.module('propertySearchApp')
       landCode:"LandCode",
       landUse:"LandUse",
       unitPrice:"UnitPrice"
-    };              
-
-    var exemptionInfoAttr = { 
-      agDifferentialValueCurrent:"AgDifferentialValueCurrent",
-      agDifferentialValuePrior:"AgDifferentialValuePrior",
-      agDifferentialValueTwoPrior:"AgDifferentialValueTwoPrior",
-      assessmentYearCurrent:"AssessmentYearCurrent",
-      assessmentYearPrior:"AssessmentYearPrior",
-      assessmentYearTwoPrior:"AssessmentYearTwoPrior",
-      countySecondHomesteadExValueCurrent:"CountySecondHomesteadExValueCurrent",
-      countySecondHomesteadExValuePrior:"CountySecondHomesteadExValuePrior",
-      countySecondHomesteadExValueTwoPrior:"CountySecondHomesteadExValueTwoPrior",
-      countySeniorExValueCurrent:"CountySeniorExValueCurrent",
-      countySeniorExValuePrior:"CountySeniorExValuePrior",
-      countySeniorExValueTwoPrior:"CountySeniorExValueTwoPrior",
-      disabledExValueCurrent:"DisabledExValueCurrent",
-      disabledExValuePrior:"DisabledExValuePrior",
-      disabledExValueTwoPrior:"DisabledExValueTwoPrior",
-      homesteadExValueCurrent:"HomesteadExValueCurrent",
-      homesteadExValuePrior:"HomesteadExValuePrior",
-      homesteadExValueTwoPrior:"HomesteadExValueTwoPrior",
-      veteranExValueCurrent:"VeteranExValueCurrent",
-      veteranExValuePrior:"VeteranExValuePrior",
-      veteranExValueTwoPrior:"VeteranExValueTwoPrior",
-      widowExValueCurrent:"WidowExValueCurrent",
-      widowExValuePrior:"WidowExValuePrior",
-      widowExValueTwoPrior:"WidowExValueTwoPrior"
     };              
 
 
@@ -365,10 +345,6 @@ angular.module('propertySearchApp')
 
     var buildClassifiedAgriculturalInfo = function(data){
       return buildObject(data, classifiedAgriculturalInfoAttr);            
-    };
-
-    var buildExemptionInfo = function(data){
-      return buildObject(data, exemptionInfoAttr);                  
     };
 
 
