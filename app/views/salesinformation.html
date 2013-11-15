@@ -1,16 +1,15 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="4">Sales Information</th>
+			<th class="tableHeader" colspan="6">Sales Information</th>
 		</tr>
 
 		<tr class="header-row">
 			<td>Previous Sale</td>
-
 			<td class="text-right">Price</td>
-
 			<td>OR Book-Page</td>
-
+                        <td>GrantorName1</td>
+                        <td>GrantorName2</td>
 			<td>Qualification Description</td>
 		</tr>
 
@@ -18,11 +17,13 @@
                   <td>{{sale.dateOfSale}}</td>
                   <td class="text-right">{{sale.salePrice | currency:"$"}}</td>
                   <td>{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
+                  <td>{{sale.grantor1}}</td>
+                  <td>{{sale.grantor2}}</td>
                   <td></td>
                 </tr>
 
 		<tr>
-			<td colspan="4">For more information about the Department of
+			<td colspan="6">For more information about the Department of
 				<a
 				href="http://dor.myflorida.com/dor/property/rp/dataformats/pdf/salequalcodes12.pdf"
 				target="_blank">Revenue's Sales Qualification Codes</a>.

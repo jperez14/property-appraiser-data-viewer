@@ -69,7 +69,8 @@ describe('Service: propertyService', function () {
       Subdivision: "013126042",
       SubdivisionDescription: "ALLAPATTAH PARK ",
       UnitCount: 1,
-      YearBuilt: 1949
+      YearBuilt: 1949,
+      Municipality: "Miami"
     }};
     
     var expectedProperty = {propertyInfo: {
@@ -94,7 +95,8 @@ describe('Service: propertyService', function () {
       subdivision: "013126042",
       subdivisionDescription: "ALLAPATTAH PARK ",
       unitCount: 1,
-      yearBuilt: 1949      
+      yearBuilt: 1949,
+      municipality: "Miami"
     }};
     
     var property = new propertyService.Property(givenProperty);
@@ -252,82 +254,7 @@ describe('Service: propertyService', function () {
 
   });
 
-  // test exemptionInfo
-  it('ExemptionInfoData not exists maps to exemptionInfo populated with default values', function(){
-    var property = new propertyService.Property({ExemptionInfo:{}});
-    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(null);
-  });
 
-  it('ExemptionInfoData null maps to exemptionInfo populated with default values', function(){
-    var property = new propertyService.Property({ExemptionInfo:null});
-    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(null);
-  });
-
-  it('exemptionInfo with a property value', function(){
-    var property = new propertyService.Property({ExemptionInfo:{AgDifferentialValueCurrent:2}});
-    expect(property.exemptionInfo.agDifferentialValueCurrent).toBe(2);
-  });
-
-
-  it('map incoming ExemptionInfo fields to our exemptionInfo model fields',function(){
-    var givenProperty = {ExemptionInfo: {
-      AgDifferentialValueCurrent: 0,
-      AgDifferentialValuePrior: 0,
-      AgDifferentialValueTwoPrior: 0,
-      AssessmentYearCurrent: 2013,
-      AssessmentYearPrior: 2012,
-      AssessmentYearTwoPrior: 2011,
-      CountySecondHomesteadExValueCurrent: 0,
-      CountySecondHomesteadExValuePrior: 0,
-      CountySecondHomesteadExValueTwoPrior: 0,
-      CountySeniorExValueCurrent: 0,
-      CountySeniorExValuePrior: 0,
-      CountySeniorExValueTwoPrior: 0,
-      DisabledExValueCurrent: 0,
-      DisabledExValuePrior: 0,
-      DisabledExValueTwoPrior: 0,
-      HomesteadExValueCurrent: 0,
-      HomesteadExValuePrior: 0,
-      HomesteadExValueTwoPrior: 0,
-      VeteranExValueCurrent: 0,
-      VeteranExValuePrior: 0,
-      VeteranExValueTwoPrior: 0,
-      WidowExValueCurrent: 0,
-      WidowExValuePrior: 0,
-      WidowExValueTwoPrior: 0
-    }};
-    
-    var expectedProperty = {exemptionInfo: {
-      agDifferentialValueCurrent: 0,
-      agDifferentialValuePrior: 0,
-      agDifferentialValueTwoPrior: 0,
-      assessmentYearCurrent: 2013,
-      assessmentYearPrior: 2012,
-      assessmentYearTwoPrior: 2011,
-      countySecondHomesteadExValueCurrent: 0,
-      countySecondHomesteadExValuePrior: 0,
-      countySecondHomesteadExValueTwoPrior: 0,
-      countySeniorExValueCurrent: 0,
-      countySeniorExValuePrior: 0,
-      countySeniorExValueTwoPrior: 0,
-      disabledExValueCurrent: 0,
-      disabledExValuePrior: 0,
-      disabledExValueTwoPrior: 0,
-      homesteadExValueCurrent: 0,
-      homesteadExValuePrior: 0,
-      homesteadExValueTwoPrior: 0,
-      veteranExValueCurrent: 0,
-      veteranExValuePrior: 0,
-      veteranExValueTwoPrior: 0,
-      widowExValueCurrent: 0,
-      widowExValuePrior: 0,
-      widowExValueTwoPrior: 0
-    }};
-    
-    var property = new propertyService.Property(givenProperty);
-    expect(property.exemptionInfo).toEqual(expectedProperty.exemptionInfo);
-
-  });
 
   // test classifiedAgInfo
   it('ClassifiedAgInfoData not exists maps to classifiedAgInfo populated with default values', function(){
@@ -447,24 +374,25 @@ describe('Service: propertyService', function () {
   });
 
   // test salesInfo
-  it('SalesInfoData not exists maps to salesInfo empty array', function(){
-    var property = new propertyService.Property({SalesInfo:[]});
+  it('SalesInfosData not exists maps to salesInfo empty array', function(){
+    var property = new propertyService.Property({SalesInfos:[]});
     expect(property.salesInfo).toEqual([]);
   });
 
-  it('SalesInfo null maps to salesInfo empty array', function(){
-    var property = new propertyService.Property({SalesInfo:null});
+  it('SalesInfos null maps to salesInfo empty array', function(){
+    var property = new propertyService.Property({SalesInfos:null});
     expect(property.salesInfo).toEqual([]);
   });
 
-  it('map incoming SalesInfo fields to our salesInfo model fields',function(){
-    var givenProperty = {SalesInfo: [{
+  it('map incoming SalesInfos fields to our salesInfo model fields',function(){
+    var givenProperty = {SalesInfos: [{
       AppraiserNote: null,
       DateOfSale: "9/1/1982",
       DocuementStamps: 0,
       Etlrun_id: 0,
       Grantee2: null,
       GranteeName: null,
+      Grantor1: "joe",
       Grantor2: null,
       GrantorName: null,
       LineNumber: 0,
@@ -494,6 +422,7 @@ describe('Service: propertyService', function () {
       etlRunId: 0,
       grantee2: null,
       granteeName: null,
+      grantor1: "joe",
       grantor2: null,
       grantorName: null,
       lineNumber: 0,
@@ -643,18 +572,18 @@ describe('Service: propertyService', function () {
 
 
   //Benefits Info
-  it('BenefitInfoData not exists maps to benefitsInfo empty array', function(){
-    var property = new propertyService.Property({BenefitInfo:[]});
+  it('BenefitInfosData not exists maps to benefitsInfo empty array', function(){
+    var property = new propertyService.Property({BenefitInfos:[]});
     expect(property.benefitsInfo).toEqual([]);
   });
 
-  it('BenefitInfo null maps to benefitsInfo empty array', function(){
-    var property = new propertyService.Property({BenefitInfo:null});
+  it('BenefitInfos null maps to benefitsInfo empty array', function(){
+    var property = new propertyService.Property({BenefitInfos:null});
     expect(property.benefitsInfo).toEqual([]);
   });
 
   it('map incoming BenefitsInfo fields to our benefitsInfo model fields',function(){
-    var givenProperty = {BenefitInfo:[
+    var givenProperty = {RollYear1:2013, BenefitInfos:[
       {
         Description: "Save Our Homes",
         TaxYear: 2011,
@@ -674,7 +603,7 @@ describe('Service: propertyService', function () {
         Value: 31912
       }]};
 
-    var expectedProperty = {benefitsInfo:[
+    var expectedProperty = {rollYear1: 2013, benefitsInfo:[
       {
         description: "Save Our Homes",
         type:"Assessment Reduction",
@@ -690,7 +619,7 @@ describe('Service: propertyService', function () {
   });
 
   it('Benefits info missing tax year puts a zero value for that year',function(){
-    var givenProperty = {BenefitInfo:[
+    var givenProperty = {RollYear1:2013, BenefitInfos:[
       {
         Description: "Save Our Homes",
         TaxYear: 2011,
@@ -704,7 +633,7 @@ describe('Service: propertyService', function () {
         Value: 31912
       }]};
 
-    var expectedProperty = {benefitsInfo:[
+    var expectedProperty = {rollYear1:2013, benefitsInfo:[
       {
         description: "Save Our Homes",
         type:"Assessment Reduction",
@@ -720,7 +649,7 @@ describe('Service: propertyService', function () {
   });
 
   it('Benefits info with more than one description keeps all of them',function(){
-    var givenProperty = {BenefitInfo:[
+    var givenProperty = {RollYear1:2013, BenefitInfos:[
       {
         Description: "Save Our Homes",
         TaxYear: 2011,
@@ -746,7 +675,7 @@ describe('Service: propertyService', function () {
         Value: 600
       }]};
 
-    var expectedProperty = {benefitsInfo:[
+    var expectedProperty = {rollYear1:2013, benefitsInfo:[
       {
         description: "Save Our Homes",
         type:"Assessment Reduction",
