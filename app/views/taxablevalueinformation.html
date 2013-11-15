@@ -1,5 +1,5 @@
 <div class="table-responsive">
-	<table class="table table-condensed table-striped">
+	<table class="table table-condensed">
 		<tr>
 			<th class="tableHeader" colspan="4">Taxable Value Information</th>
 		</tr>
@@ -15,10 +15,10 @@
 		</tr>
 
 		<tr>
-			<td><strong>County:</strong></td>
-                </tr>
-                <tr>
-			<td><strong>Exempt amt:</strong></td>
+			<td colspan="4" class="table-section">County</td>
+        </tr>
+        <tr class="border-bottom">
+			<td class="table-section-head">Exempt amt:</td>
 
 			<td class="text-right">{{property.assessmentInfo.countyExemptionValueCurrent
                           | currency:"$"}} 
@@ -30,8 +30,8 @@
                           | currency:"$"}} 
                           </td>
 		</tr>
-                <tr>
-			<td><strong>Tax Value:</strong></td>
+        <tr>
+			<td class="table-section-head">Tax Value:</td>
 
 			<td class="text-right">
                           {{property.assessmentInfo.countyTaxableValueCurrent
@@ -45,10 +45,10 @@
 		</tr>
 
 		<tr>
-			<td><strong>School Board:</strong></td>
-                </tr>
-                <tr>
-			<td><strong>Exempt amt:</strong></td>
+			<td colspan="4" class="table-section">School Board</td>
+        </tr>
+        <tr class="border-bottom">
+			<td class="table-section-head">Exempt amt:</td>
 
 			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueCurrent
                           | currency:"$"}} 
@@ -60,8 +60,8 @@
                           | currency:"$"}} 
                           </td>
 		</tr>
-                <tr>
-			<td><strong>Tax Value:</strong></td>
+        <tr>
+			<td class="table-section-head">Tax Value:</td>
 
 			<td class="text-right">
                           {{property.assessmentInfo.schoolTaxableValueCurrent
@@ -75,10 +75,10 @@
 		</tr>
 
 		<tr>
-			<td><strong>City:</strong></td>
-                </tr>
-                <tr>
-			<td><strong>Exempt amt:</strong></td>
+			<td colspan="4" class="table-section">City</td>
+        </tr>
+        <tr class="border-bottom">
+			<td class="table-section-head">Exempt amt:</td>
 
 			<td class="text-right">{{property.assessmentInfo.cityExemptionValueCurrent
                           | currency:"$"}} 
@@ -91,7 +91,7 @@
                           </td>
 		</tr>
                 <tr>
-			<td><strong>Tax Value:</strong></td>
+			<td class="table-section-head">Tax Value:</td>
 
 			<td class="text-right">
                           {{property.assessmentInfo.cityTaxableValueCurrent
@@ -105,10 +105,10 @@
 		</tr>
 
 		<tr>
-			<td><strong>Regional:</strong></td>
-                </tr>
-                <tr>
-			<td><strong>Exempt amt:</strong></td>
+			<td colspan="4" class="table-section">Regional</td>
+        </tr>
+        <tr class="border-bottom">
+			<td class="table-section-head">Exempt amt:</td>
 
 			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueCurrent
                           | currency:"$"}} 
@@ -120,8 +120,8 @@
                           | currency:"$"}} 
                           </td>
 		</tr>
-                <tr>
-			<td><strong>Tax Value:</strong></td>
+        <tr>
+			<td class="table-section-head">Tax Value:</td>
 
 			<td class="text-right">
                           {{property.assessmentInfo.regionalTaxableValueCurrent
