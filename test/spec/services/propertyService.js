@@ -45,6 +45,21 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo.bathroomCount).toBe(2);
   });
 
+  it('propertyInfo with ShowCurrentValuesFlag Y will translate to true', function(){
+    var property = new propertyService.Property({PropertyInfo:{ShowCurrentValuesFlag:'Y'}});
+    expect(property.propertyInfo.showCurrentValuesFlag).toBe(true);
+  });
+
+  it('propertyInfo with ShowCurrentValuesFlag N will translate to false', function(){
+    var property = new propertyService.Property({PropertyInfo:{ShowCurrentValuesFlag:'N'}});
+    expect(property.propertyInfo.showCurrentValuesFlag).toBe(false);
+
+    var property = new propertyService.Property({PropertyInfo:{ShowCurrentValuesFlag:null}});
+    expect(property.propertyInfo.showCurrentValuesFlag).toBe(false);
+
+    var property = new propertyService.Property({PropertyInfo:{ShowCurrentValuesFlag:""}});
+    expect(property.propertyInfo.showCurrentValuesFlag).toBe(false);
+  });
 
   it('map incoming PropertyInfo fields to our propertyInfo model fields',function(){
     var givenProperty = {PropertyInfo: {
@@ -70,7 +85,8 @@ describe('Service: propertyService', function () {
       SubdivisionDescription: "ALLAPATTAH PARK ",
       UnitCount: 1,
       YearBuilt: 1949,
-      Municipality: "Miami"
+      Municipality: "Miami",
+      ShowCurrentValuesFlag: "Y"
     }};
     
     var expectedProperty = {propertyInfo: {
@@ -96,7 +112,8 @@ describe('Service: propertyService', function () {
       subdivisionDescription: "ALLAPATTAH PARK ",
       unitCount: 1,
       yearBuilt: 1949,
-      municipality: "Miami"
+      municipality: "Miami",
+      showCurrentValuesFlag: true
     }};
     
     var property = new propertyService.Property(givenProperty);

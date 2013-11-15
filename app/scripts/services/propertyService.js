@@ -191,7 +191,8 @@ angular.module('propertySearchApp')
       subdivisionDescription:    "SubdivisionDescription",  
       unitCount:                 "UnitCount",               
       yearBuilt:                 "YearBuilt",
-      municipality:              "Municipality"
+      municipality:              "Municipality",
+      showCurrentValuesFlag:     "ShowCurrentValuesFlag" 
     };
 
     var mailingAddressAttr = {
@@ -322,6 +323,10 @@ angular.module('propertySearchApp')
       
     };
     
+    var buildExtraFeatures2 = function(data, baseYear){
+      return buildArray(data, extraFeatureAttr);
+    };
+
 
     /**
      * it builds the propertyInfo. 
@@ -332,8 +337,19 @@ angular.module('propertySearchApp')
      * propertyInfo.someproperty = null; 
      **/
     var buildPropertyInfo = function(data){
-      return buildObject(data, propertyInfoAttr);
-    };
+      // map default fields
+//      return buildObject(data, propertyInfoAttr);
+      var propertyInfo  =  buildObject(data, propertyInfoAttr);
+
+      // convert showCurrentValuesFlag to a boolean value.
+      if(propertyInfo.showCurrentValuesFlag === "Y")
+        propertyInfo.showCurrentValuesFlag = true;
+      else
+        propertyInfo.showCurrentValuesFlag = false;
+
+      return propertyInfo;
+
+     };
 
     var buildMailingAddress = function(data){
       return buildObject(data, mailingAddressAttr);      
@@ -374,6 +390,8 @@ angular.module('propertySearchApp')
       return legalDescription;
       
     };
+
+
 
     var buildArray = function(data, attributes){
       
