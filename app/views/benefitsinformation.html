@@ -8,7 +8,7 @@
 			<td>Benefit:</td>
 
 			<td>Type:</td>
-                        <td class="text-right">{{property.rollYear1}}</td>
+                        <td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.rollYear1}}</td>
                         <td class="text-right">{{property.rollYear2}}</td>
                         <td class="text-right">{{property.rollYear3}}</td>
 
@@ -17,7 +17,7 @@
 		<tr ng-repeat="benefit in property.benefitsInfo">
 			<td><strong>{{benefit.description}}</strong></td>
                         <td>{{benefit.type}}</td>
-                        <td class="text-right">{{benefit.values[0] | currency:"$"}}</td>
+                        <td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{benefit.values[0] | currency:"$"}}</td>
                         <td class="text-right">{{benefit.values[1] | currency:"$"}}</td>
                         <td class="text-right">{{benefit.values[2] | currency:"$"}}</td>
 		</tr>

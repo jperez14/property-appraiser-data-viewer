@@ -6,14 +6,14 @@
 
 		<tr class="header-row">
 			<td>Year:</td>
-			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessmentYearCurrent}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessmentYearTwoPrior}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Land Value:</strong></td>
-			<td class="text-right">{{property.assessmentInfo.landValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.landValueCurrent
 			| currency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.landValuePrior | currency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.landValueTwoPrior
@@ -22,7 +22,7 @@
 
 		<tr>
 			<td><strong>Building Value:</strong></td>
-			<td class="text-right">{{property.assessmentInfo.buildingValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.buildingValueCurrent
 			| currency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.buildingValuePrior
 			| currency:"$"}}</td>
@@ -32,7 +32,7 @@
 
 		<tr>
 			<td><strong>Market Value:</strong></td>
-			<td class="text-right">{{property.assessmentInfo.totalValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.totalValueCurrent
 			| currency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.totalValuePrior
 			| currency:"$"}}</td>
@@ -42,7 +42,7 @@
 
 		<tr>
 			<td><strong>Assessed Value:</strong></td>
-			<td class="text-right">{{property.assessmentInfo.assessedValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessedValueCurrent
 			| currency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessedValuePrior
 			| currency:"$"}}</td>

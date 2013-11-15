@@ -7,7 +7,7 @@
 		<tr class="header-row taxable">
 			<td>&nbsp;</td>
 
-			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessmentYearCurrent}}</td>
 
 			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
 
@@ -20,7 +20,7 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exempt amt:</td>
 
-			<td class="text-right">{{property.assessmentInfo.countyExemptionValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.countyExemptionValueCurrent
                           | currency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.countyExemptionValuePrior
@@ -33,7 +33,7 @@
         <tr>
 			<td class="table-section-head">Tax Value:</td>
 
-			<td class="text-right">
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
                           {{property.assessmentInfo.countyTaxableValueCurrent
                           | currency:"$"}}</td>
 			<td class="text-right">
@@ -50,7 +50,7 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exempt amt:</td>
 
-			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.schoolExemptionValueCurrent
                           | currency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.schoolExemptionValuePrior
@@ -63,7 +63,7 @@
         <tr>
 			<td class="table-section-head">Tax Value:</td>
 
-			<td class="text-right">
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
                           {{property.assessmentInfo.schoolTaxableValueCurrent
                           | currency:"$"}}</td>
 			<td class="text-right">
@@ -80,7 +80,7 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exempt amt:</td>
 
-			<td class="text-right">{{property.assessmentInfo.cityExemptionValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.cityExemptionValueCurrent
                           | currency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.cityExemptionValuePrior
@@ -93,7 +93,7 @@
                 <tr>
 			<td class="table-section-head">Tax Value:</td>
 
-			<td class="text-right">
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
                           {{property.assessmentInfo.cityTaxableValueCurrent
                           | currency:"$"}}</td>
 			<td class="text-right">
@@ -110,7 +110,7 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exempt amt:</td>
 
-			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueCurrent
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.regionalExemptionValueCurrent
                           | currency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.regionalExemptionValuePrior
@@ -123,7 +123,7 @@
         <tr>
 			<td class="table-section-head">Tax Value:</td>
 
-			<td class="text-right">
+			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
                           {{property.assessmentInfo.regionalTaxableValueCurrent
                           | currency:"$"}}</td>
 			<td class="text-right">
