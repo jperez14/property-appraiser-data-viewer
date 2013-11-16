@@ -85,7 +85,8 @@ angular.module('propertySearchApp')
       unitType:            "UnitType",         
       units:               "Units",            
       useCode:             "UseCode",          
-      zone:                "Zone"              
+      zone:                "Zone",
+      rollYear:          "RollYear"              
     };  
 
     var buildingInfoAttr = {
@@ -103,7 +104,8 @@ angular.module('propertySearchApp')
       replacementCostNew: "ReplacementCostNew",  
       segNo:              "SegNo",               
       totalAdjustedPoints:"TotalAdjustedPoints", 
-      traversePoints:     "TraversePoints"       
+      traversePoints:     "TraversePoints",
+      rollYear:          "RollYear"       
     };
     
 
@@ -113,7 +115,8 @@ angular.module('propertySearchApp')
       depreciatedValue:  "DepreciatedValue",  
       description:       "Description",       
       units:             "Units",             
-      useCode:           "UseCode"            
+      useCode:           "UseCode",
+      rollYear:          "RollYear"
     };                  
 
     var ownerInfoAttr = {
@@ -260,19 +263,6 @@ angular.module('propertySearchApp')
       number:      "Number"
     };              
 
-    
-    var buildLandLines = function(data){
-      return buildArray(data, landLineAttr);
-    };
-
-    var buildBuildingsInfo = function(data){
-      return buildArray(data, buildingInfoAttr);
-    };
-
-    var buildExtraFeatures = function(data){
-      return buildArray(data, extraFeatureAttr);
-    };
-
     var buildOwnersInfo = function(data){
       return buildArray(data, ownerInfoAttr);      
     };
@@ -323,10 +313,17 @@ angular.module('propertySearchApp')
       
     };
     
-    var buildExtraFeatures2 = function(data, baseYear){
-      return buildArray(data, extraFeatureAttr);
+    var buildExtraFeatures = function(data){
+      return buildMapByYear(data, extraFeatureAttr);
     };
 
+    var buildLandLines = function(data){
+      return buildMapByYear(data, landLineAttr);
+    };
+
+    var buildBuildingsInfo = function(data){
+      return buildMapByYear(data, buildingInfoAttr);
+    };
 
     /**
      * it builds the propertyInfo. 
@@ -337,8 +334,7 @@ angular.module('propertySearchApp')
      * propertyInfo.someproperty = null; 
      **/
     var buildPropertyInfo = function(data){
-      // map default fields
-//      return buildObject(data, propertyInfoAttr);
+
       var propertyInfo  =  buildObject(data, propertyInfoAttr);
 
       // convert showCurrentValuesFlag to a boolean value.
@@ -366,7 +362,6 @@ angular.module('propertySearchApp')
 
     var buildLegalDescription = function(data){
       
-      
       // map fields, and when field does not exists
       // assign it to null.
       var legalDescription = {};      
@@ -390,7 +385,6 @@ angular.module('propertySearchApp')
       return legalDescription;
       
     };
-
 
 
     var buildArray = function(data, attributes){
@@ -429,6 +423,33 @@ angular.module('propertySearchApp')
           result[key] = data[value]; 
       });
       
+      return result;
+
+    };
+
+    var buildMapByYear = function(data, attributes){
+
+      // data not given - return an empty array.
+      if(isUndefinedOrNull(data))
+        return {};
+        
+      var result = {};
+      
+      _.each(data, function(originalValue){
+        var newValue = {};            
+        _.each(attributes, function(value, key){
+          newValue[key] = originalValue[value]; 
+        });
+
+        // put  value in he map with key rollYear.
+        if(_.isUndefined(result[newValue.rollYear])){
+          result[newValue.rollYear] = [];
+          result[newValue.rollYear].push(newValue);
+        }else{
+          result[newValue.rollYear].push(newValue);
+        }
+      });
+
       return result;
 
     };

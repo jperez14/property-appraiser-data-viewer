@@ -506,13 +506,15 @@ describe('Service: propertyService', function () {
   // test extraFeatures
   it('ExtraFeaturesData not exists maps to ExtraFeatures empty array', function(){
     var property = new propertyService.Property({ExtraFeatures:[]});
-    expect(property.extraFeatures).toEqual([]);
+    expect(property.extraFeatures).toEqual({});
   });
 
   it('ExtraFeatures null maps to extraFeatures empty array', function(){
     var property = new propertyService.Property({ExtraFeatures:null});
-    expect(property.extraFeatures).toEqual([]);
+    expect(property.extraFeatures).toEqual({});
   });
+
+
 
   it('map incoming ExtraFeatures fields to our extraFeatures model fields',function(){
     var givenProperty = {ExtraFeatures: [{
@@ -521,17 +523,77 @@ describe('Service: propertyService', function () {
       DepreciatedValue: 672,
       Description: "Chain-link Fence 4-5 ft high",
       Units: 100,
-      UseCode: "0034 "
+      UseCode: "0034 ",
+      RollYear: 2013
     }]};
 
-    var expectedProperty = {extraFeatures: [{
+    var expectedProperty = {extraFeatures:{2013:[{
       actualYearBuilt: 1994,
       adjustedUnitPrice: 8,
       depreciatedValue: 672,
       description: "Chain-link Fence 4-5 ft high",
       units: 100,
-      useCode: "0034 "
+      useCode: "0034 ",
+      rollYear: 2013
+    }]}};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.extraFeatures).toEqual(expectedProperty.extraFeatures);
+
+  });
+
+  it('map incoming ExtraFeatures fields to our extraFeatures model fields with several years',function(){
+    var givenProperty = {ExtraFeatures: [{
+      ActualYearBuilt: 1994,
+      AdjustedUnitPrice: 8,
+      DepreciatedValue: 672,
+      Description: "Chain-link Fence 4-5 ft high",
+      Units: 100,
+      UseCode: "0034 ",
+      RollYear: 2013
+    },{
+      ActualYearBuilt: 1997,
+      AdjustedUnitPrice: 5,
+      DepreciatedValue: 6,
+      Description: "Another Fence",
+      Units: 9,
+      UseCode: "0033 ",
+      RollYear: 2012
+    },{
+      ActualYearBuilt: 1985,
+      AdjustedUnitPrice: 8,
+      DepreciatedValue: 500,
+      Description: "Ugly Fence",
+      Units: 101,
+      UseCode: "0034 ",
+      RollYear: 2013
     }]};
+
+    var expectedProperty = {extraFeatures:{2013:[{
+      actualYearBuilt: 1994,
+      adjustedUnitPrice: 8,
+      depreciatedValue: 672,
+      description: "Chain-link Fence 4-5 ft high",
+      units: 100,
+      useCode: "0034 ",
+      rollYear: 2013
+    },{
+      actualYearBuilt: 1985,
+      adjustedUnitPrice: 8,
+      depreciatedValue: 500,
+      description: "Ugly Fence",
+      units: 101,
+      useCode: "0034 ",
+      rollYear: 2013
+    }],2012:[{
+      actualYearBuilt: 1997,
+      adjustedUnitPrice: 5,
+      depreciatedValue: 6,
+      description: "Another Fence",
+      units: 9,
+      useCode: "0033 ",
+      rollYear: 2012
+    }]}};
 
     var property = new propertyService.Property(givenProperty);
     expect(property.extraFeatures).toEqual(expectedProperty.extraFeatures);
@@ -541,12 +603,12 @@ describe('Service: propertyService', function () {
   // test landLines
   it('LandlinesData not exists maps to landLines empty array', function(){
     var property = new propertyService.Property({Landlines:[]});
-    expect(property.landLines).toEqual([]);
+    expect(property.landLines).toEqual({});
   });
 
   it('Landlines null maps to landLines empty array', function(){
     var property = new propertyService.Property({Landlines:null});
-    expect(property.landLines).toEqual([]);
+    expect(property.landLines).toEqual({});
   });
 
   it('map incoming Landlines fields to our landLines model fields',function(){
@@ -563,10 +625,11 @@ describe('Service: propertyService', function () {
       UnitType: "F ",
       Units: "100.0000",
       UseCode: "00 ",
-      Zone: "5700"
+      Zone: "5700",
+      RollYear: 2013
     }]};
 
-    var expectedProperty = {landLines: [{
+    var expectedProperty = {landLines:{2013:[{
       adjustedUnitPrice: "278.1540",
       calculatedValue: "27815",
       depth: 0,
@@ -579,13 +642,115 @@ describe('Service: propertyService', function () {
       unitType: "F ",
       units: "100.0000",
       useCode: "00 ",
-      zone: "5700"
-    }]};
+      zone: "5700",
+      rollYear: 2013
+    }]}};
 
     var property = new propertyService.Property(givenProperty);
     expect(property.landLines).toEqual(expectedProperty.landLines);
 
   });
+
+  it('map incoming Landlines fields to our landLines model fields with several years.',function(){
+    var givenProperty = {Landlines: [{
+      AdjustedUnitPrice: "278.1540",
+      CalculatedValue: "27815",
+      Depth: 0,
+      FrontFeet: 0,
+      LandUse: "GENERAL",
+      LandlineType: "C",
+      MuniZone: "T3 O",
+      PercentCondition: 1,
+      TotalAdjustments: 1.0302,
+      UnitType: "F ",
+      Units: "100.0000",
+      UseCode: "00 ",
+      Zone: "5700",
+      RollYear: 2013
+    },{
+      AdjustedUnitPrice: "278.1546",
+      CalculatedValue: "26816",
+      Depth: 0,
+      FrontFeet: 0,
+      LandUse: "GENERAL",
+      LandlineType: "C",
+      MuniZone: "T3 O",
+      PercentCondition: 1,
+      TotalAdjustments: 1.0306,
+      UnitType: "F ",
+      Units: "100.0000",
+      UseCode: "00 ",
+      Zone: "5700",
+      RollYear: 2012
+    },{
+      AdjustedUnitPrice: "278.1547",
+      CalculatedValue: "27817",
+      Depth: 0,
+      FrontFeet: 0,
+      LandUse: "GENERAL",
+      LandlineType: "C",
+      MuniZone: "T3 O",
+      PercentCondition: 1,
+      TotalAdjustments: 1.0307,
+      UnitType: "F ",
+      Units: "100.0000",
+      UseCode: "00 ",
+      Zone: "5700",
+      RollYear: 2013
+    }]};
+
+    var expectedProperty = {landLines:{2013:[{
+      adjustedUnitPrice: "278.1540",
+      calculatedValue: "27815",
+      depth: 0,
+      frontFeet: 0,
+      landUse: "GENERAL",
+      landlineType: "C",
+      muniZone: "T3 O",
+      percentCondition: 1,
+      totalAdjustments: 1.0302,
+      unitType: "F ",
+      units: "100.0000",
+      useCode: "00 ",
+      zone: "5700",
+      rollYear: 2013
+    },{
+      adjustedUnitPrice: "278.1547",
+      calculatedValue: "27817",
+      depth: 0,
+      frontFeet: 0,
+      landUse: "GENERAL",
+      landlineType: "C",
+      muniZone: "T3 O",
+      percentCondition: 1,
+      totalAdjustments: 1.0307,
+      unitType: "F ",
+      units: "100.0000",
+      useCode: "00 ",
+      zone: "5700",
+      rollYear: 2013
+    }], 2012:[{
+      adjustedUnitPrice: "278.1546",
+      calculatedValue: "26816",
+      depth: 0,
+      frontFeet: 0,
+      landUse: "GENERAL",
+      landlineType: "C",
+      muniZone: "T3 O",
+      percentCondition: 1,
+      totalAdjustments: 1.0306,
+      unitType: "F ",
+      units: "100.0000",
+      useCode: "00 ",
+      zone: "5700",
+      rollYear: 2012
+    }]}};
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.landLines).toEqual(expectedProperty.landLines);
+
+  });
+
 
 
   //Benefits Info
@@ -712,6 +877,9 @@ describe('Service: propertyService', function () {
     expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
 
   });
+
+
+
 
 
 
