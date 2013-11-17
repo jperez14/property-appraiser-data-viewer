@@ -20,7 +20,9 @@
 			<td class="text-right">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="land in property.landLines">
+		<tr ng-repeat="land in
+                               property.landLines[property.rollYear1 -
+                               1]">
 			<td>{{land.muniZone}}</td>
 			<td>{{land.zone}}</td>
 			<td>{{land.landUse}}</td>

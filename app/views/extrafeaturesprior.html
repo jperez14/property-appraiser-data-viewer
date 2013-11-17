@@ -13,7 +13,9 @@
 			<td class="text-right">Depreciated Value</td>
 		</tr>
 
-		<tr ng-repeat="feature in property.extraFeatures | orderBy:'-actualYearBuilt'">
+		<tr ng-repeat="feature in
+                               property.extraFeatures[property.rollYear1
+                               - 1] | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td>{{feature.units}}</td>
