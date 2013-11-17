@@ -403,63 +403,48 @@ describe('Service: propertyService', function () {
 
   it('map incoming SalesInfos fields to our salesInfo model fields',function(){
     var givenProperty = {SalesInfos: [{
-      AppraiserNote: null,
       DateOfSale: "9/1/1982",
       DocuementStamps: 0,
-      Etlrun_id: 0,
-      Grantee2: null,
-      GranteeName: null,
-      Grantor1: "joe",
-      Grantor2: null,
-      GrantorName: null,
-      LineNumber: 0,
-      Modif_tp: null,
-      Note: null,
       OfficialRecordBook: "11557",
       OfficialRecordPage: "0429",
       QualifiedFlag: null,
       QualifiedSourceCode: null,
       ReasonCode: "00",
-      ReceivedDate: null,
-      ResetFlag: "",
       ReviewCoad: null,
       SalePrice: 60000,
       SalesId: 3,
       SalesInstrument: null,
-      Strap: null,
       VacantFlag: "",
       ValidCoad: null,
-      VerifyCoad: null
+      VerifyCoad: null,
+      GranteeName1: "Joe",
+      GranteeName2: "Peter",
+      GrantorName1: "Frank",
+      GrantorName2: "Jane"
+
+
+
     }]};
 
     var expectedProperty = {salesInfo: [{
-      appraiserNote: null,
       dateOfSale: "9/1/1982",
       docuementStamps: 0,
-      etlRunId: 0,
-      grantee2: null,
-      granteeName: null,
-      grantor1: "joe",
-      grantor2: null,
-      grantorName: null,
-      lineNumber: 0,
-      modifTp: null,
-      note: null,
       officialRecordBook: "11557",
       officialRecordPage: "0429",
       qualifiedFlag: null,
       qualifiedSourceCode: null,
       reasonCode: "00",
-      receivedDate: null,
-      resetFlag: "",
       reviewCoad: null,
       salePrice: 60000,
       salesId: 3,
       salesInstrument: null,
-      strap: null,
       vacantFlag: "",
       validCoad: null,
-      verifyCoad: null
+      verifyCoad: null,
+      granteeName1: "Joe",
+      granteeName2: "Peter",
+      grantorName1: "Frank",
+      grantorName2: "Jane"
     }]};
 
     var property = new propertyService.Property(givenProperty);

@@ -129,33 +129,37 @@ angular.module('propertySearchApp')
     };                  
 
     var saleInfoAttr = {
-      appraiserNote:        "AppraiserNote",            
       dateOfSale:           "DateOfSale",             
       docuementStamps:      "DocuementStamps",        
-      etlRunId:             "Etlrun_id",              
-      grantee2:             "Grantee2",               
-      granteeName:          "GranteeName",     
-      grantor1:             "Grantor1",
-      grantor2:             "Grantor2",               
-      grantorName:          "GrantorName",            
-      lineNumber:           "LineNumber",             
-      modifTp:              "Modif_tp",               
-      note:                 "Note",                   
       officialRecordBook:   "OfficialRecordBook",     
       officialRecordPage:   "OfficialRecordPage",     
       qualifiedFlag:        "QualifiedFlag",          
       qualifiedSourceCode:  "QualifiedSourceCode",    
       reasonCode:           "ReasonCode",             
-      receivedDate:         "ReceivedDate",           
-      resetFlag:            "ResetFlag",              
       reviewCoad:           "ReviewCoad",             
       salePrice:            "SalePrice",              
       salesId:              "SalesId",                
       salesInstrument:      "SalesInstrument",        
-      strap:                "Strap",                  
       vacantFlag:           "VacantFlag",             
       validCoad:            "ValidCoad",              
-      verifyCoad:           "VerifyCoad"              
+      verifyCoad:           "VerifyCoad",
+      granteeName1:         "GranteeName1",
+      granteeName2:         "GranteeName2",
+      grantorName1:         "GrantorName1",
+      grantorName2:         "GrantorName2"              
+      //appraiserNote:        "AppraiserNote",            
+      //etlRunId:             "Etlrun_id",              
+      //grantee2:             "Grantee2",               
+      //granteeName:          "GranteeName",     
+      //grantor1:             "Grantor1",
+      //grantor2:             "Grantor2",               
+      //grantorName:          "GrantorName",            
+      //lineNumber:           "LineNumber",             
+      //modifTp:              "Modif_tp",               
+      //note:                 "Note",                   
+      //receivedDate:         "ReceivedDate",           
+      //resetFlag:            "ResetFlag",              
+      //strap:                "Strap",                  
     };                  
 
     var siteAddressAttr = {
@@ -345,7 +349,7 @@ angular.module('propertySearchApp')
 
       return propertyInfo;
 
-     };
+    };
 
     var buildMailingAddress = function(data){
       return buildObject(data, mailingAddressAttr);      
@@ -432,7 +436,7 @@ angular.module('propertySearchApp')
       // data not given - return an empty array.
       if(isUndefinedOrNull(data))
         return {};
-        
+      
       var result = {};
       
       _.each(data, function(originalValue){
