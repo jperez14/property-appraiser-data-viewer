@@ -14,8 +14,7 @@
 		</tr>
 
 		<tr ng-repeat="feature in
-                               property.extraFeatures[property.rollYear1
-                               - 2] | orderBy:'-actualYearBuilt'">
+                               property.extraFeatures[(property.rollYear1)-2] | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td>{{feature.units}}</td>

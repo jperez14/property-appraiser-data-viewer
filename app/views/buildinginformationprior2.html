@@ -24,8 +24,7 @@
 		</tr>
 
 		<tr ng-repeat="building in
-                               property.buildingsInfo[property.rollYear1
-                               - 2]">
+                               property.buildingsInfo[(property.rollYear1)-2]">
 			<td>{{building.actual}}</td>
 			<td>{{building.actualArea }}</td>
 			<td>{{building.adjustedBasePrice}}</td>
