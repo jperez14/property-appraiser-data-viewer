@@ -16,7 +16,8 @@
                 <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
                   <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
                   <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
-                  <td>{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
+                  <td><a href="#" target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}  <span class=
+                        "glyphicon glyphicon-new-window"></span></a></td>
                   <td>{{sale.grantorName1}}</td>
                   <td>{{sale.grantorName2}}</td>
                   <td></td>

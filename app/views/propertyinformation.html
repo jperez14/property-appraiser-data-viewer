@@ -4,7 +4,8 @@
 	<table class="table table-striped" id="property_info">
 		<tr>
 			<th class="tableHeader" colspan="2">
-				<div class="prop_info_header">Property Information</div>
+				Property Information
+                <!--<div class="prop_info_header">Property Information</div>-->
 			</th>
 		</tr>
 
@@ -14,8 +15,7 @@
 		</tr>
 
 		<tr>
-			<td><strong>Property Address</strong></td>
-			<td>
+			<td colspan="2"><strong>Property Address</strong>
                             <div ng-repeat="address
                                            in
                                            property.siteAddresses">
@@ -24,13 +24,11 @@
                         </td>
 		</tr>
 		<tr>
-			<td><strong>Municipality</strong></td>
-			<td>{{property.propertyInfo.municipality}}</td>
+			<td colspan="2"><strong>Municipality</strong>{{property.propertyInfo.municipality}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Owner</strong></td>
-			<td>
+			<td colspan="2"><strong>Owner</strong>
                             <div ng-repeat="owner
                                            in
                                            property.ownersInfo">
@@ -40,9 +38,7 @@
 		</tr>
 
 		<tr>
-			<td><strong>Mailing Address</strong></td>
-
-			<td>{{property.mailingAddress.address1}}
+			<td colspan="2"><strong>Mailing Address</strong>{{property.mailingAddress.address1}}
 			{{property.mailingAddress.address2}}
 			{{property.mailingAddress.city}}
 			{{property.mailingAddress.zipCode}}
@@ -52,16 +48,12 @@
 		</tr>
 
 		<tr>
-			<td><strong>Primary Zone</strong></td>
-
-			<td>{{property.propertyInfo.primaryZone}} 
+			<td colspan="2"><strong>Primary Zone</strong>{{property.propertyInfo.primaryZone}} 
                           {{property.propertyInfo.primaryZoneDescription}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Land Use</strong></td>
-
-			<td>{{property.propertyInfo.DORCodeCurrent}}
+			<td colspan="2"><strong>Land Use</strong>{{property.propertyInfo.DORCodeCurrent}}
 			{{property.propertyInfo.DORDescription}}</td>
 		</tr>
 
