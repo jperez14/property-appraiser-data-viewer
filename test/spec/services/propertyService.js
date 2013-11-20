@@ -427,7 +427,7 @@ describe('Service: propertyService', function () {
     }]};
 
     var expectedProperty = {salesInfo: [{
-      dateOfSale: "9/1/1982",
+      dateOfSale: new Date("9/1/1982"),
       docuementStamps: 0,
       officialRecordBook: "11557",
       officialRecordPage: "0429",
