@@ -71,7 +71,10 @@ angular.module('propertySearchApp')
       }
     };
 
-
+	var fieldTypeChanger = {
+         dateOfSale:"Date"
+    };
+	
     var landLineAttr = {
       adjustedUnitPrice:   "AdjustedUnitPrice",
       calculatedValue:     "CalculatedValue",  
@@ -403,6 +406,14 @@ angular.module('propertySearchApp')
         var newValue = {};            
         _.each(attributes, function(value, key){
           newValue[key] = originalValue[value]; 
+        });
+        //change field types if required
+        _.each(fieldTypeChanger, function(value, key){
+          if(!isUndefinedOrNull(newValue[key])){
+            if(value === "Date"){
+              newValue[key] = new Date(newValue[key]);
+            }
+          }
         });
         result.push(newValue);
       });
