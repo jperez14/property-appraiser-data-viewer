@@ -1,25 +1,15 @@
-<div class="table-responsive">
+<div class="table-responsive" ng-show="property.ownersInfo.length > 2" >
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="5">Owners' Information</th>
+			<th class="tableHeader" colspan="1">Full List of Owners</th>
 		</tr>
 
 		<tr class="header-row">
 			<td>Name</td>
-		<!--	<td>Description</td> -->
-			<td>Role</td>
-			<td>% Own</td>
-			<td>Married</td>
-			<td>Tenancy</td>
 		</tr>
 
 		<tr ng-repeat="owner in property.ownersInfo">
 			<td>{{owner.name}}</td>
-		<!--	<td>{{owner.description}}</td> -->
-			<td>{{owner.role}}</td>
-			<td>{{owner.percentageOwn}}</td>
-			<td>{{owner.marriedFlag}}</td>
-			<td>{{owner.tenancyCd}}</td>
 		</tr>
 
 	</table>

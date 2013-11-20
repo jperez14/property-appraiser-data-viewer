@@ -37,12 +37,17 @@ angular.module('propertySearchApp')
       candidates = _.map(candidates, function(el){
         var candidate = {};
 
-        if(isTypeUndefined(el.SiteAddress))
+        if(isTypeUndefinedOrIsEmpty(el.SiteAddress))
           candidate.siteAddress = null;
         else
           candidate.siteAddress = el.SiteAddress;
 
-        if(isTypeUndefined(el.Strap))
+        if(isTypeUndefinedOrIsEmpty(el.Municipality))
+          candidate.municipality = null;
+        else
+          candidate.municipality = el.Municipality;
+
+		if(isTypeUndefined(el.Strap))
           candidate.folio = null;
         else
           candidate.folio = el.Strap; //.trim().replace(/-/g, "");
@@ -52,12 +57,12 @@ angular.module('propertySearchApp')
         else
           candidate.firstOwner = el.Owner1;
 
-	if(isTypeUndefinedOrIsEmpty(el.Owner2))
+        if(isTypeUndefinedOrIsEmpty(el.Owner2))
           candidate.secondOwner = null;
         else
           candidate.secondOwner = el.Owner2;
 
-	if(isTypeUndefinedOrIsEmpty(el.Owner3))
+        if(isTypeUndefinedOrIsEmpty(el.Owner3))
           candidate.thirdOwner = null;
         else
           candidate.thirdOwner = el.Owner3;

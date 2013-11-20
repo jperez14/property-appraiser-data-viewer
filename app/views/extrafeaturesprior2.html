@@ -1,14 +1,13 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="6">Extra Features</th>
+			<th class="tableHeader" colspan="5">Extra Features</th>
 		</tr>
 
 		<tr class="header-row">
 			<td>Description</td>
 			<td>Year Built</td>
 			<td>Units</td>
-			<td>Use Code</td>
 			<td class="text-right">Adj Unit Price</td>
 			<td class="text-right">Depreciated Value</td>
 		</tr>
@@ -18,7 +17,6 @@
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td>{{feature.units}}</td>
-			<td>{{feature.useCode}}</td>
 			<td class="text-right">{{feature.adjustedUnitPrice
 			| currency:"$"}}</td>
 			<td class="text-right">{{feature.depreciatedValue

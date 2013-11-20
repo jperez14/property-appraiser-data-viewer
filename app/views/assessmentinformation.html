@@ -5,49 +5,49 @@
 		</tr>
 
 		<tr class="header-row">
-			<td>Year:</td>
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessmentYearCurrent}}</td>
+			<td>Year</td>
+			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessmentYearTwoPrior}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Land Value:</strong></td>
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.landValueCurrent
-			| currency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.landValuePrior | currency:"$"}}</td>
+			<td><strong>Land Value</strong></td>
+			<td class="text-right">{{property.assessmentInfo.landValueCurrent
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessmentInfo.landValuePrior | noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.landValueTwoPrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Building Value:</strong></td>
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.buildingValueCurrent
-			| currency:"$"}}</td>
+			<td><strong>Building Value</strong></td>
+			<td class="text-right">{{property.assessmentInfo.buildingValueCurrent
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.buildingValuePrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.buildingValueTwoPrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Market Value:</strong></td>
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.totalValueCurrent
-			| currency:"$"}}</td>
+			<td><strong>Market Value</strong></td>
+			<td class="text-right">{{property.assessmentInfo.totalValueCurrent
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.totalValuePrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.totalValueTwoPrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>Assessed Value:</strong></td>
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessedValueCurrent
-			| currency:"$"}}</td>
+			<td><strong>Assessed Value</strong></td>
+			<td class="text-right">{{property.assessmentInfo.assessedValueCurrent
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessedValuePrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 			<td class="text-right">{{property.assessmentInfo.assessedValueTwoPrior
-			| currency:"$"}}</td>
+			| noCentsCurrency:"$"}}</td>
 		</tr>
 	</table>
 </div>

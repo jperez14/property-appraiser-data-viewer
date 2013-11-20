@@ -1,21 +1,16 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="13">Land Information</th>
+			<th class="tableHeader" colspan="8">Land Information</th>
 		</tr>
 
 		<tr class="header-row">
 			<td>Muni Zone</td>
-			<td>Zone</td>
+			<td>PA Zone</td>
 			<td>Land Use</td>
-			<td>Unit Type</td>
 			<td>Use Code</td>
 			<td>Total Adj</td>
 			<td>Units</td>
-			<td>Depth</td>
-			<td>Front Feet</td>
-			<td>Land Line Type</td>
-			<td>Condition</td>
 			<td class="text-right">Adj Unit Price</td>
 			<td class="text-right">Calc Value</td>
 		</tr>
@@ -24,14 +19,9 @@
 			<td>{{land.muniZone}}</td>
 			<td>{{land.zone}}</td>
 			<td>{{land.landUse}}</td>
-			<td>{{land.unitType}}</td>
 			<td>{{land.useCode}}</td>
 			<td>{{land.totalAdjustments}}</td>
-			<td>{{land.units}}</td>
-			<td>{{land.depth}}</td>
-			<td>{{land.frontFeet}}</td>
-			<td>{{land.landlineType}}</td>
-			<td>{{land.percentCondition}}</td>
+			<td>{{land.units | number:2}}</td>
 			<td class="text-right">{{land.adjustedUnitPrice
 			| currency:"$"}}</td>
 			<td class="text-right">{{land.calculatedValue

@@ -7,7 +7,7 @@
 		<tr class="header-row taxable">
 			<td>&nbsp;</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.assessmentYearCurrent}}</td>
+			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
 
 			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
 
@@ -18,120 +18,120 @@
 			<td colspan="4" class="table-section">County</td>
         </tr>
         <tr class="border-bottom">
-			<td class="table-section-head">Exempt amt:</td>
+			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.countyExemptionValueCurrent
-                          | currency:"$"}} 
+			<td class="text-right">{{property.assessmentInfo.countyExemptionValueCurrent
+                          | noCentsCurrency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.countyExemptionValuePrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 			<td class="text-right">{{property.assessmentInfo.countyExemptionValueTwoPrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value:</td>
+			<td class="table-section-head">Tax Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
+			<td class="text-right">
                           {{property.assessmentInfo.countyTaxableValueCurrent
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.countyTaxableValuePrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.countyTaxableValueTwoPrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td colspan="4" class="table-section">School Board</td>
         </tr>
         <tr class="border-bottom">
-			<td class="table-section-head">Exempt amt:</td>
+			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.schoolExemptionValueCurrent
-                          | currency:"$"}} 
+			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueCurrent
+                          | noCentsCurrency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.schoolExemptionValuePrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueTwoPrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value:</td>
+			<td class="table-section-head">Tax Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
+			<td class="text-right">
                           {{property.assessmentInfo.schoolTaxableValueCurrent
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.schoolTaxableValuePrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.schoolTaxableValueTwoPrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td colspan="4" class="table-section">City</td>
         </tr>
         <tr class="border-bottom">
-			<td class="table-section-head">Exempt amt:</td>
+			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.cityExemptionValueCurrent
-                          | currency:"$"}} 
+			<td class="text-right">{{property.assessmentInfo.cityExemptionValueCurrent
+                          | noCentsCurrency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.cityExemptionValuePrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 			<td class="text-right">{{property.assessmentInfo.cityExemptionValueTwoPrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
                 <tr>
-			<td class="table-section-head">Tax Value:</td>
+			<td class="table-section-head">Tax Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
+			<td class="text-right">
                           {{property.assessmentInfo.cityTaxableValueCurrent
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.cityTaxableValuePrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.cityTaxableValueTwoPrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td colspan="4" class="table-section">Regional</td>
         </tr>
         <tr class="border-bottom">
-			<td class="table-section-head">Exempt amt:</td>
+			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">{{property.assessmentInfo.regionalExemptionValueCurrent
-                          | currency:"$"}} 
+			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueCurrent
+                          | noCentsCurrency:"$"}} 
 
 			<td class="text-right">{{property.assessmentInfo.regionalExemptionValuePrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueTwoPrior
-                          | currency:"$"}} 
+                          | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value:</td>
+			<td class="table-section-head">Tax Value</td>
 
-			<td class="text-right" ng-show="property.propertyInfo.showCurrentValuesFlag">
+			<td class="text-right">
                           {{property.assessmentInfo.regionalTaxableValueCurrent
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.regionalTaxableValuePrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
                           {{property.assessmentInfo.regionalTaxableValueTwoPrior
-                          | currency:"$"}}</td>
+                          | noCentsCurrency:"$"}}</td>
 		</tr>
 
 

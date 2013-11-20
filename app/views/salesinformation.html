@@ -8,14 +8,14 @@
 			<td>Previous Sale</td>
 			<td class="text-right">Price</td>
 			<td>OR Book-Page</td>
-                        <td>GrantorName1</td>
-                        <td>GrantorName2</td>
+                        <td>Previous Owner 1</td>
+                        <td>Previous Owner 2</td>
 			<td>Qualification Description</td>
 		</tr>
 
                 <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
-                  <td>{{sale.dateOfSale}}</td>
-                  <td class="text-right">{{sale.salePrice | currency:"$"}}</td>
+                  <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
+                  <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
                   <td>{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
                   <td>{{sale.grantorName1}}</td>
                   <td>{{sale.grantorName2}}</td>
@@ -23,10 +23,10 @@
                 </tr>
 
 		<tr>
-			<td colspan="6">For more information about the Department of
+			<td colspan="6">For more information about the
 				<a
 				href="http://dor.myflorida.com/dor/property/rp/dataformats/pdf/salequalcodes12.pdf"
-				target="_blank">Revenue's Sales Qualification Codes</a>.
+				target="_blank">Department of Revenue's Sales Qualification Codes</a>.
 			</td>
 		</tr>
 	</table>
