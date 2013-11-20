@@ -124,9 +124,15 @@
         </div>
       </div>
       <div class="col-md-8 col-sm-7"> <!-- drop map component in this div-->
-        <!--<div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>-->
+        <!--<div ng-show="candidatesList"
+        ng-include="'views/ownerinformation.html'"></div>-->
+        <!--
         <div ng-show="property" class="map_area">MAP</div>
-		<div ng-show="candidatesList" class="map_area">MAP</div>
+        -->
+        <div ng-show="property" class="hero-unit, map_area">
+          <div id="map" class="map_area"></div>
+        </div>
+        <div ng-show="candidatesList" class="map_area">MAP</div>
       </div>
     </div>
     

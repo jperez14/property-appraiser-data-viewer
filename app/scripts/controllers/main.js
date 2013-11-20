@@ -3,6 +3,21 @@
 angular.module('propertySearchApp')
   .controller('MainCtrl', ['$scope', 'propertySearchService', function ($scope, propertySearchService) {
 
+    function initMap(){
+      var myMap = new esri.Map('map');
+      var tiled = new esri.layers.ArcGISTiledMapServiceLayer("http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/BaseMap/MapServer");
+      myMap.addLayer(tiled);
+      
+      $scope.map = myMap;
+      
+      // add a point
+      //var myPoint = {"geometry":{"x":,"y":}}
+      //$scope.map.graphics.add
+    };
+
+    // Initialize the map.
+    dojo.ready(initMap);
+
     $scope.folio = "";
     $scope.property = null;
     $scope.showError = false;
