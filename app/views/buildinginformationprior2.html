@@ -1,46 +1,32 @@
 <div class="table-responsive table-oversized">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="15">Building Information</th>
+			<th class="tableHeader" colspan="9">Building Information</th>
 		</tr>
 
 		<tr class="header-row">
-			<td>Actual</td>
-			<td>Actual Area</td>
-			<td>Adjusted Base Price</td>
+			<td>Actual Yr Blt</td>
 			<td>Building No</td>
-			<td>Depreciated Value</td>
-			<td>Effective</td>
+			<td>Sub Area</td>
+			<td>Actual Area</td>
 			<td>Effective Area</td>
-			<td>Gross Area</td>
-			<td>Heated Area</td>
-			<td>Percent Comp</td>
-			<td>Percentage Good</td>
+			<td>Adjusted Price</td>
 			<td>Replacement Cost New</td>
-			<td>SegNo</td>
-			<td>Total Adjusted Points</td>
-			<td>Traverse Points</td>
-
+			<td>% Good</td>
+			<td>Depreciated Value</td>
 		</tr>
 
 		<tr ng-repeat="building in
-                               property.buildingsInfo[(property.rollYear1)-2]">
+                               property.buildingsInfo[(property.rollYear1)-2] | orderBy:['actual', 'buildingNo', 'segNo']">
 			<td>{{building.actual}}</td>
-			<td>{{building.actualArea }}</td>
-			<td>{{building.adjustedBasePrice}}</td>
 			<td>{{building.buildingNo}}</td>
-			<td>{{building.depreciatedValue}}</td>
-			<td>{{building.effective}}</td>
-			<td>{{building.effectiveArea}}</td>
-			<td>{{building.grossArea}}</td>
-			<td>{{building.heatedArea}}</td>
-			<td>{{building.percentComp}}</td>
-			<td>{{building.percentageGood}}</td>
-			<td>{{building.replacementCostNew}}</td>
 			<td>{{building.segNo}}</td>
-			<td>{{building.totalAdjustedPoints}}</td>
-			<td>{{building.traversePoints}}</td>
-
+			<td>{{building.actualArea | number}}</td>
+			<td>{{building.effectiveArea | number}}</td>
+			<td>{{building.adjustedBasePrice}}</td>
+			<td>{{building.replacementCostNew | currency:"$"}}</td>
+			<td>{{building.percentageGood}}</td>
+			<td>{{building.depreciatedValue}}</td>
 		</tr>
 
 	</table>
