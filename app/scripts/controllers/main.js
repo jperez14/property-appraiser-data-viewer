@@ -19,6 +19,13 @@ angular.module('propertySearchApp')
       $scope.candidatesList = null;
     };
 	
+	$scope.showFullListOfOwners = function() {
+		if($scope.property != null && $scope.property.ownersInfo.length > 2)
+			return true;
+		else
+			return false;
+	};
+	
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");
 	  $scope.ownerName = "";

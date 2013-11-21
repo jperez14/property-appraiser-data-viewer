@@ -39,8 +39,8 @@
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
             <span>{{property.mailingAddress.address1}}</span>
-			<span>{{property.mailingAddress.address2}}</span>
-            <span>{{property.mailingAddress.address3}}</span>
+			<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
+            <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
 			<span class="inline">{{property.mailingAddress.city}}, </span><span class="inline">{{property.mailingAddress.state}}</span>
 			<span>{{property.mailingAddress.zipCode}}</span>
 			<span>{{property.mailingAddress.country}}</span>
