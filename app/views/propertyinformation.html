@@ -29,12 +29,11 @@
 
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
-                            <div ng-repeat="owner
-                                           in
-                                           property.ownersInfo">
-                              {{owner.name}}
-                            </div>
-                        </td>
+                <div ng-repeat="owner in property.ownersInfo">
+                    <div ng-show="$index < 2">{{owner.name}}</div>
+                </div>
+				<div ng-show="property.ownersInfo.length > 2 ">see full list below</div>
+			</td>
 		</tr>
 
 		<tr>

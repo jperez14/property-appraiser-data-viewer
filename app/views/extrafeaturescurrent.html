@@ -7,15 +7,15 @@
 		<tr class="header-row">
 			<td>Description</td>
 			<td>Year Built</td>
-			<td>Units</td>
+			<td class="text-right">Units</td>
 			<td class="text-right">Adj Unit Price</td>
-			<td class="text-right">Depreciated Value</td>
+			<td class="text-right">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="feature in property.extraFeatures[property.rollYear1] | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
-			<td>{{feature.units}}</td>
+			<td class="text-right">{{feature.units | number}}</td>
 			<td class="text-right">{{feature.adjustedUnitPrice
 			| currency:"$"}}</td>
 			<td class="text-right">{{feature.depreciatedValue
