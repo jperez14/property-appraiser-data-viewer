@@ -15,11 +15,18 @@
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong>Property Address</strong>
+			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
                             <div ng-repeat="address
                                            in
                                            property.siteAddresses">
-                              {{address.address}}
+							  <span class="inline">{{address.streetNumber}}</span>
+							  <span class="inline">{{address.streetPrefix}}</span>
+							  <span class="inline">{{address.streetName}}</span>
+							  <span class="inline">{{address.streetSuffix}}</span>
+							  <span>{{}}</span>
+							  <span class="inline">{{address.city}}, </span>
+							  <span class="inline">FL</span>
+							  <span class="inline">{{address.zip}}</span>
                             </div>
                         </td>
 		</tr>
@@ -43,7 +50,7 @@
             <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
 			<span class="inline">{{property.mailingAddress.city}}, </span><span class="inline">{{property.mailingAddress.state}}</span>
 			<span class="inline">{{property.mailingAddress.zipCode}}</span>
-			<span>{{property.mailingAddress.country}}</span>
+			<span ng-hide="property.mailingAddress.country == 'USA' || property.mailingAddress.country == 'US' ">{{property.mailingAddress.country}}</span>
                         </td>
 		</tr>
 
