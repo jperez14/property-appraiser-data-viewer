@@ -8,18 +8,15 @@ angular.module('propertySearchApp')
 
       this.propertyInfo = {};
       this.mailingAddress = {};
-      this.assessmentInfo = {};
       this.classifiedAgInfo = {};
       this.legalDescription = {};
+      this.assessment = {};
       this.land = {};
       this.building = {};
       this.extraFeature = {};
       this.siteAddresses = [];
       this.salesInfo = [];
       this.ownersInfo = [];
-      //this.extraFeatures = [];
-      //this.landLines = [];
-      //this.buildingsInfo = [];
       this.benefitsInfo = [];
       this.district = null;
       this.geoParcel = null;
@@ -39,18 +36,15 @@ angular.module('propertySearchApp')
         this.land = buildLand({})
         this.building = buildBuilding({})
         this.extraFeature = buildExtraFeature({});
+        this.assessment = buildAssessment({});
 
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
-        this.assessmentInfo = buildAssessmentInfo({});
         this.classifiedAgInfo = buildClassifiedAgriculturalInfo({});
         this.legalDescription = buildLegalDescription({});
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
         this.ownersInfo = buildOwnersInfo([]);
-        //this.extraFeatures = buildExtraFeatures([]);
-        //this.landLines = buildLandLines([]);
-        //this.buildingsInfo = buildBuildingsInfo([]);
         this.benefitsInfo = buildBenefitsInfo([]);
 
       }
@@ -65,18 +59,15 @@ angular.module('propertySearchApp')
         this.land = buildLand(data.Land); 
         this.building = buildBuilding(data.Building); 
         this.extraFeature = buildExtraFeature(data.ExtraFeature);
+        this.assessment = buildAssessment(data.Assessment);
 
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
         this.mailingAddress = buildMailingAddress(data.MailingAddress);
-        this.assessmentInfo = buildAssessmentInfo(data.AssessmentInfo);
         this.classifiedAgInfo = buildClassifiedAgriculturalInfo(data.ClassifiedAgInfo);
         this.legalDescription = buildLegalDescription(data.LegalDescription);
         this.siteAddresses = buildSiteAddresses(data.SiteAddress);
         this.salesInfo = buildSalesInfo(data.SalesInfos);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
-        //this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
-        //this.landLines = buildLandLines(data.Landlines);
-        //this.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
         this.benefitsInfo = buildBenefitsInfo(data.BenefitInfos, this.rollYear1);
 
       }
@@ -223,50 +214,18 @@ angular.module('propertySearchApp')
       city: "City",
       country: "Country",
       state: "State",
-      zipCode: "ZipCode"};              
-
-    var assessmentInfoAttr = {
-      assessedValueCurrent:             "AssessedValueCurrent",            
-      assessedValuePrior:               "AssessedValuePrior",              
-      assessedValueTwoPrior:            "AssessedValueTwoPrior",           
-      assessmentYearCurrent:            "AssessmentYearCurrent",           
-      assessmentYearPrior:              "AssessmentYearPrior",             
-      assessmentYearTwoPrior:           "AssessmentYearTwoPrior",          
-      buildingValueCurrent:             "BuildingValueCurrent",            
-      buildingValuePrior:               "BuildingValuePrior",              
-      buildingValueTwoPrior:            "BuildingValueTwoPrior",           
-      cityExemptionValueCurrent:        "CityExemptionValueCurrent",       
-      cityExemptionValuePrior:          "CityExemptionValuePrior",         
-      cityExemptionValueTwoPrior:       "CityExemptionValueTwoPrior",      
-      cityTaxableValueCurrent:          "CityTaxableValueCurrent",         
-      cityTaxableValuePrior:            "CityTaxableValuePrior",           
-      cityTaxableValueTwoPrior:         "CityTaxableValueTwoPrior",        
-      countyExemptionValueCurrent:      "CountyExemptionValueCurrent",     
-      countyExemptionValuePrior:        "CountyExemptionValuePrior",       
-      countyExemptionValueTwoPrior:     "CountyExemptionValueTwoPrior",    
-      countyTaxableValueCurrent:        "CountyTaxableValueCurrent",       
-      countyTaxableValuePrior:          "CountyTaxableValuePrior",         
-      countyTaxableValueTwoPrior:       "CountyTaxableValueTwoPrior",      
-      landValueCurrent:                 "LandValueCurrent",                
-      landValuePrior:                   "LandValuePrior",                  
-      landValueTwoPrior:                "LandValueTwoPrior",               
-      regionalExemptionValueCurrent:    "RegionalExemptionValueCurrent",   
-      regionalExemptionValuePrior:      "RegionalExemptionValuePrior",     
-      regionalExemptionValueTwoPrior:   "RegionalExemptionValueTwoPrior",  
-      regionalTaxableValueCurrent:      "RegionalTaxableValueCurrent",     
-      regionalTaxableValuePrior:        "RegionalTaxableValuePrior",       
-      regionalTaxableValueTwoPrior:     "RegionalTaxableValueTwoPrior",    
-      schoolExemptionValueCurrent:      "SchoolExemptionValueCurrent",     
-      schoolExemptionValuePrior:        "SchoolExemptionValuePrior",       
-      schoolExemptionValueTwoPrior:     "SchoolExemptionValueTwoPrior",    
-      schoolTaxableValueCurrent:        "SchoolTaxableValueCurrent",       
-      schoolTaxableValuePrior:          "SchoolTaxableValuePrior",         
-      schoolTaxableValueTwoPrior:       "SchoolTaxableValueTwoPrior",      
-      totalValueCurrent:                "TotalValueCurrent",               
-      totalValuePrior:                  "TotalValuePrior",                 
-      totalValueTwoPrior:               "TotalValueTwoPrior"                  
+      zipCode: "ZipCode"
     };              
 
+    var assessmentInfoAttr = {
+      assessedValue:     "AssessedValue",     
+      buildingOnlyValue: "BuildingOnlyValue", 
+      extraFeatureValue: "ExtraFeatureValue", 
+      landValue:         "LandValue",         
+      message:           "Message",           
+      totalValue:        "TotalValue",        
+      year:              "Year"
+    };
 
     var classifiedAgriculturalInfoAttr = { 
       acreage:"Acreage",
@@ -293,6 +252,31 @@ angular.module('propertySearchApp')
     var buildSiteAddresses = function(data){
       return buildArray(data, siteAddressAttr);      
     };
+
+    var buildAssessment = function(data){
+
+      var assessment = {};
+      if(isUndefinedOrNull(data))
+        return {};
+      
+      // Switch the AssessmentInfo array into a map with key the year.
+      _.each(data.AssessmentInfos, function(origAssessmentInfo){
+        var assessmentInfo = buildObject(origAssessmentInfo, assessmentInfoAttr);
+        var data = {"assessmentInfo":assessmentInfo};
+        assessment[assessmentInfo.year] = data; 
+      });
+
+      // Add messages
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                            function(value){return value.trim();});
+        assessment[origMessage.Year].message = message; 
+      });
+
+      return assessment;
+    };
+
+
 
     var buildBenefitsInfo = function(data, baseYear){
 
@@ -348,7 +332,7 @@ angular.module('propertySearchApp')
       var building = {};
       if(isUndefinedOrNull(data))
         building.buildingsInfo = buildBuildingsInfo([]);
-      else if(isUndefinedOrNull(data.Landlines))
+      else if(isUndefinedOrNull(data.BuildingInfos))
         building.buildingsInfo = buildBuildingsInfo([]);
       else
         building.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
@@ -407,9 +391,7 @@ angular.module('propertySearchApp')
       return buildObject(data, mailingAddressAttr);      
     };
 
-    var buildAssessmentInfo = function(data){
-      return buildObject(data, assessmentInfoAttr);      
-    };
+
 
     var buildClassifiedAgriculturalInfo = function(data){
       return buildObject(data, classifiedAgriculturalInfoAttr);            
