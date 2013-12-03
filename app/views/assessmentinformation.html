@@ -12,6 +12,16 @@
 		</tr>
 
 		<tr>
+			<td><strong>Building Value</strong></td>
+			<td class="text-right">{{property.assessmentInfo.buildingValueCurrent
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessmentInfo.buildingValuePrior
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessmentInfo.buildingValueTwoPrior
+			| noCentsCurrency:"$"}}</td>
+		</tr>
+
+		<tr>
 			<td><strong>Land Value</strong></td>
 			<td class="text-right">{{property.assessmentInfo.landValueCurrent
 			| noCentsCurrency:"$"}}</td>
@@ -21,13 +31,10 @@
 		</tr>
 
 		<tr>
-			<td><strong>Building Value</strong></td>
-			<td class="text-right">{{property.assessmentInfo.buildingValueCurrent
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.buildingValuePrior
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.buildingValueTwoPrior
-			| noCentsCurrency:"$"}}</td>
+			<td><strong>XF</strong></td>
+			<td class="text-right">{{property.assessmentInfo.xfCurrent}}</td>
+			<td class="text-right">{{property.assessmentInfo.xfPrior}}</td>
+			<td class="text-right">{{property.assessmentInfo.xfTwoPrior}}</td>
 		</tr>
 
 		<tr>

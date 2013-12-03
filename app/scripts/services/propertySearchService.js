@@ -26,7 +26,7 @@ angular.module('propertySearchApp')
       }, function(response){deferred.reject(response)});
 
       return deferred.promise.then(function(property){
-        return property;
+		return property;
       }, function(response){
         return response;
       });

@@ -213,6 +213,7 @@ angular.module('propertySearchApp')
     var mailingAddressAttr = {
       address1: "Address1",
       address2: "Address2",
+	  address3: "Address3",
       city: "City",
       country: "Country",
       state: "State",
