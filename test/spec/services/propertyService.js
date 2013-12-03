@@ -163,111 +163,74 @@ describe('Service: propertyService', function () {
 
   });
 
-  // test assessmentInfo
-  it('AssessmentInfoData not exists maps to assessmentInfo populated with default values', function(){
-    var property = new propertyService.Property({AssessmentInfo:{}});
-    expect(property.assessmentInfo.assessedValueCurrent).toBe(null);
+  // test assessment
+  it('Assessment empty object maps to assessment object with empty values', function(){
+    var property = new propertyService.Property({Assessment:{}});
+    expect(property.assessment).toEqual({});
   });
 
-  it('AssessmentInfoData null maps to assessmentInfo populated with default values', function(){
-    var property = new propertyService.Property({AssessmentInfo:null});
-    expect(property.assessmentInfo.assessedValueCurrent).toBe(null);
+  it('Assessment null maps to assessment object with empty values', function(){
+    var property = new propertyService.Property({Assessment:null});
+    expect(property.assessment).toEqual({});
   });
 
-  it('assessmentInfo with a property value', function(){
-    var property = new propertyService.Property({AssessmentInfo:{AssessedValueCurrent:2}});
-    expect(property.assessmentInfo.assessedValueCurrent).toBe(2);
+  it('Assessment does not exist maps to assessment object with empty values', function(){
+    var property = new propertyService.Property({});
+    expect(property.assessment).toEqual({});
   });
-
 
   it('map incoming AssessmentInfo fields to our assessmentInfo model fields',function(){
-    var givenProperty = {AssessmentInfo: {
-      AssessedValueCurrent: 70067,
-      AssessedValuePrior: 75395,
-      AssessedValueTwoPrior: 84661,
-      AssessmentYearCurrent: 2013,
-      AssessmentYearPrior: 2012,
-      AssessmentYearTwoPrior: 2011,
-      BuildingValueCurrent: 42252,
-      BuildingValuePrior: 46498,
-      BuildingValueTwoPrior: 50664,
-      CityExemptionValueCurrent: 0,
-      CityExemptionValuePrior: 0,
-      CityExemptionValueTwoPrior: 0,
-      CityTaxableValueCurrent: 70067,
-      CityTaxableValuePrior: 75395,
-      CityTaxableValueTwoPrior: 84661,
-      CountyExemptionValueCurrent: 0,
-      CountyExemptionValuePrior: 0,
-      CountyExemptionValueTwoPrior: 0,
-      CountyTaxableValueCurrent: 70067,
-      CountyTaxableValuePrior: 75395,
-      CountyTaxableValueTwoPrior: 84661,
-      LandValueCurrent: 27815,
-      LandValuePrior: 28897,
-      LandValueTwoPrior: 33997,
-      RegionalExemptionValueCurrent: 0,
-      RegionalExemptionValuePrior: 0,
-      RegionalExemptionValueTwoPrior: 0,
-      RegionalTaxableValueCurrent: 70067,
-      RegionalTaxableValuePrior: 75395,
-      RegionalTaxableValueTwoPrior: 84661,
-      SchoolExemptionValueCurrent: 0,
-      SchoolExemptionValuePrior: 0,
-      SchoolExemptionValueTwoPrior: 0,
-      SchoolTaxableValueCurrent: 70067,
-      SchoolTaxableValuePrior: 75395,
-      SchoolTaxableValueTwoPrior: 84661,
-      TotalValueCurrent: 70067,
-      TotalValuePrior: 75395,
-      TotalValueTwoPrior: 84661
+    var givenProperty = {Assessment: {
+      AssessmentInfos: [
+        {
+          AssessedValue: 84661,
+          BuildingOnlyValue: 49896,
+          ExtraFeatureValue: 768,
+          LandValue: 33997,
+          Message: null,
+          TotalValue: 84661,
+          Year: 2011
+        },        {
+          AssessedValue: 84662,
+          BuildingOnlyValue: 49892,
+          ExtraFeatureValue: 762,
+          LandValue: 33992,
+          Message: null,
+          TotalValue: 84662,
+          Year: 2012
+        }],
+      Messages: [
+        {
+          Message: "This is test Message1|This is test Message2|This is test Message3",
+          Year: 2011
+        },        {
+          Message: "This is test Message1|This is test Message2|This is test Message3",
+          Year: 2012
+        }]
     }};
     
-    var expectedProperty = {assessmentInfo: {
-      assessedValueCurrent: 70067,
-      assessedValuePrior: 75395,
-      assessedValueTwoPrior: 84661,
-      assessmentYearCurrent: 2013,
-      assessmentYearPrior: 2012,
-      assessmentYearTwoPrior: 2011,
-      buildingValueCurrent: 42252,
-      buildingValuePrior: 46498,
-      buildingValueTwoPrior: 50664,
-      cityExemptionValueCurrent: 0,
-      cityExemptionValuePrior: 0,
-      cityExemptionValueTwoPrior: 0,
-      cityTaxableValueCurrent: 70067,
-      cityTaxableValuePrior: 75395,
-      cityTaxableValueTwoPrior: 84661,
-      countyExemptionValueCurrent: 0,
-      countyExemptionValuePrior: 0,
-      countyExemptionValueTwoPrior: 0,
-      countyTaxableValueCurrent: 70067,
-      countyTaxableValuePrior: 75395,
-      countyTaxableValueTwoPrior: 84661,
-      landValueCurrent: 27815,
-      landValuePrior: 28897,
-      landValueTwoPrior: 33997,
-      regionalExemptionValueCurrent: 0,
-      regionalExemptionValuePrior: 0,
-      regionalExemptionValueTwoPrior: 0,
-      regionalTaxableValueCurrent: 70067,
-      regionalTaxableValuePrior: 75395,
-      regionalTaxableValueTwoPrior: 84661,
-      schoolExemptionValueCurrent: 0,
-      schoolExemptionValuePrior: 0,
-      schoolExemptionValueTwoPrior: 0,
-      schoolTaxableValueCurrent: 70067,
-      schoolTaxableValuePrior: 75395,
-      schoolTaxableValueTwoPrior: 84661,
-      totalValueCurrent: 70067,
-      totalValuePrior: 75395,
-      totalValueTwoPrior: 84661
-
-    }};
+    var expectedProperty = {assessment:{2011:{assessmentInfo:{
+      assessedValue: 84661,
+      buildingOnlyValue: 49896,
+      extraFeatureValue: 768,
+      landValue: 33997,
+      message: null,
+      totalValue: 84661,
+      year: 2011
+    }, message: ["This is test Message1","This is test Message2","This is test Message3"]},
+                                        2012:{assessmentInfo:{
+                                          assessedValue: 84662,
+                                          buildingOnlyValue: 49892,
+                                          extraFeatureValue: 762,
+                                          landValue: 33992,
+                                          message: null,
+                                          totalValue: 84662,
+                                          year: 2012
+                                        }, message: ["This is test Message1","This is test Message2","This is test Message3"]}
+                                       }};
     
     var property = new propertyService.Property(givenProperty);
-    expect(property.assessmentInfo).toEqual(expectedProperty.assessmentInfo);
+    expect(property.assessment).toEqual(expectedProperty.assessment);
 
   });
 
@@ -514,7 +477,7 @@ describe('Service: propertyService', function () {
       UseCode: "0034 ",
       RollYear: 2013
     }]}};
-        
+    
 
     var expectedProperty = {extraFeature:{extraFeatures:{2013:[{
       actualYearBuilt: 1994,
@@ -558,7 +521,7 @@ describe('Service: propertyService', function () {
       UseCode: "0034 ",
       RollYear: 2013
     }]}};
-        
+    
 
     var expectedProperty = {extraFeature:{extraFeatures:{2013:[{
       actualYearBuilt: 1994,
@@ -696,7 +659,7 @@ describe('Service: propertyService', function () {
       Zone: "5700",
       RollYear: 2013
     }]}};
-        
+    
 
     var expectedProperty = {land:{landLines:{2013:[{
       adjustedUnitPrice: "278.1540",
