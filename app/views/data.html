@@ -158,7 +158,7 @@
       <div class="col-md-6">
 		<div ng-show="property" ng-include="'views/benefitsinformation.html'"></div>
         <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
-        <div ng-show="property" ng-include="'views/ownerinformation.html'"></div>
+        <div ng-show="showFullListOfOwners()" ng-include="'views/ownerinformation.html'"></div>
         <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
 
       </div>
@@ -180,9 +180,9 @@
         
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#current" data-toggle="tab">Current Year</a></li>
-          <li><a href="#prior" data-toggle="tab">Prior Year</a></li>
-          <li><a href="#prior-2" data-toggle="tab">Prior Year 2</a></li>
+          <li class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
+          <li><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
+          <li><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
         </ul>
 
         <!-- Tab panes -->

@@ -8,12 +8,12 @@
 			<td>Actual Yr Blt</td>
 			<td>Building No</td>
 			<td>Sub Area</td>
-			<td>Actual Area</td>
-			<td>Effective Area</td>
-			<td>Adjusted Price</td>
-			<td>Replacement Cost New</td>
+			<td class="text-right">Actual Area</td>
+			<td class="text-right">Effective Area</td>
+			<td class="text-right">Adjusted Price</td>
+			<td class="text-right">Replacement Cost New</td>
 			<td>% Good</td>
-			<td>Depreciated Value</td>
+			<td class="text-right">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="building in
@@ -21,12 +21,12 @@
 			<td>{{building.actual}}</td>
 			<td>{{building.buildingNo}}</td>
 			<td>{{building.segNo}}</td>
-			<td>{{building.actualArea | number}}</td>
-			<td>{{building.effectiveArea | number}}</td>
-			<td>{{building.adjustedBasePrice}}</td>
-			<td>{{building.replacementCostNew | currency:"$"}}</td>
+			<td class="text-right">{{building.actualArea | number}}</td>
+			<td class="text-right">{{building.effectiveArea | number}}</td>
+			<td class="text-right">{{building.adjustedBasePrice}}</td>
+			<td class="text-right">{{building.replacementCostNew | currency:"$"}}</td>
 			<td>{{building.percentageGood}}</td>
-			<td>{{building.depreciatedValue}}</td>
+			<td class="text-right">{{building.depreciatedValue | currency:"$"}}</td>
 		</tr>
 
 	</table>

@@ -16,7 +16,8 @@
                 <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
                   <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
                   <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
-                  <td><a href="#" target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}  <span class=
+                  <td><a href="http://www2.miami-dadeclerk.com/Public-Records/Search.aspx?search=3&amp;Rec_Book={{sale.officialRecordBook}}&amp;Rec_Page={{sale.officialRecordPage}}" 
+					target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}  <span class=
                         "glyphicon glyphicon-new-window"></span></a></td>
                   <td>{{sale.grantorName1}}</td>
                   <td>{{sale.grantorName2}}</td>

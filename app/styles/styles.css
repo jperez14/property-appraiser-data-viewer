@@ -180,6 +180,14 @@ background-color: #eee !important;
 	display:block;
 }
 
+#property_info tr td.pi_mailing_address span {
+	display:block;
+}
+
+#property_info tr td.pi_mailing_address span.inline {
+	display:inline !important;
+}
+
 .prop_info_header {
 	border-bottom:1px solid #fff;
 	padding-bottom:5px;

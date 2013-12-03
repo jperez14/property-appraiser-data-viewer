@@ -17,9 +17,9 @@
 		<tr ng-repeat="benefit in property.benefitsInfo">
 			<td><strong>{{benefit.description}}</strong></td>
                         <td>{{benefit.type}}</td>
-                        <td class="text-right">{{benefit.values[0] | currency:"$"}}</td>
-                        <td class="text-right">{{benefit.values[1] | currency:"$"}}</td>
-                        <td class="text-right">{{benefit.values[2] | currency:"$"}}</td>
+                        <td class="text-right">{{benefit.values[0] | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefit.values[1] | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefit.values[2] | noCentsCurrency:"$"}}</td>
 		</tr>
 
 
