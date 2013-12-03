@@ -11,12 +11,15 @@ angular.module('propertySearchApp')
       this.assessmentInfo = {};
       this.classifiedAgInfo = {};
       this.legalDescription = {};
+      this.land = {};
+      this.building = {};
+      this.extraFeature = {};
       this.siteAddresses = [];
       this.salesInfo = [];
       this.ownersInfo = [];
-      this.extraFeatures = [];
-      this.landLines = [];
-      this.buildingsInfo = [];
+      //this.extraFeatures = [];
+      //this.landLines = [];
+      //this.buildingsInfo = [];
       this.benefitsInfo = [];
       this.district = null;
       this.geoParcel = null;
@@ -33,6 +36,10 @@ angular.module('propertySearchApp')
         this.rollYear2 = null;
         this.rollYear3 = null;
 
+        this.land = buildLand({})
+        this.building = buildBuilding({})
+        this.extraFeature = buildExtraFeature({});
+
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
         this.assessmentInfo = buildAssessmentInfo({});
@@ -41,9 +48,9 @@ angular.module('propertySearchApp')
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
         this.ownersInfo = buildOwnersInfo([]);
-        this.extraFeatures = buildExtraFeatures([]);
-        this.landLines = buildLandLines([]);
-        this.buildingsInfo = buildBuildingsInfo([]);
+        //this.extraFeatures = buildExtraFeatures([]);
+        //this.landLines = buildLandLines([]);
+        //this.buildingsInfo = buildBuildingsInfo([]);
         this.benefitsInfo = buildBenefitsInfo([]);
 
       }
@@ -55,6 +62,10 @@ angular.module('propertySearchApp')
         this.rollYear2 = this.rollYear1 - 1;
         this.rollYear3 = this.rollYear1 - 2;
 
+        this.land = buildLand(data.Land); 
+        this.building = buildBuilding(data.Building); 
+        this.extraFeature = buildExtraFeature(data.ExtraFeature);
+
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
         this.mailingAddress = buildMailingAddress(data.MailingAddress);
         this.assessmentInfo = buildAssessmentInfo(data.AssessmentInfo);
@@ -63,9 +74,9 @@ angular.module('propertySearchApp')
         this.siteAddresses = buildSiteAddresses(data.SiteAddress);
         this.salesInfo = buildSalesInfo(data.SalesInfos);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
-        this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
-        this.landLines = buildLandLines(data.Landlines);
-        this.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
+        //this.extraFeatures = buildExtraFeatures(data.ExtraFeatures);
+        //this.landLines = buildLandLines(data.Landlines);
+        //this.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
         this.benefitsInfo = buildBenefitsInfo(data.BenefitInfos, this.rollYear1);
 
       }
@@ -319,6 +330,43 @@ angular.module('propertySearchApp')
       return _.values(groupedBenefits);
       
     };
+    
+    var buildLand = function(data){
+      var land = {};
+      if(isUndefinedOrNull(data))
+        land.landLines = buildLandLines([]);
+      else if(isUndefinedOrNull(data.Landlines))
+        land.landLines = buildLandLines([]);
+      else
+        land.landLines = buildLandLines(data.Landlines)
+          
+      return land;
+    };
+
+    var buildBuilding = function(data){
+      var building = {};
+      if(isUndefinedOrNull(data))
+        building.buildingsInfo = buildBuildingsInfo([]);
+      else if(isUndefinedOrNull(data.Landlines))
+        building.buildingsInfo = buildBuildingsInfo([]);
+      else
+        building.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
+          
+      return building;
+    };
+
+    var buildExtraFeature = function(data){
+      var extraFeature = {};
+      if(isUndefinedOrNull(data))
+        extraFeature.extraFeatures = buildExtraFeatures([]);
+      else if(isUndefinedOrNull(data.ExtraFeatureInfos))
+        extraFeature.extraFeatures = buildExtraFeatures([]);
+      else
+        extraFeature.extraFeatures = buildExtraFeatures(data.ExtraFeatureInfos);
+          
+      return extraFeature;
+    };
+
     
     var buildExtraFeatures = function(data){
       return buildMapByYear(data, extraFeatureAttr);
