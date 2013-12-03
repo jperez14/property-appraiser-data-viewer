@@ -143,7 +143,7 @@ describe('Service: propertyService', function () {
     var givenProperty = {MailingAddress: {
       Address1: "200 SW 27th Street",
       Address2: "",
-	  Address3: "",
+      Address3: "",
       City: "Coral Gables",
       Country: "",
       State: "Florida",
@@ -153,7 +153,7 @@ describe('Service: propertyService', function () {
     var expectedProperty = {mailingAddress: {
       address1: "200 SW 27th Street",
       address2: "",
-	  address3: "",
+      address3: "",
       city: "Coral Gables",
       country: "",
       state: "Florida",
@@ -233,6 +233,90 @@ describe('Service: propertyService', function () {
     
     var property = new propertyService.Property(givenProperty);
     expect(property.assessment).toEqual(expectedProperty.assessment);
+
+  });
+
+
+  // test taxable
+  it('Taxable empty object maps to taxable object with empty values', function(){
+    var property = new propertyService.Property({Taxable:{}});
+    expect(property.taxable).toEqual({});
+  });
+
+  it('Taxable null maps to taxable object with empty values', function(){
+    var property = new propertyService.Property({Taxable:null});
+    expect(property.taxable).toEqual({});
+  });
+
+  it('Taxable does not exist maps to taxable object with empty values', function(){
+    var property = new propertyService.Property({});
+    expect(property.taxable).toEqual({});
+  });
+
+  it('map incoming TaxableInfo fields to our taxableInfo model fields',function(){
+    var givenProperty = {Taxable: {
+      TaxableInfos: [
+        {
+          CityExemptionValue: 0,
+          CityTaxableValue: 84661,
+          CountyExemptionValue: 0,
+          CountyTaxableValue: 84661,
+          Message: null,
+          RegionalExemptionValue: 0,
+          RegionalTaxableValue: 84661,
+          SchoolExemptionValue: 0,
+          SchoolTaxableValue: 84661,
+          Year: 2011
+        },        {
+          CityExemptionValue: 2,
+          CityTaxableValue: 84662,
+          CountyExemptionValue: 2,
+          CountyTaxableValue: 84662,
+          Message: null,
+          RegionalExemptionValue: 2,
+          RegionalTaxableValue: 84662,
+          SchoolExemptionValue: 2,
+          SchoolTaxableValue: 84662,
+          Year: 2012
+        }],
+      Messages: [
+        {
+          Message: "This is test Message1|This is test Message2|This is test Message3",
+          Year: 2011
+        },        {
+          Message: "This is test Message1|This is test Message2|This is test Message3",
+          Year: 2012
+        }]
+    }};
+    
+    var expectedProperty = {taxable:{2011:{taxableInfo:{
+      cityExemptionValue: 0,
+      cityTaxableValue: 84661,
+      countyExemptionValue: 0,
+      countyTaxableValue: 84661,
+      message: null,
+      regionalExemptionValue: 0,
+      regionalTaxableValue: 84661,
+      schoolExemptionValue: 0,
+      schoolTaxableValue: 84661,
+      year: 2011
+    }, message: ["This is test Message1","This is test Message2","This is test Message3"]},
+                                     2012:{taxableInfo:{
+                                       cityExemptionValue: 2,
+                                       cityTaxableValue: 84662,
+                                       countyExemptionValue: 2,
+                                       countyTaxableValue: 84662,
+                                       message: null,
+                                       regionalExemptionValue: 2,
+                                       regionalTaxableValue: 84662,
+                                       schoolExemptionValue: 2,
+                                       schoolTaxableValue: 84662,
+                                       year: 2012
+                                     }, message: ["This is test Message1","This is test Message2","This is test Message3"]}
+                                    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.taxable).toEqual(expectedProperty.taxable);
 
   });
 
