@@ -488,21 +488,24 @@ describe('Service: propertyService', function () {
 
   });
 
-  // test extraFeatures
-  it('ExtraFeaturesData not exists maps to ExtraFeatures empty array', function(){
-    var property = new propertyService.Property({ExtraFeatures:[]});
-    expect(property.extraFeatures).toEqual({});
+  // test extraFeature
+  it('ExtraFeature empty object maps to land object with empty values', function(){
+    var property = new propertyService.Property({ExtraFeature:{}});
+    expect(property.extraFeature).toEqual({extraFeatures:{}});
   });
 
-  it('ExtraFeatures null maps to extraFeatures empty array', function(){
-    var property = new propertyService.Property({ExtraFeatures:null});
-    expect(property.extraFeatures).toEqual({});
+  it('ExtraFeature null maps to land object with empty values', function(){
+    var property = new propertyService.Property({ExtraFeature:null});
+    expect(property.extraFeature).toEqual({extraFeatures:{}});
   });
 
-
+  it('ExtraFeature does not exist maps to land object with empty values', function(){
+    var property = new propertyService.Property({});
+    expect(property.extraFeature).toEqual({extraFeatures:{}});
+  });
 
   it('map incoming ExtraFeatures fields to our extraFeatures model fields',function(){
-    var givenProperty = {ExtraFeatures: [{
+    var givenProperty = {ExtraFeature:{ExtraFeatureInfos: [{
       ActualYearBuilt: 1994,
       AdjustedUnitPrice: 8,
       DepreciatedValue: 672,
@@ -510,9 +513,10 @@ describe('Service: propertyService', function () {
       Units: 100,
       UseCode: "0034 ",
       RollYear: 2013
-    }]};
+    }]}};
+        
 
-    var expectedProperty = {extraFeatures:{2013:[{
+    var expectedProperty = {extraFeature:{extraFeatures:{2013:[{
       actualYearBuilt: 1994,
       adjustedUnitPrice: 8,
       depreciatedValue: 672,
@@ -520,15 +524,16 @@ describe('Service: propertyService', function () {
       units: 100,
       useCode: "0034 ",
       rollYear: 2013
-    }]}};
+    }]}}};
+    
 
     var property = new propertyService.Property(givenProperty);
-    expect(property.extraFeatures).toEqual(expectedProperty.extraFeatures);
+    expect(property.extraFeature).toEqual(expectedProperty.extraFeature);
 
   });
 
   it('map incoming ExtraFeatures fields to our extraFeatures model fields with several years',function(){
-    var givenProperty = {ExtraFeatures: [{
+    var givenProperty = {ExtraFeature:{ExtraFeatureInfos: [{
       ActualYearBuilt: 1994,
       AdjustedUnitPrice: 8,
       DepreciatedValue: 672,
@@ -552,9 +557,10 @@ describe('Service: propertyService', function () {
       Units: 101,
       UseCode: "0034 ",
       RollYear: 2013
-    }]};
+    }]}};
+        
 
-    var expectedProperty = {extraFeatures:{2013:[{
+    var expectedProperty = {extraFeature:{extraFeatures:{2013:[{
       actualYearBuilt: 1994,
       adjustedUnitPrice: 8,
       depreciatedValue: 672,
@@ -578,26 +584,32 @@ describe('Service: propertyService', function () {
       units: 9,
       useCode: "0033 ",
       rollYear: 2012
-    }]}};
+    }]}}};
+    
 
     var property = new propertyService.Property(givenProperty);
-    expect(property.extraFeatures).toEqual(expectedProperty.extraFeatures);
+    expect(property.extraFeature).toEqual(expectedProperty.extraFeature);
 
   });
 
-  // test landLines
-  it('LandlinesData not exists maps to landLines empty array', function(){
-    var property = new propertyService.Property({Landlines:[]});
-    expect(property.landLines).toEqual({});
+  // test land
+  it('Land empty object maps to land object with empty values', function(){
+    var property = new propertyService.Property({Land:{}});
+    expect(property.land).toEqual({landLines:{}});
   });
 
-  it('Landlines null maps to landLines empty array', function(){
-    var property = new propertyService.Property({Landlines:null});
-    expect(property.landLines).toEqual({});
+  it('Land null maps to land object with empty values', function(){
+    var property = new propertyService.Property({Land:null});
+    expect(property.land).toEqual({landLines:{}});
+  });
+
+  it('Land does not exist maps to land object with empty values', function(){
+    var property = new propertyService.Property({});
+    expect(property.land).toEqual({landLines:{}});
   });
 
   it('map incoming Landlines fields to our landLines model fields',function(){
-    var givenProperty = {Landlines: [{
+    var givenProperty = {Land:{Landlines: [{
       AdjustedUnitPrice: "278.1540",
       CalculatedValue: "27815",
       Depth: 0,
@@ -612,9 +624,9 @@ describe('Service: propertyService', function () {
       UseCode: "00 ",
       Zone: "5700",
       RollYear: 2013
-    }]};
+    }]}};
 
-    var expectedProperty = {landLines:{2013:[{
+    var expectedProperty = {land:{landLines:{2013:[{
       adjustedUnitPrice: "278.1540",
       calculatedValue: "27815",
       depth: 0,
@@ -629,15 +641,16 @@ describe('Service: propertyService', function () {
       useCode: "00 ",
       zone: "5700",
       rollYear: 2013
-    }]}};
+    }]}}};
+    
 
     var property = new propertyService.Property(givenProperty);
-    expect(property.landLines).toEqual(expectedProperty.landLines);
+    expect(property.land).toEqual(expectedProperty.land);
 
   });
 
   it('map incoming Landlines fields to our landLines model fields with several years.',function(){
-    var givenProperty = {Landlines: [{
+    var givenProperty = {Land:{Landlines: [{
       AdjustedUnitPrice: "278.1540",
       CalculatedValue: "27815",
       Depth: 0,
@@ -682,9 +695,10 @@ describe('Service: propertyService', function () {
       UseCode: "00 ",
       Zone: "5700",
       RollYear: 2013
-    }]};
+    }]}};
+        
 
-    var expectedProperty = {landLines:{2013:[{
+    var expectedProperty = {land:{landLines:{2013:[{
       adjustedUnitPrice: "278.1540",
       calculatedValue: "27815",
       depth: 0,
@@ -729,10 +743,11 @@ describe('Service: propertyService', function () {
       useCode: "00 ",
       zone: "5700",
       rollYear: 2012
-    }]}};
+    }]}}};
+    
 
     var property = new propertyService.Property(givenProperty);
-    expect(property.landLines).toEqual(expectedProperty.landLines);
+    expect(property.land).toEqual(expectedProperty.land);
 
   });
 
