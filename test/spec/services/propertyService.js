@@ -143,6 +143,7 @@ describe('Service: propertyService', function () {
     var givenProperty = {MailingAddress: {
       Address1: "200 SW 27th Street",
       Address2: "",
+	  Address3: "",
       City: "Coral Gables",
       Country: "",
       State: "Florida",
@@ -152,6 +153,7 @@ describe('Service: propertyService', function () {
     var expectedProperty = {mailingAddress: {
       address1: "200 SW 27th Street",
       address2: "",
+	  address3: "",
       city: "Coral Gables",
       country: "",
       state: "Florida",

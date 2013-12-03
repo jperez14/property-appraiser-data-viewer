@@ -12,7 +12,7 @@
 			<td class="text-right">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="feature in property.extraFeatures[property.rollYear1] | orderBy:'-actualYearBuilt'">
+		<tr ng-repeat="feature in property.extraFeature.extraFeatures[property.rollYear1] | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td class="text-right">{{feature.units | number}}</td>

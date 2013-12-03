@@ -13,7 +13,7 @@
 		</tr>
 
 		<tr ng-repeat="feature in
-                               property.extraFeatures[(property.rollYear1)-1] | orderBy:'-actualYearBuilt'">
+                               property.extraFeature.extraFeatures[(property.rollYear1)-1] | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td class="text-right">{{feature.units}}</td>
