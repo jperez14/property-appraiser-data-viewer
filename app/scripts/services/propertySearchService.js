@@ -24,7 +24,7 @@ angular.module('propertySearchApp')
         
         deferred.resolve(new propertyService.Property(rawProperty));
       }, function(response){deferred.reject(response)});
-
+		
       return deferred.promise.then(function(property){
 		return property;
       }, function(response){
