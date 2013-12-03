@@ -11,6 +11,7 @@ angular.module('propertySearchApp')
       this.classifiedAgInfo = {};
       this.legalDescription = {};
       this.assessment = {};
+      this.taxable = {};
       this.land = {};
       this.building = {};
       this.extraFeature = {};
@@ -37,6 +38,7 @@ angular.module('propertySearchApp')
         this.building = buildBuilding({})
         this.extraFeature = buildExtraFeature({});
         this.assessment = buildAssessment({});
+        this.taxable = buildTaxable({});
 
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
@@ -60,6 +62,7 @@ angular.module('propertySearchApp')
         this.building = buildBuilding(data.Building); 
         this.extraFeature = buildExtraFeature(data.ExtraFeature);
         this.assessment = buildAssessment(data.Assessment);
+        this.taxable = buildTaxable(data.Taxable);
 
         this.propertyInfo = buildPropertyInfo(data.PropertyInfo);
         this.mailingAddress = buildMailingAddress(data.MailingAddress);
@@ -226,6 +229,20 @@ angular.module('propertySearchApp')
       year:              "Year"
     };
 
+    var taxableInfoAttr = {
+      cityExemptionValue:     "CityExemptionValue",    
+      cityTaxableValue:       "CityTaxableValue",      
+      countyExemptionValue:   "CountyExemptionValue",  
+      countyTaxableValue:     "CountyTaxableValue",    
+      message:                "Message",               
+      regionalExemptionValue: "RegionalExemptionValue",
+      regionalTaxableValue:   "RegionalTaxableValue",  
+      schoolExemptionValue:   "SchoolExemptionValue",  
+      schoolTaxableValue:     "SchoolTaxableValue",    
+      year:                   "Year"                   
+    };
+    
+
     var classifiedAgriculturalInfoAttr = { 
       acreage:"Acreage",
       calculatedValue:"CalculatedValue",
@@ -273,6 +290,30 @@ angular.module('propertySearchApp')
       });
 
       return assessment;
+    };
+
+
+    var buildTaxable = function(data){
+
+      var taxable = {};
+      if(isUndefinedOrNull(data))
+        return {};
+      
+      // Switch the TaxableInfo array into a map with key the year.
+      _.each(data.TaxableInfos, function(origTaxableInfo){
+        var taxableInfo = buildObject(origTaxableInfo, taxableInfoAttr);
+        var data = {"taxableInfo":taxableInfo};
+        taxable[taxableInfo.year] = data; 
+      });
+
+      // Add messages
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                            function(value){return value.trim();});
+        taxable[origMessage.Year].message = message; 
+      });
+
+      return taxable;
     };
 
 
