@@ -26,6 +26,13 @@ angular.module('propertySearchApp')
 			return false;
 	};
 	
+	$scope.showFullListOfSiteAddresses = function() {
+		if($scope.property != null && $scope.property.siteAddresses.length > 1)
+			return true;
+		else
+			return false;
+	};
+	
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");
 	  $scope.ownerName = "";
