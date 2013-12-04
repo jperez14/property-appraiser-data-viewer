@@ -47,13 +47,14 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
-            <span>{{property.mailingAddress.address1}}</span>
-			<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
-            <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
-			<span class="inline">{{property.mailingAddress.city}}, </span><span class="inline">{{property.mailingAddress.state}}</span>
-			<span class="inline">{{property.mailingAddress.zipCode}}</span>
-			<span ng-hide="property.mailingAddress.country == 'USA' || property.mailingAddress.country == 'US' ">{{property.mailingAddress.country}}</span>
-                        </td>
+				<span>{{property.mailingAddress.address1}}</span>
+				<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
+				<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
+				<span class="inline">{{property.mailingAddress.city}}, </span>
+				<span class="inline">{{property.mailingAddress.state}}</span>
+				<span class="inline">{{property.mailingAddress.zipCode}}</span>
+				<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+            </td>
 		</tr>
 
 		<tr>

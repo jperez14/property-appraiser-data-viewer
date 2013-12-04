@@ -40,6 +40,13 @@ angular.module('propertySearchApp')
 			return municipality;
 	};
 	
+	$scope.isCountryUSA = function(country) {
+		if(country != undefined && (country.toUpperCase() === 'USA' || country.toUpperCase() === 'US'))
+			return true;
+		else
+			return false;
+	};
+
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");
 	  $scope.ownerName = "";
