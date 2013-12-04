@@ -33,6 +33,13 @@ angular.module('propertySearchApp')
 			return false;
 	};
 	
+	$scope.getRenamedMunicipality = function(municipality) {
+		if(municipality.toUpperCase() === 'UNINCORPORATED COUNTY')
+			return "Miami";
+		else
+			return municipality;
+	};
+	
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");
 	  $scope.ownerName = "";
