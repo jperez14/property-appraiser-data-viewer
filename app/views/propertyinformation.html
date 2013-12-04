@@ -16,28 +16,30 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
-                            <div ng-repeat="address
-                                           in
-                                           property.siteAddresses">
-							  <span class="inline">{{address.streetNumber}}</span>
-							  <span class="inline">{{address.streetPrefix}}</span>
-							  <span class="inline">{{address.streetName}}</span>
-							  <span class="inline">{{address.streetSuffix}}</span>
-							  <span>{{}}</span>
-							  <span class="inline">{{address.city}}, </span>
-							  <span class="inline">FL</span>
-							  <span class="inline">{{address.zip}}</span>
-                            </div>
-                        </td>
+                <div ng-repeat="address in property.siteAddresses">
+					<span ng-show="$index < 1">
+						<span class="inline">{{address.streetNumber}}</span>
+						<span class="inline">{{address.streetPrefix}}</span>
+						<span class="inline">{{address.streetName}}</span>
+						<span class="inline">{{address.streetSuffix}}</span>
+						<span>{{}}</span>
+						<span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
+						<span class="inline">FL</span>
+						<span class="inline">{{address.zip}}</span>
+					</span>
+                </div>
+				<div ng-show="property.siteAddresses.length > 1 ">see full list below</div>
+            </td>
 		</tr>
+<!--		
 		<tr>
 			<td colspan="2"><strong>Municipality</strong>{{property.propertyInfo.municipality}}</td>
 		</tr>
-
+-->
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
                 <div ng-repeat="owner in property.ownersInfo">
-                    <div ng-show="$index < 2">{{owner.name}}</div>
+                    <span ng-show="$index < 2">{{owner.name}}</span> 
                 </div>
 				<div ng-show="property.ownersInfo.length > 2 ">see full list below</div>
 			</td>
@@ -45,23 +47,24 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
-            <span>{{property.mailingAddress.address1}}</span>
-			<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
-            <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
-			<span class="inline">{{property.mailingAddress.city}}, </span><span class="inline">{{property.mailingAddress.state}}</span>
-			<span class="inline">{{property.mailingAddress.zipCode}}</span>
-			<span ng-hide="property.mailingAddress.country == 'USA' || property.mailingAddress.country == 'US' ">{{property.mailingAddress.country}}</span>
-                        </td>
+				<span>{{property.mailingAddress.address1}}</span>
+				<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
+				<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
+				<span class="inline">{{property.mailingAddress.city}}, </span>
+				<span class="inline">{{property.mailingAddress.state}}</span>
+				<span class="inline">{{property.mailingAddress.zipCode}}</span>
+				<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+            </td>
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong>Primary Zone</strong>{{property.propertyInfo.primaryZone}} 
-                          {{property.propertyInfo.primaryZoneDescription}}</td>
+			<td colspan="2"><strong>Primary Zone</strong><div>{{property.propertyInfo.primaryZone}} 
+                          {{property.propertyInfo.primaryZoneDescription}}</div></td>
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong>Land Use</strong>{{property.propertyInfo.DORCodeCurrent}}
-			{{property.propertyInfo.DORDescription}}</td>
+			<td colspan="2"><strong>Land Use</strong><div>{{property.propertyInfo.DORCodeCurrent}}
+			{{property.propertyInfo.DORDescription}}</div></td>
 		</tr>
 
 		<tr>

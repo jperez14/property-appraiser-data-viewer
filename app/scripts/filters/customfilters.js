@@ -7,6 +7,8 @@ angular.module('propertySearchApp')
 	var formats = locale.NUMBER_FORMATS;
 
 	return function(amount, currencySymbol) {
+	  if(amount === undefined)
+		return amount;
 	  var value = currencyFilter(amount, currencySymbol);
 	  var sep = value.indexOf(formats.DECIMAL_SEP);
 	  if(amount >= 0 ) {

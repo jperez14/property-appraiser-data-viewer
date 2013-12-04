@@ -101,32 +101,40 @@
 
   <!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
   
+  <!-- script not working due to property element being created on the fly 
   <script>
     $( document ).ready(function() {
     
-    $('.map_area').click(function(){ // this click function is just to attach map... not sure how you would connect this
+    $('.map_area').on('click', function(){ // this click function is just to attach map... not sure how you would connect this
     // make the map the height of the property information
     var prop_info_height = $('.property_info').css('height');
     $('.map_area').css('height', prop_info_height);
     });
     });
   </script>
+  -->
 
   <div class="content main_content_body">
 
     <div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
 
-    <div class="row">
+    <div class="row" ng-show="candidatesList">
+      <div class="col-md-12 col-sm-12">
+        <div class="property_info tabular_data">
+		  <div ng-include="'views/candidates.html'"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" ng-show="property">
       <div class="col-md-4 col-sm-5">
         <div class="property_info tabular_data">
-          <div ng-show="property" ng-include="'views/propertyinformation.html'"></div>
-		  <div ng-show="candidatesList" ng-include="'views/candidates.html'"></div>
+          <div ng-include="'views/propertyinformation.html'"></div>
         </div>
       </div>
       <div class="col-md-8 col-sm-7"> <!-- drop map component in this div-->
         <!--<div ng-show="candidatesList" ng-include="'views/ownerinformation.html'"></div>-->
-        <div ng-show="property" class="map_area">MAP</div>
-		<div ng-show="candidatesList" class="map_area">MAP</div>
+        <div class="map_area">MAP</div>
       </div>
     </div>
     
@@ -146,12 +154,8 @@
 
     <div class="row tabular_data">
       <div class="col-md-6">
-        <!-- <div ng-show="property" ng-include="'views/siteaddress.html'"></div> -->
         <div ng-show="property" ng-include="'views/assessmentinformation.html'"></div>
         <div ng-show="property" ng-include="'views/taxablevalueinformation.html'"></div>
-        
-        
-        
       </div>
       <!-- close first column -->
 
@@ -159,8 +163,8 @@
 		<div ng-show="property" ng-include="'views/benefitsinformation.html'"></div>
         <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
         <div ng-show="showFullListOfOwners()" ng-include="'views/ownerinformation.html'"></div>
+        <div ng-show="showFullListOfSiteAddresses()" ng-include="'views/siteaddress.html'"></div>
         <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
-
       </div>
 
     </div>

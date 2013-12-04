@@ -8,13 +8,13 @@
 
 	<div class="results_record" ng-repeat="candidate in candidatesList.candidates">
 		<span class="record_number">{{$index + 1}}</span>
-		<span class="record_folio"><strong>FOLIO:</strong> <a href="" ng-click="getCandidateFolio(candidate.folio)">{{candidate.folio}}</a></span>
-		<span class="record_owener" ng-show="candidate.secondOwner == null"><strong>OWNER:</strong> {{candidate.firstOwner}}</span>
-		<span class="record_owener" ng-show="candidate.secondOwner"><strong>OWNER 1:</strong> {{candidate.firstOwner}}</span>
-		<span class="record_owener" ng-show="candidate.secondOwner"><strong>OWNER 2:</strong> {{candidate.secondOwner}}</span>
-		<span class="record_owener" ng-show="candidate.thirdOwner"><strong>OWNER 3:</strong> {{candidate.thirdOwner}}</span>
-		<span class="record_address"><strong>ADDRESS:</strong> {{candidate.siteAddress}}</span>
-		<span class="record_address">{{candidate.municipality}}</span>
+		<div class="record_folio"><strong>FOLIO:</strong> <a href="" ng-click="getCandidateFolio(candidate.folio)">{{candidate.folio}}</a></div>
+		<div class="record_owner" ng-show="candidate.secondOwner == null"><strong>OWNER:</strong> {{candidate.firstOwner}}</div>
+		<div class="record_owner" ng-show="candidate.secondOwner"><strong>OWNER 1:</strong> {{candidate.firstOwner}}</div>
+		<div class="record_owner" ng-show="candidate.secondOwner"><strong>OWNER 2:</strong> {{candidate.secondOwner}}</div>
+		<div class="record_owner" ng-show="candidate.thirdOwner"><strong>OWNER 3:</strong> {{candidate.thirdOwner}}</div>
+		<div class="record_address"><strong>ADDRESS:</strong> {{candidate.siteAddress}}</div>
+		<div class="record_address">{{getRenamedMunicipality(candidate.municipality)}}</div>
 	</div>
 
 </div>

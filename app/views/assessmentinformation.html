@@ -6,55 +6,75 @@
 
 		<tr class="header-row">
 			<td>Year</td>
-			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
-			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
-			<td class="text-right">{{property.assessmentInfo.assessmentYearTwoPrior}}</td>
+			<td class="text-right">{{property.rollYear1}}</td>
+			<td class="text-right">{{property.rollYear2}}</td>
+			<td class="text-right">{{property.rollYear3}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Building Value</strong></td>
-			<td class="text-right">{{property.assessmentInfo.buildingValueCurrent
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.buildingOnlyValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.buildingValuePrior
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.buildingOnlyValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.buildingValueTwoPrior
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.buildingOnlyValue
 			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Land Value</strong></td>
-			<td class="text-right">{{property.assessmentInfo.landValueCurrent
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.landValue 
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.landValuePrior | noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.landValueTwoPrior
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.landValue 
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.landValue
 			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
-			<td><strong>XF</strong></td>
-			<td class="text-right">{{property.assessmentInfo.xfCurrent}}</td>
-			<td class="text-right">{{property.assessmentInfo.xfPrior}}</td>
-			<td class="text-right">{{property.assessmentInfo.xfTwoPrior}}</td>
+			<td><strong>XF Value</strong></td>
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.extraFeatureValue
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.extraFeatureValue
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.extraFeatureValue
+			| noCentsCurrency:"$"}}</td>
 		</tr>
 
 		<tr>
 			<td><strong>Market Value</strong></td>
-			<td class="text-right">{{property.assessmentInfo.totalValueCurrent
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.totalValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.totalValuePrior
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.totalValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.totalValueTwoPrior
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.totalValue
 			| noCentsCurrency:"$"}}</td>
+		</tr>
+        
+        <tr>
+			<td colspan="4">&nbsp;</td>
 		</tr>
 
 		<tr>
 			<td><strong>Assessed Value</strong></td>
-			<td class="text-right">{{property.assessmentInfo.assessedValueCurrent
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.assessedValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.assessedValuePrior
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.assessedValue
 			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessmentInfo.assessedValueTwoPrior
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.assessedValue
 			| noCentsCurrency:"$"}}</td>
 		</tr>
+        
+        
+        <tr ng-show="isDisplayMessages(property, property.assessment)" class="table-message">
+			<td colspan="4">
+            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
+            </td>
+		</tr>
+        
+        
+        
 	</table>
 </div>

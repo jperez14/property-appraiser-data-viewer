@@ -26,6 +26,36 @@ angular.module('propertySearchApp')
 			return false;
 	};
 	
+	$scope.showFullListOfSiteAddresses = function() {
+		if($scope.property != null && $scope.property.siteAddresses.length > 1)
+			return true;
+		else
+			return false;
+	};
+	
+	$scope.getRenamedMunicipality = function(municipality) {
+		if(municipality.toUpperCase() === 'UNINCORPORATED COUNTY')
+			return "Miami";
+		else
+			return municipality;
+	};
+	
+	$scope.isCountryUSA = function(country) {
+		if(country != undefined && (country.toUpperCase() === 'USA' || country.toUpperCase() === 'US'))
+			return true;
+		else
+			return false;
+	};
+	
+	$scope.isDisplayMessages = function(property, propertySection) {
+		if(propertySection != undefined && (propertySection[property.rollYear1].message.length > 0 ||
+			propertySection[property.rollYear2].message.length > 0 ||
+				propertySection[property.rollYear3].message.length > 0))
+			return true;
+		else
+			return false;
+	};
+
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");
 	  $scope.ownerName = "";

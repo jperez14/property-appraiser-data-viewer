@@ -7,11 +7,11 @@
 		<tr class="header-row taxable">
 			<td>&nbsp;</td>
 
-			<td class="text-right">{{property.assessmentInfo.assessmentYearCurrent}}</td>
+			<td class="text-right">{{property.rollYear1}}</td>
 
-			<td class="text-right">{{property.assessmentInfo.assessmentYearPrior}}</td>
+			<td class="text-right">{{property.rollYear1}}</td>
 
-			<td class="text-right">{{property.assessmentInfo.assessmentYearTwoPrior}}</td>
+			<td class="text-right">{{property.rollYear1}}</td>
 		</tr>
 
 		<tr>
@@ -20,27 +20,27 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right">{{property.assessmentInfo.countyExemptionValueCurrent
+			<td class="text-right">{{property.taxable[property.rollYear1].taxableInfo.countyExemptionValue
                           | noCentsCurrency:"$"}} 
 
-			<td class="text-right">{{property.assessmentInfo.countyExemptionValuePrior
+			<td class="text-right">{{property.taxable[property.rollYear2].taxableInfo.countyExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
-			<td class="text-right">{{property.assessmentInfo.countyExemptionValueTwoPrior
+			<td class="text-right">{{property.taxable[property.rollYear3].taxableInfo.countyExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
-                          {{property.assessmentInfo.countyTaxableValueCurrent
+                          {{property.taxable[property.rollYear1].taxableInfo.countyTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.countyTaxableValuePrior
+                          {{property.taxable[property.rollYear2].taxableInfo.countyTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.countyTaxableValueTwoPrior
+                          {{property.taxable[property.rollYear3].taxableInfo.countyTaxableValue
                           | noCentsCurrency:"$"}}</td>
 		</tr>
 
@@ -50,27 +50,27 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueCurrent
+			<td class="text-right">{{property.taxable[property.rollYear1].taxableInfo.schoolExemptionValue
                           | noCentsCurrency:"$"}} 
 
-			<td class="text-right">{{property.assessmentInfo.schoolExemptionValuePrior
+			<td class="text-right">{{property.taxable[property.rollYear2].taxableInfo.schoolExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
-			<td class="text-right">{{property.assessmentInfo.schoolExemptionValueTwoPrior
+			<td class="text-right">{{property.taxable[property.rollYear3].taxableInfo.schoolExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
-                          {{property.assessmentInfo.schoolTaxableValueCurrent
+                          {{property.taxable[property.rollYear1].taxableInfo.schoolTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.schoolTaxableValuePrior
+                          {{property.taxable[property.rollYear2].taxableInfo.schoolTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.schoolTaxableValueTwoPrior
+                          {{property.taxable[property.rollYear3].taxableInfo.schoolTaxableValue
                           | noCentsCurrency:"$"}}</td>
 		</tr>
 
@@ -80,27 +80,27 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right">{{property.assessmentInfo.cityExemptionValueCurrent
+			<td class="text-right">{{property.taxable[property.rollYear1].taxableInfo.cityExemptionValue
                           | noCentsCurrency:"$"}} 
 
-			<td class="text-right">{{property.assessmentInfo.cityExemptionValuePrior
+			<td class="text-right">{{property.taxable[property.rollYear2].taxableInfo.cityExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
-			<td class="text-right">{{property.assessmentInfo.cityExemptionValueTwoPrior
+			<td class="text-right">{{property.taxable[property.rollYear3].taxableInfo.cityExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
                 <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
-                          {{property.assessmentInfo.cityTaxableValueCurrent
+                          {{property.taxable[property.rollYear1].taxableInfo.cityTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.cityTaxableValuePrior
+                          {{property.taxable[property.rollYear2].taxableInfo.cityTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.cityTaxableValueTwoPrior
+                          {{property.taxable[property.rollYear3].taxableInfo.cityTaxableValue
                           | noCentsCurrency:"$"}}</td>
 		</tr>
 
@@ -110,28 +110,36 @@
         <tr class="border-bottom">
 			<td class="table-section-head">Exemption Value</td>
 
-			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueCurrent
+			<td class="text-right">{{property.taxable[property.rollYear1].taxableInfo.regionalExemptionValue
                           | noCentsCurrency:"$"}} 
 
-			<td class="text-right">{{property.assessmentInfo.regionalExemptionValuePrior
+			<td class="text-right">{{property.taxable[property.rollYear2].taxableInfo.regionalExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
-			<td class="text-right">{{property.assessmentInfo.regionalExemptionValueTwoPrior
+			<td class="text-right">{{property.taxable[property.rollYear3].taxableInfo.regionalExemptionValue
                           | noCentsCurrency:"$"}} 
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
-                          {{property.assessmentInfo.regionalTaxableValueCurrent
+                          {{property.taxable[property.rollYear1].taxableInfo.regionalTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.regionalTaxableValuePrior
+                          {{property.taxable[property.rollYear2].taxableInfo.regionalTaxableValue
                           | noCentsCurrency:"$"}}</td>
 			<td class="text-right">
-                          {{property.assessmentInfo.regionalTaxableValueTwoPrior
+                          {{property.taxable[property.rollYear3].taxableInfo.regionalTaxableValue
                           | noCentsCurrency:"$"}}</td>
+		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.taxable)" class="table-message">
+			<td colspan="4">
+            <div ng-repeat="message in property.taxable[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.taxable[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.taxable[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
+            </td>
 		</tr>
 
 
