@@ -180,7 +180,7 @@ background-color: #eee !important;
 	display:block;
 }
 
-#property_info tr td div {
+#property_info tr td > div {
 	padding-left:8px;
 }
 
@@ -248,6 +248,15 @@ background-color: #eeeeee;
     font-weight: normal;
     letter-spacing: 0;
 	padding: 1px 5px 1px 15px !important;
+}
+
+table tr.table-message td {
+	background-color:#fff !important;
+	border-top:1px solid #ccc;
+}
+
+table tr.table-message td div {
+	margin-bottom:5px;
 }
 
 /* end result table styles */

@@ -22,6 +22,16 @@
 			<td class="text-right">{{feature.depreciatedValue
 			| currency:"$"}}</td>
 		</tr>
+        
+        <tr class="table-message">
+			<td colspan="5">
+            &nbsp;<!--
+            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
+            -->
+            </td>
+		</tr>
 
 	</table>
 </div>
