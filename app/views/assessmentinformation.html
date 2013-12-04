@@ -66,7 +66,7 @@
 		</tr>
         
         
-        <tr class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.assessment)" class="table-message">
 			<td colspan="4">
             <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
             <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>

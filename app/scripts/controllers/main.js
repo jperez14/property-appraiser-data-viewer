@@ -46,6 +46,15 @@ angular.module('propertySearchApp')
 		else
 			return false;
 	};
+	
+	$scope.isDisplayMessages = function(property, propertySection) {
+		if(propertySection != undefined && (propertySection[property.rollYear1].message.length > 0 ||
+			propertySection[property.rollYear2].message.length > 0 ||
+				propertySection[property.rollYear3].message.length > 0))
+			return true;
+		else
+			return false;
+	};
 
     $scope.getCandidateFolio = function(folioNum){
       $scope.folio = folioNum.trim().replace(/-/g, "");

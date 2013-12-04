@@ -134,13 +134,11 @@
                           | noCentsCurrency:"$"}}</td>
 		</tr>
         
-        <tr class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.taxable)" class="table-message">
 			<td colspan="4">
-            &nbsp;<!--
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            -->
+            <div ng-repeat="message in property.taxable[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.taxable[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.taxable[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
             </td>
 		</tr>
 
