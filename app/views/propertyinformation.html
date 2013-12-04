@@ -17,7 +17,7 @@
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
                 <div ng-repeat="address in property.siteAddresses">
-					<div ng-show="$index < 1">
+					<span ng-show="$index < 1">
 						<span class="inline">{{address.streetNumber}}</span>
 						<span class="inline">{{address.streetPrefix}}</span>
 						<span class="inline">{{address.streetName}}</span>
@@ -26,7 +26,7 @@
 						<span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
 						<span class="inline">FL</span>
 						<span class="inline">{{address.zip}}</span>
-					</div>
+					</span>
                 </div>
 				<div ng-show="property.siteAddresses.length > 1 ">see full list below</div>
             </td>
@@ -39,7 +39,7 @@
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
                 <div ng-repeat="owner in property.ownersInfo">
-                    <div ng-show="$index < 2">{{owner.name}}</div>
+                    <span ng-show="$index < 2">{{owner.name}}</span> 
                 </div>
 				<div ng-show="property.ownersInfo.length > 2 ">see full list below</div>
 			</td>
@@ -58,13 +58,13 @@
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong>Primary Zone</strong>{{property.propertyInfo.primaryZone}} 
-                          {{property.propertyInfo.primaryZoneDescription}}</td>
+			<td colspan="2"><strong>Primary Zone</strong><div>{{property.propertyInfo.primaryZone}} 
+                          {{property.propertyInfo.primaryZoneDescription}}</div></td>
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong>Land Use</strong>{{property.propertyInfo.DORCodeCurrent}}
-			{{property.propertyInfo.DORDescription}}</td>
+			<td colspan="2"><strong>Land Use</strong><div>{{property.propertyInfo.DORCodeCurrent}}
+			{{property.propertyInfo.DORDescription}}</div></td>
 		</tr>
 
 		<tr>

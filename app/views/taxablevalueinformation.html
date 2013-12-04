@@ -31,7 +31,7 @@
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
                           {{property.taxable[property.rollYear1].taxableInfo.countyTaxableValue
@@ -61,7 +61,7 @@
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
                           {{property.taxable[property.rollYear1].taxableInfo.schoolTaxableValue
@@ -91,7 +91,7 @@
                           </td>
 		</tr>
                 <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
                           {{property.taxable[property.rollYear1].taxableInfo.cityTaxableValue
@@ -121,7 +121,7 @@
                           </td>
 		</tr>
         <tr>
-			<td class="table-section-head">Tax Value</td>
+			<td class="table-section-head">Taxable Value</td>
 
 			<td class="text-right">
                           {{property.taxable[property.rollYear1].taxableInfo.regionalTaxableValue
@@ -132,6 +132,16 @@
 			<td class="text-right">
                           {{property.taxable[property.rollYear3].taxableInfo.regionalTaxableValue
                           | noCentsCurrency:"$"}}</td>
+		</tr>
+        
+        <tr class="table-message">
+			<td colspan="4">
+            &nbsp;<!--
+            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
+            -->
+            </td>
 		</tr>
 
 
