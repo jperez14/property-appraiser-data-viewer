@@ -94,7 +94,7 @@ angular.module('propertySearchApp')
       units:               "Units",            
       useCode:             "UseCode",          
       zone:                "Zone",
-      rollYear:          "RollYear"              
+      year:                "RollYear"              
     };  
 
     var buildingInfoAttr = {
@@ -113,7 +113,7 @@ angular.module('propertySearchApp')
       segNo:              "SegNo",               
       totalAdjustedPoints:"TotalAdjustedPoints", 
       traversePoints:     "TraversePoints",
-      rollYear:          "RollYear"       
+      year:               "RollYear"       
     };
     
 
@@ -124,7 +124,8 @@ angular.module('propertySearchApp')
       description:       "Description",       
       units:             "Units",             
       useCode:           "UseCode",
-      rollYear:          "RollYear"
+      percentCondition:  "PercentCondition",
+      year:              "RollYear"
     };                  
 
     var ownerInfoAttr = {
@@ -283,7 +284,7 @@ angular.module('propertySearchApp')
         assessment[assessmentInfo.year] = data; 
       });
 
-      // Add messages
+      // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
         var message = _.map(origMessage.Message.split("|"), 
                             function(value){return value.trim();});
@@ -307,7 +308,7 @@ angular.module('propertySearchApp')
         taxable[taxableInfo.year] = data; 
       });
 
-      // Add messages
+      // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
         var message = _.map(origMessage.Message.split("|"), 
                             function(value){return value.trim();});
@@ -357,7 +358,7 @@ angular.module('propertySearchApp')
       
     };
     
-    var buildLand = function(data){
+    var buildLand2 = function(data){
       var land = {};
       if(isUndefinedOrNull(data))
         land.landLines = buildLandLines([]);
@@ -369,7 +370,35 @@ angular.module('propertySearchApp')
       return land;
     };
 
-    var buildBuilding = function(data){
+
+    var buildLand = function(data){
+
+      var land = {};
+      if(isUndefinedOrNull(data))
+        return {};
+      
+      // Switch the Landlines array into a map with key the year.
+      _.each(data.Landlines, function(origLandLine){
+        var landLine = buildObject(origLandLine, landLineAttr);
+        if(isUndefinedOrNull(land[landLine.year]))
+          land[landLine.year] = {landLines:[]};
+        land[landLine.year].landLines.push(landLine); 
+      });
+
+      // Add messages to each key year.
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                            function(value){return value.trim();});
+        land[origMessage.Year].message = message; 
+      });
+
+      return land;
+    };
+
+
+
+
+    var buildBuilding2 = function(data){
       var building = {};
       if(isUndefinedOrNull(data))
         building.buildingsInfo = buildBuildingsInfo([]);
@@ -381,7 +410,32 @@ angular.module('propertySearchApp')
       return building;
     };
 
-    var buildExtraFeature = function(data){
+    var buildBuilding = function(data){
+
+      var building = {};
+      if(isUndefinedOrNull(data))
+        return {};
+      
+      // Switch the Buildinglines array into a map with key the year.
+      _.each(data.BuildingInfos, function(origBuildingInfo){
+        var buildingInfo = buildObject(origBuildingInfo, buildingInfoAttr);
+        if(isUndefinedOrNull(building[buildingInfo.year]))
+          building[buildingInfo.year] = {buildingsInfo:[]};
+        building[buildingInfo.year].buildingsInfo.push(buildingInfo); 
+      });
+
+      // Add messages to each key year.
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                            function(value){return value.trim();});
+        building[origMessage.Year].message = message; 
+      });
+
+      return building;
+    };
+
+
+    var buildExtraFeature2 = function(data){
       var extraFeature = {};
       if(isUndefinedOrNull(data))
         extraFeature.extraFeatures = buildExtraFeatures([]);
@@ -390,6 +444,30 @@ angular.module('propertySearchApp')
       else
         extraFeature.extraFeatures = buildExtraFeatures(data.ExtraFeatureInfos);
           
+      return extraFeature;
+    };
+
+    var buildExtraFeature = function(data){
+
+      var extraFeature = {};
+      if(isUndefinedOrNull(data))
+        return {};
+      
+      // Switch the ExtraFeaturelines array into a map with key the year.
+      _.each(data.ExtraFeatureInfos, function(origExtraFeatureInfo){
+        var extraFeatureInfo = buildObject(origExtraFeatureInfo, extraFeatureAttr);
+        if(isUndefinedOrNull(extraFeature[extraFeatureInfo.year]))
+          extraFeature[extraFeatureInfo.year] = {extraFeaturesInfo:[]};
+        extraFeature[extraFeatureInfo.year].extraFeaturesInfo.push(extraFeatureInfo); 
+      });
+
+      // Add messages to each key year.
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                            function(value){return value.trim();});
+        extraFeature[origMessage.Year].message = message; 
+      });
+
       return extraFeature;
     };
 
