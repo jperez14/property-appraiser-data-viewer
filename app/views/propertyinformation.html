@@ -27,8 +27,15 @@
 						<span class="inline">FL</span>
 						<span class="inline">{{address.zip}}</span>
 					</span>
+					<span ng-show="$index >= 1">
+						<span class="inline">{{address.streetNumber}}</span>
+						<span class="inline">{{address.streetPrefix}}</span>
+						<span class="inline">{{address.streetName}}</span>
+						<span class="inline">{{address.streetSuffix}}</span>
+						<span class="inline">{{address.unit}}</span>
+					</span>
                 </div>
-				<div ng-show="property.siteAddresses.length > 1 ">see full list below</div>
+				<!-- <div ng-show="property.siteAddresses.length > 1 ">see full list below</div> -->
             </td>
 		</tr>
 <!--		
