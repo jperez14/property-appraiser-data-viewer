@@ -16,7 +16,7 @@
 			<td class="text-right">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="building in property.building.buildingsInfo[property.rollYear1] | orderBy:['actual', 'buildingNo', 'segNo']">
+		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['actual', 'buildingNo', 'segNo']">
 			<td>{{building.actual}}</td>
 			<td>{{building.buildingNo}}</td>
 			<td>{{building.segNo}}</td>
@@ -28,13 +28,11 @@
 			<td class="text-right">{{building.depreciatedValue | currency:"$"}}</td>
 		</tr>
         
-        <tr class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.building)" class="table-message">
 			<td colspan="9">
-            &nbsp;<!--
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            -->
+            <div ng-repeat="message in property.building[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.building[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.building[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
             </td>
 		</tr>
 

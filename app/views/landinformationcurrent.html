@@ -15,7 +15,7 @@
 			<td class="text-right">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="land in property.land.landLines[property.rollYear1]">
+		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
 			<td>{{land.muniZone}}</td>
 			<td>{{land.zone}}</td>
 			<td>{{land.landUse}}</td>
@@ -28,13 +28,11 @@
 			| currency:"$"}}</td>
 		</tr>
         
-        <tr class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.land)" class="table-message">
 			<td colspan="8">
-            &nbsp;<!--
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            -->
+            <div ng-repeat="message in property.land[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.land[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.land[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
             </td>
 		</tr>
 

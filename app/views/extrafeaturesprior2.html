@@ -13,7 +13,7 @@
 		</tr>
 
 		<tr ng-repeat="feature in
-                               property.extraFeature.extraFeatures[(property.rollYear1)-2] | orderBy:'-actualYearBuilt'">
+                               property.extraFeature[(property.rollYear1)-2].extraFeaturesInfo | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
 			<td class="text-right">{{feature.units}}</td>
@@ -23,13 +23,11 @@
 			| currency:"$"}}</td>
 		</tr>
         
-        <tr class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.extraFeature)" class="table-message">
 			<td colspan="5">
-            &nbsp;<!--
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            -->
+            <div ng-repeat="message in property.extraFeature[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
+            <div ng-repeat="message in property.extraFeature[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
+            <div ng-repeat="message in property.extraFeature[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
             </td>
 		</tr>
 
