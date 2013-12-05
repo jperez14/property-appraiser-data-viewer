@@ -76,10 +76,10 @@ angular.module('propertySearchApp')
       }
     };
 
-	var fieldTypeChanger = {
-         dateOfSale:"Date"
+    var fieldTypeChanger = {
+      dateOfSale:"Date"
     };
-	
+    
     var landLineAttr = {
       adjustedUnitPrice:   "AdjustedUnitPrice",
       calculatedValue:     "CalculatedValue",  
@@ -214,7 +214,7 @@ angular.module('propertySearchApp')
     var mailingAddressAttr = {
       address1: "Address1",
       address2: "Address2",
-	  address3: "Address3",
+      address3: "Address3",
       city: "City",
       country: "Country",
       state: "State",
@@ -286,9 +286,12 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        var message = _.map(origMessage.Message.split("|"), 
-                            function(value){return value.trim();});
-        assessment[origMessage.Year].message = message; 
+        if(! isUndefinedOrNull(origMessage.Message)){
+          var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+          assessment[origMessage.Year].message = message; 
+        }
+
       });
 
       return assessment;
@@ -310,9 +313,12 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        var message = _.map(origMessage.Message.split("|"), 
-                            function(value){return value.trim();});
-        taxable[origMessage.Year].message = message; 
+        if(! isUndefinedOrNull(origMessage.Message)){
+          var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+          taxable[origMessage.Year].message = message; 
+        }
+
       });
 
       return taxable;
@@ -366,7 +372,7 @@ angular.module('propertySearchApp')
         land.landLines = buildLandLines([]);
       else
         land.landLines = buildLandLines(data.Landlines)
-          
+      
       return land;
     };
 
@@ -387,9 +393,12 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        var message = _.map(origMessage.Message.split("|"), 
-                            function(value){return value.trim();});
-        land[origMessage.Year].message = message; 
+        if(! isUndefinedOrNull(origMessage.Message)){
+          var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+          land[origMessage.Year].message = message; 
+        }
+
       });
 
       return land;
@@ -406,7 +415,7 @@ angular.module('propertySearchApp')
         building.buildingsInfo = buildBuildingsInfo([]);
       else
         building.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
-          
+      
       return building;
     };
 
@@ -426,9 +435,12 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        var message = _.map(origMessage.Message.split("|"), 
-                            function(value){return value.trim();});
-        building[origMessage.Year].message = message; 
+        if(! isUndefinedOrNull(origMessage.Message)){
+          var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+          building[origMessage.Year].message = message; 
+        }
+
       });
 
       return building;
@@ -443,7 +455,7 @@ angular.module('propertySearchApp')
         extraFeature.extraFeatures = buildExtraFeatures([]);
       else
         extraFeature.extraFeatures = buildExtraFeatures(data.ExtraFeatureInfos);
-          
+      
       return extraFeature;
     };
 
@@ -463,9 +475,12 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        var message = _.map(origMessage.Message.split("|"), 
-                            function(value){return value.trim();});
-        extraFeature[origMessage.Year].message = message; 
+        if(! isUndefinedOrNull(origMessage.Message)){
+          var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+          extraFeature[origMessage.Year].message = message; 
+        }
+
       });
 
       return extraFeature;
