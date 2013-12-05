@@ -280,7 +280,7 @@ angular.module('propertySearchApp')
       // Switch the AssessmentInfo array into a map with key the year.
       _.each(data.AssessmentInfos, function(origAssessmentInfo){
         var assessmentInfo = buildObject(origAssessmentInfo, assessmentInfoAttr);
-        var data = {"assessmentInfo":assessmentInfo};
+        var data = {"assessmentInfo":assessmentInfo, message:[]};
         assessment[assessmentInfo.year] = data; 
       });
 
@@ -307,7 +307,7 @@ angular.module('propertySearchApp')
       // Switch the TaxableInfo array into a map with key the year.
       _.each(data.TaxableInfos, function(origTaxableInfo){
         var taxableInfo = buildObject(origTaxableInfo, taxableInfoAttr);
-        var data = {"taxableInfo":taxableInfo};
+        var data = {"taxableInfo":taxableInfo, message:[]};
         taxable[taxableInfo.year] = data; 
       });
 
@@ -387,7 +387,7 @@ angular.module('propertySearchApp')
       _.each(data.Landlines, function(origLandLine){
         var landLine = buildObject(origLandLine, landLineAttr);
         if(isUndefinedOrNull(land[landLine.year]))
-          land[landLine.year] = {landLines:[]};
+          land[landLine.year] = {landLines:[], message:[]};
         land[landLine.year].landLines.push(landLine); 
       });
 
@@ -429,7 +429,7 @@ angular.module('propertySearchApp')
       _.each(data.BuildingInfos, function(origBuildingInfo){
         var buildingInfo = buildObject(origBuildingInfo, buildingInfoAttr);
         if(isUndefinedOrNull(building[buildingInfo.year]))
-          building[buildingInfo.year] = {buildingsInfo:[]};
+          building[buildingInfo.year] = {buildingsInfo:[], message:[]};
         building[buildingInfo.year].buildingsInfo.push(buildingInfo); 
       });
 
@@ -469,7 +469,7 @@ angular.module('propertySearchApp')
       _.each(data.ExtraFeatureInfos, function(origExtraFeatureInfo){
         var extraFeatureInfo = buildObject(origExtraFeatureInfo, extraFeatureAttr);
         if(isUndefinedOrNull(extraFeature[extraFeatureInfo.year]))
-          extraFeature[extraFeatureInfo.year] = {extraFeaturesInfo:[]};
+          extraFeature[extraFeatureInfo.year] = {extraFeaturesInfo:[], message:[]};
         extraFeature[extraFeatureInfo.year].extraFeaturesInfo.push(extraFeatureInfo); 
       });
 
