@@ -549,7 +549,7 @@ angular.module('propertySearchApp')
 
       // Parse description comma separated.
       if(! _.isNull(legalDescription.description))
-        legalDescription.parsedDescription = _.map(legalDescription.description.split(","), 
+        legalDescription.parsedDescription = _.map(legalDescription.description.split("|"), 
                                                    function(value){return value.trim();});
       else
         legalDescription.parsedDescription = [];
