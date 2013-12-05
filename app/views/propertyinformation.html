@@ -39,9 +39,10 @@
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
                 <div ng-repeat="owner in property.ownersInfo">
-                    <span ng-show="$index < 2">{{owner.name}}</span> 
+					{{owner.name}}
+                    <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
                 </div>
-				<div ng-show="property.ownersInfo.length > 2 ">see full list below</div>
+				<!-- <div ng-show="property.ownersInfo.length > 2 ">see full list below</div> -->
 			</td>
 		</tr>
 

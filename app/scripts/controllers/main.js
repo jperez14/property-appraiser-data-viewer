@@ -18,14 +18,14 @@ angular.module('propertySearchApp')
       $scope.property = null;
       $scope.candidatesList = null;
     };
-	
+/*	
 	$scope.showFullListOfOwners = function() {
 		if($scope.property != null && $scope.property.ownersInfo.length > 2)
 			return true;
 		else
 			return false;
 	};
-	
+*/	
 	$scope.showFullListOfSiteAddresses = function() {
 		if($scope.property != null && $scope.property.siteAddresses.length > 1)
 			return true;
