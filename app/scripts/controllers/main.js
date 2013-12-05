@@ -66,15 +66,14 @@ angular.module('propertySearchApp')
 	};
 
     $scope.getCandidateFolio = function(folioNum){
-      $scope.folio = folioNum.trim().replace(/-/g, "");
-	  $scope.ownerName = "";
-	  $scope.address = "";
-      $scope.getPropertyByFolio();
+      var folio = folioNum.trim().replace(/-/g, "");
+      $scope.getPropertyByFolio(folio);
     };
 
-    $scope.getPropertyByFolio = function(){
+    $scope.getPropertyByFolio = function(candidateFolio){
       clearResults();
-      propertySearchService.getPropertyByFolio($scope.folio).then(function(property){
+	  var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
+      propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
       });
 
