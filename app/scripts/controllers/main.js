@@ -81,9 +81,11 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByOwner = function(){
 	  clearResults();
-	  propertySearchService.getCandidatesByOwner($scope.ownerName, 1, 200, function(result){
-		$scope.candidatesList = result;
-		console.log("candidatesList", $scope.candidatesList);
+	  propertySearchService.getCandidatesByOwner($scope.ownerName, 1, 200).then(function(candidatesList){
+		if(candidatesList.candidates.length > 1)
+			$scope.candidatesList = candidatesList;
+		else if(candidatesList.candidates.length == 1)
+			$scope.getCandidateFolio(candidatesList.candidates[0].folio);
 	  });
     };
 
@@ -95,8 +97,11 @@ angular.module('propertySearchApp')
       if(addr[1] != undefined) {
         unit = addr[1].trim();
 	  }
-	  propertySearchService.getCandidatesByAddress(fullAddr, unit, 1, 200, function(result){
-		$scope.candidatesList = result;
+	  propertySearchService.getCandidatesByAddress(fullAddr, unit, 1, 200).then(function(candidatesList){
+		if(candidatesList.candidates.length > 1)
+			$scope.candidatesList = candidatesList;
+		else if(candidatesList.candidates.length == 1)
+			$scope.getCandidateFolio(candidatesList.candidates[0].folio);
 	  });
     };
 
