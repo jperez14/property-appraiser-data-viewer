@@ -15,24 +15,30 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
-                <div ng-repeat="address in property.siteAddresses">
-					<span ng-show="$index < 1">
-						<span class="inline">{{address.streetNumber}}</span>
-						<span class="inline">{{address.streetPrefix}}</span>
-						<span class="inline">{{address.streetName}}</span>
-						<span class="inline">{{address.streetSuffix}}</span>
-						<span>{{}}</span>
-						<span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
-						<span class="inline">FL</span>
-						<span class="inline">{{address.zip}}</span>
-					</span>
-					<span ng-show="$index >= 1">
-						<span class="inline">{{address.streetNumber}}</span>
-						<span class="inline">{{address.streetPrefix}}</span>
-						<span class="inline">{{address.streetName}}</span>
-						<span class="inline">{{address.streetSuffix}}</span>
-						<span class="inline">{{address.unit}}</span>
-					</span>
+            
+                <div class="address-overflow"> <!-- add class "address-overflow" to this div only if > 5 addresses -->
+                
+                    <span ng-repeat="address in property.siteAddresses">
+                        <div class="property-add" ng-show="$index < 1">
+                            <span class="inline">{{address.streetNumber}}</span>
+                            <span class="inline">{{address.streetPrefix}}</span>
+                            <span class="inline">{{address.streetName}}</span>
+                            <span class="inline">{{address.streetSuffix}}</span>
+                            <span>{{}}</span>
+                            <span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
+                            <span class="inline">FL</span>
+                            <span class="inline">{{address.zip}}</span>
+                        </div>
+                        
+                        <span ng-show="$index >= 1">
+                            <span class="inline">{{address.streetNumber}}</span>
+                            <span class="inline">{{address.streetPrefix}}</span>
+                            <span class="inline">{{address.streetName}}</span>
+                            <span class="inline">{{address.streetSuffix}}</span>
+                            <span class="inline">{{address.unit}}</span>
+                        </span>
+                    </span>
+                    
                 </div>
 				<!-- <div ng-show="property.siteAddresses.length > 1 ">see full list below</div> -->
             </td>

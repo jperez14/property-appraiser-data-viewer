@@ -202,6 +202,21 @@ background-color: #eee !important;
 	height: 45px;
 }
 
+.address-overflow {
+	overflow-y: auto;
+	height: 95px;
+}
+
+.property-add {
+	margin-bottom:5px;
+}
+
+/*
+.address-overflow span > div {
+	margin-bottom:5px;
+}
+*/
+
 .tabular_data table {
 	font-size:11px;
 	border: 1px solid #dddddd;
