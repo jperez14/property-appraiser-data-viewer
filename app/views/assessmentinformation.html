@@ -51,18 +51,14 @@
 			| noCentsCurrency:"$"}}</td>
 		</tr>
 
-		<tr>
+		<tr class="sum-row">
 			<td><strong>Market Value</strong></td>
-			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.totalValue
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.totalValue
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.totalValue
-			| noCentsCurrency:"$"}}</td>
-		</tr>
-        
-        <tr>
-			<td colspan="4">&nbsp;</td>
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear1].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</span></td>
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear2].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</span></td>
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear3].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</span></td>
 		</tr>
 
 		<tr>

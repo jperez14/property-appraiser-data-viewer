@@ -208,7 +208,16 @@ background-color: #eee !important;
 }
 
 .property-add {
-	margin-bottom:5px;
+	margin-bottom: 5px;
+}
+
+.table-condensed > tbody > tr.sum-row > td {
+	padding: 5px 5px 10px 5px;
+}
+
+.double-line {
+	border-bottom: double #666;
+	padding-bottom: 2px;
 }
 
 /*
