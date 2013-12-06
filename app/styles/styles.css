@@ -197,6 +197,11 @@ background-color: #eee !important;
 	padding-bottom:5px;
 }
 
+.owner-overflow {
+	overflow-y: auto;
+	height: 45px;
+}
+
 .tabular_data table {
 	font-size:11px;
 	border: 1px solid #dddddd;

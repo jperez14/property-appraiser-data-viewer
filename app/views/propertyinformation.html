@@ -44,9 +44,11 @@
 -->
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
-                <div ng-repeat="owner in property.ownersInfo">
-					{{owner.name}}
-                    <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
+                <div class="owner-overflow"> <!-- add "owner-overflow" class to this div when more than 5 owners -->
+                    <div ng-repeat="owner in property.ownersInfo">
+                        {{owner.name}}
+                        <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
+                    </div>
                 </div>
 				<!-- <div ng-show="property.ownersInfo.length > 2 ">see full list below</div> -->
 			</td>
@@ -54,13 +56,15 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
-				<span>{{property.mailingAddress.address1}}</span>
-				<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
-				<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
-				<span class="inline">{{property.mailingAddress.city}}, </span>
-				<span class="inline">{{property.mailingAddress.state}}</span>
-				<span class="inline">{{property.mailingAddress.zipCode}}</span>
-				<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+				<div>
+                    <span>{{property.mailingAddress.address1}}</span>
+                    <span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
+                    <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
+                    <span class="inline">{{property.mailingAddress.city}}, </span>
+                    <span class="inline">{{property.mailingAddress.state}}</span>
+                    <span class="inline">{{property.mailingAddress.zipCode}}</span>
+                    <span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+                </div>
             </td>
 		</tr>
 
