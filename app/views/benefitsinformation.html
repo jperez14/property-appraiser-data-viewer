@@ -3,6 +3,16 @@
 		<tr>
 			<th class="tableHeader" colspan="5">Benefits Information</th>
 		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.assessment)">
+			<td colspan="5">
+                <div class="table-message">
+                    <div ng-repeat="message in property.assessment[property.rollYear1].message">{{message}}</div>
+                    <div ng-repeat="message in property.assessment[property.rollYear2].message">{{message}}</div>
+                    <div ng-repeat="message in property.assessment[property.rollYear3].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
 
 		<tr class="header-row">
 			<td>Benefit:</td>
@@ -26,16 +36,6 @@
 		<tr>
 			<td colspan="5">Note: Not all benefits are applicable to all
 				Taxable Values (i.e. County, School Board, City, Regional).</td>
-		</tr>
-        
-        <tr class="table-message">
-			<td colspan="5">
-            &nbsp;<!--
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            -->
-            </td>
 		</tr>
         
 	</table>

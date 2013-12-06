@@ -3,6 +3,14 @@
 		<tr>
 			<th class="tableHeader" colspan="8">Land Information</th>
 		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.land, property.rollYear2)">
+			<td colspan="8">
+                <div class="table-message">
+                    <div ng-repeat="message in property.land[property.rollYear2].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
 
 		<tr class="header-row">
 			<td>Muni Zone</td>
@@ -27,11 +35,5 @@
 			<td class="text-right">{{land.calculatedValue | negativeNumber | emptyCurrency:"$"}}</td>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.land, property.rollYear2)" class="table-message">
-			<td colspan="8">
-            <div ng-repeat="message in property.land[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            </td>
-		</tr>
-
 	</table>
 </div>

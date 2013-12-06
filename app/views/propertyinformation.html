@@ -10,30 +10,35 @@
 		</tr>
 
 		<tr>
-			<td width="50%"><strong>Folio</strong></td>
-			<td>{{property.propertyInfo.folioNumber}}</td>
+			<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber}}</td>
 		</tr>
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
-                <div ng-repeat="address in property.siteAddresses">
-					<span ng-show="$index < 1">
-						<span class="inline">{{address.streetNumber}}</span>
-						<span class="inline">{{address.streetPrefix}}</span>
-						<span class="inline">{{address.streetName}}</span>
-						<span class="inline">{{address.streetSuffix}}</span>
-						<span>{{}}</span>
-						<span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
-						<span class="inline">FL</span>
-						<span class="inline">{{address.zip}}</span>
-					</span>
-					<span ng-show="$index >= 1">
-						<span class="inline">{{address.streetNumber}}</span>
-						<span class="inline">{{address.streetPrefix}}</span>
-						<span class="inline">{{address.streetName}}</span>
-						<span class="inline">{{address.streetSuffix}}</span>
-						<span class="inline">{{address.unit}}</span>
-					</span>
+            
+                <div class="address-overflow"> <!-- add class "address-overflow" to this div only if > 5 addresses -->
+                
+                    <span ng-repeat="address in property.siteAddresses">
+                        <div class="property-add" ng-show="$index < 1">
+                            <span class="inline">{{address.streetNumber}}</span>
+                            <span class="inline">{{address.streetPrefix}}</span>
+                            <span class="inline">{{address.streetName}}</span>
+                            <span class="inline">{{address.streetSuffix}}</span>
+                            <span>{{}}</span>
+                            <span class="inline">{{getRenamedMunicipality(address.city)}}, </span>
+                            <span class="inline">FL</span>
+                            <span class="inline">{{address.zip}}</span>
+                        </div>
+                        
+                        <span ng-show="$index >= 1">
+                            <span class="inline">{{address.streetNumber}}</span>
+                            <span class="inline">{{address.streetPrefix}}</span>
+                            <span class="inline">{{address.streetName}}</span>
+                            <span class="inline">{{address.streetSuffix}}</span>
+                            <span class="inline">{{address.unit}}</span>
+                        </span>
+                    </span>
+                    
                 </div>
 				<!-- <div ng-show="property.siteAddresses.length > 1 ">see full list below</div> -->
             </td>
@@ -45,9 +50,11 @@
 -->
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
-                <div ng-repeat="owner in property.ownersInfo">
-					{{owner.name}}
-                    <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
+                <div class="owner-overflow"> <!-- add "owner-overflow" class to this div when more than 5 owners -->
+                    <div ng-repeat="owner in property.ownersInfo">
+                        {{owner.name}}
+                        <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
+                    </div>
                 </div>
 				<!-- <div ng-show="property.ownersInfo.length > 2 ">see full list below</div> -->
 			</td>
@@ -55,13 +62,15 @@
 
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
-				<span>{{property.mailingAddress.address1}}</span>
-				<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
-				<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
-				<span class="inline">{{property.mailingAddress.city}}, </span>
-				<span class="inline">{{property.mailingAddress.state}}</span>
-				<span class="inline">{{property.mailingAddress.zipCode}}</span>
-				<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+				<div>
+                    <span>{{property.mailingAddress.address1}}</span>
+                    <span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
+                    <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
+                    <span class="inline">{{property.mailingAddress.city}}, </span>
+                    <span class="inline">{{property.mailingAddress.state}}</span>
+                    <span class="inline">{{property.mailingAddress.zipCode}}</span>
+                    <span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
+                </div>
             </td>
 		</tr>
 
@@ -76,7 +85,7 @@
 		</tr>
 
 		<tr>
-			<td><strong>Beds / Baths / Half</strong></td>
+			<td width="50%"><strong>Beds / Baths / Half</strong></td>
 
 			<td>{{property.propertyInfo.bedroomCount}}
 			/ {{property.propertyInfo.bathroomCount}}

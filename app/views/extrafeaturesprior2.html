@@ -3,6 +3,15 @@
 		<tr>
 			<th class="tableHeader" colspan="5">Extra Features</th>
 		</tr>
+        
+		<tr ng-show="isDisplayMessages(property, property.extraFeature, property.rollYear3)">
+			<td colspan="5">
+                <div class="table-message">
+                    <div ng-repeat="message in property.extraFeature[property.rollYear3].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
+
 
 		<tr class="header-row">
 			<td>Description</td>
@@ -20,12 +29,5 @@
 			<td class="text-right">{{feature.adjustedUnitPrice | negativeNumber | currency:"$"}}</td>
 			<td class="text-right">{{feature.depreciatedValue | negativeNumber | currency:"$"}}</td>
 		</tr>
-        
-        <tr ng-show="isDisplayMessages(property, property.extraFeature, property.rollYear3)" class="table-message">
-			<td colspan="5">
-            <div ng-repeat="message in property.extraFeature[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            </td>
-		</tr>
-
 	</table>
 </div>

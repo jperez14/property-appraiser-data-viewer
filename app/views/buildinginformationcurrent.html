@@ -3,6 +3,14 @@
 		<tr>
 			<th class="tableHeader" colspan="9">Building Information</th>
 		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)">
+			<td colspan="9">
+                <div class="table-message">
+                    <div ng-repeat="message in property.building[property.rollYear1].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
 
 		<tr class="header-row">
 			<td>Actual Yr Blt</td>
@@ -28,11 +36,5 @@
 			<td class="text-right">{{building.depreciatedValue | negativeNumber | emptyCurrency:"$"}}</td>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)" class="table-message">
-			<td colspan="9">
-            <div ng-repeat="message in property.building[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            </td>
-		</tr>
-
 	</table>
 </div>
