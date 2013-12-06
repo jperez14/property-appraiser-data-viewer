@@ -41,27 +41,27 @@
 			| noCentsCurrency:"$"}}</td>
 		</tr>
 
-		<tr>
-			<td><strong>XF Value</strong></td>
-			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</td>
-			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</td>
-		</tr>
-
 		<tr class="sum-row">
-			<td><strong>Market Value</strong></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear1].assessmentInfo.totalValue
+			<td><strong>XF Value</strong></td>
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear1].assessmentInfo.extraFeatureValue
 			| noCentsCurrency:"$"}}</span></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear2].assessmentInfo.totalValue
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear2].assessmentInfo.extraFeatureValue
 			| noCentsCurrency:"$"}}</span></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear3].assessmentInfo.totalValue
+			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear3].assessmentInfo.extraFeatureValue
 			| noCentsCurrency:"$"}}</span></td>
 		</tr>
 
 		<tr>
+			<td><strong>Market Value</strong></td>
+			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessment[property.rollYear2].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</td>
+			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.totalValue
+			| noCentsCurrency:"$"}}</td>
+		</tr>
+
+		<tr class="row-divider">
 			<td><strong>Assessed Value</strong></td>
 			<td class="text-right">{{property.assessment[property.rollYear1].assessmentInfo.assessedValue
 			| noCentsCurrency:"$"}}</td>
