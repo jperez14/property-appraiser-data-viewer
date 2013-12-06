@@ -28,11 +28,9 @@
 			| currency:"$"}}</td>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.land)" class="table-message">
+        <tr ng-show="isDisplayMessages(property, property.land, property.rollYear1)" class="table-message">
 			<td colspan="8">
             <div ng-repeat="message in property.land[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.land[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.land[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
             </td>
 		</tr>
 

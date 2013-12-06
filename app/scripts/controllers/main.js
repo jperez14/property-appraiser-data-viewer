@@ -48,10 +48,16 @@ angular.module('propertySearchApp')
 			return false;
 	};
 	
-	$scope.isDisplayMessages = function(property, propertySection) {
+	$scope.isDisplayMessages = function(property, propertySection, rollYear) {
 		if(property != null && property != undefined && propertySection != null && propertySection != undefined)
 		{
-			if((propertySection[property.rollYear1] != undefined 
+			if(rollYear != null && rollYear != undefined){
+				if(propertySection[rollYear] != undefined && propertySection[rollYear].message.length > 0)
+					return true;
+				else
+					return false;
+			}
+			else if((propertySection[property.rollYear1] != undefined 
 					&& propertySection[property.rollYear1].message.length > 0)
 				|| (propertySection[property.rollYear2] != undefined 
 					&& propertySection[property.rollYear2].message.length > 0)
