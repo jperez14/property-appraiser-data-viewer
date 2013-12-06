@@ -46,7 +46,7 @@
               <div class="input-group">
                 
                  <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control add-main" ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
-                 <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite">
+                 <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
                     <span class="glyphicon glyphicon-search"></span>

@@ -12,6 +12,7 @@ angular.module('propertySearchApp')
     $scope.candidatesList = null;
     
     $scope.address = "";
+	$scope.suite = "";
 	$scope.folioMask = "99-9999-999-9999";
     
 	$scope.salesInfoGrantorName1 = false;
@@ -121,13 +122,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByAddress = function(){
 	  clearResults();
-      var addr = $scope.address.trim().split('#');
-      var fullAddr = addr[0].trim();
-      var unit = "";
-      if(addr[1] != undefined) {
-        unit = addr[1].trim();
-	  }
-	  propertySearchService.getCandidatesByAddress(fullAddr, unit, 1, 200).then(function(candidatesList){
+	  propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, 1, 200).then(function(candidatesList){
 		if(candidatesList.candidates.length > 1)
 			$scope.candidatesList = candidatesList;
 		else if(candidatesList.candidates.length == 1)
