@@ -14,10 +14,15 @@ angular.module('propertySearchApp')
     $scope.address = "";
 	$scope.folioMask = "99-9999-999-9999";
     
+	$scope.salesInfoGrantorName1 = false;
+	$scope.salesInfoGrantorName2 = false;
+
     function clearResults() {
       $scope.property = null;
       $scope.candidatesList = null;
-    };
+      $scope.salesInfoGrantorName1 = false;
+      $scope.salesInfoGrantorName2 = false;
+	};
 /*
 	$scope.showFullListOfOwners = function() {
 		if($scope.property != null && $scope.property.ownersInfo.length > 2)
@@ -48,6 +53,24 @@ angular.module('propertySearchApp')
 			return false;
 	};
 	
+	$scope.showHideSalesInfoGrantorColumns = function(salesInfo) {
+		if(salesInfo.length > 0){
+			_.each(salesInfo, function(sale){
+				if(sale.grantorName1 != null && sale.grantorName1 != undefined && sale.grantorName1.trim() != "")
+					$scope.salesInfoGrantorName1 = true;
+				if(sale.grantorName2 != null && sale.grantorName2 != undefined && sale.grantorName2.trim() != "")
+					$scope.salesInfoGrantorName2 = true;
+			});
+		}
+	};
+	
+	$scope.salesInfoColumnCount = function() {
+		var count = 4;
+		count = ($scope.salesInfoGrantorName1 == true) ? count + 1 : count;
+		count = ($scope.salesInfoGrantorName2 == true) ? count + 1 : count;
+		return count;
+	};
+
 	$scope.isDisplayMessages = function(property, propertySection, rollYear) {
 		if(property != null && property != undefined && propertySection != null && propertySection != undefined)
 		{
@@ -81,6 +104,7 @@ angular.module('propertySearchApp')
 	  var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
       propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
+		$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
       });
 
     };
