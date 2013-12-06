@@ -44,7 +44,7 @@
 
               <div class="input-group">
                 <input type="text" value="Folio" name="" id="search_box"
-	               class="form-control" ui-mask='{{folioMask}}' 
+	               class="form-control" ui-mask='{{folioMask}}' ui-keypress="{13:'getPropertyByFolio()'}"
 	               ng-model='folio' ng-click="showError=false"> <span
 						                       class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit"
@@ -60,7 +60,8 @@
             <div class="tab-pane" id="owner-name">
 
               <div class="input-group">
-                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control" ng-model='ownerName' ng-click="showError=false">
+                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" 
+					class="form-control" ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -74,7 +75,8 @@
             <div class="tab-pane" id="address">
 
               <div class="input-group">
-                <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control" ng-model='address' ng-click="showError=false">
+                <input type="text" value="Address" name="" id="search_box" placeholder="Address" 
+					class="form-control" ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
                     <span class="glyphicon glyphicon-search"></span>
