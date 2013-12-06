@@ -17,4 +17,23 @@ angular.module('propertySearchApp')
 	  return value.substring(0, sep) + ')';
 	};
 
+  }])
+  .filter('emptyCurrency', ['$filter', '$locale', function(filter, locale) {
+    var currencyFilter = filter('currency');
+	
+	return function(amount, currencySymbol) {
+	  if(amount === "")
+	    return amount;
+	  return currencyFilter(amount, currencySymbol);
+	};
+  }])
+  .filter('negativeNumber', ['$filter', '$locale', function(filter, locale) {
+	var numberFilter = filter('number');
+	return function(number, decimals) {
+	  if(number === -1)
+	    return "";
+	  if(decimals != undefined)
+	    return numberFilter(number, decimals);
+	  return numberFilter(number);
+	}
   }]);
