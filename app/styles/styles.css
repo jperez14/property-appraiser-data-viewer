@@ -107,7 +107,7 @@ div.search_area .tab-content {
 .map_area {
 	background-color:#6CF;
 	height:600px;
-	background-image: url(../images/map_bg.jpg);
+/*	background-image: url(../images/map_bg.jpg); */
 }
 
 .footer_area {

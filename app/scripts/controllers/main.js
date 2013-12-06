@@ -3,6 +3,21 @@
 angular.module('propertySearchApp')
   .controller('MainCtrl', ['$scope', 'propertySearchService', function ($scope, propertySearchService) {
 
+    function initMap(){
+      var myMap = new esri.Map('map');
+      var urlAerial = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
+      var urlStreet = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/BaseMap/MapServer";
+      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial);
+
+
+      myMap.addLayer(tiled);
+      
+      $scope.map = myMap;
+    };
+
+    // Initialize the map.
+    dojo.ready(initMap);
+
     $scope.folio = "";
     $scope.property = null;
     $scope.showError = false;
@@ -75,6 +90,14 @@ angular.module('propertySearchApp')
 	  var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
       propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
+
+      // add a point
+      var myPoint = {"geometry":{"x":857869.8,"y":488913.9},"symbol":{"color":[255,0,0,128],
+    "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+    "style":"esriSMSSquare","outline":{"color":[0,0,0,255],"width":1,
+    "type":"esriSLS","style":"esriSLSSolid"}}};
+      var gra = new esri.Graphic(myPoint);
+      $scope.map.graphics.add(gra);
       });
 
     };
