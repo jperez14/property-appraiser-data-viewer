@@ -3,6 +3,16 @@
 		<tr>
 			<th class="tableHeader" colspan="4">Assessment Information</th>
 		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.assessment)">
+			<td colspan="4">
+                <div class="table-message">
+                    <div ng-repeat="message in property.assessment[property.rollYear1].message">{{message}}</div>
+                    <div ng-repeat="message in property.assessment[property.rollYear2].message">{{message}}</div>
+                    <div ng-repeat="message in property.assessment[property.rollYear3].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
 
 		<tr class="header-row">
 			<td>Year</td>
@@ -64,16 +74,6 @@
 			<td class="text-right">{{property.assessment[property.rollYear3].assessmentInfo.assessedValue
 			| noCentsCurrency:"$"}}</td>
 		</tr>
-        
-        
-        <tr ng-show="isDisplayMessages(property, property.assessment)" class="table-message">
-			<td colspan="4">
-            <div ng-repeat="message in property.assessment[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.assessment[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            </td>
-		</tr>
-        
         
         
 	</table>
