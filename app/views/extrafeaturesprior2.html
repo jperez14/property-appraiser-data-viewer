@@ -16,11 +16,9 @@
                                property.extraFeature[(property.rollYear1)-2].extraFeaturesInfo | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td>{{feature.actualYearBuilt}}</td>
-			<td class="text-right">{{feature.units}}</td>
-			<td class="text-right">{{feature.adjustedUnitPrice
-			| currency:"$"}}</td>
-			<td class="text-right">{{feature.depreciatedValue
-			| currency:"$"}}</td>
+			<td class="text-right">{{feature.units | negativeNumber}}</td>
+			<td class="text-right">{{feature.adjustedUnitPrice | negativeNumber | currency:"$"}}</td>
+			<td class="text-right">{{feature.depreciatedValue | negativeNumber | currency:"$"}}</td>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.extraFeature, property.rollYear3)" class="table-message">
