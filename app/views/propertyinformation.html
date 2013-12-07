@@ -16,7 +16,7 @@
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
             
-                <div class="address-overflow"> <!-- add class "address-overflow" to this div only if > 5 addresses -->
+                <div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
                 
                     <span ng-repeat="address in property.siteAddresses">
                         <div class="property-add" ng-show="$index < 1">
@@ -40,7 +40,6 @@
                     </span>
                     
                 </div>
-				<!-- <div ng-show="property.siteAddresses.length > 1 ">see full list below</div> -->
             </td>
 		</tr>
 <!--		
@@ -50,13 +49,11 @@
 -->
 		<tr>
 			<td colspan="2"><strong>Owner</strong>
-                <div class="owner-overflow"> <!-- add "owner-overflow" class to this div when more than 5 owners -->
+                <div ng-class="{'owner-overflow' : property.ownersInfo.length > 3}">
                     <div ng-repeat="owner in property.ownersInfo">
                         {{owner.name}}
-                        <!-- <span ng-show="$index < 2">{{owner.name}}</span> -->
                     </div>
                 </div>
-				<!-- <div ng-show="property.ownersInfo.length > 2 ">see full list below</div> -->
 			</td>
 		</tr>
 
