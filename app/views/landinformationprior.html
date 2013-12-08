@@ -3,6 +3,14 @@
 		<tr>
 			<th class="tableHeader" colspan="8">Land Information</th>
 		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.land, property.rollYear2)">
+			<td colspan="8">
+                <div class="table-message">
+                    <div ng-repeat="message in property.land[property.rollYear2].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
 
 		<tr class="header-row">
 			<td>Muni Zone</td>
@@ -22,20 +30,10 @@
 			<td>{{land.landUse}}</td>
 			<td>{{land.useCode}}</td>
 			<td>{{land.totalAdjustments}}</td>
-			<td>{{land.units | number:2}}</td>
-			<td class="text-right">{{land.adjustedUnitPrice
-			| currency:"$"}}</td>
-			<td class="text-right">{{land.calculatedValue
-			| currency:"$"}}</td>
+			<td>{{land.units | negativeNumber:2}}</td>
+			<td class="text-right">{{land.adjustedUnitPrice | negativeNumber | emptyCurrency:"$"}}</td>
+			<td class="text-right">{{land.calculatedValue | negativeNumber | emptyCurrency:"$"}}</td>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.land)" class="table-message">
-			<td colspan="8">
-            <div ng-repeat="message in property.land[property.rollYear1].message">{{property.rollYear1}}: {{message}}</div>
-            <div ng-repeat="message in property.land[property.rollYear2].message">{{property.rollYear2}}: {{message}}</div>
-            <div ng-repeat="message in property.land[property.rollYear3].message">{{property.rollYear3}}: {{message}}</div>
-            </td>
-		</tr>
-
 	</table>
 </div>
