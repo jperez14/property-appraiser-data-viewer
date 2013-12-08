@@ -3,11 +3,10 @@
 angular.module('propertySearchApp')
   .service('esriGisService',['$q',  function ($q) {
 
-    var greet = function(){return 1};
     
-    var urlPointFolio = "http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_Test/MapServer/17";
-    var pointFromFolio = function(folio){
-      
+
+    var pointFromFolio = function($scope, folio){
+      var urlPointFolio = "http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_Test/MapServer/17";      
       var queryTask = new esri.tasks.QueryTask(urlPointFolio);
 
       var query = new esri.tasks.Query();
@@ -16,29 +15,24 @@ angular.module('propertySearchApp')
       query.outFields = ["*"];
 
       var deferred = $q.defer();
-      queryTask.execute(query).then(
-        function (featureSet) {
-          console.log("esriGIS featureset", featureSet);
+      queryTask.execute(query,function (featureSet) {
           deferred.resolve(featureSet);
-          //deferred.resolve("hello world");
-        },
-        function (error) {
+          $scope.$apply();
+        }, function (error) {
           deferred.reject(error);
+          $scope.$apply();
         });
 
 
-      return deferred.promise;
+      return deferred.promise.then(function(featureSet){console.log("featureSet",featureSet);return featureSet}, function(error){console.log('Getting pointFromFolio ERROR: ',error);return error;});
 
-      //      queryTask.execute(query, function(results){
-      //        console.log(results);
-      //      });
 
     };
     
     
+
     // public API
-    return {greet:greet,
-            getPointFromFolio:pointFromFolio
+    return {getPointFromFolio:pointFromFolio
            };
 
   }]);
