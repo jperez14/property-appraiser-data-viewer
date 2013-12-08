@@ -197,6 +197,39 @@ background-color: #eee !important;
 	padding-bottom:5px;
 }
 
+.owner-overflow {
+	overflow-y: auto;
+	height: 45px;
+}
+
+.address-overflow {
+	overflow-y: auto;
+	height: 95px;
+}
+
+.property-add {
+	margin-bottom: 5px;
+}
+
+.table-condensed > tbody > tr.sum-row > td {
+	padding: 5px 5px 10px 5px;
+}
+
+.table-condensed > tbody > tr.row-divider > td {
+	border-top:1px solid #bbb;
+}
+
+.double-line {
+	border-bottom: double #666;
+	padding-bottom: 2px;
+}
+
+/*
+.address-overflow span > div {
+	margin-bottom:5px;
+}
+*/
+
 .tabular_data table {
 	font-size:11px;
 	border: 1px solid #dddddd;
@@ -250,6 +283,7 @@ background-color: #eeeeee;
 	padding: 1px 5px 1px 15px !important;
 }
 
+/*
 table tr.table-message td {
 	background-color:#fff !important;
 	border-top:1px solid #ccc;
@@ -258,6 +292,7 @@ table tr.table-message td {
 table tr.table-message td div {
 	margin-bottom:5px;
 }
+*/
 
 /* end result table styles */
 
@@ -356,12 +391,18 @@ border-radius: 0px;
 	
 	float:left;
 	width:47%;
-	height:110px;
+	/*height:110px;*/
+	height:95px;
 }
 
 .results_record span {
 	/*display:block;*/
 	/*padding-left:60px;*/
+}
+
+.results_record strong {
+	display:inline-block;
+	width:60px;
 }
 
 .record_folio {
@@ -409,16 +450,19 @@ border-radius: 0px;
 
 #results_list {
 	/*padding:25px;*/
-	padding:15px;
+	padding:15px 15px 0 15px;
 	/*position:absolute;*/
 	z-index:100;
-	height:600px; /* set to initial size of map */
+	height:560px; /* set to initial size of map */
 	/*width:40%;*/
 
     background: #888;
 	
 	overflow:auto;
 }
+
+.add-main {width:80% !important}
+.add-suite {width:20% !important}
 
 @media (max-width: 1032px) { 
 #site_nav li a {height:75px;}
@@ -460,5 +504,7 @@ div.search_area .nav-tabs {padding-left:10px;}
 #search_dropdown {position: absolute; left:85px; margin-bottom:0; border-top-right-radius:4px; border-bottom-right-radius:4px;}
 #search_submit {width:100%; text-align:center; border-top-left-radius:4px; border-bottom-left-radius:4px;}
 
+.add-main {width:100% !important}
+.add-suite {width:100% !important}
 }
 

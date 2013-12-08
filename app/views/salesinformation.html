@@ -1,16 +1,16 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="6">Sales Information</th>
+			<th class="tableHeader" colspan="{{salesInfoColumnCount()}}">Sales Information</th>
 		</tr>
 
 		<tr class="header-row">
 			<td>Previous Sale</td>
 			<td class="text-right">Price</td>
 			<td>OR Book-Page</td>
-                        <td>Previous Owner 1</td>
-                        <td>Previous Owner 2</td>
 			<td>Qualification Description</td>
+            <td ng-show="salesInfoGrantorName1">Previous Owner 1</td>
+            <td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
 		</tr>
 
                 <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
@@ -19,13 +19,13 @@
                   <td><a href="http://www2.miami-dadeclerk.com/Public-Records/Search.aspx?search=3&amp;Rec_Book={{sale.officialRecordBook}}&amp;Rec_Page={{sale.officialRecordPage}}" 
 					target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}  <span class=
                         "glyphicon glyphicon-new-window"></span></a></td>
-                  <td>{{sale.grantorName1}}</td>
-                  <td>{{sale.grantorName2}}</td>
                   <td></td>
+                  <td ng-show="salesInfoGrantorName1">{{sale.grantorName1}}</td>
+                  <td ng-show="salesInfoGrantorName2">{{sale.grantorName2}}</td>
                 </tr>
 
 		<tr>
-			<td colspan="6">For more information about the
+			<td colspan="{{salesInfoColumnCount()}}">For more information about the
 				<a
 				href="http://dor.myflorida.com/dor/property/rp/dataformats/pdf/salequalcodes12.pdf"
 				target="_blank">Department of Revenue's Sales Qualification Codes</a>.
