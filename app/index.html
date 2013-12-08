@@ -17,6 +17,9 @@
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="styles/styles.css">
 
+<!-- dojo esri -->
+<link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="../../assets/js/html5shiv.js"></script>
@@ -36,6 +39,7 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="http://js.arcgis.com/3.7"></script>
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass/js/affix.js"></script>
@@ -68,7 +72,16 @@
         <script src="scripts/services/propertySearchService.js"></script>
         <script src="scripts/services/propertyService.js"></script>
         <script src="scripts/services/candidateService.js"></script>
+        <script src="scripts/services/esriGisService.js"></script>
         <!-- endbuild -->
+
+<script>
+  dojo.require("esri.map");
+  //dojo.require("esri.layers.FeatureLayer");
+  dojo.require("esri.layers.agstiled");
+  dojo.require("esri.graphic");
+  dojo.require("esri.tasks.query"); 
+</script>
 
 </body>
 </html>
