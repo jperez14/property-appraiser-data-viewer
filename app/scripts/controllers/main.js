@@ -6,11 +6,15 @@ angular.module('propertySearchApp')
     function initMap(){
       var myMap = new esri.Map('map');
       var urlAerial = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
+      var urlAerial2 = "http://arcgis.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
       var urlStreet = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/BaseMap/MapServer";
-      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial);
+      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial2);
 
+      var urlParcels = "http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/57";
+      //var parcels = new esri.layers.FeatureLayer(urlParcels);
 
       myMap.addLayer(tiled);
+      //myMap.addLayer(parcels);
       
       $scope.map = myMap;
     };
@@ -89,11 +93,30 @@ angular.module('propertySearchApp')
 
     $scope.getPropertyByFolio = function(candidateFolio){
 
+      // Clear previous data.
       clearResults();
+      $scope.map.graphics.clear();
+
+      // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
+
+      // Get property data.
       propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
       });
+
+      // Get xy for property and display it in map.
+      esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
+        
+        var myPoint = {"geometry":{"x":featureSet.features[0].attributes.X_COORD,"y":featureSet.features[0].attributes.Y_COORD},"symbol":{"color":[255,0,0,128],
+                                                                                                                                          "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+                                                                                                                                          "style":"esriSMSSquare","outline":{"color":[0,0,0,255],"width":1,
+                                                                                                                                                                             "type":"esriSLS","style":"esriSLSSolid"}}};
+        var gra = new esri.Graphic(myPoint);
+        $scope.map.graphics.add(gra);
+        $scope.map.centerAndZoom(myPoint.geometry, 10);
+
+      }, function(error){console.log("there was an error");})
 
     };
 
@@ -119,6 +142,13 @@ angular.module('propertySearchApp')
     };
 
   }]);
+
+
+//      var ranValue = Math.random();
+//      console.log("ranValue about to call greet service ", ranValue)
+//      esriGisService.greet($scope, ranValue).then(function(greet){
+//        console.log("The greeting is", greet);
+//      });
 
 
 //       esriGisService.getPointFromFolio(folio).then(function(featureSet){
