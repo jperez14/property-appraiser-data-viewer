@@ -18,7 +18,7 @@ angular.module('propertySearchApp')
       $scope.property = null;
       $scope.candidatesList = null;
     };
-/*
+/**
 	$scope.showFullListOfOwners = function() {
 		if($scope.property != null && $scope.property.ownersInfo.length > 2)
 			return true;
