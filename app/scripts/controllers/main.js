@@ -62,6 +62,18 @@ angular.module('propertySearchApp')
 			return false;
 	};
 */
+	$scope.showFolioStatus = function() {
+		if($scope.property != null) {
+			if($scope.property.propertyInfo.status != "AC Active") {
+				return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
+			}
+			else
+				return "";
+		}
+		else
+			return "";
+	};
+
 	$scope.getRenamedMunicipality = function(municipality) {
 		if(municipality.toUpperCase() === 'UNINCORPORATED COUNTY')
 			return "Miami";
