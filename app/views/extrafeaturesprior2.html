@@ -17,7 +17,7 @@
 			<td>Description</td>
 			<td>Year Built</td>
 			<td class="text-right">Units</td>
-			<td class="text-right">Adj Unit Price</td>
+			<td class="text-right">Adj Rate</td>
 			<td class="text-right">Calc Value</td>
 		</tr>
 
@@ -27,7 +27,7 @@
 			<td>{{feature.actualYearBuilt}}</td>
 			<td class="text-right">{{feature.units | negativeNumber}}</td>
 			<td class="text-right">{{feature.adjustedUnitPrice | negativeNumber | currency:"$"}}</td>
-			<td class="text-right">{{feature.depreciatedValue | negativeNumber | currency:"$"}}</td>
+			<td class="text-right">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 	</table>
 </div>

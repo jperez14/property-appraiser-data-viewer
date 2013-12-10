@@ -1,11 +1,11 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="8">Land Information</th>
+			<th class="tableHeader" colspan="7">Land Information</th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.land, property.rollYear2)">
-			<td colspan="8">
+			<td colspan="7">
                 <div class="table-message">
                     <div ng-repeat="message in property.land[property.rollYear2].message">{{message}}</div>
                 </div>
@@ -16,10 +16,11 @@
 			<td>Muni Zone</td>
 			<td>PA Zone</td>
 			<td>Land Use</td>
-			<td>Use Code</td>
-			<td>Total Adj</td>
+			<!-- <td>Use Code</td> -->
+			<!-- <td>Total Adj</td> -->
+			<td>Unit Type</td>
 			<td>Units</td>
-			<td class="text-right">Adj Unit Price</td>
+			<td class="text-right">Adj Rate</td>
 			<td class="text-right">Calc Value</td>
 		</tr>
 
@@ -28,11 +29,12 @@
 			<td>{{land.muniZone}}</td>
 			<td>{{land.zone}}</td>
 			<td>{{land.landUse}}</td>
-			<td>{{land.useCode}}</td>
-			<td>{{land.totalAdjustments}}</td>
+			<!-- <td>{{land.useCode}}</td> -->
+			<!-- <td>{{land.totalAdjustments}}</td> -->
+			<td>{{land.unitType}}</td>
 			<td>{{land.units | negativeNumber:2}}</td>
 			<td class="text-right">{{land.adjustedUnitPrice | negativeNumber | emptyCurrency:"$"}}</td>
-			<td class="text-right">{{land.calculatedValue | negativeNumber | emptyCurrency:"$"}}</td>
+			<td class="text-right">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
         
 	</table>

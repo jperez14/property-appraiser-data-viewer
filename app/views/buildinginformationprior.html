@@ -1,11 +1,11 @@
 <div class="table-responsive table-oversized">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="9">Building Information</th>
+			<th class="tableHeader" colspan="7">Building Information</th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.building, property.rollYear2)">
-			<td colspan="9">
+			<td colspan="7">
                 <div class="table-message">
                     <div ng-repeat="message in property.building[property.rollYear2].message">{{message}}</div>
                 </div>
@@ -13,14 +13,14 @@
 		</tr>
 
 		<tr class="header-row">
-			<td>Actual Yr Blt</td>
-			<td>Building No</td>
+			<td>Year Blt</td>
+			<td>Building Nbr</td>
 			<td>Sub Area</td>
 			<td class="text-right">Actual Area</td>
 			<td class="text-right">Effective Area</td>
-			<td class="text-right">Adjusted Price</td>
-			<td class="text-right">Replacement Cost New</td>
-			<td>% Good</td>
+			<td class="text-right">Adj Rate</td>
+			<!-- <td class="text-right">Replacement Cost New</td> -->
+			<!-- <td>% Good</td> -->
 			<td class="text-right">Calc Value</td>
 		</tr>
 
@@ -32,9 +32,9 @@
 			<td class="text-right">{{building.actualArea | negativeNumber}}</td>
 			<td class="text-right">{{building.effectiveArea | negativeNumber}}</td>
 			<td class="text-right">{{building.adjustedBasePrice | negativeNumber}}</td>
-			<td class="text-right">{{building.replacementCostNew | negativeNumber | emptyCurrency:"$"}}</td>
-			<td>{{building.percentageGood | negativeNumber:2}}</td>
-			<td class="text-right">{{building.depreciatedValue | negativeNumber | emptyCurrency:"$"}}</td>
+			<!-- <td class="text-right">{{building.replacementCostNew | negativeNumber | emptyCurrency:"$"}}</td> -->
+			<!-- <td>{{building.percentageGood | negativeNumber:2}}</td> -->
+			<td class="text-right">{{building.depreciatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 
 	</table>
