@@ -11,10 +11,10 @@ angular.module('propertySearchApp')
       var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial2);
 
       var urlParcels = "http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/57";
-      //var parcels = new esri.layers.FeatureLayer(urlParcels);
+      var parcels = new esri.layers.FeatureLayer(urlParcels);
 
       myMap.addLayer(tiled);
-      //myMap.addLayer(parcels);
+      myMap.addLayer(parcels);
       
       $scope.map = myMap;
     };
@@ -130,13 +130,17 @@ angular.module('propertySearchApp')
       clearResults();
       $scope.map.graphics.clear();
 
+      // resize map container
+      $scope.mapStyle = {width:'100%', height:'600px'};
+      $scope.map.resize();
+
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
 
       // Get property data.
       propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
-		$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
       });
 
       // Get xy for property and display it in map.
