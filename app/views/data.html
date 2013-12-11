@@ -106,23 +106,10 @@
 
   <!-- <div class="alert alert-danger col-md-10 col-sm-5" ng-show="showError">No data was returned for {{folio}}</div> -->
   
-  <!-- script not working due to property element being created on the fly 
-  <script>
-    $( document ).ready(function() {
-    
-    $('.map_area').on('click', function(){ // this click function is just to attach map... not sure how you would connect this
-    // make the map the height of the property information
-    var prop_info_height = $('.property_info').css('height');
-    $('.map_area').css('height', prop_info_height);
-    });
-    });
-  </script>
-  -->
-
   <div class="content main_content_body">
 
     <div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
-
+    
     <div class="row" ng-show="candidatesList">
       <div class="col-md-12 col-sm-12">
         <div class="property_info tabular_data">
@@ -131,22 +118,18 @@
       </div>
     </div>
     
-    <div class="row" ng-show="property">
+    <div class="row">
       <div class="col-md-4 col-sm-5">
-        <div class="property_info tabular_data">
+        <div class="property_info tabular_data" ng-show="property">
           <div ng-include="'views/propertyinformation.html'"></div>
         </div>
       </div>
-      <div class="col-md-8 col-sm-7"> <!-- drop map component in this div-->
-        <!--<div ng-show="candidatesList"
-        ng-include="'views/ownerinformation.html'"></div>-->
-        <!--
-        <div ng-show="property" class="map_area">MAP</div>
-        -->
-        <div ng-show="property" class="hero-unit, map_area">
-          <div id="map" class="map_area" ng-style="mapStyle"></div>
+      <div class="col-md-8 col-sm-7"> 
+
+        <div class="hero-unit map_container">
+          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: property == null}"></div>
         </div>
-        <div ng-show="candidatesList" class="map_area">MAP</div>
+        
       </div>
     </div>
     
