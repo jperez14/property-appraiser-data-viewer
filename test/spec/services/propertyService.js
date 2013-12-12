@@ -453,7 +453,7 @@ describe('Service: propertyService', function () {
   it('map incoming SalesInfos fields to our salesInfo model fields',function(){
     var givenProperty = {SalesInfos: [{
       DateOfSale: "9/1/1982",
-      DocuementStamps: 0,
+      DocumentStamps: 0,
       OfficialRecordBook: "11557",
       OfficialRecordPage: "0429",
       QualifiedFlag: null,
@@ -461,15 +461,16 @@ describe('Service: propertyService', function () {
       ReasonCode: "00",
       ReviewCoad: null,
       SalePrice: 60000,
-      SalesId: 3,
-      SalesInstrument: null,
+      SaleId: 3,
+      SaleInstrument: null,
       VacantFlag: "",
       ValidCoad: null,
       VerifyCoad: null,
       GranteeName1: "Joe",
       GranteeName2: "Peter",
       GrantorName1: "Frank",
-      GrantorName2: "Jane"
+      GrantorName2: "Jane",
+      QualificationDescription: "2008 and prior year"
 
 
 
@@ -477,7 +478,7 @@ describe('Service: propertyService', function () {
 
     var expectedProperty = {salesInfo: [{
       dateOfSale: new Date("9/1/1982"),
-      docuementStamps: 0,
+      documentStamps: 0,
       officialRecordBook: "11557",
       officialRecordPage: "0429",
       qualifiedFlag: null,
@@ -485,15 +486,16 @@ describe('Service: propertyService', function () {
       reasonCode: "00",
       reviewCoad: null,
       salePrice: 60000,
-      salesId: 3,
-      salesInstrument: null,
+      saleId: 3,
+      saleInstrument: null,
       vacantFlag: "",
       validCoad: null,
       verifyCoad: null,
       granteeName1: "Joe",
       granteeName2: "Peter",
       grantorName1: "Frank",
-      grantorName2: "Jane"
+      grantorName2: "Jane",
+      qualificationDescription: "2008 and prior year"
     }]};
 
     var property = new propertyService.Property(givenProperty);

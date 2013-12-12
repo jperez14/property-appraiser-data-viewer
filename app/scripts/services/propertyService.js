@@ -140,7 +140,7 @@ angular.module('propertySearchApp')
 
     var saleInfoAttr = {
       dateOfSale:           "DateOfSale",             
-      docuementStamps:      "DocuementStamps",        
+      documentStamps:       "DocumentStamps",        
       officialRecordBook:   "OfficialRecordBook",     
       officialRecordPage:   "OfficialRecordPage",     
       qualifiedFlag:        "QualifiedFlag",          
@@ -148,15 +148,16 @@ angular.module('propertySearchApp')
       reasonCode:           "ReasonCode",             
       reviewCoad:           "ReviewCoad",             
       salePrice:            "SalePrice",              
-      salesId:              "SalesId",                
-      salesInstrument:      "SalesInstrument",        
+      saleId:               "SaleId",                
+      saleInstrument:       "SaleInstrument",        
       vacantFlag:           "VacantFlag",             
       validCoad:            "ValidCoad",              
       verifyCoad:           "VerifyCoad",
       granteeName1:         "GranteeName1",
       granteeName2:         "GranteeName2",
       grantorName1:         "GrantorName1",
-      grantorName2:         "GrantorName2"              
+      grantorName2:         "GrantorName2",
+      qualificationDescription: "QualificationDescription"              
 
     };                  
 
