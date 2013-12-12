@@ -24,6 +24,8 @@ angular.module('propertySearchApp')
       this.rollYear1 = null;
       this.rollYear2 = null;
       this.rollYear3 = null;
+	  this.message = null;
+	  this.completed = null;
 
       
       if(isUndefinedOrNull(data)) {
@@ -33,6 +35,8 @@ angular.module('propertySearchApp')
         this.rollYear1 = null;
         this.rollYear2 = null;
         this.rollYear3 = null;
+		this.message = null;
+		this.completed = null;
 
         this.land = buildLand({})
         this.building = buildBuilding({})
@@ -58,6 +62,8 @@ angular.module('propertySearchApp')
         this.rollYear1 = data.RollYear1;
         this.rollYear2 = this.rollYear1 - 1;
         this.rollYear3 = this.rollYear1 - 2;
+		this.message = data.Message;
+		this.completed = data.Completed;
 
         this.land = buildLand(data.Land); 
         this.building = buildBuilding(data.Building); 

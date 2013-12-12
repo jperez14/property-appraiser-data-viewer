@@ -74,7 +74,7 @@ angular.module('propertySearchApp')
 */
 	$scope.showFolioStatus = function() {
 		if($scope.property != null) {
-			if($scope.property.propertyInfo.status != "AC Active") {
+			if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
 				return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
 			}
 			else
@@ -158,20 +158,28 @@ angular.module('propertySearchApp')
       // Get property data.
       propertySearchService.getPropertyByFolio(folio).then(function(property){
         $scope.property = property;
-	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-      });
+		$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+		$scope.showError = $scope.property.completed === false ? true : false;
+		$scope.errorMsg = $scope.property.completed === false ? $scope.property.message : "";
+      }, function(error){console.log("getPropertyByFolio error "+error);});
 
       // Get xy for property and display it in map.
       esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
         
-        var myPoint = {"geometry":{"x":featureSet.features[0].attributes.X_COORD,"y":featureSet.features[0].attributes.Y_COORD},"symbol":{"color":[255,0,0,128],
-                                                                                                                                          "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-                                                                                                                                          "style":"esriSMSSquare","outline":{"color":[0,0,0,255],"width":1,
-                                                                                                                                                                             "type":"esriSLS","style":"esriSLSSolid"}}};
-        var gra = new esri.Graphic(myPoint);
-        $scope.map.graphics.add(gra);
-        $scope.map.centerAndZoom(myPoint.geometry, 10);
-
+        if(featureSet.features.length > 0) {
+			var myPoint = {"geometry":{
+				"x":featureSet.features[0].attributes.X_COORD,
+				"y":featureSet.features[0].attributes.Y_COORD},
+				"symbol":{"color":[255,0,0,128],
+					"size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+					"style":"esriSMSSquare",
+					"outline":{"color":[0,0,0,255],"width":1,"type":"esriSLS","style":"esriSLSSolid"}
+				}
+			};
+			var gra = new esri.Graphic(myPoint);
+			$scope.map.graphics.add(gra);
+			$scope.map.centerAndZoom(myPoint.geometry, 10);
+		}
       }, function(error){console.log("there was an error");})
 
     };
@@ -184,7 +192,7 @@ angular.module('propertySearchApp')
 			$scope.candidatesList = candidatesList;
 		else if(candidatesList.candidates.length == 1)
 			$scope.getCandidateFolio(candidatesList.candidates[0].folio);
-	  });
+	  }, function(error){console.log("getCandidatesByOwner error "+error);});
     };
 
     $scope.getCandidatesByAddress = function(){
@@ -194,7 +202,7 @@ angular.module('propertySearchApp')
 			$scope.candidatesList = candidatesList;
 		else if(candidatesList.candidates.length == 1)
 			$scope.getCandidateFolio(candidatesList.candidates[0].folio);
-	  });
+	  }, function(error){console.log("getCandidatesByOwner error "+error);});
 
     };
 
