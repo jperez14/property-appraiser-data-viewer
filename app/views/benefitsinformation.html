@@ -4,12 +4,12 @@
 			<th class="tableHeader" colspan="5">Benefits Information</th>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.assessment)">
+        <tr ng-show="true">
 			<td colspan="5">
                 <div class="table-message">
-                    <div ng-repeat="message in property.assessment[property.rollYear1].message">{{message}}</div>
-                    <div ng-repeat="message in property.assessment[property.rollYear2].message">{{message}}</div>
-                    <div ng-repeat="message in property.assessment[property.rollYear3].message">{{message}}</div>
+                    <div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>
+                    <div ng-repeat="message in property.benefit.messages[property.rollYear2]">{{message}}</div>
+                    <div ng-repeat="message in property.benefit.messages[property.rollYear3]">{{message}}</div>
                 </div>
             </td>
 		</tr>
@@ -24,13 +24,15 @@
 
 		</tr>
 
-		<tr ng-repeat="benefit in property.benefitsInfo">
-			<td><strong>{{benefit.description}}</strong></td>
-                        <td>{{benefit.type}}</td>
-                        <td class="text-right">{{benefit.values[0] | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefit.values[1] | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefit.values[2] | noCentsCurrency:"$"}}</td>
-		</tr>
+		<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
+			<td><strong>{{benefitType}}</strong></td>
+
+                        <td>{{benefitsByYear[property.rollYear1].type}}</td>
+                        <td class="text-right">{{benefitsByYear[property.rollYear1].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefitsByYear[property.rollYear2].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefitsByYear[property.rollYear3].value | noCentsCurrency:"$"}}</td>
+
+                </tr>
 
 
 		<tr>

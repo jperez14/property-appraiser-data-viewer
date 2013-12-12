@@ -18,7 +18,7 @@ angular.module('propertySearchApp')
       this.siteAddresses = [];
       this.salesInfo = [];
       this.ownersInfo = [];
-      this.benefitsInfo = [];
+      this.benefit = {};
       this.district = null;
       this.geoParcel = null;
       this.rollYear1 = null;
@@ -39,6 +39,7 @@ angular.module('propertySearchApp')
         this.extraFeature = buildExtraFeature({});
         this.assessment = buildAssessment({});
         this.taxable = buildTaxable({});
+        this.benefit = buildBenefit({});
 
         this.propertyInfo = buildPropertyInfo({});
         this.mailingAddress = buildMailingAddress({});
@@ -47,7 +48,7 @@ angular.module('propertySearchApp')
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
         this.ownersInfo = buildOwnersInfo([]);
-        this.benefitsInfo = buildBenefitsInfo([]);
+
 
       }
       else{
@@ -71,7 +72,7 @@ angular.module('propertySearchApp')
         this.siteAddresses = buildSiteAddresses(data.SiteAddress);
         this.salesInfo = buildSalesInfo(data.SalesInfos);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
-        this.benefitsInfo = buildBenefitsInfo(data.BenefitInfos, this.rollYear1);
+        this.benefit = buildBenefit(data.Benefit);
 
       }
     };
@@ -80,6 +81,14 @@ angular.module('propertySearchApp')
       dateOfSale:"Date"
     };
     
+    var benefitAttr = {
+      description: "Description",
+      message:     "Message",
+      year:        "TaxYear",
+      type:        "Type",
+      value:       "Value"
+    };
+
     var landLineAttr = {
       adjustedUnitPrice:   "AdjustedUnitPrice",
       calculatedValue:     "CalculatedValue",  
@@ -279,6 +288,9 @@ angular.module('propertySearchApp')
         if(! isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
+          // add the message array to the year.
+          if(isUndefinedOrNull(assessment[origMessage.Year]))
+            assessment[origMessage.Year] = {assessmentInfo:[], message:[]};
           assessment[origMessage.Year].message = message; 
         }
 
@@ -306,6 +318,9 @@ angular.module('propertySearchApp')
         if(! isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
+          // add the message array to the year.
+          if(isUndefinedOrNull(taxable[origMessage.Year]))
+            taxable[origMessage.Year] = {taxableInfo:[], message:[]};
           taxable[origMessage.Year].message = message; 
         }
 
@@ -316,45 +331,29 @@ angular.module('propertySearchApp')
 
 
 
-    var buildBenefitsInfo = function(data, baseYear){
-
-      // data not given - return an empty array.
+    var buildBenefit= function(data){
+      var benefit = {benefits:{}, messages:{}};
       if(isUndefinedOrNull(data))
-        return [];      
+        return benefit;
 
-      var groupedBenefits = {};
-      var benefit = {};
-
-      // group same type of benefits.
-      _.each(data, function(originalBenefit){
-        benefit = {};
-        if(_.isUndefined(groupedBenefits[originalBenefit.Description])){
-          benefit.description = originalBenefit.Description;
-          benefit.type = originalBenefit.Type;
-          benefit.data = {};
-          benefit.data[originalBenefit.TaxYear] = originalBenefit.Value;
-
-          groupedBenefits[originalBenefit.Description] = benefit;          
-        }else{
-          benefit = groupedBenefits[originalBenefit.Description];
-          benefit.data[originalBenefit.TaxYear] = originalBenefit.Value;
-        }
-
+      // Group by benefit description
+      _.each(data.BenefitInfos, function(originalBenefit){
+        var mappedBenefit = buildObject(originalBenefit, benefitAttr);
+        if(isUndefinedOrNull(benefit.benefits[mappedBenefit.description]))
+          benefit.benefits[mappedBenefit.description] = {};
+        benefit.benefits[mappedBenefit.description][mappedBenefit.year] = mappedBenefit;
       });
 
-      // pick from benefit.data the baseYear and two prior
-      _.each(groupedBenefits, function(benefitType, key){
-        benefitType.values = [];
-        benefitType.values.push(benefitType.data[baseYear] || 0);
-        benefitType.values.push(benefitType.data[baseYear-1] || 0);
-        benefitType.values.push(benefitType.data[baseYear-2] || 0);
+      _.each(data.Messages, function(origMessage){
+        var message = _.map(origMessage.Message.split("|"), 
+                              function(value){return value.trim();});
+        benefit.messages[origMessage.Year] = message;
       });
 
-      return _.values(groupedBenefits);
-      
+      return benefit;
+
     };
     
-
 
 
     var buildLand = function(data){
@@ -376,6 +375,9 @@ angular.module('propertySearchApp')
         if(! isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
+          // add the message array to the year.
+          if(isUndefinedOrNull(land[origMessage.Year]))
+            land[origMessage.Year] = {landLines:[], message:[]};
           land[origMessage.Year].message = message; 
         }
 
@@ -408,6 +410,9 @@ angular.module('propertySearchApp')
         if(! isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
+          // add the message array to the year.
+          if(isUndefinedOrNull(building[origMessage.Year]))
+            building[origMessage.Year] = {buildingsInfo:[], message:[]};
           building[origMessage.Year].message = message; 
         }
 
@@ -438,6 +443,9 @@ angular.module('propertySearchApp')
         if(! isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
+          // add the message array to the year.
+          if(isUndefinedOrNull(extraFeature[origMessage.Year]))
+            extraFeature[origMessage.Year] = {extraFeaturesInfo:[], message:[]};
           extraFeature[origMessage.Year].message = message; 
         }
 
@@ -551,13 +559,16 @@ angular.module('propertySearchApp')
     var buildObject = function(data, attributes){
 
       // map fields, and when field does not exists
-      // assign it to null.
+      // assign it to null. 
+      // -1 should be converted to NULL.
       var result = {};      
 
       _.each(attributes, function(value, key){
         if(isUndefinedOrNull(data))
           result[key] = null;
         else if ( _.isUndefined(data[value]))
+          result[key] = null;
+        else if(data[value] === -1)
           result[key] = null;
         else
           result[key] = data[value]; 
