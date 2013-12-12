@@ -178,7 +178,7 @@ angular.module('propertySearchApp')
       bathroomCount:             "BathroomCount",                     
       bedroomCount:              "BedroomCount",            
       buildingEffectiveArea:     "BuildingEffectiveArea",   
-      DORCodeCurrent:            "DORCodeCurrent",          
+      DORCode:                   "DORCode",          
       DORDescription:            "DORDescription",          
       floorCount:                "FloorCount",              
       folioNumber:               "FolioNumber",             
