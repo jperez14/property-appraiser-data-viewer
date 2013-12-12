@@ -9,14 +9,19 @@ angular.module('propertySearchApp')
       var urlAerial = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
       var urlAerial2 = "http://arcgis.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
       var urlStreet = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/BaseMap/MapServer";
-      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial2);
+      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial);
 
       var urlParcels = "http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/57";
       var parcels = new esri.layers.FeatureLayer(urlParcels);
 
+      //Add layers.
       myMap.addLayer(tiled);
       myMap.addLayer(parcels);
       
+      //Add events.
+      myMap.on("click", $scope.mapClicked);
+
+
       $scope.map = myMap;
 	  
     };
@@ -24,8 +29,11 @@ angular.module('propertySearchApp')
     // Initialize the map.
     dojo.ready(initMap);
 
+    $scope.mapClicked = function(event){console.log("map has been clicked again", event.mapPoint.x, event.mapPoint.y)};
+
     $scope.folio = "";
     $scope.property = null;
+    
     $scope.showError = false;
     $scope.errorMsg = "";
     

@@ -125,6 +125,7 @@ angular.module('propertySearchApp')
       units:             "Units",             
       useCode:           "UseCode",
       percentCondition:  "PercentCondition",
+      message:           "Message",
       year:              "RollYear"
     };                  
 
@@ -156,19 +157,7 @@ angular.module('propertySearchApp')
       granteeName2:         "GranteeName2",
       grantorName1:         "GrantorName1",
       grantorName2:         "GrantorName2"              
-      //appraiserNote:        "AppraiserNote",            
-      //etlRunId:             "Etlrun_id",              
-      //grantee2:             "Grantee2",               
-      //granteeName:          "GranteeName",     
-      //grantor1:             "Grantor1",
-      //grantor2:             "Grantor2",               
-      //grantorName:          "GrantorName",            
-      //lineNumber:           "LineNumber",             
-      //modifTp:              "Modif_tp",               
-      //note:                 "Note",                   
-      //receivedDate:         "ReceivedDate",           
-      //resetFlag:            "ResetFlag",              
-      //strap:                "Strap",                  
+
     };                  
 
     var siteAddressAttr = {
@@ -364,17 +353,7 @@ angular.module('propertySearchApp')
       
     };
     
-    var buildLand2 = function(data){
-      var land = {};
-      if(isUndefinedOrNull(data))
-        land.landLines = buildLandLines([]);
-      else if(isUndefinedOrNull(data.Landlines))
-        land.landLines = buildLandLines([]);
-      else
-        land.landLines = buildLandLines(data.Landlines)
-      
-      return land;
-    };
+
 
 
     var buildLand = function(data){
@@ -407,17 +386,7 @@ angular.module('propertySearchApp')
 
 
 
-    var buildBuilding2 = function(data){
-      var building = {};
-      if(isUndefinedOrNull(data))
-        building.buildingsInfo = buildBuildingsInfo([]);
-      else if(isUndefinedOrNull(data.BuildingInfos))
-        building.buildingsInfo = buildBuildingsInfo([]);
-      else
-        building.buildingsInfo = buildBuildingsInfo(data.BuildingInfos);
-      
-      return building;
-    };
+
 
     var buildBuilding = function(data){
 
@@ -447,17 +416,7 @@ angular.module('propertySearchApp')
     };
 
 
-    var buildExtraFeature2 = function(data){
-      var extraFeature = {};
-      if(isUndefinedOrNull(data))
-        extraFeature.extraFeatures = buildExtraFeatures([]);
-      else if(isUndefinedOrNull(data.ExtraFeatureInfos))
-        extraFeature.extraFeatures = buildExtraFeatures([]);
-      else
-        extraFeature.extraFeatures = buildExtraFeatures(data.ExtraFeatureInfos);
-      
-      return extraFeature;
-    };
+
 
     var buildExtraFeature = function(data){
 
@@ -547,7 +506,7 @@ angular.module('propertySearchApp')
           legalDescription[key] = data[value]; 
       });
 
-      // Parse description comma separated.
+      // Parse description piped (|) separated.
       if(! _.isNull(legalDescription.description))
         legalDescription.parsedDescription = _.map(legalDescription.description.split("|"), 
                                                    function(value){return value.trim();});

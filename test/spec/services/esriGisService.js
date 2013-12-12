@@ -15,7 +15,5 @@ describe('Service: esriGisService', function () {
     expect(!!esriGisService).toBe(true);
   });
 
-  it('should fail', function(){
-    expect(esriGisService.greet()).toBe(333333);
-  });
+
 });

@@ -25,7 +25,7 @@ describe('Service: propertySearchService', function () {
     District: 1,
     ExemptionInfo: {AgDifferentialValueCurrent: 0},
     PropertyInfo: {FolioNumber: "01-3126-042-0370"},
-    LegalDescription: {Description: "A,B,C"}
+    LegalDescription: {Description: "A|B|C"}
   };
   
   var mockCandidatesList = {
