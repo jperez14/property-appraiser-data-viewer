@@ -4,6 +4,7 @@ angular.module('propertySearchApp')
   .controller('MainCtrl', ['$scope', 'propertySearchService', 'esriGisService', function ($scope, propertySearchService, esriGisService) {
 
     function initMap(){
+		
       var myMap = new esri.Map('map');
       var urlAerial = "http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
       var urlAerial2 = "http://arcgis.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer";
@@ -17,6 +18,7 @@ angular.module('propertySearchApp')
       myMap.addLayer(parcels);
       
       $scope.map = myMap;
+	  
     };
 
     // Initialize the map.
@@ -141,10 +143,6 @@ angular.module('propertySearchApp')
       // Clear previous data.
       clearResults();
       $scope.map.graphics.clear();
-
-      // resize map container
-      $scope.mapStyle = {width:'100%', height:'600px'};
-      $scope.map.resize();
 
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;

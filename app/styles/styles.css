@@ -104,10 +104,22 @@ div.search_area .tab-content {
 	margin:0;
 }
 
+.map_container {
+	position:relative;
+	overflow:hidden;
+}
+
 .map_area {
-	background-color:#6CF;
+	width:100%;
 	height:600px;
-/*	background-image: url(../images/map_bg.jpg); */
+}
+
+#map {
+	height:600px;
+}
+
+.map_absolute {
+	position:absolute;
 }
 
 .footer_area {
@@ -165,6 +177,7 @@ div.search_area .tab-content {
 
 #property_info {
 	border: 1px solid #dddddd;
+	height:600px;
 }
 
 #property_info.table-striped > tbody > tr:nth-child(odd) > td {
