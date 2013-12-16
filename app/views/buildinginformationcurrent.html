@@ -24,7 +24,7 @@
 			<td class="text-right">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['actual', 'buildingNo', 'segNo']">
+		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['-actual', 'buildingNo', 'segNo']">
 			<td>{{building.actual}}</td>
 			<td>{{building.buildingNo}}</td>
 			<td>{{building.segNo}}</td>
