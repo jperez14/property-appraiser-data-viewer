@@ -21,12 +21,36 @@ angular.module('propertySearchApp')
       //Add events to map.
       map.on("click", $scope.mapClicked);
 
+
+      // Enable Navagation Fatures
+      dojo.connect(map, 'onLoad',function(){
+        map.enableRubberBandZoom();
+        map.disableScrollWheelZoom();
+      });
+
+
+
       $scope.map = map;
+
+//      dojo.connect(map, 'onLoad', function(theMap) {
+//        //create the draw toolbar 
+//        toolbar = new esri.toolbars.Draw(map);
+//        dojo.connect(toolbar,"onDrawEnd",drawEndHandler);
+//      });
       
     };
 
     // Initialize the map.
     dojo.ready(initMap);
+
+    $scope. activateToolbar = function (){
+        toolbar.activate(esri.toolbars.Draw.EXTENT);
+    };
+
+    $scope.drawEndHandler  = function (geometry){
+        toolbar.deactivate();
+
+    };
 
     $scope.mapClicked = function(event){
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
