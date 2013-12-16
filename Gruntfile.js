@@ -87,6 +87,14 @@ module.exports = function (grunt) {
           //rewrite: {
           //  '^/context': '/ArcGIS/rest/services/Gic/MapServer/43/query'
           //}
+      },
+      {
+          context: ['/ArcGIS'],
+          host: 's0142357.miamidade.gov',
+          port: 80,
+          https: false,
+          changeOrigin: false,
+          xforward: false 
       }
       ],
       livereload: {

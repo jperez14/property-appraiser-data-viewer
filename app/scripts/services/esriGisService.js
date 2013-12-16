@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('esriGisService',['$q',  function ($q) {
+  .service('esriGisService',['$q', 'paConfiguration',  function ($q, paConfig) {
 
-    
 
     var pointFromFolio = function($scope, folio){
-      var urlPointFolio = "http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_Test/MapServer/17";      
-      var queryTask = new esri.tasks.QueryTask(urlPointFolio);
+
+      var url = paConfig.urlCoordFromFolio;       
+      var queryTask = new esri.tasks.QueryTask(url);
 
       var query = new esri.tasks.Query();
       query.returnGeometry = false;
@@ -28,11 +28,49 @@ angular.module('propertySearchApp')
 
 
     };
-    
+
+    var folioFromPoint = function ($scope, x, y){
+      var url = paConfig.urlParcelLayer;
+      return featuresFromPointLayerIntersection($scope, x, y, url, false).then(function(featureSet){
+        if(featureSet.features.length > 0)
+          return featureSet.features[0].attributes.FOLIO;
+        else
+          return "";
+        
+      } ,function(error){return error;});
+    };
+
+    var featuresFromPointLayerIntersection = function ($scope, x, y, url, returnGeometry){
+      // build hte query.
+      var point = new esri.geometry.Point(x, y, new esri.SpatialReference(paConfig.wkidJson));
+      var query = new esri.tasks.Query();
+      query.geometry = point;
+      query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_INTERSECTS;
+      query.returnGeometry = returnGeometry;
+      query.outFields = ["*"];
+      query.outSpatialReference = paConfig.wkidJson; 
+
+      // execute the query.
+      var queryTask = new esri.tasks.QueryTask(url);
+
+      var deferred = $q.defer();
+      queryTask.execute(query,function (featureSet) {
+          deferred.resolve(featureSet);
+          $scope.$apply();
+        }, function (error) {
+          deferred.reject(error);
+          $scope.$apply();
+        });
+
+
+      return deferred.promise.then(function(featureSet){console.log("featureSet",featureSet);return featureSet}, function(error){console.log('Getting pointFromFolio ERROR: ',error);return error;});
+
+    };
     
 
     // public API
-    return {getPointFromFolio:pointFromFolio
+    return {getPointFromFolio:pointFromFolio,
+            getFolioFromPoint:folioFromPoint
            };
 
   }]);

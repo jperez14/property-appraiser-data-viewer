@@ -92,7 +92,8 @@ angular.module('propertySearchApp')
       message:     "Message",
       year:        "TaxYear",
       type:        "Type",
-      value:       "Value"
+      value:       "Value",
+      url:         "Url" 
     };
 
     var landLineAttr = {
