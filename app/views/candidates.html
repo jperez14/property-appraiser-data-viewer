@@ -6,7 +6,7 @@
 		<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the search results to get more information.</p>
 	</div>
 
-	<div class="results_record" ng-repeat="candidate in candidatesList.candidates">
+	<div class="results_record" ng-repeat="candidate in candidatesList.candidates | orderBy:['siteAddress']">
 		<span class="record_number">{{$index + 1}}</span>
 		<div class="record_folio"><strong>FOLIO:</strong> <a href="" ng-click="getCandidateFolio(candidate.folio)">{{candidate.folio}}</a></div>
 		<div class="record_owner"><strong>OWNER:</strong> {{candidate.firstOwner}}</div>
