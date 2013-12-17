@@ -162,11 +162,13 @@ angular.module('propertySearchApp')
       return count;
     };
 
-    $scope.isDisplayMessages = function(property, propertySection, rollYear) {
+	$scope.isDisplayMessages = function(property, propertySection, rollYear) {
       if(property != null && property != undefined && propertySection != null && propertySection != undefined)
       {
 	if(rollYear != null && rollYear != undefined){
-	  if(propertySection[rollYear] != undefined && propertySection[rollYear].message.length > 0)
+	  if(propertySection.messages != undefined && propertySection.messages.length > 0)
+	    return true;
+	  else if(propertySection[rollYear] != undefined && propertySection[rollYear].message.length > 0)
 	    return true;
 	  else
 	    return false;
