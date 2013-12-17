@@ -28,8 +28,8 @@
 			<td>{{building.actual}}</td>
 			<td>{{building.buildingNo}}</td>
 			<td>{{building.segNo}}</td>
-			<td class="text-right">{{building.actualArea}}</td>
-			<td class="text-right">{{building.effectiveArea}}</td>
+			<td class="text-right">{{building.actualArea | number}}</td>
+			<td class="text-right">{{building.effectiveArea | number}}</td>
 			<td class="text-right">{{building.adjustedBasePrice | currency:"$"}}</td>
 			<!-- <td class="text-right">{{building.replacementCostNew | negativeNumber | emptyCurrency:"$"}}</td> -->
 			<!-- <td>{{building.percentageGood | negativeNumber:2}}</td> -->
