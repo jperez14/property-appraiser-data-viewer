@@ -6,7 +6,22 @@ angular.module('propertySearchApp')
     //Completed, Message
     var Candidates = function(data) {
       this.candidates = [];
-      this.candidates = buildCandidates(data.MinimumPropertyInfos);
+	  this.completed = null;
+	  this.message = null;
+	  this.total = null;
+	  
+	  if(isUndefinedOrNull(data)) {
+	    this.completed = null;
+	    this.message = null;
+	    this.total = null;
+        this.candidates = buildCandidates([]);
+	  }
+	  else{
+	    this.completed = data.Completed;
+	    this.message = data.Message;
+	    this.total = data.Total;
+        this.candidates = buildCandidates(data.MinimumPropertyInfos);
+	  }
     };
 
     /**

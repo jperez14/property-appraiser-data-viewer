@@ -190,9 +190,9 @@
         
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
-          <li><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
-          <li><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear1)" class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear2)"><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear3)"><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
         </ul>
 
         <!-- Tab panes -->
