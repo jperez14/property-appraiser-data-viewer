@@ -25,13 +25,13 @@
 		</tr>
 
 		<tr ng-repeat="building in
-                               property.building[(property.rollYear1)-2].buildingsInfo | orderBy:['actual', 'buildingNo', 'segNo']">
+                               property.building[(property.rollYear1)-2].buildingsInfo | orderBy:['-actual', 'buildingNo', 'segNo']">
 			<td>{{building.actual}}</td>
 			<td>{{building.buildingNo}}</td>
 			<td>{{building.segNo}}</td>
 			<td class="text-right">{{building.actualArea}}</td>
 			<td class="text-right">{{building.effectiveArea}}</td>
-			<td class="text-right">{{building.adjustedBasePrice}}</td>
+			<td class="text-right">{{building.adjustedBasePrice | currency:"$"}}</td>
 			<td class="text-right">{{building.depreciatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 
