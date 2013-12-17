@@ -77,14 +77,9 @@ angular.module('propertySearchApp')
     $scope.municipalityOnOff = function(){
       var geometry = esriGisService.getMunicipalityFromPoint($scope, 857822.4, 489075.1);
       geometry.then(function(geometry){
-
-  var myPolygon = {"geometry":geometry,
-    "symbol":{"color":[255,0,0,64],"outline":{"color":[0,0,0,255],
-    "width":1,"type":"esriSLS","style":"esriSLSSolid"},
-    "type":"esriSFS","style":"esriSFSSolid"}};
-
-	  var gra = new esri.Graphic(myPolygon);
-	  $scope.map.graphics.add(gra);
+        var myPolygon = {"geometry":geometry, "symbol":paConfig.layerSymbol};
+	var gra = new esri.Graphic(myPolygon);
+	$scope.map.graphics.add(gra);
       });
     };
     
@@ -209,11 +204,7 @@ angular.module('propertySearchApp')
 	  var myPoint = {"geometry":{
 	    "x":featureSet.features[0].attributes.X_COORD,
 	    "y":featureSet.features[0].attributes.Y_COORD},
-			 "symbol":{"color":[255,0,0,128],
-				   "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-				   "style":"esriSMSSquare",
-				   "outline":{"color":[0,0,0,255],"width":1,"type":"esriSLS","style":"esriSLSSolid"}
-				  }
+		         "symbol":paConfig.propertyMarkerSymbol
 			};
 	  var gra = new esri.Graphic(myPoint);
 	  $scope.map.graphics.add(gra);
