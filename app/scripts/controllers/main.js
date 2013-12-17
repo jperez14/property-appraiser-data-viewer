@@ -74,6 +74,21 @@ angular.module('propertySearchApp')
     $scope.salesInfoGrantorName1 = false;
     $scope.salesInfoGrantorName2 = false;
 
+    $scope.municipalityOnOff = function(){
+      var geometry = esriGisService.getMunicipalityFromPoint($scope, 857822.4, 489075.1);
+      geometry.then(function(geometry){
+
+  var myPolygon = {"geometry":geometry,
+    "symbol":{"color":[255,0,0,64],"outline":{"color":[0,0,0,255],
+    "width":1,"type":"esriSLS","style":"esriSLSSolid"},
+    "type":"esriSFS","style":"esriSFSSolid"}};
+
+	  var gra = new esri.Graphic(myPolygon);
+	  $scope.map.graphics.add(gra);
+      });
+    };
+    
+
     function clearResults() {
       $scope.property = null;
       $scope.candidatesList = null;

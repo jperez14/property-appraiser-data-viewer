@@ -24,9 +24,11 @@ angular.module('propertySearchApp')
         });
 
 
-      return deferred.promise.then(function(featureSet){console.log("featureSet",featureSet);return featureSet}, function(error){console.log('Getting pointFromFolio ERROR: ',error);return error;});
-
-
+      return deferred.promise.then(function(featureSet){
+        console.log("featureSet",featureSet);
+        return featureSet}, function(error){
+          console.log('Getting pointFromFolio ERROR: ',error);
+          return error;});
     };
 
     var folioFromPoint = function ($scope, x, y){
@@ -40,6 +42,19 @@ angular.module('propertySearchApp')
       } ,function(error){return error;});
     };
 
+    var municipalityFromPoint = function($scope, x, y){
+      var url = paConfig.urlMunicipalityLayer;
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
+        if(featureSet.features.length > 0)
+          return featureSet.features[0].geometry;
+        else
+          return null;
+        
+      } ,function(error){return error;});
+
+      
+    };
+    
     var featuresFromPointLayerIntersection = function ($scope, x, y, url, returnGeometry){
       // build hte query.
       var point = new esri.geometry.Point(x, y, new esri.SpatialReference(paConfig.wkidJson));
@@ -63,14 +78,19 @@ angular.module('propertySearchApp')
         });
 
 
-      return deferred.promise.then(function(featureSet){console.log("featureSet",featureSet);return featureSet}, function(error){console.log('Getting pointFromFolio ERROR: ',error);return error;});
+      return deferred.promise.then(function(featureSet){
+        console.log("featureSet",featureSet);
+        return featureSet}, function(error){
+          console.log('Getting pointFromFolio ERROR: ',error);
+          return error;});
 
     };
     
 
     // public API
     return {getPointFromFolio:pointFromFolio,
-            getFolioFromPoint:folioFromPoint
+            getFolioFromPoint:folioFromPoint,
+            getMunicipalityFromPoint:municipalityFromPoint
            };
 
   }]);
