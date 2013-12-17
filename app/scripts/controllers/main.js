@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', 'propertySearchService', 'esriGisService', 'paConfiguration', function ($scope, propertySearchService, esriGisService, paConfig) {
+  .controller('MainCtrl', ['$scope', '$q', 'propertySearchService', 'esriGisService', 'paConfiguration', function ($scope, $q, propertySearchService, esriGisService, paConfig) {
 
     function initMap(){
 
@@ -15,8 +15,10 @@ angular.module('propertySearchApp')
       //Add layers.
       var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial);
       var parcels = new esri.layers.FeatureLayer(urlParcelLayer);
+      var layers = new esri.layers.GraphicsLayer({id:"layers"});
       map.addLayer(tiled);
       map.addLayer(parcels);
+      map.addLayer(layers);
       
       //Add events to map.
       map.on("click", $scope.mapClicked);
@@ -53,6 +55,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.mapClicked = function(event){
+
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){$scope.getPropertyByFolio(folioValue);}, function(error){});
     };
@@ -74,13 +77,26 @@ angular.module('propertySearchApp')
     $scope.salesInfoGrantorName1 = false;
     $scope.salesInfoGrantorName2 = false;
 
-    $scope.municipalityOnOff = function(){
-      var geometry = esriGisService.getMunicipalityFromPoint($scope, 857822.4, 489075.1);
-      geometry.then(function(geometry){
-        var myPolygon = {"geometry":geometry, "symbol":paConfig.layerSymbol};
-	var gra = new esri.Graphic(myPolygon);
-	$scope.map.graphics.add(gra);
-      });
+    $scope.layers = paConfig.layers;
+
+    $scope.turnLayerOnOff = function(layer){
+
+      if (layer.value === true){
+        var geometry = esriGisService.getMunicipalityFromPoint($scope, layer, 857822.4, 489075.1);
+        geometry.then(function(geometry){
+          var myPolygon = {"geometry":geometry, "symbol":paConfig.layerSymbol, "attributes":layer};
+	  var gra = new esri.Graphic(myPolygon);
+	  $scope.map.getLayer("layers").add(gra);
+        });
+      }else{
+        _.each($scope.map.getLayer("layers").graphics, function(graphicLayer){
+          if(graphicLayer.attributes !== null)
+            if(graphicLayer.attributes.label === layer.label)
+	      $scope.map.getLayer("layers").remove(graphicLayer);              
+        });
+      }
+       
+      
     };
     
 
@@ -185,9 +201,17 @@ angular.module('propertySearchApp')
       // Clear previous data.
       clearResults();
       $scope.map.graphics.clear();
+      $scope.map.getLayer("layers").clear();
+
+
+      // resize map container
+      //$scope.mapStyle = {width:'100%', height:'200px'};
+      //$scope.map.resize();
+
 
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
+
 
       // Get property data.
       propertySearchService.getPropertyByFolio(folio).then(function(property){
@@ -195,7 +219,7 @@ angular.module('propertySearchApp')
 	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
 	$scope.showError = $scope.property.completed === false ? true : false;
 	$scope.errorMsg = $scope.property.completed === false ? $scope.property.message : "";
-      }, function(error){console.log("getPropertyByFolio error "+error);});
+      }, function(error){console.log("getPropertyByFolio error ", error);});
 
       // Get xy for property and display it in map.
       esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
@@ -211,6 +235,8 @@ angular.module('propertySearchApp')
 	  $scope.map.centerAndZoom(myPoint.geometry, 10);
 	}
       }, function(error){console.log("there was an error");})
+
+      //$q.all(property, geometry).then(function(data){console.log("Operation DONE");});
 
     };
 

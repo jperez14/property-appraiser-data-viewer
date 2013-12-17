@@ -10,6 +10,10 @@ angular.module('propertySearchApp')
     urlParcelLayer:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/57",
     urlMunicipalityLayer:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/31",
 
+    layers:[{label:"Municipality", value:false, url:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/31"},
+            {label:"Commission District", value:false, url:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/11"}],
+
+
     layerSymbol:{"color":[255,0,0,64],"outline":{"color":[0,0,0,255],
                                                  "width":1,"type":"esriSLS","style":"esriSLSSolid"},
                  "type":"esriSFS","style":"esriSFSSolid"},
