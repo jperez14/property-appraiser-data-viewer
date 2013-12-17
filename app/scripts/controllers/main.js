@@ -65,6 +65,9 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
+	$scope.fromPage = 1;
+	$scope.toPage = 200;
+	$scope.itemsPerFetch = 200;
     
     $scope.address = "";
 
@@ -92,6 +95,8 @@ angular.module('propertySearchApp')
     function clearResults() {
       $scope.property = null;
       $scope.candidatesList = null;
+	  $scope.fromPage = 1;
+	  $scope.toPage = 200;
 
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
@@ -223,24 +228,42 @@ angular.module('propertySearchApp')
 
     };
 
-    $scope.getCandidatesByOwner = function(){
+	$scope.fetchNextPage = function() {
+		if($scope.toPage >= $scope.candidatesList.total) {
+            $scope.showError = true;
+            $scope.errorMsg = "You are on the last page of results";
+		}
+		else {
+			$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
+			$scope.toPage = $scope.toPage + $scope.itemsPerFetch;
+			propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
+			  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
+			  console.log("candidates updated", $scope.candidatesList);
+			}, function(error) {
+			  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
+			  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
+			  console.log("error when fetching nextPage of candidates"+error);
+			});
+		}
+	};
 
+    $scope.getCandidatesByOwner = function(){
       clearResults();
-      propertySearchService.getCandidatesByOwner($scope.ownerName, 1, 200).then(function(candidatesList){
-	if(candidatesList.candidates.length > 1)
-	  $scope.candidatesList = candidatesList;
-	else if(candidatesList.candidates.length == 1)
-	  $scope.getCandidateFolio(candidatesList.candidates[0].folio);
+      propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(candidatesList){
+	    if(candidatesList.candidates.length > 1)
+	      $scope.candidatesList = candidatesList;
+	    else if(candidatesList.candidates.length == 1)
+	      $scope.getCandidateFolio(candidatesList.candidates[0].folio);
       }, function(error){console.log("getCandidatesByOwner error "+error);});
     };
 
     $scope.getCandidatesByAddress = function(){
       clearResults();
-      propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, 1, 200).then(function(candidatesList){
-	if(candidatesList.candidates.length > 1)
-	  $scope.candidatesList = candidatesList;
-	else if(candidatesList.candidates.length == 1)
-	  $scope.getCandidateFolio(candidatesList.candidates[0].folio);
+      propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(candidatesList){
+	    if(candidatesList.candidates.length > 1)
+	      $scope.candidatesList = candidatesList;
+	    else if(candidatesList.candidates.length == 1)
+	      $scope.getCandidateFolio(candidatesList.candidates[0].folio);
       }, function(error){console.log("getCandidatesByOwner error "+error);});
 
     };
