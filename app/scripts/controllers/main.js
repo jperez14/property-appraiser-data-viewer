@@ -201,31 +201,40 @@ angular.module('propertySearchApp')
 
       // Get property data.
       propertySearchService.getPropertyByFolio(folio).then(function(property){
-        $scope.property = property;
-	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-	$scope.showError = $scope.property.completed === false ? true : false;
-	$scope.errorMsg = $scope.property.completed === false ? $scope.property.message : "";
+		if(property.completed == true) {
+			if(_.isNull(property.propertyInfo.folioNumber)) {
+				$scope.showError = property.completed;
+				$scope.errorMsg = property.message;
+			}
+			else {
+              $scope.property = property;
+              $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+			}
+		}
+		else {
+			$scope.showError = !property.completed;
+			$scope.errorMsg = property.message;
+		}
       }, function(error){console.log("getPropertyByFolio error "+error);});
 
       // Get xy for property and display it in map.
       esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
         
-        if(featureSet.features.length > 0) {
-	  var myPoint = {"geometry":{
-	    "x":featureSet.features[0].attributes.X_COORD,
-	    "y":featureSet.features[0].attributes.Y_COORD},
-			 "symbol":{"color":[255,0,0,128],
-				   "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-				   "style":"esriSMSSquare",
-				   "outline":{"color":[0,0,0,255],"width":1,"type":"esriSLS","style":"esriSLSSolid"}
-				  }
-			};
-	  var gra = new esri.Graphic(myPoint);
-	  $scope.map.graphics.add(gra);
-	  $scope.map.centerAndZoom(myPoint.geometry, 10);
-	}
-      }, function(error){console.log("there was an error");})
-
+        if(featureSet.features != undefined && featureSet.features.length > 0) {
+	      var myPoint = {"geometry":{
+	        "x":featureSet.features[0].attributes.X_COORD,
+	        "y":featureSet.features[0].attributes.Y_COORD},
+			"symbol":{"color":[255,0,0,128],
+			  "size":12,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+			  "style":"esriSMSSquare",
+			  "outline":{"color":[0,0,0,255],"width":1,"type":"esriSLS","style":"esriSLSSolid"}
+		    }
+		  };
+	      var gra = new esri.Graphic(myPoint);
+	      $scope.map.graphics.add(gra);
+	      $scope.map.centerAndZoom(myPoint.geometry, 10);
+	   }
+       }, function(error){console.log("there was an error");})
     };
 
 	$scope.fetchNextPage = function() {
@@ -247,23 +256,43 @@ angular.module('propertySearchApp')
 		}
 	};
 
-    $scope.getCandidatesByOwner = function(){
+	$scope.getCandidatesByOwner = function(){
       clearResults();
-      propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(candidatesList){
-	    if(candidatesList.candidates.length > 1)
-	      $scope.candidatesList = candidatesList;
-	    else if(candidatesList.candidates.length == 1)
-	      $scope.getCandidateFolio(candidatesList.candidates[0].folio);
+      propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
+		if(result.completed == true) {
+			if(result.candidates.length == 0) {
+				$scope.showError = result.completed;
+				$scope.errorMsg = result.message;
+			}
+			else if(result.candidates.length == 1)
+			  $scope.getCandidateFolio(result.candidates[0].folio);
+			else if(result.candidates.length > 1)
+			  $scope.candidatesList = result;
+		}
+		else {
+			$scope.showError = !result.completed;
+			$scope.errorMsg = result.message;
+		}
       }, function(error){console.log("getCandidatesByOwner error "+error);});
     };
 
     $scope.getCandidatesByAddress = function(){
       clearResults();
-      propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(candidatesList){
-	    if(candidatesList.candidates.length > 1)
-	      $scope.candidatesList = candidatesList;
-	    else if(candidatesList.candidates.length == 1)
-	      $scope.getCandidateFolio(candidatesList.candidates[0].folio);
+      propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
+		if(result.completed == true) {
+			if(result.candidates.length == 0) {
+				$scope.showError = result.completed;
+				$scope.errorMsg = result.message;
+			}
+			else if(result.candidates.length == 1)
+			  $scope.getCandidateFolio(result.candidates[0].folio);
+			else if(result.candidates.length > 1)
+			  $scope.candidatesList = result;
+		}
+		else {
+			$scope.showError = !result.completed;
+			$scope.errorMsg = result.message;
+		}
       }, function(error){console.log("getCandidatesByOwner error "+error);});
 
     };
