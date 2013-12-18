@@ -45,6 +45,7 @@ angular.module('propertySearchApp')
     // Initialize the map.
     dojo.ready(initMap);
 
+	$scope.joseFlag = true;
     $scope. activateToolbar = function (){
         toolbar.activate(esri.toolbars.Draw.EXTENT);
     };
@@ -227,6 +228,7 @@ angular.module('propertySearchApp')
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
       $scope.resetLayers();
+	  $scope.joseFlag = false;
 
       // resize map container
       //$scope.mapStyle = {width:'100%', height:'200px'};

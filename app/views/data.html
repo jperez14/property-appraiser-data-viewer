@@ -138,7 +138,8 @@
       <div class="col-md-8 col-sm-7"> 
 
         <div class="hero-unit map_container">
-          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: property == null}"></div>
+          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: property == null}" ng-show="property || joseFlag"></div>             
+          
         </div>
         
       </div>
@@ -157,6 +158,35 @@
       </ul>
       
     </div>
+    
+    <script>
+
+    $(document).ready(function() {
+		$('body').on('click', 'span.pop-icon', function(){
+		
+		var current_popover = $(this).attr('id');
+		
+		//console.log($('div.popover').length);
+
+				
+				if ($(this).next('.popover').is(':visible')) {
+					
+					$('span.pop-icon').popover('destroy');
+				//console.log('hide just the current one clicked - because it was open');
+					
+					} else {
+				
+				
+				$('span.pop-icon').popover('destroy');
+				$('#' + current_popover + '').popover('show');
+				//console.log('hiding everyone and showing THIS');
+				
+					}
+
+		});
+	});
+	
+    </script>
 
     <div class="row tabular_data">
       <div class="col-md-6">
