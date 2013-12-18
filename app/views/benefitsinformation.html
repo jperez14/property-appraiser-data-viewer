@@ -4,7 +4,7 @@
 			<th class="tableHeader" colspan="5">Benefits Information <span class="glyphicon glyphicon-info-sign"></span></th>
 		</tr>
         
-        <tr ng-show="true">
+        <tr ng-show="isDisplayMessages(property, property.benefit)">
 			<td colspan="5">
                 <div class="table-message">
                     <div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>

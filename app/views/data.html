@@ -16,6 +16,16 @@
         <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/facebook-search.png"></a>
         <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/twitter-search.png"></a>
       </div>
+
+      <!-- Layer List  -->
+      <div>
+            <ul ng-repeat="layer in layers">
+              <li>{{layer.label}}
+                <input type="checkbox" ng-model="layer.value" ng-change="turnLayerOnOff(layer)">
+              </li>
+            </ul>
+      </div>
+
       
       <!-- Nav tabs -->
       <ul class="nav nav-tabs">
@@ -37,10 +47,6 @@
 
         <div class="col-md-6 col-sm-7 col-xs-12 text-right">
 
-          <span>
-            Municipality: <input type="checkbox" ng-model="value1" ng-change="municipalityOnOff()">
-            District: <input type="checkbox">
-          </span>
 
           <!-- Tab panes -->
           <div class="tab-content">
@@ -184,9 +190,9 @@
         
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
-          <li><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
-          <li><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear1)" class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear2)"><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear3)"><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
         </ul>
 
         <!-- Tab panes -->
