@@ -247,8 +247,12 @@ angular.module('propertySearchApp')
 	      var gra = new esri.Graphic(myPoint);
 	      $scope.map.graphics.add(gra);
 	      $scope.map.centerAndZoom(myPoint.geometry, 10);
-	   }
-       }, function(error){console.log("there was an error");})
+	    }
+      }, function(error){
+	    console.log("there was an error");
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
     };
 
 	$scope.fetchNextPage = function() {
@@ -287,7 +291,11 @@ angular.module('propertySearchApp')
 			$scope.showError = !result.completed;
 			$scope.errorMsg = result.message;
 		}
-      }, function(error){console.log("getCandidatesByOwner error "+error);});
+      }, function(error){
+	    console.log("getCandidatesByOwner error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
     };
 
     $scope.getCandidatesByAddress = function(){
@@ -307,10 +315,42 @@ angular.module('propertySearchApp')
 			$scope.showError = !result.completed;
 			$scope.errorMsg = result.message;
 		}
-      }, function(error){console.log("getCandidatesByOwner error "+error);});
+      }, function(error){
+	    console.log("getCandidatesByAddress error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
 
     };
 
-  }]);
+    $scope.getCandidatesByPartialFolio = function(){
+      clearResults();
+	  //TODO : compute and populate partialFolio
+	  var partialFolio = "";
+      propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
+		if(result.completed == true) {
+			if(result.candidates.length == 0) {
+				$scope.showError = result.completed;
+				$scope.errorMsg = result.message;
+			}
+			else if(result.candidates.length == 1)
+			  $scope.getCandidateFolio(result.candidates[0].folio);
+			else if(result.candidates.length > 1)
+			  $scope.candidatesList = result;
+		}
+		else {
+			$scope.showError = !result.completed;
+			$scope.errorMsg = result.message;
+		}
+      }, function(error){
+	    console.log("getCandidatesByPartialFolio error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
+
+    };
+
+
+	}]);
 
 
