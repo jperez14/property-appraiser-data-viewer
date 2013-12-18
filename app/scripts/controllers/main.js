@@ -85,7 +85,7 @@ angular.module('propertySearchApp')
     $scope.turnLayerOnOff = function(layer){
 
       if (layer.value === true){
-        var geometry = esriGisService.getMunicipalityFromPoint($scope, layer, 857822.4, 489075.1);
+        var geometry = esriGisService.getMunicipalityFromPoint($scope, layer, $scope.property.location.x, $scope.property.location.y);
         geometry.then(function(geometry){
           var myPolygon = {"geometry":geometry, "symbol":paConfig.layerSymbol, "attributes":layer};
 	  var gra = new esri.Graphic(myPolygon);
@@ -233,7 +233,7 @@ angular.module('propertySearchApp')
 
 
       // Get property data.
-      propertySearchService.getPropertyByFolio(folio).then(function(property){
+      var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
 		if(property.completed == true) {
 			if(_.isNull(property.propertyInfo.folioNumber)) {
 				$scope.showError = property.completed;
@@ -248,11 +248,12 @@ angular.module('propertySearchApp')
 			$scope.showError = !property.completed;
 			$scope.errorMsg = property.message;
 		}
+        return $scope.property;
       }, function(error){console.log("getPropertyByFolio error "+error);});
 
 
       // Get xy for property and display it in map.
-      esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
+      var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
         
 
         if(featureSet.features != undefined && featureSet.features.length > 0) {
@@ -263,13 +264,15 @@ angular.module('propertySearchApp')
 			};
 	  var gra = new esri.Graphic(myPoint);
 	  $scope.map.graphics.add(gra);
-	  $scope.map.centerAndZoom(myPoint.geometry, 10);
+	  $scope.map.centerAndZoom(myPoint.geometry, 10);          
 	}
-      }, function(error){console.log("there was an error");})
+          return {
+	    "x":featureSet.features[0].attributes.X_COORD,
+	    "y":featureSet.features[0].attributes.Y_COORD};
+      }, function(error){console.log("there was an error");});
 
-      //$q.all(property, geometry).then(function(data){console.log("Operation DONE");});
-
-
+      $q.all([propertyPromise, geometryPromise]).then(function(data){
+        $scope.property.location = data[1];});
     };
 
 	$scope.fetchNextPage = function() {
