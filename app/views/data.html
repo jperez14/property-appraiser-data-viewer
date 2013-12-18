@@ -157,6 +157,35 @@
       </ul>
       
     </div>
+    
+    <script>
+
+    $(document).ready(function() {
+		$('body').on('click', 'span.pop-icon', function(){
+		
+		var current_popover = $(this).attr('id');
+		
+		//console.log($('div.popover').length);
+
+				
+				if ($(this).next('.popover').is(':visible')) {
+					
+					$('span.pop-icon').popover('destroy');
+				//console.log('hide just the current one clicked - because it was open');
+					
+					} else {
+				
+				
+				$('span.pop-icon').popover('destroy');
+				$('#' + current_popover + '').popover('show');
+				//console.log('hiding everyone and showing THIS');
+				
+					}
+
+		});
+	});
+	
+    </script>
 
     <div class="row tabular_data">
       <div class="col-md-6">

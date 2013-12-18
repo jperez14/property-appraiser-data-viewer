@@ -1,10 +1,10 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="5">Benefits Information <span class="glyphicon glyphicon-info-sign"></span></th>
+			<th class="tableHeader" colspan="5">Benefits Information <span id="benefits-help" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Benefits Description" data-content="This is the content for the pop over! And here is another sentence to see how things start to look when you have long winded messages."></span></th>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.benefit)">
+        <tr ng-show="true">
 			<td colspan="5">
                 <div class="table-message">
                     <div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>

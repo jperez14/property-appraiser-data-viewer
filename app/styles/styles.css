@@ -297,6 +297,30 @@ background-color: #eeeeee;
 	padding: 1px 5px 1px 15px !important;
 }
 
+.tableHeader span.glyphicon {
+	font-size: 16px;
+	color: #cccccc;
+	padding-left: 10px;
+}
+
+.tableHeader span.glyphicon:hover {
+	cursor:pointer;
+}
+
+.popover-title {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.popover-content {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:11px;
+}
+
+
 /*
 table tr.table-message td {
 	background-color:#fff !important;
