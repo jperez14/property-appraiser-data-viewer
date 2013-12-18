@@ -55,7 +55,6 @@ angular.module('propertySearchApp')
     };
 
     $scope.mapClicked = function(event){
-
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){$scope.getPropertyByFolio(folioValue);}, function(error){});
     };
@@ -81,6 +80,12 @@ angular.module('propertySearchApp')
     $scope.salesInfoGrantorName2 = false;
 
     $scope.layers = paConfig.layers;
+    $scope.resetLayers = function(){
+      _.each($scope.layers, function(layer){
+        layer.value = false;
+      });
+    };
+    
 
     $scope.turnLayerOnOff = function(layer){
 
@@ -221,7 +226,7 @@ angular.module('propertySearchApp')
       clearResults();
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
-
+      $scope.resetLayers();
 
       // resize map container
       //$scope.mapStyle = {width:'100%', height:'200px'};
@@ -265,10 +270,12 @@ angular.module('propertySearchApp')
 	  var gra = new esri.Graphic(myPoint);
 	  $scope.map.graphics.add(gra);
 	  $scope.map.centerAndZoom(myPoint.geometry, 10);          
-	}
           return {
 	    "x":featureSet.features[0].attributes.X_COORD,
 	    "y":featureSet.features[0].attributes.Y_COORD};
+	}else{
+          return $q.reject("No point found");
+        }
       }, function(error){
 	    console.log("there was an error");
 		$scope.showError = true;
