@@ -13,9 +13,9 @@
 		</tr>
 
 		<tr class="header-row">
-			<td>Muni Zone</td>
-			<td>PA Zone</td>
-			<td>Land Use</td>
+        	<td>Primary Land Use</td>
+			<td class="text-center">Muni Zone</td>
+			<td class="text-center">PA Zone</td>
 			<!-- <td>Use Code</td> -->
 			<!-- <td>Total Adj</td> -->
 			<td>Unit Type</td>
@@ -25,9 +25,9 @@
 		</tr>
 
 		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
-			<td>{{land.muniZone}}</td>
-			<td>{{land.zone}}</td>
 			<td>{{land.landUse}}</td>
+            <td class="text-center">{{land.muniZone}}</td>
+			<td class="text-center">{{land.zone}}</td>
 			<!-- <td>{{land.useCode}}</td> -->
 			<!--<td>{{land.totalAdjustments}}</td> -->
 			<td>{{land.unitType}}</td>

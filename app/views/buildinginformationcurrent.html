@@ -13,9 +13,10 @@
 		</tr>
 
 		<tr class="header-row">
-			<td>Year Blt</td>
-			<td>Building Nbr</td>
-			<td>Sub Area</td>
+        
+        	<td class="text-center">Building Nbr</td>
+        	<td class="text-center">Sub Area</td>
+			<td class="text-center">Year Blt</td>
 			<td class="text-right">Actual Area</td>
 			<td class="text-right">Effective Area</td>
 			<td class="text-right">Adj Rate</td>
@@ -25,9 +26,9 @@
 		</tr>
 
 		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['-actual', 'buildingNo', 'segNo']">
-			<td>{{building.actual}}</td>
-			<td>{{building.buildingNo}}</td>
-			<td>{{building.segNo}}</td>
+			<td class="text-center">{{building.buildingNo}}</td>
+			<td class="text-center">{{building.segNo}}</td>
+            <td class="text-center">{{building.actual}}</td>
 			<td class="text-right">{{building.actualArea}}</td>
 			<td class="text-right">{{building.effectiveArea}}</td>
 			<td class="text-right">{{building.adjustedBasePrice | currency:"$"}}</td>
