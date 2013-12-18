@@ -32,7 +32,7 @@
 			<!--<td>{{land.totalAdjustments}}</td> -->
 			<td>{{land.unitType}}</td>
 			<td>{{land.units | negativeNumber:2}}</td>
-			<td class="text-right">{{land.adjustedUnitPrice | emptyCurrency:"$"}}</td>
+			<td class="text-right">{{land.adjustedUnitPrice | currency:"$"}}</td>
 			<td class="text-right">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 

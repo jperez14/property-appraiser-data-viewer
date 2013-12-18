@@ -55,7 +55,6 @@ angular.module('propertySearchApp')
     };
 
     $scope.mapClicked = function(event){
-
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){$scope.getPropertyByFolio(folioValue);}, function(error){});
     };
@@ -81,6 +80,12 @@ angular.module('propertySearchApp')
     $scope.salesInfoGrantorName2 = false;
 
     $scope.layers = paConfig.layers;
+    $scope.resetLayers = function(){
+      _.each($scope.layers, function(layer){
+        layer.value = false;
+      });
+    };
+    
 
     $scope.turnLayerOnOff = function(layer){
 
@@ -221,7 +226,7 @@ angular.module('propertySearchApp')
       clearResults();
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
-
+      $scope.resetLayers();
 
       // resize map container
       //$scope.mapStyle = {width:'100%', height:'200px'};
@@ -265,11 +270,17 @@ angular.module('propertySearchApp')
 	  var gra = new esri.Graphic(myPoint);
 	  $scope.map.graphics.add(gra);
 	  $scope.map.centerAndZoom(myPoint.geometry, 10);          
-	}
           return {
 	    "x":featureSet.features[0].attributes.X_COORD,
 	    "y":featureSet.features[0].attributes.Y_COORD};
-      }, function(error){console.log("there was an error");});
+	}else{
+          return $q.reject("No point found");
+        }
+      }, function(error){
+	    console.log("there was an error");
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
 
       $q.all([propertyPromise, geometryPromise]).then(function(data){
         $scope.property.location = data[1];});
@@ -311,7 +322,11 @@ angular.module('propertySearchApp')
 			$scope.showError = !result.completed;
 			$scope.errorMsg = result.message;
 		}
-      }, function(error){console.log("getCandidatesByOwner error "+error);});
+      }, function(error){
+	    console.log("getCandidatesByOwner error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
     };
 
     $scope.getCandidatesByAddress = function(){
@@ -331,10 +346,42 @@ angular.module('propertySearchApp')
 			$scope.showError = !result.completed;
 			$scope.errorMsg = result.message;
 		}
-      }, function(error){console.log("getCandidatesByOwner error "+error);});
+      }, function(error){
+	    console.log("getCandidatesByAddress error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
 
     };
 
-  }]);
+    $scope.getCandidatesByPartialFolio = function(){
+      clearResults();
+	  //TODO : compute and populate partialFolio
+	  var partialFolio = "";
+      propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
+		if(result.completed == true) {
+			if(result.candidates.length == 0) {
+				$scope.showError = result.completed;
+				$scope.errorMsg = result.message;
+			}
+			else if(result.candidates.length == 1)
+			  $scope.getCandidateFolio(result.candidates[0].folio);
+			else if(result.candidates.length > 1)
+			  $scope.candidatesList = result;
+		}
+		else {
+			$scope.showError = !result.completed;
+			$scope.errorMsg = result.message;
+		}
+      }, function(error){
+	    console.log("getCandidatesByPartialFolio error "+error);
+		$scope.showError = true;
+		$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	  });
+
+    };
+
+
+	}]);
 
 

@@ -9,7 +9,8 @@ angular.module('propertySearchApp')
                                      {endPoint:""},
                                      {propertyByFolio:{method:'GET'},
 				      candidatesByOwner:{method:'GET'},
-				      candidatesByAddress:{method:'GET'}
+				      candidatesByAddress:{method:'GET'},
+					  candidatesByPartialFolio:{method:'GET'}
 				     }
                                     );
 
@@ -36,50 +37,48 @@ angular.module('propertySearchApp')
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = 'GetOwners';
       var params = {"ownerName":ownerName, "from":from, "to":to, "endPoint":endPoint};
-	  
-	  var deferred = $q.defer();
-      var candidatesList = PropertyResource.candidatesByOwner(params, 
-		function (){
-			deferred.resolve(new candidateService.Candidates(candidatesList));
-		}, 
-		function(response){
-			deferred.reject(response);
-	  });
-
-      return deferred.promise.then(function(candidatesList){
-		return candidatesList;
-      }, function(response){
-        return response;
-      });
-
+	  return getCandidates(params);
     };
     
     var candidatesByAddress = function(address, unit, from, to, callback){
       var endPoint = "GetAddress";
       var params = {"myAddress":address, "myUnit":unit, "from":from, "to":to, "endPoint":endPoint};
+	  
+	  return getCandidates(params);
 
+    };
+	
+	var candidatesByPartialFolio = function(partialFolio, from, to, callback){
+	  var endPoint = "GetPropertySearchByPartialFolio";
+	  var params = {"partialFolioNumber":partialFolio, "from":from, "to":to, "endPoint":endPoint};
+	  
+	  return getCandidates(params);
+	};
+	
+	function getCandidates(params)
+	{
 	  var deferred = $q.defer();
-      var candidatesList = PropertyResource.candidatesByAddress(params, 
-		function (){
-			deferred.resolve(new candidateService.Candidates(candidatesList));
-		}, 
+	  var candidatesList = PropertyResource.candidatesByPartialFolio(params, 
+	    function(){
+		  deferred.resolve(new candidateService.Candidates(candidatesList));
+		},
 		function(response){
-			deferred.reject(response);
+		  deffered.reject(response);
 	  });
 
-      return deferred.promise.then(function(candidatesList){
+	  return deferred.promise.then(function(candidatesList){
 		return candidatesList;
       }, function(response){
         return response;
       });
-    };
+	}
     
     // public API
     return {getPropertyByFolio:propertyByFolio,
 	    getCandidatesByOwner:candidatesByOwner,
-	    getCandidatesByAddress:candidatesByAddress
-           };
-    
+	    getCandidatesByAddress:candidatesByAddress,
+		getCandidatesByPartialFolio:candidatesByPartialFolio
+    };
 
   }]);
 
