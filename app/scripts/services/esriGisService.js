@@ -42,8 +42,8 @@ angular.module('propertySearchApp')
       } ,function(error){return error;});
     };
 
-    var municipalityFromPoint = function($scope, x, y){
-      var url = paConfig.urlMunicipalityLayer;
+    var municipalityFromPoint = function($scope, layer, x, y){
+      var url = layer.url;
       return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
         if(featureSet.features.length > 0)
           return featureSet.features[0].geometry;

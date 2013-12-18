@@ -1,7 +1,7 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="5">Benefits Information</th>
+			<th class="tableHeader" colspan="5">Benefits Information <span class="glyphicon glyphicon-info-sign"></span></th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.benefit)">
@@ -25,7 +25,7 @@
 		</tr>
 
 		<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
-			<td><strong>{{benefitType}}</strong></td>
+			<td><strong>{{benefitType}}</strong> <a href="#" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></td>
 
                         <td>{{benefitsByYear[property.rollYear1].type}}</td>
                         <td class="text-right">{{benefitsByYear[property.rollYear1].value | noCentsCurrency:"$"}}</td>
