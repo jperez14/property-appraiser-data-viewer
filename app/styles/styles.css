@@ -324,6 +324,26 @@ background-color: #eeeeee;
 	color:#aaa;
 }
 
+#map_lc {
+	position: absolute;
+	z-index: 5000;
+	right: 20px;
+	top: 20px;
+}
+
+#map_lc > div {
+	margin-bottom:10px;
+}
+
+#map_lc .layer-drop {
+	width:160px;
+	font-weight:bold;
+}
+
+.layer-ul {
+	padding:8px;
+	font-size:11px;
+}
 
 /*
 table tr.table-message td {

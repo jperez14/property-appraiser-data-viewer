@@ -16,16 +16,6 @@
         <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/facebook-search.png"></a>
         <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/twitter-search.png"></a>
       </div>
-
-      <!-- Layer List  -->
-      <div>
-            <ul ng-repeat="layer in layers">
-              <li>{{layer.label}}
-                <input type="checkbox" ng-model="layer.value" ng-change="turnLayerOnOff(layer)">
-              </li>
-            </ul>
-      </div>
-
       
       <!-- Nav tabs -->
       <ul class="nav nav-tabs">
@@ -138,8 +128,32 @@
       <div class="col-md-8 col-sm-7"> 
 
         <div class="hero-unit map_container">
-          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: property == null}" ng-show="property || joseFlag"></div>             
+          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: property == null}" ng-show="property || joseFlag">
           
+          <div id="map_lc">
+            
+            <!-- Arial Year - just need to replace current with year and attach handlers
+            <div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-sm">Current</button>
+              <button type="button" class="btn btn-default btn-sm">Current1</button>
+              <button type="button" class="btn btn-default btn-sm">Current2</button>
+            </div>
+            </div> -->
+            
+            <!-- Layer List  -->
+            <div>
+              <div class="btn-group">
+              	<button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
+                  <ul class="dropdown-menu keep_open layer-ul" role="menu">
+                    <li ng-repeat="layer in layers"><input type="checkbox" ng-model="layer.value" ng-change="turnLayerOnOff(layer)"> {{layer.label}}</li>
+                  </ul>
+              </div>
+            </div>
+              
+          </div> <!-- end map_lc -->
+              
+          </div>               
         </div>
         
       </div>
@@ -163,23 +177,24 @@
 
     $(document).ready(function() {
 		
-		$('body').on('click', 'span.pop-icon', function(){
+		$('body').on('click', function(e){
 		
-			var current_popover = $(this).attr('id');
+			if($(e.target).hasClass('pop-icon')){		
+			var current_popover = $(e.target).attr('id');
 				
-				if ($(this).next('.popover').is(':visible')) {
-					
+				if ($(e.target).next('.popover').is(':visible')) {
 					$('span.pop-icon').popover('destroy');
-					
 				} else {
-
 					$('span.pop-icon').popover('destroy');
 					$('#' + current_popover + '').popover('show');
+				};
 				
-				}
-
+			} else {
+				$('span.pop-icon').popover('destroy');
+			};
 		});
 		
+
 		placeholderSupport = ("placeholder" in document.createElement("input")); // test placeholder support
 		if(!placeholderSupport ){
 			
@@ -216,6 +231,10 @@
 			});
 	
 		};
+		
+		$('body').on('click', '.dropdown-menu', function(e){
+        	$(this).hasClass('keep_open') && e.stopPropagation(); // This replace if conditional.
+    	});
 		
 	});
 	
