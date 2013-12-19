@@ -180,9 +180,15 @@
 
 		});
 		
-		placeholderSupport = ("placeholder" in document.createElement("input"));
-		
+		placeholderSupport = ("placeholder" in document.createElement("input")); // test placeholder support
 		if(!placeholderSupport ){
+			
+			//initialize placeholders onload for IE - only works if setTimeout function is there
+			setTimeout(function(){
+				$('.input-group input[type=text]').each(function(){
+					$(this).addClass('placeholder').val($(this).attr('placeholder'));
+				});
+			}, 500);
 			
 			$(function () {
 			$('[placeholder]')
