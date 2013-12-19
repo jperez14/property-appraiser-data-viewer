@@ -285,7 +285,9 @@ angular.module('propertySearchApp')
 	  });
 
       $q.all([propertyPromise, geometryPromise]).then(function(data){
-        $scope.property.location = data[1];});
+        $scope.property.location = data[1];},function(error){
+          console.log("there was an error");
+        });
     };
 
 	$scope.fetchNextPage = function() {
