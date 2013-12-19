@@ -162,28 +162,55 @@
     <script>
 
     $(document).ready(function() {
+		
 		$('body').on('click', 'span.pop-icon', function(){
 		
-		var current_popover = $(this).attr('id');
-		
-		//console.log($('div.popover').length);
-
+			var current_popover = $(this).attr('id');
 				
 				if ($(this).next('.popover').is(':visible')) {
 					
 					$('span.pop-icon').popover('destroy');
-				//console.log('hide just the current one clicked - because it was open');
 					
-					} else {
+				} else {
+
+					$('span.pop-icon').popover('destroy');
+					$('#' + current_popover + '').popover('show');
 				
-				
-				$('span.pop-icon').popover('destroy');
-				$('#' + current_popover + '').popover('show');
-				//console.log('hiding everyone and showing THIS');
-				
-					}
+				}
 
 		});
+		
+		placeholderSupport = ("placeholder" in document.createElement("input"));
+		
+		if(!placeholderSupport ){
+			
+			$(function () {
+			$('[placeholder]')
+				.focus(function () {
+					var input = $(this);
+					if (input.val() === input.attr('placeholder')) {
+						input.val('').removeClass('placeholder');
+					}
+				})
+				.blur(function () {
+					var input = $(this);
+					if (input.val() === '' || input.val() === input.attr('placeholder')) {
+						input.addClass('placeholder').val(input.attr('placeholder'));
+					}
+				})
+				.blur()
+				.parents('form').submit(function () {
+					$(this).find('[placeholder]').each(function () {
+						var input = $(this);
+						if (input.val() === input.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				});
+			});
+	
+		};
+		
 	});
 	
     </script>

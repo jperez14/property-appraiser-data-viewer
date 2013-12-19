@@ -320,6 +320,10 @@ background-color: #eeeeee;
 	font-size:11px;
 }
 
+.placeholder {
+	color:#aaa;
+}
+
 
 /*
 table tr.table-message td {

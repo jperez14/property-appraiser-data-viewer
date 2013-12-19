@@ -43,12 +43,15 @@
 
 		<tr class="sum-row">
 			<td><strong>XF Value</strong></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear1].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</span></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear2].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</span></td>
-			<td class="text-right"><span class="double-line">{{property.assessment[property.rollYear3].assessmentInfo.extraFeatureValue
-			| noCentsCurrency:"$"}}</span></td>
+			<td class="text-right">
+            	<!-- need a conditional statement around the span - if not value present do not print the following markup --><span class="double-line">{{property.assessment[property.rollYear1].assessmentInfo.extraFeatureValue | noCentsCurrency:"$"}}</span> <!-- close conditional -->
+            </td>
+			<td class="text-right">
+            	<span class="double-line">{{property.assessment[property.rollYear2].assessmentInfo.extraFeatureValue | noCentsCurrency:"$"}}</span>
+            </td>
+			<td class="text-right">
+            	<span class="double-line">{{property.assessment[property.rollYear3].assessmentInfo.extraFeatureValue | noCentsCurrency:"$"}}</span>
+            </td>
 		</tr>
 
 		<tr>
