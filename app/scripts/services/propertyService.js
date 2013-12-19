@@ -3,7 +3,6 @@
 angular.module('propertySearchApp')
   .factory('propertyService', function () {
 
-    //Completed, Message
     var Property = function(data) {
 
       this.propertyInfo = {};
@@ -24,8 +23,8 @@ angular.module('propertySearchApp')
       this.rollYear1 = null;
       this.rollYear2 = null;
       this.rollYear3 = null;
-	  this.message = null;
-	  this.completed = null;
+      this.message = null;
+      this.completed = null;
 
       
       if(isUndefinedOrNull(data)) {
@@ -35,8 +34,8 @@ angular.module('propertySearchApp')
         this.rollYear1 = null;
         this.rollYear2 = null;
         this.rollYear3 = null;
-		this.message = null;
-		this.completed = null;
+	this.message = null;
+	this.completed = null;
 
         this.land = buildLand({})
         this.building = buildBuilding({})
@@ -62,8 +61,8 @@ angular.module('propertySearchApp')
         this.rollYear1 = data.RollYear1;
         this.rollYear2 = this.rollYear1 - 1;
         this.rollYear3 = this.rollYear1 - 2;
-		this.message = data.Message;
-		this.completed = data.Completed;
+	this.message = data.Message;
+	this.completed = data.Completed;
 
         this.land = buildLand(data.Land); 
         this.building = buildBuilding(data.Building); 
@@ -353,7 +352,7 @@ angular.module('propertySearchApp')
 
       _.each(data.Messages, function(origMessage){
         var message = _.map(origMessage.Message.split("|"), 
-                              function(value){return value.trim();});
+                            function(value){return value.trim();});
         benefit.messages[origMessage.Year] = message;
       });
 
@@ -615,9 +614,21 @@ angular.module('propertySearchApp')
 
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)}
 
+    var isPropertyValid = function(rawProperty){
+      if(rawProperty.Completed === false)
+        return false;
+      else if (rawProperty.Completed === true && 
+               _.isNull(rawProperty.PropertyInfo.FolioNumber))
+        return false
+      else
+        return true;
+    };
+
+
     // Public API
     return {
-      Property: Property
+      Property: Property,
+      isPropertyValid: isPropertyValid
     };
     
     

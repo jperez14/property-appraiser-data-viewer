@@ -16,12 +16,12 @@ angular.module('propertySearchApp')
 
       var deferred = $q.defer();
       queryTask.execute(query,function (featureSet) {
-          deferred.resolve(featureSet);
-          $scope.$apply();
-        }, function (error) {
-          deferred.reject(error);
-          $scope.$apply();
-        });
+        deferred.resolve(featureSet);
+        $scope.$apply();
+      }, function (error) {
+        deferred.reject(error);
+        $scope.$apply();
+      });
 
 
       return deferred.promise.then(function(featureSet){
@@ -70,12 +70,12 @@ angular.module('propertySearchApp')
 
       var deferred = $q.defer();
       queryTask.execute(query,function (featureSet) {
-          deferred.resolve(featureSet);
-          $scope.$apply();
-        }, function (error) {
-          deferred.reject(error);
-          $scope.$apply();
-        });
+        deferred.resolve(featureSet);
+        $scope.$apply();
+      }, function (error) {
+        deferred.reject(error);
+        $scope.$apply();
+      });
 
 
       return deferred.promise.then(function(featureSet){

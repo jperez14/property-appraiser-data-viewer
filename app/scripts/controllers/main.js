@@ -34,24 +34,24 @@ angular.module('propertySearchApp')
 
       $scope.map = map;
 
-//      dojo.connect(map, 'onLoad', function(theMap) {
-//        //create the draw toolbar 
-//        toolbar = new esri.toolbars.Draw(map);
-//        dojo.connect(toolbar,"onDrawEnd",drawEndHandler);
-//      });
+      //      dojo.connect(map, 'onLoad', function(theMap) {
+      //        //create the draw toolbar 
+      //        toolbar = new esri.toolbars.Draw(map);
+      //        dojo.connect(toolbar,"onDrawEnd",drawEndHandler);
+      //      });
       
     };
 
     // Initialize the map.
     dojo.ready(initMap);
 
-	$scope.joseFlag = true;
+    $scope.joseFlag = true;
     $scope. activateToolbar = function (){
-        toolbar.activate(esri.toolbars.Draw.EXTENT);
+      toolbar.activate(esri.toolbars.Draw.EXTENT);
     };
 
     $scope.drawEndHandler  = function (geometry){
-        toolbar.deactivate();
+      toolbar.deactivate();
 
     };
 
@@ -68,9 +68,9 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
-	$scope.fromPage = 1;
-	$scope.toPage = 200;
-	$scope.itemsPerFetch = 200;
+    $scope.fromPage = 1;
+    $scope.toPage = 200;
+    $scope.itemsPerFetch = 200;
     
     $scope.address = "";
 
@@ -104,7 +104,7 @@ angular.module('propertySearchApp')
 	      $scope.map.getLayer("layers").remove(graphicLayer);              
         });
       }
-       
+      
       
     };
     
@@ -112,8 +112,8 @@ angular.module('propertySearchApp')
     function clearResults() {
       $scope.property = null;
       $scope.candidatesList = null;
-	  $scope.fromPage = 1;
-	  $scope.toPage = 200;
+      $scope.fromPage = 1;
+      $scope.toPage = 200;
 
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
@@ -180,18 +180,18 @@ angular.module('propertySearchApp')
     };
 
     $scope.isDisplayYearTab = function(property, rollYear){
-		if(property != null) {
-			if(property.extraFeature[rollYear] != undefined &&
-				property.land[rollYear] != undefined &&
-				property.building[rollYear] != undefined)
-			  return true;
-			else
-			  return false;
-		}
-		else false;
-	};
-	
-	$scope.isDisplayMessages = function(property, propertySection, rollYear) {
+      if(property != null) {
+	if(property.extraFeature[rollYear] != undefined &&
+	   property.land[rollYear] != undefined &&
+	   property.building[rollYear] != undefined)
+	  return true;
+	else
+	  return false;
+      }
+      else false;
+    };
+    
+    $scope.isDisplayMessages = function(property, propertySection, rollYear) {
       if(property != null && property != undefined && propertySection != null && propertySection != undefined)
       {
 	if(rollYear != null && rollYear != undefined){
@@ -228,40 +228,26 @@ angular.module('propertySearchApp')
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
       $scope.resetLayers();
-	  $scope.joseFlag = false;
+      $scope.joseFlag = false;
 
       // resize map container
       //$scope.mapStyle = {width:'100%', height:'200px'};
       //$scope.map.resize();
 
-
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
 
-
       // Get property data.
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
-		if(property.completed == true) {
-			if(_.isNull(property.propertyInfo.folioNumber)) {
-				$scope.showError = property.completed;
-				$scope.errorMsg = property.message;
-			}
-			else {
-              $scope.property = property;
-              $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-			}
-		}
-		else {
-			$scope.showError = !property.completed;
-			$scope.errorMsg = property.message;
-		}
-        return $scope.property;
-      }, function(error){console.log("getPropertyByFolio error "+error);});
-
+            $scope.property = property;
+            $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+      }, function(error){
+          console.log("getPropertyByFolio error ", error);
+          $scope.showError = true;
+	  $scope.errorMsg = error;});
 
       // Get xy for property and display it in map.
       var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
-        
 
         if(featureSet.features != undefined && featureSet.features.length > 0) {
 	  var myPoint = {"geometry":{
@@ -279,10 +265,10 @@ angular.module('propertySearchApp')
           return $q.reject("No point found");
         }
       }, function(error){
-	    console.log("there was an error");
-		$scope.showError = true;
-		$scope.errorMsg = "Oops !! The request failed. Please try again later";
-	  });
+	console.log("there was an error");
+	$scope.showError = true;
+	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+      });
 
       $q.all([propertyPromise, geometryPromise]).then(function(data){
         $scope.property.location = data[1];},function(error){
@@ -290,102 +276,102 @@ angular.module('propertySearchApp')
         });
     };
 
-	$scope.fetchNextPage = function() {
-		if($scope.toPage >= $scope.candidatesList.total) {
-            $scope.showError = true;
-            $scope.errorMsg = "You are on the last page of results";
-		}
-		else {
-			$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
-			$scope.toPage = $scope.toPage + $scope.itemsPerFetch;
-			propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
-			  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
-			  console.log("candidates updated", $scope.candidatesList);
-			}, function(error) {
-			  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
-			  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
-			  console.log("error when fetching nextPage of candidates"+error);
-			});
-		}
-	};
+    $scope.fetchNextPage = function() {
+      if($scope.toPage >= $scope.candidatesList.total) {
+        $scope.showError = true;
+        $scope.errorMsg = "You are on the last page of results";
+      }
+      else {
+	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
+	$scope.toPage = $scope.toPage + $scope.itemsPerFetch;
+	propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
+	  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
+	  console.log("candidates updated", $scope.candidatesList);
+	}, function(error) {
+	  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
+	  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
+	  console.log("error when fetching nextPage of candidates"+error);
+	});
+      }
+    };
 
-	$scope.getCandidatesByOwner = function(){
+    $scope.getCandidatesByOwner = function(){
       clearResults();
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
-		if(result.completed == true) {
-			if(result.candidates.length == 0) {
-				$scope.showError = result.completed;
-				$scope.errorMsg = result.message;
-			}
-			else if(result.candidates.length == 1)
-			  $scope.getCandidateFolio(result.candidates[0].folio);
-			else if(result.candidates.length > 1)
-			  $scope.candidatesList = result;
-		}
-		else {
-			$scope.showError = !result.completed;
-			$scope.errorMsg = result.message;
-		}
+	if(result.completed == true) {
+	  if(result.candidates.length == 0) {
+	    $scope.showError = result.completed;
+	    $scope.errorMsg = result.message;
+	  }
+	  else if(result.candidates.length == 1)
+	    $scope.getCandidateFolio(result.candidates[0].folio);
+	  else if(result.candidates.length > 1)
+	    $scope.candidatesList = result;
+	}
+	else {
+	  $scope.showError = !result.completed;
+	  $scope.errorMsg = result.message;
+	}
       }, function(error){
-	    console.log("getCandidatesByOwner error "+error);
-		$scope.showError = true;
-		$scope.errorMsg = "Oops !! The request failed. Please try again later";
-	  });
+	console.log("getCandidatesByOwner error "+error);
+	$scope.showError = true;
+	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+      });
     };
 
     $scope.getCandidatesByAddress = function(){
       clearResults();
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
-		if(result.completed == true) {
-			if(result.candidates.length == 0) {
-				$scope.showError = result.completed;
-				$scope.errorMsg = result.message;
-			}
-			else if(result.candidates.length == 1)
-			  $scope.getCandidateFolio(result.candidates[0].folio);
-			else if(result.candidates.length > 1)
-			  $scope.candidatesList = result;
-		}
-		else {
-			$scope.showError = !result.completed;
-			$scope.errorMsg = result.message;
-		}
+	if(result.completed == true) {
+	  if(result.candidates.length == 0) {
+	    $scope.showError = result.completed;
+	    $scope.errorMsg = result.message;
+	  }
+	  else if(result.candidates.length == 1)
+	    $scope.getCandidateFolio(result.candidates[0].folio);
+	  else if(result.candidates.length > 1)
+	    $scope.candidatesList = result;
+	}
+	else {
+	  $scope.showError = !result.completed;
+	  $scope.errorMsg = result.message;
+	}
       }, function(error){
-	    console.log("getCandidatesByAddress error "+error);
-		$scope.showError = true;
-		$scope.errorMsg = "Oops !! The request failed. Please try again later";
-	  });
+	console.log("getCandidatesByAddress error "+error);
+	$scope.showError = true;
+	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+      });
 
     };
 
     $scope.getCandidatesByPartialFolio = function(){
       clearResults();
-	  //TODO : compute and populate partialFolio
-	  var partialFolio = "";
+      //TODO : compute and populate partialFolio
+      var partialFolio = "";
       propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
-		if(result.completed == true) {
-			if(result.candidates.length == 0) {
-				$scope.showError = result.completed;
-				$scope.errorMsg = result.message;
-			}
-			else if(result.candidates.length == 1)
-			  $scope.getCandidateFolio(result.candidates[0].folio);
-			else if(result.candidates.length > 1)
-			  $scope.candidatesList = result;
-		}
-		else {
-			$scope.showError = !result.completed;
-			$scope.errorMsg = result.message;
-		}
+	if(result.completed == true) {
+	  if(result.candidates.length == 0) {
+	    $scope.showError = result.completed;
+	    $scope.errorMsg = result.message;
+	  }
+	  else if(result.candidates.length == 1)
+	    $scope.getCandidateFolio(result.candidates[0].folio);
+	  else if(result.candidates.length > 1)
+	    $scope.candidatesList = result;
+	}
+	else {
+	  $scope.showError = !result.completed;
+	  $scope.errorMsg = result.message;
+	}
       }, function(error){
-	    console.log("getCandidatesByPartialFolio error "+error);
-		$scope.showError = true;
-		$scope.errorMsg = "Oops !! The request failed. Please try again later";
-	  });
+	console.log("getCandidatesByPartialFolio error "+error);
+	$scope.showError = true;
+	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+      });
 
     };
 
 
-	}]);
+  }]);
 
 
