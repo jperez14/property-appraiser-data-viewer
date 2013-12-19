@@ -110,6 +110,7 @@ angular.module('propertySearchApp')
     
 
     function clearResults() {
+	  $scope.showError = false;
       $scope.property = null;
       $scope.candidatesList = null;
 	  $scope.fromPage = 1;
