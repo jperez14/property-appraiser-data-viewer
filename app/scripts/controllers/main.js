@@ -68,6 +68,9 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
+	$scope.isOwnerCandidates = false;
+	$scope.isAddressCandidates = false;
+	$scope.isPartialFolioCandidates = false;
 	$scope.fromPage = 1;
 	$scope.toPage = 200;
 	$scope.itemsPerFetch = 200;
@@ -113,6 +116,9 @@ angular.module('propertySearchApp')
 	  $scope.showError = false;
       $scope.property = null;
       $scope.candidatesList = null;
+      $scope.isOwnerCandidates = false;
+      $scope.isAddressCandidates = false;
+      $scope.isPartialFolioCandidates = false;
 	  $scope.fromPage = 1;
 	  $scope.toPage = 200;
 
@@ -291,6 +297,16 @@ angular.module('propertySearchApp')
         });
     };
 
+	$scope.candidatesPaginationSuccess = function(result){
+	  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
+	  console.log("candidates updated", $scope.candidatesList);
+	};
+	$scope.candidatesPaginationFailure = function(error) {
+	  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
+	  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
+	  console.log("error when fetching nextPage of candidates"+error);
+	};
+			
 	$scope.fetchNextPage = function() {
 		if($scope.toPage >= $scope.candidatesList.total) {
             $scope.showError = true;
@@ -299,19 +315,25 @@ angular.module('propertySearchApp')
 		else {
 			$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
 			$scope.toPage = $scope.toPage + $scope.itemsPerFetch;
-			propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
-			  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
-			  console.log("candidates updated", $scope.candidatesList);
-			}, function(error) {
-			  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
-			  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
-			  console.log("error when fetching nextPage of candidates"+error);
-			});
+			
+			if(	$scope.isOwnerCandidates === true) {
+				propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage)
+					.then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+			}
+			if($scope.isAddressCandidates === true) {
+				propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage)
+					.then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+			}
+			if($scope.isPartialFolioCandidates === true) {
+				propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage)
+					.then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+			}
 		}
 	};
 
 	$scope.getCandidatesByOwner = function(){
       clearResults();
+	  $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 		if(result.completed == true) {
 			if(result.candidates.length == 0) {
@@ -336,6 +358,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByAddress = function(){
       clearResults();
+	  $scope.isAddressCandidates = true;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 		if(result.completed == true) {
 			if(result.candidates.length == 0) {
@@ -361,6 +384,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByPartialFolio = function(){
       clearResults();
+	  $scope.isPartialFolioCandidates = true;
 	  //TODO : compute and populate partialFolio
 	  var partialFolio = "";
       propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
