@@ -25,7 +25,7 @@
                                property.extraFeature[(property.rollYear1)-2].extraFeaturesInfo | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td class="text-center">{{feature.actualYearBuilt}}</td>
-			<td class="text-right">{{feature.units}}</td>
+			<td class="text-right">{{feature.units | number}}</td>
 			<td class="text-right">{{feature.adjustedUnitPrice | currency:"$"}}</td>
 			<td class="text-right">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
