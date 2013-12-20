@@ -188,14 +188,15 @@ angular.module('propertySearchApp')
 
     $scope.isDisplayYearTab = function(property, rollYear){
 		if(property != null) {
-			if(property.extraFeature[rollYear] != undefined &&
-				property.land[rollYear] != undefined &&
+			if(property.extraFeature[rollYear] != undefined ||
+				property.land[rollYear] != undefined ||
 				property.building[rollYear] != undefined)
 			  return true;
 			else
 			  return false;
 		}
-		else false;
+		else 
+			return false;
 	};
 	
 	$scope.isDisplayMessages = function(property, propertySection, rollYear) {
