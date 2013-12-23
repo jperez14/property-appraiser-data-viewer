@@ -18,10 +18,10 @@
 			<td class="text-center">PA Zone</td>
 			<!-- <td>Use Code</td> -->
 			<!-- <td>Total Adj</td> -->
-			<td>Unit Type</td>
-			<td>Units</td>
-			<td class="text-right">Adj Rate</td>
-			<td class="text-right">Calc Value</td>
+			<td class="text-center">Unit Type</td>
+			<td class="text-right fixed-width">Units</td>
+			<td class="text-right fixed-width">Adj Rate</td>
+			<td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
@@ -30,10 +30,10 @@
 			<td class="text-center">{{land.zone}}</td>
 			<!-- <td>{{land.useCode}}</td> -->
 			<!--<td>{{land.totalAdjustments}}</td> -->
-			<td>{{land.unitType}}</td>
-			<td>{{land.units | negativeNumber:2}}</td>
-			<td class="text-right">{{land.adjustedUnitPrice | currency:"$"}}</td>
-			<td class="text-right">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
+			<td class="text-center">{{land.unitType}}</td>
+			<td class="text-right fixed-width">{{land.units | negativeNumber:2}}</td>
+			<td class="text-right fixed-width">{{land.adjustedUnitPrice | currency:"$"}}</td>
+			<td class="text-right fixed-width">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 
 	</table>

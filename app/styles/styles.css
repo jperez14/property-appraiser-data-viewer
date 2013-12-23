@@ -293,6 +293,10 @@ background-color: #eee !important;
 	display:block;
 }
 
+.fixed-width {
+	width:130px;
+}
+
 /*
 .address-overflow span > div {
 	margin-bottom:5px;
@@ -598,6 +602,8 @@ border: 1px solid #dddddd;
 .results_record {width:46%;}
 
 .mb-zoombox {display:none}
+
+.fixed-width {width:100px;}
 }
 
 @media (max-width: 767px) {
