@@ -7,7 +7,7 @@ angular.module('propertySearchApp')
 	var formats = locale.NUMBER_FORMATS;
 
 	return function(amount, currencySymbol) {
-	  if(amount === undefined)
+	  if(amount === undefined || amount === null)
 		return amount;
 	  var value = currencyFilter(amount, currencySymbol);
 	  var sep = value.indexOf(formats.DECIMAL_SEP);
@@ -15,6 +15,18 @@ angular.module('propertySearchApp')
 	    return value.substring(0, sep);
 	  }
 	  return value.substring(0, sep) + ')';
+	};
+
+  }])
+  .filter('centsCurrency', ['$filter', '$locale', function (filter, locale) {
+    
+	var currencyFilter = filter('currency');
+	var formats = locale.NUMBER_FORMATS;
+
+	return function(amount, currencySymbol) {
+	  if(amount === undefined || amount === null)
+		return amount;
+	  return currencyFilter(amount, currencySymbol);
 	};
 
   }])
