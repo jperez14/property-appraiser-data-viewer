@@ -582,6 +582,14 @@ border-radius: 0px;
 	overflow:auto;
 }
 
+.apps_title {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	font-size: 12px;
+}
+
 .add-main {width:80% !important}
 .add-suite {width:20% !important}
 
