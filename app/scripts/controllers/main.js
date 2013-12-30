@@ -318,6 +318,22 @@ angular.module('propertySearchApp')
           console.log("there was an error");
         });
     };
+	
+	$scope.getCandidatesHeight = function(){
+		if($scope.candidatesList == null)
+			return {height:'560px'};
+		else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 2)
+			return {height:'215px'};
+		else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 4)
+			return {height:'330px'};
+		else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 6)
+			return {height:'445px'};
+		else if($scope.candidatesList != null && $scope.candidatesList.candidates.length >= 7)
+			return {height:'560px'};
+		else
+			return {height:'560px'};
+	};
+	
 
 	$scope.candidatesPaginationSuccess = function(result){
 	  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
