@@ -19,9 +19,9 @@
       
       <!-- Nav tabs -->
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#address" data-toggle="tab">Address</a></li>
-        <li><a href="#owner-name" data-toggle="tab">Owner Name</a></li>
-        <li><a href="#folio" data-toggle="tab">Folio</a></li>
+        <li ng-class="{active: isActiveSearchTab('Address')}"><a ng-click="setActiveSearchTab('Address')">Address</a></li>
+        <li ng-class="{active: isActiveSearchTab('Owner')}"><a ng-click="setActiveSearchTab('Owner')">Owner Name</a></li>
+        <li ng-class="{active: isActiveSearchTab('Folio')}"><a ng-click="setActiveSearchTab('Folio')">Folio</a></li>
       </ul>
 
 
@@ -42,11 +42,12 @@
           <div class="tab-content">
 
             
-            <div class="tab-pane active" id="address">
+            <div class="tab-pane" ng-class="{active: isActiveSearchTab('Address')}" id="address">
 
               <div class="input-group">
                 
-                 <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control add-main" ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
+                 <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control add-main"
+					ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}" >
                  <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
@@ -60,11 +61,11 @@
             
             
             
-            <div class="tab-pane" id="owner-name">
+            <div class="tab-pane" ng-class="{active: isActiveSearchTab('Owner')}" id="owner-name">
 
               <div class="input-group">
-                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" 
-					class="form-control" ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
+                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control"
+					ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -76,11 +77,12 @@
             </div>
             
             
-            <div class="tab-pane" id="folio">
+            <div class="tab-pane" ng-class="{active: isActiveSearchTab('Folio')}" id="folio">
 
               <div class="input-group">
 
-                <input type="text" value="Folio" name="" id="search_box" class="form-control" ui-mask='{{folioMask}}' ui-keypress="{13:'getPropertyByFolio()'}" ng-model='folio' ng-click="showError=false"> 
+                <input type="text" value="Folio" name="" id="search_box" class="form-control" ui-mask='{{folioMask}}' 
+					ui-keypress="{13:'getPropertyByFolio()'}" ng-model='folio' ng-click="showError=false" > 
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getPropertyByFolio()">
 
@@ -296,24 +298,30 @@
         
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-          <li ng-show="isDisplayYearTab(property, property.rollYear1)" class="active"><a href="#current" data-toggle="tab">{{property.rollYear1}}</a></li>
-          <li ng-show="isDisplayYearTab(property, property.rollYear2)"><a href="#prior" data-toggle="tab">{{property.rollYear2}}</a></li>
-          <li ng-show="isDisplayYearTab(property, property.rollYear3)"><a href="#prior-2" data-toggle="tab">{{property.rollYear3}}</a></li>
+         <li ng-show="isDisplayYearTab(property, property.rollYear1)" ng-class="{active: isActiveRollYearTab(property.rollYear1)}">
+			<a ng-click="setActiveRollYearTab(property.rollYear1)">{{property.rollYear1}}</a>
+		  </li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear2)" ng-class="{active: isActiveRollYearTab(property.rollYear2)}">
+			<a ng-click="setActiveRollYearTab(property.rollYear2)">{{property.rollYear2}}</a>
+		  </li>
+          <li ng-show="isDisplayYearTab(property, property.rollYear3)" ng-class="{active: isActiveRollYearTab(property.rollYear3)}">
+			<a ng-click="setActiveRollYearTab(property.rollYear3)">{{property.rollYear3}}</a>
+		  </li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content" style="padding-top:15px;">
-          <div class="tab-pane active" id="current" ng-show="isDisplayYearTab(property, property.rollYear1)">
+          <div class="tab-pane" ng-show="isDisplayYearTab(property, property.rollYear1)" ng-class="{active: isActiveRollYearTab(property.rollYear1)}" >
           	<div ng-show="property" ng-include="'views/landinformationcurrent.html'"></div>
             <div ng-show="property" ng-include="'views/buildinginformationcurrent.html'"></div>
             <div ng-show="property" ng-include="'views/extrafeaturescurrent.html'"></div>
           </div>
-          <div class="tab-pane" id="prior" ng-show="isDisplayYearTab(property, property.rollYear2)">
+          <div class="tab-pane" ng-show="isDisplayYearTab(property, property.rollYear2)" ng-class="{active: isActiveRollYearTab(property.rollYear2)}" >
           	<div ng-show="property" ng-include="'views/landinformationprior.html'"></div>
             <div ng-show="property" ng-include="'views/buildinginformationprior.html'"></div>
             <div ng-show="property" ng-include="'views/extrafeaturesprior.html'"></div>
           </div>
-          <div class="tab-pane" id="prior-2" ng-show="isDisplayYearTab(property, property.rollYear3)">
+          <div class="tab-pane" ng-show="isDisplayYearTab(property, property.rollYear3)" ng-class="{active: isActiveRollYearTab(property.rollYear3)}" >
           	<div ng-show="property" ng-include="'views/landinformationprior2.html'"></div>
             <div ng-show="property" ng-include="'views/buildinginformationprior2.html'"></div>
             <div ng-show="property" ng-include="'views/extrafeaturesprior2.html'"></div>

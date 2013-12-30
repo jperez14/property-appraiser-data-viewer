@@ -80,6 +80,22 @@ angular.module('propertySearchApp')
     $scope.suite = "";
     $scope.folioMask = "99-9999-999-9999";
     
+	$scope.activeSearchTab = "Address";
+	$scope.isActiveSearchTab = function(tab) {
+		return $scope.activeSearchTab == tab;
+	};
+	$scope.setActiveSearchTab = function(tab) {
+		$scope.activeSearchTab = tab;
+	};
+
+	$scope.activeRollYearTab = 0;
+	$scope.isActiveRollYearTab = function(rollYear) {
+		return $scope.activeRollYearTab == rollYear;
+	};
+	$scope.setActiveRollYearTab = function(rollYear) {
+		$scope.activeRollYearTab = rollYear;
+	};
+	
     $scope.salesInfoGrantorName1 = false;
     $scope.salesInfoGrantorName2 = false;
 
@@ -89,8 +105,7 @@ angular.module('propertySearchApp')
         layer.value = false;
       });
     };
-    
-
+	
     $scope.turnLayerOnOff = function(layer){
 
       if (layer.value === true){
@@ -121,6 +136,7 @@ angular.module('propertySearchApp')
       $scope.isPartialFolioCandidates = false;
 	  $scope.fromPage = 1;
 	  $scope.toPage = 200;
+	  $scope.activeRollYearTab = 0;
 
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
@@ -245,7 +261,11 @@ angular.module('propertySearchApp')
 
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
-
+	  
+	  if(folio.length != 13) {
+	    $scope.getCandidatesByPartialFolio(folio);
+		return true;
+	  }
 
       // Get property data.
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
@@ -257,6 +277,7 @@ angular.module('propertySearchApp')
 			else {
               $scope.property = property;
               $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+			  $scope.activeRollYearTab = $scope.property.rollYear1;
 			}
 		}
 		else {
@@ -383,12 +404,10 @@ angular.module('propertySearchApp')
 
     };
 
-    $scope.getCandidatesByPartialFolio = function(){
+    $scope.getCandidatesByPartialFolio = function(folio){
       clearResults();
 	  $scope.isPartialFolioCandidates = true;
-	  //TODO : compute and populate partialFolio
-	  var partialFolio = "";
-      propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
+      propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 		if(result.completed == true) {
 			if(result.candidates.length == 0) {
 				$scope.showError = result.completed;
