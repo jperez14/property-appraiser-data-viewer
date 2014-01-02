@@ -111,15 +111,70 @@ div.search_area .tab-content {
 
 .map_area {
 	width:100%;
-	height:600px;
+	height:598px;
 }
 
 #map {
 	height:600px;
 }
 
+.map_area {
+	border:1px solid #999;
+}
+
 .map_absolute {
 	position:absolute;
+}
+
+.lc_container {padding:10px; width:100%; position:absolute; z-index:500}
+
+.map-button {
+	width:35px;
+	height:35px;
+	display:inline-block;
+	margin-right:2px;
+	background-image:url(../images/map-icons.png);
+}
+
+.map-button:hover {
+	cursor:pointer;
+}
+/* initial state*/
+.mb-zoomin {background-position:0 0;}
+.mb-zoomout {background-position:-35px 0;}
+.mb-fullextent {background-position:-70px 0;}
+.mb-zoombox {background-position:-105px 0;}
+.mb-initial {background-position:-175px 0;}
+/* hover state */
+.mb-zoomin:hover {background-position:0 35px;}
+.mb-zoomout:hover {background-position:-35px 35px;}
+.mb-fullextent:hover {background-position:-70px 35px;}
+.mb-zoombox:hover {background-position:-105px 35px;}
+.mb-initial:hover {background-position:-175px 35px;}
+/* active state - mainly for zoombox - add class "mb-active" to keep on */
+.mb-zoomin .mb-active {background-position:0 35px;}
+.mb-zoomout .mb-active {background-position:-35px 35px;}
+.mb-fullextent .mb-active {background-position:-70px 35px;}
+.mb-zoombox .mb-active {background-position:-105px 35px;}
+.mb-initial .mb-active {background-position:-175px 35px;}
+
+
+#map_lc {
+	float:right;
+}
+
+#map_lc ul.dropdown-menu {
+	right:0 !important;
+	left:auto;
+}
+
+span.map-view {
+	color:#39599f;
+}
+
+span.map-view:hover {
+	text-decoration:underline;
+	cursor:pointer;
 }
 
 .footer_area {
@@ -238,6 +293,10 @@ background-color: #eee !important;
 	display:block;
 }
 
+.fixed-width {
+	width:130px;
+}
+
 /*
 .address-overflow span > div {
 	margin-bottom:5px;
@@ -320,6 +379,30 @@ background-color: #eeeeee;
 	font-size:11px;
 }
 
+.placeholder {
+	color:#aaa;
+}
+
+#map_lc {
+/*	position: absolute;
+	z-index: 5000;
+	right: 20px;
+	top: 20px;*/
+}
+
+#map_lc > div {
+	margin-bottom:10px;
+}
+
+#map_lc .layer-drop {
+	/*width:160px;
+	font-weight:bold;*/
+}
+
+.layer-ul {
+	padding:8px;
+	font-size:11px;
+}
 
 /*
 table tr.table-message td {
@@ -491,12 +574,20 @@ border-radius: 0px;
 	padding:15px 15px 0 15px;
 	/*position:absolute;*/
 	z-index:100;
-	height:560px; /* set to initial size of map */
+	/*height:560px; /* set to initial size of map */
 	/*width:40%;*/
 
     background: #888;
 	
 	overflow:auto;
+}
+
+.apps_title {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	font-size: 12px;
 }
 
 .add-main {width:80% !important}
@@ -517,6 +608,10 @@ border: 1px solid #dddddd;
 -webkit-overflow-scrolling: touch;
 }
 .results_record {width:46%;}
+
+.mb-zoombox {display:none}
+
+.fixed-width {width:100px;}
 }
 
 @media (max-width: 767px) {

@@ -44,14 +44,43 @@ angular.module('propertySearchApp')
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = 'GetOwners';
       var params = {"ownerName":ownerName, "from":from, "to":to, "endPoint":endPoint};
-      return getCandidates(params);
+
+      var deferred = $q.defer();
+      var candidatesList = PropertyResource.candidatesByOwner(params, 
+	                                                      function(){
+		                                                deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                              },
+		                                              function(response){
+		                                                deffered.reject(response);
+	                                                      });
+
+      return deferred.promise.then(function(candidatesList){
+	return candidatesList;
+      }, function(response){
+        return response;
+      });
+
     };
     
     var candidatesByAddress = function(address, unit, from, to, callback){
       var endPoint = "GetAddress";
       var params = {"myAddress":address, "myUnit":unit, "from":from, "to":to, "endPoint":endPoint};
+
       
-      return getCandidates(params);
+      var deferred = $q.defer();
+      var candidatesList = PropertyResource.candidatesByAddress(params, 
+	                                                        function(){
+		                                                  deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                },
+		                                                function(response){
+		                                                  deffered.reject(response);
+	                                                        });
+
+      return deferred.promise.then(function(candidatesList){
+	return candidatesList;
+      }, function(response){
+        return response;
+      });
 
     };
     
@@ -59,27 +88,25 @@ angular.module('propertySearchApp')
       var endPoint = "GetPropertySearchByPartialFolio";
       var params = {"partialFolioNumber":partialFolio, "from":from, "to":to, "endPoint":endPoint};
       
-      return getCandidates(params);
-    };
-    
-    function getCandidates(params)
-    {
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByPartialFolio(params, 
 	                                                             function(){
 		                                                       deferred.resolve(new candidateService.Candidates(candidatesList));
 		                                                     },
 		                                                     function(response){
-		                                                       defered.reject(response);
+		                                                       deffered.reject(response);
 	                                                             });
+
 
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
       }, function(response){
         return response;
       });
-    }
+
+    };
     
+
     // public API
     return {getPropertyByFolio:propertyByFolio,
 	    getCandidatesByOwner:candidatesByOwner,

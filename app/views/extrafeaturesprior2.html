@@ -16,18 +16,20 @@
 		<tr class="header-row">
 			<td>Description</td>
 			<td class="text-center">Year Built</td>
-			<td class="text-right">Units</td>
-			<td class="text-right">Adj Rate</td>
-			<td class="text-right">Calc Value</td>
+			<td class="text-right fixed-width">Units</td>
+			<td class="text-right fixed-width">Adj Rate</td>
+			<td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="feature in
                                property.extraFeature[(property.rollYear1)-2].extraFeaturesInfo | orderBy:'-actualYearBuilt'">
 			<td>{{feature.description}}</td>
 			<td class="text-center">{{feature.actualYearBuilt}}</td>
-			<td class="text-right">{{feature.units}}</td>
-			<td class="text-right">{{feature.adjustedUnitPrice | currency:"$"}}</td>
-			<td class="text-right">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
+
+			<td class="text-right fixed-width">{{feature.units | number}}</td>
+			<td class="text-right fixed-width">{{feature.adjustedUnitPrice | currency:"$"}}</td>
+			<td class="text-right fixed-width">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
+
 		</tr>
 	</table>
 </div>

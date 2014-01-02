@@ -68,14 +68,35 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
+
+    $scope.isOwnerCandidates = false;
+    $scope.isAddressCandidates = false;
+    $scope.isPartialFolioCandidates = false;
     $scope.fromPage = 1;
     $scope.toPage = 200;
     $scope.itemsPerFetch = 200;
+
     
     $scope.address = "";
 
     $scope.suite = "";
     $scope.folioMask = "99-9999-999-9999";
+    
+    $scope.activeSearchTab = "Address";
+    $scope.isActiveSearchTab = function(tab) {
+      return $scope.activeSearchTab == tab;
+    };
+    $scope.setActiveSearchTab = function(tab) {
+      $scope.activeSearchTab = tab;
+    };
+
+    $scope.activeRollYearTab = 0;
+    $scope.isActiveRollYearTab = function(rollYear) {
+      return $scope.activeRollYearTab == rollYear;
+    };
+    $scope.setActiveRollYearTab = function(rollYear) {
+      $scope.activeRollYearTab = rollYear;
+    };
     
     $scope.salesInfoGrantorName1 = false;
     $scope.salesInfoGrantorName2 = false;
@@ -87,7 +108,6 @@ angular.module('propertySearchApp')
       });
     };
     
-
     $scope.turnLayerOnOff = function(layer){
 
       if (layer.value === true){
@@ -110,11 +130,17 @@ angular.module('propertySearchApp')
     
 
     function clearResults() {
+
       $scope.showError = false;
       $scope.property = null;
       $scope.candidatesList = null;
+      $scope.isOwnerCandidates = false;
+      $scope.isAddressCandidates = false;
+      $scope.isPartialFolioCandidates = false;
       $scope.fromPage = 1;
       $scope.toPage = 200;
+      $scope.activeRollYearTab = 0;
+
 
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
@@ -181,18 +207,21 @@ angular.module('propertySearchApp')
     };
 
     $scope.isDisplayYearTab = function(property, rollYear){
+
       if(property != null) {
-	if(property.extraFeature[rollYear] != undefined &&
-	   property.land[rollYear] != undefined &&
+	if(property.extraFeature[rollYear] != undefined ||
+	   property.land[rollYear] != undefined ||
 	   property.building[rollYear] != undefined)
 	  return true;
 	else
 	  return false;
       }
-      else false;
+      else 
+	return false;
     };
     
     $scope.isDisplayMessages = function(property, propertySection, rollYear) {
+
       if(property != null && property != undefined && propertySection != null && propertySection != undefined)
       {
 	if(rollYear != null && rollYear != undefined){
@@ -234,13 +263,20 @@ angular.module('propertySearchApp')
       // Get folio to search for.
       var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
 
+      if(folio.length != 13) {
+	$scope.getCandidatesByPartialFolio(folio);
+	return true;
+      }
+
+
       // Get property data.
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
-            $scope.property = property;
-            $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+        $scope.property = property;
+        $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+	$scope.activeRollYearTab = $scope.property.rollYear1;
       }, function(error){
-          $scope.showError = true;
-	  $scope.errorMsg = error.message;
+        $scope.showError = true;
+	$scope.errorMsg = error.message;
       });
 
       // Get xy for property and display it in map.
@@ -272,7 +308,34 @@ angular.module('propertySearchApp')
           console.log("there was an error");
         });
     };
+    
+    $scope.getCandidatesHeight = function(){
+      if($scope.candidatesList == null)
+	return {height:'560px'};
+      else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 2)
+	return {height:'215px'};
+      else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 4)
+	return {height:'330px'};
+      else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 6)
+	return {height:'445px'};
+      else if($scope.candidatesList != null && $scope.candidatesList.candidates.length >= 7)
+	return {height:'560px'};
+      else
+	return {height:'560px'};
+    };
+    
 
+
+    $scope.candidatesPaginationSuccess = function(result){
+      $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
+      console.log("candidates updated", $scope.candidatesList);
+    };
+    $scope.candidatesPaginationFailure = function(error) {
+      $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
+      $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
+      console.log("error when fetching nextPage of candidates"+error);
+    };
+    
     $scope.fetchNextPage = function() {
       if($scope.toPage >= $scope.candidatesList.total) {
         $scope.showError = true;
@@ -281,19 +344,26 @@ angular.module('propertySearchApp')
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
 	$scope.toPage = $scope.toPage + $scope.itemsPerFetch;
-	propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
-	  $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
-	  console.log("candidates updated", $scope.candidatesList);
-	}, function(error) {
-	  $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
-	  $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
-	  console.log("error when fetching nextPage of candidates"+error);
-	});
+	
+	if(	$scope.isOwnerCandidates === true) {
+	  propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage)
+	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+	}
+	if($scope.isAddressCandidates === true) {
+	  propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage)
+	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+	}
+	if($scope.isPartialFolioCandidates === true) {
+	  propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage)
+	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+	}
       }
     };
 
     $scope.getCandidatesByOwner = function(){
+
       clearResults();
+      $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
@@ -318,6 +388,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByAddress = function(){
       clearResults();
+      $scope.isAddressCandidates = true;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
@@ -341,18 +412,18 @@ angular.module('propertySearchApp')
 
     };
 
-    $scope.getCandidatesByPartialFolio = function(){
+    $scope.getCandidatesByPartialFolio = function(folio){
       clearResults();
-      //TODO : compute and populate partialFolio
-      var partialFolio = "";
-      propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage).then(function(result){
+
+      $scope.isPartialFolioCandidates = true;
+      propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
 	    $scope.showError = result.completed;
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1)
-	    $scope.getPropertyByFolio(result.candidates[0].folio);
+	    $scope.getCandidateFolio(result.candidates[0].folio);
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -360,6 +431,7 @@ angular.module('propertySearchApp')
 	  $scope.showError = !result.completed;
 	  $scope.errorMsg = result.message;
 	}
+
       }, function(error){
 	console.log("getCandidatesByPartialFolio error "+error);
 	$scope.showError = true;
