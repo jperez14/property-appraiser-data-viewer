@@ -15,7 +15,13 @@ angular.module('propertySearchApp')
                                     );
 
 
-    
+    /**
+     * Requests property information by folio.
+     * When Folio is found return the property. 
+     * When the Folio does not exist, or the request
+     * failed an object of the form {message:"some message"}
+     * is returned.
+     */
     var propertyByFolio = function(folio){
       var endPoint = 'GetPropertySearchByFolio';
       var params = {folioNumber:folio, layerId:'4', "endPoint":endPoint};         
@@ -26,12 +32,12 @@ angular.module('propertySearchApp')
           deferred.resolve(new propertyService.Property(rawProperty));
         else
           deferred.reject(rawProperty.Message)
-      }, function(response){deferred.reject(response)});
+      }, function(response){deferred.reject("Ooops The request failed. Try again later.")});
       
       return deferred.promise.then(function(property){
 	return property;
       }, function(response){
-        return response;
+        return $q.reject({message:response});
       });
     };
 
@@ -64,7 +70,7 @@ angular.module('propertySearchApp')
 		                                                       deferred.resolve(new candidateService.Candidates(candidatesList));
 		                                                     },
 		                                                     function(response){
-		                                                       deffered.reject(response);
+		                                                       defered.reject(response);
 	                                                             });
 
       return deferred.promise.then(function(candidatesList){

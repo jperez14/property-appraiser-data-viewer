@@ -778,147 +778,75 @@ describe('Service: propertyService', function () {
 
 
 
-  //Benefits Info
-  it('BenefitInfosData not exists maps to benefitsInfo empty array', function(){
-    var property = new propertyService.Property({BenefitInfos:[]});
-    expect(property.benefitsInfo).toEqual([]);
+  //Benefit
+  it('Benefit not exists maps to benefit empty object', function(){
+    var property = new propertyService.Property({Benefit:{}});
+    expect(property.benefit).toEqual({benefits:{}, messages:{}});
   });
 
-  it('BenefitInfos null maps to benefitsInfo empty array', function(){
-    var property = new propertyService.Property({BenefitInfos:null});
-    expect(property.benefitsInfo).toEqual([]);
+  it('Benefit null maps to benefit empty object', function(){
+    var property = new propertyService.Property({Benefit:null});
+    expect(property.benefit).toEqual({benefits:{}, messages:{}});
   });
 
-  it('map incoming BenefitsInfo fields to our benefitsInfo model fields',function(){
-    var givenProperty = {RollYear1:2013, BenefitInfos:[
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2011,
-        Type: "Assessment Reduction",
-        Value: 76044, 
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2012,
-        Type: "Assessment Reduction",
-        Value: 56004,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2013,
-        Type: "Assessment Reduction",
-        Value: 31912,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }]};
+  it('map incoming Benefits fields to our benefitsInfo model fields',function(){
+    var givenProperty = {Benefit:{
+      BenefitInfos: [
+        {
+          Description: "Non-Homestead Cap",
+          Message: null,
+          TaxYear: 2011,
+          Type: "Assessment Reduction",
+          Url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+          Value: 3344
+        },
+        {
+          Description: "Non-Homestead Cap",
+          Message: null,
+          TaxYear: 2013,
+          Type: "Assessment Reduction",
+          Url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+          Value: 3345
+        },
+        {
+          Description: "Save Our Homes",
+          Message: null,
+          TaxYear: 2011,
+          Type: "Assessment Reduction",
+          Url: "http://www.miamidade.gov/pa/amendment_10.asp",
+          Value: 89595
+        }],
+      Messages: []
+    }};
+    
 
-    var expectedProperty = {rollYear1: 2013, benefitsInfo:[
-      {
-        description: "Save Our Homes",
-        type:"Assessment Reduction",
-        data:{2013:31912, 2012:56004, 2011:76044},
-        values:[31912, 56004, 76044],
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }
-
-    ]};
+    var expectedProperty = {benefit:{
+      benefits:{"Non-Homestead Cap":{2011:{
+        description: "Non-Homestead Cap",
+        message: null,
+        year: 2011,
+        type: "Assessment Reduction",
+        url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+        value: 3344
+      },2013:{description: "Non-Homestead Cap",
+              message: null,
+              year: 2013,
+              type: "Assessment Reduction",
+              url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+              value: 3345}}, "Save Our Homes":{2011:{description: "Save Our Homes",
+                                                     message: null,
+                                                     year: 2011,
+                                                     type: "Assessment Reduction",
+                                                     url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                                                     value: 89595}}},
+      messages:{}
+    }};
+    
 
     var property = new propertyService.Property(givenProperty);
-    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
+    expect(property.benefit).toEqual(expectedProperty.benefit);
 
   });
-
-  it('Benefits info missing tax year puts a zero value for that year',function(){
-    var givenProperty = {RollYear1:2013, BenefitInfos:[
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2011,
-        Type: "Assessment Reduction",
-        Value: 76044,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2013,
-        Type: "Assessment Reduction",
-        Value: 31912,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }]};
-
-    var expectedProperty = {rollYear1:2013, benefitsInfo:[
-      {
-        description: "Save Our Homes",
-        type:"Assessment Reduction",
-        data:{2013:31912, 2011:76044},
-        values:[31912, 0, 76044],
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }
-
-    ]};
-
-    var property = new propertyService.Property(givenProperty);
-    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
-
-  });
-
-  it('Benefits info with more than one description keeps all of them',function(){
-    var givenProperty = {RollYear1:2013, BenefitInfos:[
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2011,
-        Type: "Assessment Reduction",
-        Value: 76044,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Civilian Disability",
-        TaxYear: 2013,
-        Type: "Exemption",
-        Value: 500,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Save Our Homes",
-        TaxYear: 2013,
-        Type: "Assessment Reduction",
-        Value: 31912,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      },
-      {
-        Description: "Civilian Disability",
-        TaxYear: 2012,
-        Type: "Exemption",
-        Value: 600,
-        Url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }]};
-
-    var expectedProperty = {rollYear1:2013, benefitsInfo:[
-      {
-        description: "Save Our Homes",
-        type:"Assessment Reduction",
-        data:{2013:31912, 2011:76044},
-        values:[31912, 0, 76044],
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }, {
-        description: "Civilian Disability",
-        type: "Exemption",
-        data:{2012:600, 2013:500},
-        values:[500,600,0],
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp"
-      }
-
-
-    ]};
-
-    var property = new propertyService.Property(givenProperty);
-    expect(property.benefitsInfo).toEqual(expectedProperty.benefitsInfo);
-
-  });
-
-
-
-
 
 
 

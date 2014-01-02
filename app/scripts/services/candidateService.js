@@ -65,7 +65,7 @@ angular.module('propertySearchApp')
 		if(isTypeUndefined(el.Strap))
           candidate.folio = null;
         else
-          candidate.folio = el.Strap; //.trim().replace(/-/g, "");
+          candidate.folio = el.Strap.trim().replace(/-/g, "");
 
         if(isTypeUndefinedOrIsEmpty(el.Owner1))
           candidate.firstOwner = null;
@@ -95,9 +95,20 @@ angular.module('propertySearchApp')
 
     var isTypeUndefinedOrIsEmpty = function(val){return typeof val === "undefined" || _.isEmpty(val) }
     
+    var isCandidatesFound = function(rawCandidates){
+      if(rawCandidates.Completed === false)
+        return false;
+      else if(rawCandidates.Completed === true && rawCandidates.Total == 0)
+        return false;
+      else
+        return true;
+    };
+    
+
     // Public API
     return {
-      Candidates: Candidates
+      Candidates: Candidates,
+      isCandidatesFound: isCandidatesFound
     };
     
   });

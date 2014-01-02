@@ -110,6 +110,7 @@ angular.module('propertySearchApp')
     
 
     function clearResults() {
+      $scope.showError = false;
       $scope.property = null;
       $scope.candidatesList = null;
       $scope.fromPage = 1;
@@ -216,10 +217,6 @@ angular.module('propertySearchApp')
 	return false;
     };
 
-    $scope.getCandidateFolio = function(folioNum){
-      var folio = folioNum.trim().replace(/-/g, "");
-      $scope.getPropertyByFolio(folio);
-    };
 
     $scope.getPropertyByFolio = function(candidateFolio){
 
@@ -242,9 +239,9 @@ angular.module('propertySearchApp')
             $scope.property = property;
             $scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
       }, function(error){
-          console.log("getPropertyByFolio error ", error);
           $scope.showError = true;
-	  $scope.errorMsg = error;});
+	  $scope.errorMsg = error.message;
+      });
 
       // Get xy for property and display it in map.
       var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
@@ -304,7 +301,7 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1)
-	    $scope.getCandidateFolio(result.candidates[0].folio);
+	    $scope.getPropertyByFolio(result.candidates[0].folio);
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -328,7 +325,7 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1)
-	    $scope.getCandidateFolio(result.candidates[0].folio);
+	    $scope.getPropertyByFolio(result.candidates[0].folio);
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -355,7 +352,7 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1)
-	    $scope.getCandidateFolio(result.candidates[0].folio);
+	    $scope.getPropertyByFolio(result.candidates[0].folio);
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}

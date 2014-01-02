@@ -27,6 +27,13 @@ describe('Service: propertySearchService', function () {
     PropertyInfo: {FolioNumber: "01-3126-042-0370"},
     LegalDescription: {Description: "A|B|C"}
   };
+
+  var mockFolioDoesNotExistResponse = {
+    Completed:true,
+    Message:"Folio does not exist",
+    PropertyInfo:{FolioNumber: null}
+  };
+  
   
   var mockCandidatesList = {
     candidates : [{
@@ -44,6 +51,7 @@ describe('Service: propertySearchService', function () {
     $rootScope = _$rootScope_;
 
     $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetPropertySearchByFolio?folioNumber=0131260420370&layerId=4').respond(mockProperty);
+    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetPropertySearchByFolio?folioNumber=1111111111111&layerId=4').respond(mockFolioDoesNotExistResponse);
     $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetOwners?from=1&ownerName=Michael+Sarasti&to=200').respond(mockCandidatesList);
     $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetAddress?from=1&myAddress=7244+SW+72+St&myUnit=&to=200').respond(mockCandidatesList);
   }));
@@ -65,12 +73,16 @@ describe('Service: propertySearchService', function () {
     $rootScope.$apply();
   });
 
-  xit('propertyByFolio callback executed', function(){
-    var property = propertySearchService.getPropertyByFolio('0131260420370', function(prop){
-      expect(property.PropertyInfo.FolioNumber).toBe("01-3126-042-0370");
-      //expect(property.LegalDescription.Description).toEqualData(["A","B","C"]);
+  it('propertyByFolio folio does not exist, returns an error message', function(){
+    var property = propertySearchService.getPropertyByFolio('1111111111111');
+    property.then(function(myProperty){
+      expect(true).toBe(false);
+    },function(response){
+      expect(response.message).toBe("Folio does not exist");
     });
+
     $httpBackend.flush();
+    $rootScope.$apply();
   });
 
   it('propertyByOwnerName callback executed', function() {
