@@ -28,6 +28,7 @@ angular.module('propertySearchApp')
       dojo.connect(map, 'onLoad',function(){
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
+        map.hideZoomSlider();
       });
 
 
