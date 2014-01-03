@@ -135,11 +135,15 @@
           
           <div class="lc_container">
           
-          <span class="map-button mb-zoomin"></span>
-          <span class="map-button mb-zoomout"></span>
-          <span class="map-button mb-fullextent"></span>
-          <!--<span class="map-button mb-zoombox"></span>-->
-          <span class="map-button mb-initial"></span>
+          <span class="map-button mb-zoomin" ng-click="mapZoomIn()"></span>
+          <span class="map-button mb-zoomout" ng-click="mapZoomOut()"></span>
+          <span class="map-button mb-fullextent"
+          ng-click="mapZoomToFullExtent()" ></span>
+          <!--
+          <span class="map-button mb-zoombox"
+          ng-click="mapZoomInBox()"></span>
+          -->
+          <span class="map-button mb-initial" ng-click="mapZoomToProperty()"></span>
           
           	 <div id="map_lc">
             
@@ -157,7 +161,9 @@
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">
-                      	<li><span>Aerial Map</span> &nbsp;|&nbsp; <span class="map-view">Street Map</span></li>
+                      	<li><span ng-click="mapToggleAerialOn()">Aerial
+                      	Map</span>
+                      	&nbsp;|&nbsp; <span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
                         <li class="divider"></li>
                         <li ng-repeat="layer in layers"><input type="checkbox" ng-model="layer.value" ng-change="turnLayerOnOff(layer)"> {{layer.label}}</li>
                       </ul>

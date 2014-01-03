@@ -13,12 +13,16 @@ angular.module('propertySearchApp')
       var urlParcelLayer = paConfig.urlParcelLayer;
 
       //Add layers.
-      var tiled = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial);
+      var aerialLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial, {id:"aerial"});
+      var streetLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlStreet, {id:"street"});
       var parcels = new esri.layers.FeatureLayer(urlParcelLayer);
       var layers = new esri.layers.GraphicsLayer({id:"layers"});
-      map.addLayer(tiled);
+      map.addLayer(aerialLayer);
+      map.addLayer(streetLayer);
       map.addLayer(parcels);
       map.addLayer(layers);
+      streetLayer.hide(); 
+
       
       //Add events to map.
       map.on("click", $scope.mapClicked);
@@ -29,6 +33,8 @@ angular.module('propertySearchApp')
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
         map.hideZoomSlider();
+
+        $scope.navToolBar  = new esri.toolbars.Navigation(map);
       });
 
 
@@ -47,14 +53,52 @@ angular.module('propertySearchApp')
     dojo.ready(initMap);
 
     $scope.joseFlag = true;
-    $scope. activateToolbar = function (){
+    $scope.activateToolbar = function (){
       toolbar.activate(esri.toolbars.Draw.EXTENT);
     };
 
     $scope.drawEndHandler  = function (geometry){
       toolbar.deactivate();
-
     };
+
+    $scope.mapZoomIn = function(){
+      var extent=$scope.map.extent;
+      $scope.map.setExtent(extent.expand(0.5));
+    };
+
+    $scope.mapZoomOut = function(){
+      var extent=$scope.map.extent;
+      $scope.map.setExtent(extent.expand(2));
+    };
+
+    $scope.mapZoomToProperty = function(){
+      if(!isUndefinedOrNull($scope.property))
+        if(!isUndefinedOrNull($scope.property.location)){
+          var geometry = {"x":$scope.property.location.x, 
+                          "y":$scope.property.location.y, 
+                          "spatialReference":{"wkid":2236}};
+           $scope.map.centerAndZoom(geometry, 10);
+        }
+    };
+    
+    $scope.mapZoomToFullExtent = function(){
+      $scope.navToolBar.zoomToFullExtent();
+    };
+    
+    $scope.mapZoomInBox = function(){
+      $scope.navToolBar.activate(esri.toolbars.Navigation.ZOOM_IN);
+    };
+    
+    $scope.mapToggleAerialOn = function(){
+      $scope.map.getLayer("aerial").show();
+      $scope.map.getLayer("street").hide();
+    }
+
+    $scope.mapToggleStreetOn = function(){
+      $scope.map.getLayer("street").show();
+      $scope.map.getLayer("aerial").hide();
+    }
+    
 
     $scope.mapClicked = function(event){
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
@@ -286,7 +330,8 @@ angular.module('propertySearchApp')
         if(featureSet.features != undefined && featureSet.features.length > 0) {
 	  var myPoint = {"geometry":{
 	    "x":featureSet.features[0].attributes.X_COORD,
-	    "y":featureSet.features[0].attributes.Y_COORD},
+	    "y":featureSet.features[0].attributes.Y_COORD,
+            "spatialReference":{"wkid":2236}},
 		         "symbol":paConfig.propertyMarkerSymbol
 			};
 	  var gra = new esri.Graphic(myPoint);
@@ -440,6 +485,8 @@ angular.module('propertySearchApp')
       });
 
     };
+
+    var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
 
   }]);
