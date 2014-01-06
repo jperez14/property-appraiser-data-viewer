@@ -77,7 +77,7 @@ angular.module('propertySearchApp')
           var geometry = {"x":$scope.property.location.x, 
                           "y":$scope.property.location.y, 
                           "spatialReference":{"wkid":2236}};
-           $scope.map.centerAndZoom(geometry, 10);
+          $scope.map.centerAndZoom(geometry, 10);
         }
     };
     
@@ -102,7 +102,20 @@ angular.module('propertySearchApp')
 
     $scope.mapClicked = function(event){
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
-      folio.then(function(folioValue){$scope.getPropertyByFolio(folioValue);}, function(error){});
+      folio.then(function(folioValue){
+        var myPromise = $scope.getPropertyByFolio(folioValue);
+        myPromise.then(function(data){
+//          console.log("mapClicked data ", data);
+//          var geometry = {
+//	      "x":$scope.property.location.x,
+//	      "y":$scope.property.location.y,
+//	      "spatialReference":{"wkid":2236}}
+//          $scope.map.centerAndZoom(geometry, 10);          
+        }
+                        , function(error){}
+                          );
+      }, 
+                 function(error){});
     };
 
     $scope.folio = "";
@@ -291,69 +304,81 @@ angular.module('propertySearchApp')
 	return false;
     };
 
+   
+    $scope.searchByFolio = function(){
+      var folio = $scope.folio;
+      if(folio != undefined && folio.length >=7 && folio.length < 13) {
+	$scope.getCandidatesByPartialFolio(folio);
+      }
+      else if(folio != undefined && folio.length == 13){
+        var myPromise = $scope.getPropertyByFolio(folio);
+        myPromise.then(function(data){
+          console.log("mapClicked data ", data);
+          var geometry = {
+	    "x":$scope.property.location.x,
+	    "y":$scope.property.location.y,
+	    "spatialReference":{"wkid":2236}}
+          $scope.map.centerAndZoom(geometry, 10);          
+        }
+                       , function(error){}
+                      );
 
-    $scope.getPropertyByFolio = function(candidateFolio){
+      }
+
+    };
+    
+    $scope.getPropertyByFolio = function(folio){
 
       // Clear previous data.
       clearResults();
-
-      // resize map container
-      //$scope.mapStyle = {width:'100%', height:'200px'};
-      //$scope.map.resize();
-
-      // Get folio to search for.
-      var folio = (candidateFolio != undefined) ? candidateFolio : $scope.folio;
-
-      if(folio != undefined && folio.length >=7 && folio.length < 13) {
-		$scope.getCandidatesByPartialFolio(folio);
-      }
-	  else if(folio != undefined && folio.length == 13){
 
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
       $scope.resetLayers();
       $scope.joseFlag = false;
-	  // Get property data.
-		  var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
-			$scope.property = property;
-			$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-		$scope.activeRollYearTab = $scope.property.rollYear1;
-		  }, function(error){
-			$scope.showError = true;
-		$scope.errorMsg = error.message;
-		  });
 
-		  // Get xy for property and display it in map.
-		  var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
+      // Get property data.
+      var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
+	$scope.property = property;
+	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+	$scope.activeRollYearTab = $scope.property.rollYear1;
+      }, function(error){
+	$scope.showError = true;
+	$scope.errorMsg = error.message;
+      });
 
-			if(featureSet.features != undefined && featureSet.features.length > 0) {
-		  var myPoint = {"geometry":{
-			"x":featureSet.features[0].attributes.X_COORD,
-			"y":featureSet.features[0].attributes.Y_COORD,
-				"spatialReference":{"wkid":2236}},
-					 "symbol":paConfig.propertyMarkerSymbol
-				};
-		  var gra = new esri.Graphic(myPoint);
-		  $scope.map.graphics.add(gra);
-		  $scope.map.centerAndZoom(myPoint.geometry, 10);          
-			  return {
-			"x":featureSet.features[0].attributes.X_COORD,
-			"y":featureSet.features[0].attributes.Y_COORD};
-		}else{
-			  return $q.reject("No point found");
-			}
-		  }, function(error){
-		console.log("there was an error");
-		$scope.showError = true;
-		$scope.errorMsg = "Oops !! The request failed. Please try again later";
-		  });
+      // Get xy for property and display it in map.
+      var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
 
-		  $q.all([propertyPromise, geometryPromise]).then(function(data){
-			$scope.property.location = data[1];},function(error){
-			  console.log("there was an error");
-			});
-	  }
-	};
+	if(featureSet.features != undefined && featureSet.features.length > 0) {
+	  var myPoint = {"geometry":{
+	    "x":featureSet.features[0].attributes.X_COORD,
+	    "y":featureSet.features[0].attributes.Y_COORD,
+	    "spatialReference":{"wkid":2236}},
+			 "symbol":paConfig.propertyMarkerSymbol
+			};
+	  var gra = new esri.Graphic(myPoint);
+	  $scope.map.graphics.add(gra);
+	  //$scope.map.centerAndZoom(myPoint.geometry, 10);          
+	  return {
+	    "x":featureSet.features[0].attributes.X_COORD,
+	    "y":featureSet.features[0].attributes.Y_COORD};
+	}else{
+	  return $q.reject("No point found");
+	}
+      }, function(error){
+	console.log("there was an error");
+	$scope.showError = true;
+	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+      });
+
+      return $q.all([propertyPromise, geometryPromise]).then(function(data){
+	$scope.property.location = data[1];},function(error){
+	  console.log("there was an error");
+	});
+
+
+    };
     
     $scope.getCandidatesHeight = function(){
       if($scope.candidatesList == null)
@@ -416,8 +441,10 @@ angular.module('propertySearchApp')
 	    $scope.showError = result.completed;
 	    $scope.errorMsg = result.message;
 	  }
-	  else if(result.candidates.length == 1)
-	    $scope.getPropertyByFolio(result.candidates[0].folio);
+	  else if(result.candidates.length == 1){
+            $scope.folio = result.candidates[0].folio;
+            $scope.searchByFolio();
+          }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -441,8 +468,10 @@ angular.module('propertySearchApp')
 	    $scope.showError = result.completed;
 	    $scope.errorMsg = result.message;
 	  }
-	  else if(result.candidates.length == 1)
-	    $scope.getPropertyByFolio(result.candidates[0].folio);
+	  else if(result.candidates.length == 1){
+            $scope.folio = result.candidates[0].folio;
+            $scope.searchByFolio();
+          }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -468,8 +497,10 @@ angular.module('propertySearchApp')
 	    $scope.showError = result.completed;
 	    $scope.errorMsg = result.message;
 	  }
-	  else if(result.candidates.length == 1)
-	    $scope.getCandidateFolio(result.candidates[0].folio);
+	  else if(result.candidates.length == 1){
+            $scope.folio = result.candidates[0].folio;
+            $scope.searchByFolio();
+          }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
