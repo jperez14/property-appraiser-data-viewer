@@ -82,9 +82,9 @@
               <div class="input-group">
 
                 <input type="text" value="Folio" name="" id="search_box" class="form-control" ui-mask='{{folioMask}}' 
-					ui-keypress="{13:'getPropertyByFolio()'}" ng-model='folio' ng-click="showError=false" > 
+					ui-keypress="{13:'searchByFolio()'}" ng-model='folio' ng-click="showError=false" > 
                 <span class="input-group-btn">
-                  <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getPropertyByFolio()">
+                  <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="searchByFolio()">
 
                     <span class="glyphicon glyphicon-search"></span>
                   </button>
@@ -164,12 +164,8 @@ Launch modal
           
           <span class="map-button mb-zoomin" ng-click="mapZoomIn()"></span>
           <span class="map-button mb-zoomout" ng-click="mapZoomOut()"></span>
-          <span class="map-button mb-fullextent"
-          ng-click="mapZoomToFullExtent()" ></span>
-          <!--
-          <span class="map-button mb-zoombox"
-          ng-click="mapZoomInBox()"></span>
-          -->
+          <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()" ></span>
+          <span class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"></span>
           <span class="map-button mb-initial" ng-click="mapZoomToProperty()"></span>
           
           	 <div id="map_lc">
@@ -188,7 +184,7 @@ Launch modal
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">
-                      	<li><span ng-click="mapToggleAerialOn()">Aerial
+                      	<li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial
                       	Map</span>
                       	&nbsp;|&nbsp; <span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
                         <li class="divider"></li>

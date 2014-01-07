@@ -31,6 +31,35 @@ angular.module('propertySearchApp')
           return error;});
     };
 
+//    var bounderiesFromFolio = function($scope, folio){
+//      var url = paConfig.urlParcelLayer;
+//      var queryTask = new esri.tasks.QueryTask(url);
+//
+//      var query = new esri.tasks.Query();
+//      query.returnGeometry = true;
+//      query.where = "FOLIO=" + folio;
+//      query.outFields = ["*"];
+//
+//      var deferred = $q.defer();
+//      queryTask.execute(query,function (featureSet) {
+//        deferred.resolve(featureSet);
+//        $scope.$apply();
+//      }, function (error) {
+//        deferred.reject(error);
+//        $scope.$apply();
+//      });
+//
+//
+//      return deferred.promise.then(function(featureSet){
+//        console.log("featureSet",featureSet);
+//        return featureSet}, function(error){
+//          console.log('Getting pointFromFolio ERROR: ',error);
+//          return error;});
+//
+//
+//    };
+    
+
     var folioFromPoint = function ($scope, x, y){
       var url = paConfig.urlParcelLayer;
       return featuresFromPointLayerIntersection($scope, x, y, url, false).then(function(featureSet){
