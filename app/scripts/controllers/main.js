@@ -35,9 +35,9 @@ angular.module('propertySearchApp')
         map.hideZoomSlider();
 
         $scope.navToolBar  = new esri.toolbars.Navigation(map);
+        $scope.drawToolBar = new esri.toolbars.Draw(map);
+        dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
       });
-
-
 
       $scope.map = map;
 
@@ -53,12 +53,14 @@ angular.module('propertySearchApp')
     dojo.ready(initMap);
 
     $scope.joseFlag = true;
-    $scope.activateToolbar = function (){
-      toolbar.activate(esri.toolbars.Draw.EXTENT);
+
+    $scope.mapActivateZoomInBox = function (){
+      $scope.drawToolBar.activate(esri.toolbars.Draw.EXTENT);
     };
 
     $scope.drawEndHandler  = function (geometry){
-      toolbar.deactivate();
+      $scope.drawToolBar.deactivate();
+      $scope.map.setExtent(geometry);
     };
 
     $scope.mapZoomIn = function(){
@@ -85,10 +87,6 @@ angular.module('propertySearchApp')
       $scope.navToolBar.zoomToFullExtent();
     };
     
-    $scope.mapZoomInBox = function(){
-      $scope.navToolBar.activate(esri.toolbars.Navigation.ZOOM_IN);
-    };
-    
     $scope.mapToggleAerialOn = function(){
       $scope.map.getLayer("aerial").show();
       $scope.map.getLayer("street").hide();
@@ -104,18 +102,8 @@ angular.module('propertySearchApp')
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){
         var myPromise = $scope.getPropertyByFolio(folioValue);
-        myPromise.then(function(data){
-//          console.log("mapClicked data ", data);
-//          var geometry = {
-//	      "x":$scope.property.location.x,
-//	      "y":$scope.property.location.y,
-//	      "spatialReference":{"wkid":2236}}
-//          $scope.map.centerAndZoom(geometry, 10);          
-        }
-                        , function(error){}
-                          );
-      }, 
-                 function(error){});
+        myPromise.then(function(data){}, function(error){});
+      }, function(error){});
     };
 
     $scope.folio = "";
