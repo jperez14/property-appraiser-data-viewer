@@ -304,7 +304,11 @@ angular.module('propertySearchApp')
 	return false;
     };
 
-   
+    $scope.getCandidateFolio = function(folio) {
+		$scope.folio = folio;
+		$scope.searchByFolio();
+	};
+
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
       if(folio != undefined && folio.length >=7 && folio.length < 13) {
@@ -442,9 +446,8 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1){
-            $scope.folio = result.candidates[0].folio;
-            $scope.searchByFolio();
-          }
+		$scope.getCandidateFolio(result.candidates[0].folio);
+      }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -469,9 +472,8 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1){
-            $scope.folio = result.candidates[0].folio;
-            $scope.searchByFolio();
-          }
+		$scope.getCandidateFolio(result.candidates[0].folio);
+      }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
@@ -498,9 +500,8 @@ angular.module('propertySearchApp')
 	    $scope.errorMsg = result.message;
 	  }
 	  else if(result.candidates.length == 1){
-            $scope.folio = result.candidates[0].folio;
-            $scope.searchByFolio();
-          }
+		$scope.getCandidateFolio(result.candidates[0].folio);
+	  }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
 	}
