@@ -105,13 +105,31 @@
       
     </div> <!-- /.end search_area-->
 	
-	<div id="loadingWidget" class="row-fluid ui-corner-all" style="padding: 0 .7em; height: 140px; modal:true;" loading-widget >
+    
+<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
+Launch modal
+</button>
+     
+    
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+    
+<div class="modal-body">
+   
+	<div id="loadingWidget" class="row-fluid ui-corner-all"> <!-- loading-widget > -->
 		<div class="loadingContent">
-		  <p>
+		  <p style="text-align:center;">
 			<img alt="Loading Content" src="images/ajax-loader.gif" /> Loading
 		  </p>
 		</div>
 	</div>
+
+</div>
+    
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
   </div>
