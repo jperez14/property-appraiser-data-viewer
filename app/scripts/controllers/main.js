@@ -126,7 +126,7 @@ angular.module('propertySearchApp')
     $scope.address = "";
 
     $scope.suite = "";
-    $scope.folioMask = "99-9999-9?99-9999";
+    $scope.folioMask = "9?9-9999-999-9999";
     
     $scope.activeSearchTab = "Address";
     $scope.isActiveSearchTab = function(tab) {
@@ -299,8 +299,12 @@ angular.module('propertySearchApp')
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
-      if(folio != undefined && folio.length >=7 && folio.length < 13) {
-	$scope.getCandidatesByPartialFolio(folio);
+	  if (folio != undefined && folio.length < 7 ) {
+		$scope.showError = true;
+		$scope.errorMsg = "Please enter at least 7 digits for Folio";
+	  }
+      else if(folio != undefined && folio.length >=7 && folio.length < 13) {
+		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
         var myPromise = $scope.getPropertyByFolio(folio);
