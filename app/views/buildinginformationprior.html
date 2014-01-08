@@ -20,8 +20,6 @@
 			
 			<td class="text-right fixed-width">Effective Area</td>
 			<td class="text-right fixed-width">Adj Rate</td>
-			<!-- <td class="text-right">Replacement Cost New</td> -->
-			<!-- <td>% Good</td> -->
 			<td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
@@ -34,7 +32,7 @@
             <td class="text-center">{{building.actual}}</td>
 			
 			<td class="text-right fixed-width">{{building.effectiveArea| number}}</td>
-			<td class="text-right fixed-width">{{building.adjustedBasePrice | currency:"$"}}</td>
+			<td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
 			<td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency:"$"}}</td>
 		</tr>
 
