@@ -406,7 +406,7 @@ angular.module('propertySearchApp')
     $scope.fetchNextPage = function() {
       if($scope.toPage >= $scope.candidatesList.total) {
         $scope.showError = true;
-        $scope.errorMsg = "You are on the last page of results";
+        $scope.errorMsg = "You have reached the end of the results of your search";
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
