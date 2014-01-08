@@ -16,8 +16,6 @@
         	<td>Land Use</td>
 			<td class="text-center">Muni Zone</td>
 			<td class="text-center">PA Zone</td>
-			<!-- <td>Use Code</td> -->
-			<!-- <td>Total Adj</td> -->
 			<td class="text-center">Unit Type</td>
 			<td class="text-right fixed-width">Units</td>
 			<td class="text-right fixed-width">Adj Rate</td>
@@ -28,12 +26,9 @@
 			<td>{{land.landUse}}</td>
             <td class="text-center">{{land.muniZone}}</td>
 			<td class="text-center">{{land.zone}}</td>
-			<!-- <td>{{land.useCode}}</td> -->
-			<!--<td>{{land.totalAdjustments}}</td> -->
-
 			<td class="text-center">{{land.unitType}}</td>
 			<td class="text-right fixed-width">{{land.units | number:2}}</td>
-			<td class="text-right fixed-width">{{land.adjustedUnitPrice | currency:"$"}}</td>
+			<td class="text-right fixed-width">{{land.adjustedUnitPrice | centsCurrency:"$"}}</td>
 			<td class="text-right fixed-width">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
 
 		</tr>
