@@ -426,6 +426,7 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByOwner = function(){
 
       clearResults();
+	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
@@ -453,6 +454,7 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByAddress = function(){
       clearResults();
       $scope.isAddressCandidates = true;
+	  $scope.loader = true; //flag hackeysack
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
@@ -479,7 +481,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByPartialFolio = function(folio){
       clearResults();
-
+		$scope.loader = true; //flag hackeysack
       $scope.isPartialFolioCandidates = true;
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {

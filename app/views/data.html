@@ -105,28 +105,21 @@
       
     </div> <!-- /.end search_area-->
 	
-    
-<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
-Launch modal
-</button>
-     
-    
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="load-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" loading-widget>
 <div class="modal-dialog">
 <div class="modal-content">
-    
+
 <div class="modal-body">
-   
-	<div id="loadingWidget" class="row-fluid ui-corner-all"> <!-- loading-widget > -->
-		<div class="loadingContent">
-		  <p style="text-align:center;">
-			<img alt="Loading Content" src="images/ajax-loader.gif" /> Loading
-		  </p>
-		</div>
-	</div>
+
+<div id="loadingWidget" class="row-fluid ui-corner-all"> <!-- loading-widget > -->
+<div class="loadingContent">
+<img alt="Loading Content" src="images/ajax-loader.gif" />
+</div>
+</div>
 
 </div>
-    
+
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -179,21 +172,32 @@ Launch modal
                 </div>
                 </div> -->
                 
+                <!-- Map View List  -->
+                <div style="display:inline">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Map View <span class="caret"></span></button>
+                      <ul class="dropdown-menu layer-ul" role="menu">
+                      	<li>Choose your desired view below.</li>
+                        <li class="divider"></li>
+                        <li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial Map</span></li>
+                        <li class="divider"></li>
+                      	<li><span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
+                        <li class="divider"></li>
+                      </ul>
+                  </div>
+                </div>
+                
                 <!-- Layer List  -->
-                <div>
+                <div style="display:inline">
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">
-                      	<li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial
-                      	Map</span>
-                      	&nbsp;|&nbsp; <span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
+                        <li>Toggle layers by checking the options below.</li>
                         <li class="divider"></li>
                         <li ng-repeat="layer in layers"><input type="checkbox" ng-model="layer.value" ng-change="turnLayerOnOff(layer)"> {{layer.label}}</li>
                       </ul>
                   </div>
                 </div>
-                
-                <!--<span class="map-view">Street Map | Aerial Map</span>-->
                   
               </div> <!-- end map_lc -->
           
