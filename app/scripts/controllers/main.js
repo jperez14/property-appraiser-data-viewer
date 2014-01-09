@@ -316,11 +316,17 @@ angular.module('propertySearchApp')
         var myPromise = $scope.getPropertyByFolio(folio);
         myPromise.then(function(data){
           console.log("mapClicked data ", data);
-          var geometry = {
-	    "x":$scope.property.location.x,
-	    "y":$scope.property.location.y,
-	    "spatialReference":{"wkid":2236}}
-          $scope.map.centerAndZoom(geometry, 10);          
+		  if(!isUndefinedOrNull($scope.property.location)){
+			  var geometry = {
+				"x":$scope.property.location.x,
+				"y":$scope.property.location.y,
+				"spatialReference":{"wkid":2236}
+			  };
+			  $scope.map.centerAndZoom(geometry, 10);
+		  }
+		  else {
+			$scope.mapZoomToFullExtent();
+		  }
         }
                        , function(error){}
                       );
