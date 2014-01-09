@@ -9,6 +9,7 @@
 		<div class="record_folio"><strong>FOLIO:</strong>
 			<input class="hyperInput" type="text" ui-mask='{{folioMask}}' ng-model='candidate.folio' ng-click="getCandidateFolio(candidate.folio)" readonly="true"> {{showFolioStatus(candidate.status)}}
 		</div>
+		<div class="record_owner"><strong>DESC:</strong> {{candidate.subdivisionDescription}}</div>
 		<div class="record_owner"><strong>OWNER:</strong> {{candidate.firstOwner}}</div>
 		<div class="record_owner" ng-show="candidate.secondOwner"><strong>&nbsp;</strong> {{candidate.secondOwner}}</div>
 		<div class="record_address"><strong>ADDRESS:</strong> {{candidate.siteAddress}}</div>

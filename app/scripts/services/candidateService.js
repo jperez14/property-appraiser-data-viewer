@@ -86,6 +86,11 @@ angular.module('propertySearchApp')
 			candidate.status = null;
 		else
 			candidate.status = el.Status;
+			
+		if(isTypeUndefinedOrIsEmpty(el.SubdivisionDescription))
+			candidate.SubdivisionDescription = null;
+		else
+			candidate.subdivisionDescription = el.SubdivisionDescription;
 
 		return candidate;
       });
