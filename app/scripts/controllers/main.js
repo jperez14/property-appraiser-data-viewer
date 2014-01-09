@@ -299,11 +299,11 @@ angular.module('propertySearchApp')
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
-	  if (folio != undefined && folio.length < 7 ) {
+	  if (folio != undefined && folio.length < 6 ) {
 		$scope.showError = true;
-		$scope.errorMsg = "Please enter at least 7 digits for Folio";
+		$scope.errorMsg = "Please enter at least 6 digits for Folio";
 	  }
-      else if(folio != undefined && folio.length >=7 && folio.length < 13) {
+      else if(folio != undefined && folio.length >=6 && folio.length < 13) {
 		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
