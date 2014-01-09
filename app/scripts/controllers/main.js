@@ -441,7 +441,13 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByOwner = function(){
 
-      clearResults();
+      if(_.isEmpty($scope.ownerName))
+	  {
+		$scope.showError = true;
+		$scope.errorMsg = "Please enter a valid Owner Name";
+		return true;
+	  }
+	  clearResults();
 	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
@@ -468,6 +474,12 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByAddress = function(){
+      if(_.isEmpty($scope.address))
+	  {
+		$scope.showError = true;
+		$scope.errorMsg = "Please enter a valid Address";
+		return true;
+	  }
       clearResults();
       $scope.isAddressCandidates = true;
 	  $scope.loader = true; //flag hackeysack
