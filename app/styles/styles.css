@@ -690,3 +690,11 @@ div.search_area .nav-tabs {padding-left:10px;}
 .add-suite {width:100% !important}
 }
 
+.hyperInput {
+	border:none;
+	color: #39599f;
+	font-weight: bold;
+	cursor:pointer;
+}
+
+.hyperInput:hover { text-decoration: underline;}
