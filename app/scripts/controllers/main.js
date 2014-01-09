@@ -506,6 +506,11 @@ angular.module('propertySearchApp')
 
     };
 
+    $scope.openPictometryWindow = function(){
+      $window.open("#/pictometry");
+    };
+    
+
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
 

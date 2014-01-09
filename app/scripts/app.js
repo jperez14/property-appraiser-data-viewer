@@ -7,6 +7,10 @@ angular.module('propertySearchApp', ['ngResource', 'ui.mask', 'ui.keypress', 'no
         templateUrl: 'views/data.html',
         controller: 'MainCtrl'
       })
+      .when('/pictometry',{
+        templateUrl: 'views/pictometry.html',
+        controller: 'PictometryCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
