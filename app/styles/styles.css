@@ -119,18 +119,39 @@ div.search_area .tab-content {
 }
 
 .map_area {
-	border:1px solid #999;
+	border:1px solid #ccc;
 }
 
 .map_absolute {
 	position:absolute;
 }
 
+/*
 .lc_container {padding:10px; width:100%; position:absolute; z-index:500}
+*/
 
+.lc_container {
+	padding: 5px 10px;
+	background-color: #999;
+	border-bottom:1px solid #ccc;
+	height: 40px;
+	width: 100%;
+	position: absolute;
+	z-index: 500;
+}
+
+/*
 .map-button {
 	width:35px;
 	height:35px;
+	display:inline-block;
+	margin-right:2px;
+	background-image:url(../images/map-icons.png);
+}
+*/
+.map-button {
+	width:30px;
+	height:30px;
 	display:inline-block;
 	margin-right:2px;
 	background-image:url(../images/map-icons.png);
@@ -139,24 +160,43 @@ div.search_area .tab-content {
 .map-button:hover {
 	cursor:pointer;
 }
-/* initial state*/
+/* initial state
 .mb-zoomin {background-position:0 0;}
 .mb-zoomout {background-position:-35px 0;}
 .mb-fullextent {background-position:-70px 0;}
 .mb-zoombox {background-position:-105px 0;}
 .mb-initial {background-position:-175px 0;}
-/* hover state */
+/* hover state 
 .mb-zoomin:hover {background-position:0 35px;}
 .mb-zoomout:hover {background-position:-35px 35px;}
 .mb-fullextent:hover {background-position:-70px 35px;}
 .mb-zoombox:hover {background-position:-105px 35px;}
 .mb-initial:hover {background-position:-175px 35px;}
-/* active state - mainly for zoombox - add class "mb-active" to keep on */
+/* active state - mainly for zoombox - add class "mb-active" to keep on 
 .mb-zoomin .mb-active {background-position:0 35px;}
 .mb-zoomout .mb-active {background-position:-35px 35px;}
 .mb-fullextent .mb-active {background-position:-70px 35px;}
 .mb-zoombox .mb-active {background-position:-105px 35px;}
-.mb-initial .mb-active {background-position:-175px 35px;}
+.mb-initial .mb-active {background-position:-175px 35px;}*/
+
+/* initial state*/
+.mb-zoomin {background-position:0 0;}
+.mb-zoomout {background-position:-30px 0;}
+.mb-fullextent {background-position:-60px 0;}
+.mb-zoombox {background-position:-90px 0;}
+.mb-initial {background-position:-150px 0;}
+/* hover state */
+.mb-zoomin:hover {background-position:0 31px;}
+.mb-zoomout:hover {background-position:-30px 31px;}
+.mb-fullextent:hover {background-position:-60px 31px;}
+.mb-zoombox:hover {background-position:-90px 31px;}
+.mb-initial:hover {background-position:-150px 31px;}
+/* active state - mainly for zoombox - add class "mb-active" to keep on */
+.mb-zoomin .mb-active {background-position:0 31px;}
+.mb-zoomout .mb-active {background-position:-30px 31px;}
+.mb-fullextent .mb-active {background-position:-60px 31px;}
+.mb-zoombox .mb-active {background-position:-90px 31px;}
+.mb-initial .mb-active {background-position:-150px 31px;}
 
 
 #map_lc {
@@ -226,6 +266,15 @@ span.map-view:hover {
 .footer_area span a:hover {
 	text-decoration:underline;
 }
+
+/* loader modal */
+
+#load-modal {overflow-y:hidden;}
+.modal-open {overflow:auto;}
+#load-modal .modal-dialog {position:absolute; width:180px; top:50%; left:50%; margin-left:-90px; margin-top:-100px;}
+#load-modal .modal-content {border-radius:3px;}
+#load-modal .modal-body {padding:20px 10px;}
+.loadingContent {text-align:center;}
 
 
 /* result table styles */

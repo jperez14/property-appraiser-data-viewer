@@ -126,7 +126,7 @@ angular.module('propertySearchApp')
     $scope.address = "";
 
     $scope.suite = "";
-    $scope.folioMask = "99-9999-9?99-9999";
+    $scope.folioMask = "9?9-9999-999-9999";
     
     $scope.activeSearchTab = "Address";
     $scope.isActiveSearchTab = function(tab) {
@@ -208,16 +208,22 @@ angular.module('propertySearchApp')
       return false;
       };
     */
-    $scope.showFolioStatus = function() {
-      if($scope.property != null) {
-	if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
-	  return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
-	}
-	else
-	  return "";
-      }
+    $scope.showFolioStatus = function(status) {
+      if(status != undefined) {
+        if(status != null && status != "AC Active")
+          return "("+ status.substr(2).trim() +")";
+        else
+          return "";
+	  }
+	  if(status == undefined && $scope.property != null) {
+		if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
+	      return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
+		}
+		else
+	      return "";
+		}
       else
-	return "";
+		return "";
     };
 
     $scope.getRenamedMunicipality = function(municipality) {
@@ -299,18 +305,28 @@ angular.module('propertySearchApp')
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
-      if(folio != undefined && folio.length >=7 && folio.length < 13) {
-	$scope.getCandidatesByPartialFolio(folio);
+	  if (folio != undefined && folio.length < 6 ) {
+		$scope.showError = true;
+		$scope.errorMsg = "Please enter at least 6 digits for Folio";
+	  }
+      else if(folio != undefined && folio.length >=6 && folio.length < 13) {
+		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
         var myPromise = $scope.getPropertyByFolio(folio);
         myPromise.then(function(data){
           console.log("mapClicked data ", data);
-          var geometry = {
-	    "x":$scope.property.location.x,
-	    "y":$scope.property.location.y,
-	    "spatialReference":{"wkid":2236}}
-          $scope.map.centerAndZoom(geometry, 10);          
+		  if(!isUndefinedOrNull($scope.property.location)){
+			  var geometry = {
+				"x":$scope.property.location.x,
+				"y":$scope.property.location.y,
+				"spatialReference":{"wkid":2236}
+			  };
+			  $scope.map.centerAndZoom(geometry, 10);
+		  }
+		  else {
+			$scope.mapZoomToFullExtent();
+		  }
         }
                        , function(error){}
                       );
@@ -402,7 +418,7 @@ angular.module('propertySearchApp')
     $scope.fetchNextPage = function() {
       if($scope.toPage >= $scope.candidatesList.total) {
         $scope.showError = true;
-        $scope.errorMsg = "You are on the last page of results";
+        $scope.errorMsg = "You have reached the end of the results of your search";
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
@@ -426,6 +442,7 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByOwner = function(){
 
       clearResults();
+	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
@@ -453,6 +470,7 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByAddress = function(){
       clearResults();
       $scope.isAddressCandidates = true;
+	  $scope.loader = true; //flag hackeysack
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
@@ -479,7 +497,7 @@ angular.module('propertySearchApp')
 
     $scope.getCandidatesByPartialFolio = function(folio){
       clearResults();
-
+		$scope.loader = true; //flag hackeysack
       $scope.isPartialFolioCandidates = true;
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {

@@ -90,14 +90,21 @@ angular.module('notificationWidget', [])
 
             var startRequestHandler = function() {
                 // got the request start notification, show the element
-                element.show();
-				$('body').css('cursor', 'url(/images/hourglass.cur), auto');
+                //element.show();
+				//$('body').css('cursor', 'url(/images/hourglass.cur), auto');
+				if (scope.loader == true) {
+					$('#load-modal').modal('show');
+				}
             };
 
             var endRequestHandler = function() {
                 // got the request start notification, show the element
-                element.hide();
-				$('body').css('cursor', 'default');
+                //element.hide();
+				//$('body').css('cursor', 'default');
+				if (scope.loader == true) {
+					$('#load-modal').modal('hide');
+					scope.loader = false;
+				}
             };
             // register for the request start notification
             requestNotificationChannel.onRequestStarted(scope, startRequestHandler);

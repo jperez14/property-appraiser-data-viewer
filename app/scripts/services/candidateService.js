@@ -82,7 +82,12 @@ angular.module('propertySearchApp')
         else
           candidate.thirdOwner = el.Owner3;
 
-        return candidate;
+        if(isTypeUndefinedOrIsEmpty(el.Status))
+			candidate.status = null;
+		else
+			candidate.status = el.Status;
+
+		return candidate;
       });
       
       return candidates;
