@@ -208,16 +208,22 @@ angular.module('propertySearchApp')
       return false;
       };
     */
-    $scope.showFolioStatus = function() {
-      if($scope.property != null) {
-	if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
-	  return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
-	}
-	else
-	  return "";
-      }
+    $scope.showFolioStatus = function(status) {
+      if(status != undefined) {
+        if(status != null && status != "AC Active")
+          return "("+ status.substr(2).trim() +")";
+        else
+          return "";
+	  }
+	  if(status == undefined && $scope.property != null) {
+		if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
+	      return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
+		}
+		else
+	      return "";
+		}
       else
-	return "";
+		return "";
     };
 
     $scope.getRenamedMunicipality = function(municipality) {
