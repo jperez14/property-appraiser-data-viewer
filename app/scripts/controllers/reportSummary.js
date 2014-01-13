@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('ReportSummaryCtrl', ['$scope', 'SharedDataService', function ($scope, SharedData){
+  .controller('ReportSummaryCtrl', ['$scope', function ($scope){
 
-    $scope.property = SharedData.property;
+    $scope.property = window.opener.property;
 
   }]);

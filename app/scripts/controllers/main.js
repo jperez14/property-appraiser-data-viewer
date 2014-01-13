@@ -542,14 +542,16 @@ angular.module('propertySearchApp')
 
     $scope.openPictometryWindow = function(){
 
-        var url = '#/pictometry/' + $scope.property.location.x + '/' + $scope.property.location.y;
-        $window.open(url);
+      var url = '#/pictometry/' + $scope.property.location.x + '/' + $scope.property.location.y;
+      $window.open(url);
     };
 
     $scope.openReportSummaryWindow = function(){
-        var url = '#/reportSummary/';
         //$window.open(url);
-      $window.location.href = url;
+        //$window.location.href = url;
+        var url = '#/reportSummary/';
+        $window.property = $scope.property;  
+        $window.open(url,'name','height=500,width=600, location=0');
     };
     
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
