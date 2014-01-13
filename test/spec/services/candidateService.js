@@ -75,6 +75,26 @@ describe('Service: candidateService', function () {
     expect(candidatesList.candidates[0].municipality).toBe("Miami");
   });
 
+  it("MinimumPropertyInfos first element's Status with empty value makes it null", function(){
+    var candidatesList = new candidateService.Candidates({MinimumPropertyInfos:[{Status:""}]});
+    expect(candidatesList.candidates[0].status).toBe(null);
+  });
+
+  it("MinimumPropertyInfos first element's Status is not empty and has a value", function(){
+    var candidatesList = new candidateService.Candidates({MinimumPropertyInfos:[{Status:"AC Active"}]});
+    expect(candidatesList.candidates[0].status).toBe("AC Active");
+  });
+
+  it("MinimumPropertyInfos first element's SubdivisionDescription with empty value makes it null", function(){
+    var candidatesList = new candidateService.Candidates({MinimumPropertyInfos:[{SubdivisionDescription:""}]});
+    expect(candidatesList.candidates[0].subdivisionDescription).toBe(null);
+  });
+
+  it("MinimumPropertyInfos first element's Status is not empty and has a value", function(){
+    var candidatesList = new candidateService.Candidates({MinimumPropertyInfos:[{SubdivisionDescription:"ISLE OF NORMANDY TROUVILLE SEC"}]});
+    expect(candidatesList.candidates[0].subdivisionDescription).toBe("ISLE OF NORMANDY TROUVILLE SEC");
+  });
+
   it('map incoming candidates fields to our candidates model fields',function(){
     var givenProperty = {
       Completed: true,
@@ -88,7 +108,9 @@ describe('Service: candidateService', function () {
 	  Owner3: "",
 	  SiteAddress: "2444 OVERBROOK ST",
 	  Strap: "01-4115-028-0470",
-	  Municipality: 'MIAMI'
+	  Municipality: 'MIAMI',
+	  Status: "AC Active",
+	  SubdivisionDescription :"ISLE OF NORMANDY TROUVILLE SEC"
 	}
       ]
     };
@@ -101,7 +123,9 @@ describe('Service: candidateService', function () {
 	  thirdOwner: null,
 	  siteAddress: "2444 OVERBROOK ST",
 	  folio: "0141150280470",
-	  municipality: 'MIAMI'
+	  municipality: 'MIAMI',
+  	  status: "AC Active",
+	  subdivisionDescription :"ISLE OF NORMANDY TROUVILLE SEC"
 	}
       ]
     };
@@ -124,7 +148,9 @@ describe('Service: candidateService', function () {
           Owner2: "",
           Owner3: "",
           SiteAddress: "1600 BIARRITZ DR",
-          Strap: "02-3210-001-0650"
+          Strap: "02-3210-001-0650",
+		  Status: "AC Active",
+		  SubdivisionDescription :"ISLE OF NORMANDY TROUVILLE SEC"
         }]
     };
 
