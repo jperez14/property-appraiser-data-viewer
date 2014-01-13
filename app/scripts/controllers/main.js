@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', 'propertySearchService', 'esriGisService', 'paConfiguration', function ($scope, $q, propertySearchService, esriGisService, paConfig) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
     function initMap(){
 
@@ -107,7 +107,11 @@ angular.module('propertySearchApp')
     };
 
     $scope.folio = "";
-    $scope.property = null;
+    $scope.property = null;//SharedData.property;;
+    $scope.testSharedData = function(){
+      $scope.property.rollYear1 = 2014;
+    };
+    
     
     $scope.showError = false;
     $scope.errorMsg = "";
@@ -525,10 +529,17 @@ angular.module('propertySearchApp')
     };
 
     $scope.openPictometryWindow = function(){
-      $window.open("#/pictometry");
+
+        var url = '#/pictometry/' + $scope.property.location.x + '/' + $scope.property.location.y;
+        $window.open(url);
+    };
+
+    $scope.openReportSummaryWindow = function(){
+        var url = '#/reportSummary/';
+        //$window.open(url);
+      $window.location.href = url;
     };
     
-
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
 

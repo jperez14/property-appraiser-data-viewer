@@ -58,6 +58,8 @@ angular.module('propertySearchApp')
 //
 //
 //    };
+
+
     
 
     var folioFromPoint = function ($scope, x, y){
@@ -114,6 +116,7 @@ angular.module('propertySearchApp')
           return error;});
 
     };
+
     
 
     // public API
