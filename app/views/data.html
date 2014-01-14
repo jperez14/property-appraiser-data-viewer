@@ -6,16 +6,15 @@
 
 <div class="container">  
 
-
   <div class="content">
-    
 
     <div class="search_area">
       
       <div class="text-right hidden-xs social-buttons">
         <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/facebook-search.png"></a>
         <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/twitter-search.png"></a>
-      </div>
+		<button ng-show="property" ng-click="openReportSummaryWindow()">OPEN REPORT</button>
+	  </div>
       
       <!-- Nav tabs -->
       <ul class="nav nav-tabs">
@@ -46,7 +45,7 @@
 
               <div class="input-group">
                 
-                 <input type="text" value="Address" name="" id="search_box" placeholder="Address" class="form-control add-main"
+                 <input type="text" value="Address" name="" id="search_box" placeholder="Address  < sample: '111 NW 1 St' >" class="form-control add-main"
 					ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}" >
                  <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
                 <span class="input-group-btn">
@@ -182,6 +181,8 @@
                         <li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial Map</span></li>
                         <li class="divider"></li>
                       	<li><span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
+                        <li class="divider"></li>
+                      	<li><span class="map-view" ng-click="openPictometryWindow()">Angled Aerial Views</span></li>
                         <li class="divider"></li>
                       </ul>
                   </div>

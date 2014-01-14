@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', 'propertySearchService', 'esriGisService', 'paConfiguration', function ($scope, $q, propertySearchService, esriGisService, paConfig) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
     function initMap(){
 
@@ -107,7 +107,11 @@ angular.module('propertySearchApp')
     };
 
     $scope.folio = "";
-    $scope.property = null;
+    $scope.property = null;//SharedData.property;;
+    $scope.testSharedData = function(){
+      $scope.property.rollYear1 = 2014;
+    };
+    
     
     $scope.showError = false;
     $scope.errorMsg = "";
@@ -305,6 +309,7 @@ angular.module('propertySearchApp')
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
+      clearResults();
 	  if (folio != undefined && folio.length < 6 ) {
 		$scope.showError = true;
 		$scope.errorMsg = "Please enter at least 6 digits for Folio";
@@ -440,14 +445,13 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
-
+	  clearResults();
       if(_.isEmpty($scope.ownerName))
 	  {
 		$scope.showError = true;
 		$scope.errorMsg = "Please enter a valid Owner Name";
 		return true;
 	  }
-	  clearResults();
 	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
@@ -474,13 +478,13 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByAddress = function(){
+      clearResults();
       if(_.isEmpty($scope.address))
 	  {
 		$scope.showError = true;
 		$scope.errorMsg = "Please enter a valid Address";
 		return true;
 	  }
-      clearResults();
       $scope.isAddressCandidates = true;
 	  $scope.loader = true; //flag hackeysack
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
@@ -537,10 +541,19 @@ angular.module('propertySearchApp')
     };
 
     $scope.openPictometryWindow = function(){
-      $window.open("#/pictometry");
+
+      var url = '#/pictometry/' + $scope.property.location.x + '/' + $scope.property.location.y;
+      $window.open(url);
+    };
+
+    $scope.openReportSummaryWindow = function(){
+        //$window.open(url);
+        //$window.location.href = url;
+        var url = '#/reportSummary/';
+        $window.property = $scope.property;  
+        $window.open(url,'name','height=500,width=600, location=0');
     };
     
-
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
 
