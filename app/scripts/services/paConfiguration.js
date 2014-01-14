@@ -38,7 +38,7 @@ angular.module('propertySearchApp')
                                      "style":"esriSLSSolid"}
     },
     propertyMarkerPictureSymbol:{
-    "url":"http://static.arcgis.com/images/Symbols/Shapes/RedCircleLargeB.png", 
+    "url":"images/map-pin-64.png", 
     "height":10,
     "width":10,
     "type":"esriPMS",
