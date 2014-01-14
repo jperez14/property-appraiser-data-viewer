@@ -639,8 +639,22 @@ border-radius: 0px;
 	font-size: 12px;
 }
 
+.hyperInput {
+	border:none;
+	color: #39599f;
+	font-weight: bold;
+	cursor:pointer;
+	max-width:95px;
+}
+
+.hyperInput:hover { text-decoration: underline;}
+
 .add-main {width:80% !important}
 .add-suite {width:20% !important}
+
+/* ----------------------------------------------------
+media queries below... do not place styles below this line.
+------------------------------------------------------*/
 
 @media (max-width: 1032px) { 
 #site_nav li a {height:75px;}
@@ -689,12 +703,3 @@ div.search_area .nav-tabs {padding-left:10px;}
 .add-main {width:100% !important}
 .add-suite {width:100% !important}
 }
-
-.hyperInput {
-	border:none;
-	color: #39599f;
-	font-weight: bold;
-	cursor:pointer;
-}
-
-.hyperInput:hover { text-decoration: underline;}
