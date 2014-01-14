@@ -17,10 +17,14 @@ angular.module('propertySearchApp')
       var streetLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlStreet, {id:"street"});
       var parcels = new esri.layers.FeatureLayer(urlParcelLayer);
       var layers = new esri.layers.GraphicsLayer({id:"layers"});
+      var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:2252});
+      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:2251});
       map.addLayer(aerialLayer);
       map.addLayer(streetLayer);
       map.addLayer(parcels);
       map.addLayer(layers);
+      map.addLayer(parcelBoundary);
+      map.addLayer(parcelPoint);
       streetLayer.hide(); 
 
       
@@ -310,10 +314,10 @@ angular.module('propertySearchApp')
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
       clearResults();
-	  if (folio != undefined && folio.length < 6 ) {
+      if (folio != undefined && folio.length < 6 ) {
 		$scope.showError = true;
 		$scope.errorMsg = "Please enter at least 6 digits for Folio";
-	  }
+      }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
 		$scope.getCandidatesByPartialFolio(folio);
       }
@@ -347,6 +351,8 @@ angular.module('propertySearchApp')
 
       $scope.map.graphics.clear();
       $scope.map.getLayer("layers").clear();
+      $scope.map.getLayer("parcelBoundary").clear();
+      $scope.map.getLayer("parcelPoint").clear();
       $scope.resetLayers();
       $scope.joseFlag = false;
 
@@ -361,35 +367,28 @@ angular.module('propertySearchApp')
       });
 
       // Get xy for property and display it in map.
-      var geometryPromise = esriGisService.getPointFromFolio($scope, folio).then(function(featureSet){
+      var geometryPromise = esriGisService.getXYFromFolio($scope, folio).then(
+        function(coord){
+          var graphic = esriGisService.getGraphicMarkerFromXY(coord.x, coord.y);
+          $scope.map.getLayer("parcelPoint").add(graphic);
+          return coord;
+        }, function(error){
+	  $scope.showError = true;
+	  $scope.errorMsg = error.message;
+        });
 
-	if(featureSet.features != undefined && featureSet.features.length > 0) {
-	  var myPoint = {"geometry":{
-	    "x":featureSet.features[0].attributes.X_COORD,
-	    "y":featureSet.features[0].attributes.Y_COORD,
-	    "spatialReference":{"wkid":2236}},
-			 "symbol":paConfig.propertyMarkerSymbol
-			};
-	  var gra = new esri.Graphic(myPoint);
-	  $scope.map.graphics.add(gra);
-	  //$scope.map.centerAndZoom(myPoint.geometry, 10);          
-	  return {
-	    "x":featureSet.features[0].attributes.X_COORD,
-	    "y":featureSet.features[0].attributes.Y_COORD};
-	}else{
-	  return $q.reject("No point found");
-	}
-      }, function(error){
-	console.log("there was an error");
-	$scope.showError = true;
-	$scope.errorMsg = "Oops !! The request failed. Please try again later";
-      });
+      // Get boundaries for property
+      var boundariesPromise = esriGisService.getPolygonFromFolio($scope, folio).then(
+        function(polygon){
+          var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+          $scope.map.getLayer("parcelBoundary").add(graphic);
+        }, function(error){
+        });
 
       return $q.all([propertyPromise, geometryPromise]).then(function(data){
 	$scope.property.location = data[1];},function(error){
-	  console.log("there was an error");
+	  console.log("Error in getPropertyByFolio ", folio);
 	});
-
 
     };
     

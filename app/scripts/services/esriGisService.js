@@ -3,17 +3,16 @@
 angular.module('propertySearchApp')
   .service('esriGisService',['$q', 'paConfiguration',  function ($q, paConfig) {
 
-
-    var pointFromFolio = function($scope, folio){
-
-      var url = paConfig.urlCoordFromFolio;       
+    var queryLayer = function($scope, url, whereClause, returnGeometry){
+      
+      // build query.
       var queryTask = new esri.tasks.QueryTask(url);
-
       var query = new esri.tasks.Query();
-      query.returnGeometry = false;
-      query.where = "CHILD=" + folio;
+      query.returnGeometry = returnGeometry;
+      query.where = whereClause;
       query.outFields = ["*"];
 
+      // execute query.
       var deferred = $q.defer();
       queryTask.execute(query,function (featureSet) {
         deferred.resolve(featureSet);
@@ -23,44 +22,82 @@ angular.module('propertySearchApp')
         $scope.$apply();
       });
 
+      // return promise.
+      return deferred.promise.then(
+        function(featureSet){
+          return featureSet}, 
+        function(error){
+          return error;
+        }
+      );
 
-      return deferred.promise.then(function(featureSet){
-        console.log("featureSet",featureSet);
-        return featureSet}, function(error){
-          console.log('Getting pointFromFolio ERROR: ',error);
-          return error;});
+    }
+        
+    var xyFromFolio = function($scope, folio){
+
+      var url = paConfig.urlCoordFromFolio;       
+      var whereClause = "CHILD=" + folio;
+      return queryLayer($scope, url, whereClause, false).then(
+        function(featureSet){
+	  if(featureSet.features != undefined && featureSet.features.length > 0) {
+	    return {
+	      "x":featureSet.features[0].attributes.X_COORD,
+	      "y":featureSet.features[0].attributes.Y_COORD};
+	  }else{
+            var message = "No xy found for folio " + folio;
+	    return $q.reject({error:featureSet, message:message});
+	  }
+        }, 
+        function(error){
+          var message = "error when trying to get xy from folio. "
+          return {"error":error, "message":message};
+        }
+      );
+
     };
 
-//    var bounderiesFromFolio = function($scope, folio){
-//      var url = paConfig.urlParcelLayer;
-//      var queryTask = new esri.tasks.QueryTask(url);
-//
-//      var query = new esri.tasks.Query();
-//      query.returnGeometry = true;
-//      query.where = "FOLIO=" + folio;
-//      query.outFields = ["*"];
-//
-//      var deferred = $q.defer();
-//      queryTask.execute(query,function (featureSet) {
-//        deferred.resolve(featureSet);
-//        $scope.$apply();
-//      }, function (error) {
-//        deferred.reject(error);
-//        $scope.$apply();
-//      });
-//
-//
-//      return deferred.promise.then(function(featureSet){
-//        console.log("featureSet",featureSet);
-//        return featureSet}, function(error){
-//          console.log('Getting pointFromFolio ERROR: ',error);
-//          return error;});
-//
-//
-//    };
-
-
+    var graphicMarkerFromXY = function(x, y){
+      	  var point = {
+            "geometry":{
+	      "x":x,
+	      "y":y,
+	      "spatialReference":{"wkid":2236}},
+            "symbol":paConfig.propertyMarkerPictureSymbol
+          };
+	  
+      return new esri.Graphic(point);
+    }
     
+
+    var polygonFromFolio = function($scope, folio){
+
+      var url = paConfig.urlParcelBoundariesLayer;
+      var whereClause = "FOLIO=" + folio;
+      return queryLayer($scope, url, whereClause, true).then(
+        function(featureSet){
+	  if(featureSet.features != undefined && featureSet.features.length > 0) {
+            return featureSet.features[0].geometry;
+	  }else{
+            var message = "No polygon found for folio " + folio;
+            $q.reject({"error":featureSet, "message":message});
+          }
+        }, 
+        function(error){
+          var message = "error  when getting polygonFormFolio";
+          return {"error":error, "message":message}
+        }
+      );
+
+    };
+
+
+    var graphicMarkerFromPolygon = function(polygon){
+
+	  var boundary = {"geometry":polygon,
+                          "symbol":paConfig.propertyBoundarySymbol};
+	  return new esri.Graphic(boundary);
+    };
+
 
     var folioFromPoint = function ($scope, x, y){
       var url = paConfig.urlParcelLayer;
@@ -120,7 +157,10 @@ angular.module('propertySearchApp')
     
 
     // public API
-    return {getPointFromFolio:pointFromFolio,
+    return {getXYFromFolio:xyFromFolio,
+            getGraphicMarkerFromXY:graphicMarkerFromXY,
+            getPolygonFromFolio:polygonFromFolio,
+            getGraphicMarkerFromPolygon:graphicMarkerFromPolygon,
             getFolioFromPoint:folioFromPoint,
             getMunicipalityFromPoint:municipalityFromPoint
            };
