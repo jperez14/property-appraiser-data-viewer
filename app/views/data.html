@@ -11,9 +11,10 @@
     <div class="search_area">
       
       <div class="text-right hidden-xs social-buttons">
-        <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/facebook-search.png"></a>
-        <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/twitter-search.png"></a>
-		<button ng-show="property" ng-click="openReportSummaryWindow()">OPEN REPORT</button>
+        <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/icon-facebook.png" alt="Facebook" title="Facebook"></a>
+        <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/icon-twitter.png" alt="Twitter" title="Twitter"></a>
+        <a href="#" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>
+        <a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>
 	  </div>
       
       <!-- Nav tabs -->
@@ -45,7 +46,7 @@
 
               <div class="input-group">
                 
-                 <input type="text" value="Address" name="" id="search_box" placeholder="Address  < sample: '111 NW 1 St' >" class="form-control add-main"
+                 <input type="text" value="Address" name="" id="search_box" placeholder="Address: 111 NW 1 St" class="form-control add-main"
 					ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}" >
                  <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
                 <span class="input-group-btn">
@@ -80,7 +81,7 @@
 
               <div class="input-group">
 
-                <input type="text" value="Folio" name="" id="search_box" class="form-control" ui-mask='{{folioMask}}' 
+                <input type="text" value="Folio" name="" id="search_box" class="form-control folio-box" ui-mask='{{folioMask}}' 
 					ui-keypress="{13:'searchByFolio()'}" ng-model='folio' ng-click="showError=false" > 
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="searchByFolio()">
