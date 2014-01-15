@@ -345,9 +345,13 @@ angular.module('propertySearchApp')
       // Group by benefit description
       _.each(data.BenefitInfos, function(originalBenefit){
         var mappedBenefit = buildObject(originalBenefit, benefitAttr);
-        if(isUndefinedOrNull(benefit.benefits[mappedBenefit.description]))
-          benefit.benefits[mappedBenefit.description] = {};
-        benefit.benefits[mappedBenefit.description][mappedBenefit.year] = mappedBenefit;
+        if(isUndefinedOrNull(benefit.benefits[mappedBenefit.description])){
+          benefit.benefits[mappedBenefit.description] = {years:{},
+                                                         type:mappedBenefit.type,
+                                                         url:mappedBenefit.url};
+        }
+        
+        benefit.benefits[mappedBenefit.description].years[mappedBenefit.year] = mappedBenefit;
       });
 
       _.each(data.Messages, function(origMessage){

@@ -25,12 +25,12 @@
 		</tr>
 
 		<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
-			<td><strong>{{benefitType}}</strong> <a href="#" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></td>
+			<td><strong>{{benefitType}}</strong> <a href="{{benefitsByYear.url}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></td>
 
-                        <td>{{benefitsByYear[property.rollYear1].type}}</td>
-                        <td class="text-right">{{benefitsByYear[property.rollYear1].value | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefitsByYear[property.rollYear2].value | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefitsByYear[property.rollYear3].value | noCentsCurrency:"$"}}</td>
+                        <td>{{benefitsByYear.type}}</td>
+                        <td class="text-right">{{benefitsByYear.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefitsByYear.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefitsByYear.years[property.rollYear3].value | noCentsCurrency:"$"}}</td>
 
                 </tr>
 

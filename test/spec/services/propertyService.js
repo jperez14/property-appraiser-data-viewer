@@ -821,7 +821,9 @@ describe('Service: propertyService', function () {
     
 
     var expectedProperty = {benefit:{
-      benefits:{"Non-Homestead Cap":{2011:{
+      benefits:{"Non-Homestead Cap":{type:"Assessment Reduction",
+                                     url:"http://www.miamidade.gov/pa/property_value_cap.asp",
+                                     years:{2011:{
         description: "Non-Homestead Cap",
         message: null,
         year: 2011,
@@ -833,12 +835,15 @@ describe('Service: propertyService', function () {
               year: 2013,
               type: "Assessment Reduction",
               url: "http://www.miamidade.gov/pa/property_value_cap.asp",
-              value: 3345}}, "Save Our Homes":{2011:{description: "Save Our Homes",
+              value: 3345}}}, 
+                "Save Our Homes":{type:"Assessment Reduction",
+                                  url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                                  years:{2011:{description: "Save Our Homes",
                                                      message: null,
                                                      year: 2011,
                                                      type: "Assessment Reduction",
                                                      url: "http://www.miamidade.gov/pa/amendment_10.asp",
-                                                     value: 89595}}},
+                                                     value: 89595}}}},
       messages:{}
     }};
     
