@@ -23,7 +23,9 @@
                             <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}}</span>
                             <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}}</span>
                             <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}}</span>
-                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
+                            <span ng-show="address.address"
+                            ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
+                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffixDirection}}</span>
 							<span class="inline">{{address.unit}}</span>
                             <span>{{}}</span>
                             <span class="inline">{{getRenamedMunicipality(address.city)}}</span>

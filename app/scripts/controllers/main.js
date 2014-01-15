@@ -5,7 +5,9 @@ angular.module('propertySearchApp')
 
     function initMap(){
 
-      var map = new esri.Map('map');
+      var map = new esri.Map('map', {logo:false, 
+                                     showAttribution:false}
+                             );
       
       // urls for the map.
       var urlAerial = paConfig.urlAerialMap;

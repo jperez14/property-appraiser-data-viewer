@@ -14,7 +14,7 @@ angular.module('propertySearchApp')
 
     layers:[{label:"Municipality", value:false, url:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/31"},
             {label:"Commission District", value:false, url:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/11"},
-            {label:"Elementary School", value:false, url:"http://311arcgis.miamidade.gov/ArcGIS/rest/services/Gic/MapServer/18"}],
+            {label:"Zoning", value:false, url:"/ArcGIS/rest/services/MD_PropertySearchApp_Test/MapServer/8"}],
 
 
     layerSymbol:{"color":[255,0,0,64],
@@ -39,8 +39,8 @@ angular.module('propertySearchApp')
     },
     propertyMarkerPictureSymbol:{
     "url":"images/map-pin-64.png", 
-    "height":10,
-    "width":10,
+    "height":40,
+    "width":40,
     "type":"esriPMS",
     "angle": 0
   },
