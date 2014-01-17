@@ -3,11 +3,45 @@
 angular.module('propertySearchApp')
   .controller('MainCtrl', ['$scope', '$q', '$window', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
+    // IMPORTANT - Do not move
+    $scope.mapClicked = function(event){
+      console.log("map has been clicked");
+      var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
+      folio.then(function(folioValue){
+        var myPromise = $scope.getPropertyByFolio(folioValue);
+        myPromise.then(function(data){}, function(error){});
+      }, function(error){});
+    };
+
+    // IMPORTANT - Do not move
+    $scope.drawEndHandler  = function (geometry){
+      console.log("DrawEnd Handler completed.");
+      $scope.drawToolBar.deactivate();
+      $scope.map.setExtent(geometry);
+    };
+
+    // IMPORTANT - Do not move
     function initMap(){
 
       var map = new esri.Map('map', {logo:false, 
                                      showAttribution:false}
                              );
+
+      $scope.map = map;
+
+      map.on('load',function(){
+        console.log("OnLoad is called");
+        map.enableRubberBandZoom();
+        map.disableScrollWheelZoom();
+        map.hideZoomSlider();
+
+        $scope.navToolBar  = new esri.toolbars.Navigation(map);
+        $scope.drawToolBar = new esri.toolbars.Draw(map);
+        dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
+        //Add events to map.
+        map.on("click", $scope.mapClicked);
+        map.resize();
+      });
       
       // urls for the map.
       var urlAerial = paConfig.urlAerialMap;
@@ -29,30 +63,6 @@ angular.module('propertySearchApp')
       map.addLayer(parcelPoint);
       streetLayer.hide(); 
 
-      
-      //Add events to map.
-      map.on("click", $scope.mapClicked);
-
-
-      // Enable Navagation Fatures
-      dojo.connect(map, 'onLoad',function(){
-        map.enableRubberBandZoom();
-        map.disableScrollWheelZoom();
-        map.hideZoomSlider();
-
-        $scope.navToolBar  = new esri.toolbars.Navigation(map);
-        $scope.drawToolBar = new esri.toolbars.Draw(map);
-        dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
-      });
-
-      $scope.map = map;
-
-      //      dojo.connect(map, 'onLoad', function(theMap) {
-      //        //create the draw toolbar 
-      //        toolbar = new esri.toolbars.Draw(map);
-      //        dojo.connect(toolbar,"onDrawEnd",drawEndHandler);
-      //      });
-      
     };
 
     // Initialize the map.
@@ -64,10 +74,7 @@ angular.module('propertySearchApp')
       $scope.drawToolBar.activate(esri.toolbars.Draw.EXTENT);
     };
 
-    $scope.drawEndHandler  = function (geometry){
-      $scope.drawToolBar.deactivate();
-      $scope.map.setExtent(geometry);
-    };
+
 
     $scope.mapZoomIn = function(){
       var extent=$scope.map.extent;
@@ -104,13 +111,7 @@ angular.module('propertySearchApp')
     }
     
 
-    $scope.mapClicked = function(event){
-      var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
-      folio.then(function(folioValue){
-        var myPromise = $scope.getPropertyByFolio(folioValue);
-        myPromise.then(function(data){}, function(error){});
-      }, function(error){});
-    };
+
 
     $scope.folio = "";
     $scope.property = null;//SharedData.property;;
@@ -326,7 +327,6 @@ angular.module('propertySearchApp')
       else if(folio != undefined && folio.length == 13){
         var myPromise = $scope.getPropertyByFolio(folio);
         myPromise.then(function(data){
-          console.log("mapClicked data ", data);
 		  if(!isUndefinedOrNull($scope.property.location)){
 			  var geometry = {
 				"x":$scope.property.location.x,
@@ -556,7 +556,6 @@ angular.module('propertySearchApp')
     };
     
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
-
 
   }]);
 
