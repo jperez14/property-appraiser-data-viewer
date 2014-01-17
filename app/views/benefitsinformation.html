@@ -1,7 +1,7 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="5">Benefits Information <span id="benefits-help" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Benefits Description" data-content="This is the content for the pop over! And here is another sentence to see how things start to look when you have long winded messages."></span></th>
+			<th class="tableHeader" colspan="5">Benefits Information <span id="benefits-help" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Benefits Description" data-content="The content for this pop-over has not yet been provided by J.N."></span></th>
 		</tr>
         
         <tr ng-show="true">
@@ -25,7 +25,7 @@
 		</tr>
 
 		<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
-			<td><strong>{{benefitType}}</strong> <a href="{{benefitsByYear.url}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a></td>
+			<td><strong><a href="{{benefitsByYear.url}}" target="_blank">{{benefitType}}</a></strong></td>
 
                         <td>{{benefitsByYear.type}}</td>
                         <td class="text-right">{{benefitsByYear.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>

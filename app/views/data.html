@@ -7,14 +7,19 @@
 <div class="container">  
 
   <div class="content">
+  
+  <!--[if lt IE 9]>
+<div class="alert alert-warning">Internet Explorer 8 is currently not supported in this release. Please upgrade or use a different browser to participate in testing.</div>
+<![endif]-->
 
     <div class="search_area">
       
       <div class="text-right hidden-xs social-buttons">
-        <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/icon-facebook.png" alt="Facebook" title="Facebook"></a>
-        <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/icon-twitter.png" alt="Twitter" title="Twitter"></a>
-        <a href="#" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>
-        <a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>
+      <a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>
+      <a href="http://www.miamidade.gov/pa/includes/property-search/sendEmail.asp" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>
+      <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/icon-facebook.png" alt="Facebook" title="Facebook"></a>
+      <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/icon-twitter.png" alt="Twitter" title="Twitter"></a>
+
 	  </div>
       
       <!-- Nav tabs -->
@@ -131,7 +136,7 @@
   
   <div class="content main_content_body">
 
-    <div class="alert alert-danger col-md-12 col-sm-5" ng-show="showError">{{errorMsg}}</div>
+    <div class="alert alert-danger col-md-12 col-sm-12" ng-show="showError">{{errorMsg}}</div>
     
     <div class="row" ng-show="candidatesList">
       <div class="col-md-12 col-sm-12">
@@ -160,7 +165,7 @@
           <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()" ></span>
           <span class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"></span>
           <span class="map-button mb-initial" ng-click="mapZoomToProperty()"></span>
-          
+                    
           	 <div id="map_lc">
             
                 <!-- Arial Year - just need to replace current with year and attach handlers
