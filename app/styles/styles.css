@@ -579,8 +579,12 @@ border-radius: 0px;
 }
 
 .record_folio {
-	margin-bottom:5px;
+	/*margin-bottom:5px;*/
 	font-weight:bold;
+}
+
+.record_desc {
+	margin-bottom:7px;
 }
 
 
