@@ -7,7 +7,7 @@
 		<tr class="header-row">
 			<td>Previous Sale</td>
 			<td class="text-right" style="padding-right:30px">Price</td>
-			<td>OR Book-Page</td>
+			<td class="text-center">OR Book-Page</td>
 			<td class="text-center">Qualification Description</td>
             <td ng-show="salesInfoGrantorName1">Previous Owner 1</td>
             <td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
@@ -16,9 +16,8 @@
                 <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
                   <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
                   <td class="text-right" style="padding-right:30px">{{sale.salePrice | noCentsCurrency:"$"}}</td>
-                  <td><a href="http://www2.miami-dadeclerk.com/Public-Records/Search.aspx?search=3&amp;Rec_Book={{sale.officialRecordBook}}&amp;Rec_Page={{sale.officialRecordPage}}" 
-					target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}  <span class=
-                        "glyphicon glyphicon-new-window"></span></a></td>
+                  <td class="text-center"><a href="http://www2.miami-dadeclerk.com/Public-Records/Search.aspx?search=3&amp;Rec_Book={{sale.officialRecordBook}}&amp;Rec_Page={{sale.officialRecordPage}}" 
+					target="_blank">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</a></td>
                   <td>{{sale.qualificationDescription}}</td>
                   <td ng-show="salesInfoGrantorName1">{{sale.grantorName1}}</td>
                   <td ng-show="salesInfoGrantorName2">{{sale.grantorName2}}</td>
