@@ -1,11 +1,116 @@
 <html>
+
+<style type="text/css">
+.print-container {width:800px;}
+
+.print-button {
+	text-align:right;
+	padding-top:10px;
+}
+
+.print-left {
+	float:left;
+	width:395px;
+	padding-right:5px;
+}
+
+.print-right {
+	float:right;
+	width:395px;
+	padding-left:5px;
+}
+
+.header {
+	margin-bottom:10px;
+}
+
+table {
+	border-collapse:collapse;
+	width:100%;
+	margin-bottom:10px;
+}
+
+
+th, td {
+	border: 1px solid #666;
+	padding:2px;
+}
+
+table, th {
+	border: 2px solid #333;
+}
+
+th {
+	font-weight:bold;
+	font-size:12px;
+}
+
+
+.print-map {
+
+height:300px;
+border:2px solid #333;
+margin-bottom:10px;
+	
+}
+
+.disclaimer {
+	clear:both;
+	font-size:10px;
+}
+
+body {
+	background-color:#fff;
+	font-size:11px;
+}
+
+.container {
+max-width:800px;
+padding-left: 0;
+padding-right: 0;
+}
+@media (min-width: 1200px) {
+.container {
+	width: 800px;
+}
+}
+@media (min-width: 992px) {
+.container {
+	width: 800px;
+}
+}
+@media (min-width: 768px) {
+.container {
+	width: 800px;
+}
+}
+@media print {
+.print-button, .header {
+	display: none;
+}
+.print-break {
+	page-break-before: always;
+}
+}
+
+
+</style>
+
 <body>
-	<div class="row tabular_data">
-		<div class="col-md-6">
-			<button ng-click="doPrint()">Print</button>
+<div class="print-container">	
+    
+<p class="print-button"><button ng-click="doPrint()">Print</button></p>
+
+<div class="header">
+  <img src="images/banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+</div>
+
+
+<div class="print-left">
+          
 			<!-- START : Property Information -->
-			<div class="property_info tabular_data">
-				<table class="table table-striped" id="property_info">
+			
+				<table class="print-table">
 					<tr>
 						<th class="tableHeader" colspan="2">
 							Property Information
@@ -99,12 +204,12 @@
 						<td>{{property.propertyInfo.yearBuilt}}</td>
 					</tr>
 				</table>
-			</div>
+
 			<!-- END : Property Information -->
 
 			<!-- START : Assessment Information -->
-			<div class="table-responsive">
-				<table class="table table-condensed table-striped">
+
+				<table class="print-table">
 					<tr>
 						<th class="tableHeader" colspan="4">Assessment Information</th>
 					</tr>
@@ -172,16 +277,16 @@
 						| noCentsCurrency:"$"}}</td>
 					</tr>
 				</table>
-			</div>
+
 			<!-- END : Assessment Information -->
 
 			<!-- START : Benefits Information -->
-			<div class="table-responsive">
-				<table class="table table-condensed table-striped">
+
+				<table class="print-table">
 					<tr>
 						<th class="tableHeader" colspan="5">Benefits Information</th>
 					</tr>
-					<tr ng-show="true">
+					<tr ng-show="true"> <!-- this NG show should be conditional, not just true -->
 						<td colspan="5">
 							<div class="table-message">
 								<div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>
@@ -209,12 +314,33 @@
 							Taxable Values (i.e. County, School Board, City, Regional).</td>
 					</tr>
 				</table>
-			</div>
+
 			<!-- END : Benefits Information -->
+            
+            
+            <!-- START : Full Legal Description -->
+	
+				<table class="print-table">
+					<tr>
+						<th class="tableHeader">Full Legal Description</th>
+					</tr>
+							<tr ng-repeat="description in property.legalDescription.parsedDescription">
+							  <td>{{description}}</td>
+							</tr>  
+				</table>
+
+			<!-- END : Full Legal Description -->
+</div>
+
+<div class="print-right">
+
+		<div class="print-map">
+        MAP
+        </div>
 
 			<!-- START : Taxable Value Information -->
-			<div class="table-responsive">
-				<table class="table table-condensed">
+
+				<table class="print-table">
 					<tr>
 						<th class="tableHeader" colspan="4">Taxable Value Information</th>
 					</tr>
@@ -234,7 +360,7 @@
 						<td class="text-right">{{property.rollYear3}}</td>
 					</tr>
 					<tr>
-						<td colspan="4" class="table-section">County</td>
+						<td colspan="4" class="table-section"><strong>County</strong></td>
 					</tr>
 					<tr class="border-bottom">
 						<td class="table-section-head">Exemption Value</td>
@@ -262,7 +388,7 @@
 									  | noCentsCurrency:"$"}}</td>
 					</tr>
 					<tr>
-						<td colspan="4" class="table-section">School Board</td>
+						<td colspan="4" class="table-section"><strong>School Board</strong></td>
 					</tr>
 					<tr class="border-bottom">
 						<td class="table-section-head">Exemption Value</td>
@@ -291,7 +417,7 @@
 									  | noCentsCurrency:"$"}}</td>
 					</tr>
 					<tr>
-						<td colspan="4" class="table-section">City</td>
+						<td colspan="4" class="table-section"><strong>City</strong></td>
 					</tr>
 					<tr class="border-bottom">
 						<td class="table-section-head">Exemption Value</td>
@@ -320,7 +446,7 @@
 									  | noCentsCurrency:"$"}}</td>
 					</tr>
 					<tr>
-						<td colspan="4" class="table-section">Regional</td>
+						<td colspan="4" class="table-section"><strong>Regional</strong></td>
 					</tr>
 					<tr class="border-bottom">
 						<td class="table-section-head">Exemption Value</td>
@@ -349,56 +475,53 @@
 									  | noCentsCurrency:"$"}}</td>
 					</tr>
 				</table>
-			</div>
+
 			<!-- END : Taxable Value Information -->
+            
+            
 
-			<!-- START : Full Legal Description -->
-			<div class="table-responsive">
-				<table class="table table-condensed table-striped">
-					<tr>
-						<th class="tableHeader">Full Legal Description</th>
-					</tr>
-							<tr ng-repeat="description in property.legalDescription.parsedDescription">
-							  <td>{{description}}</td>
-							</tr>  
-				</table>
-			</div>
-			<!-- END : Full Legal Description -->
+<!-- START : Sales Information -->
 
-			<!-- START : Sales Information -->
-			<div class="table-responsive">
-				<table class="table table-condensed table-striped">
+				<table class="print-table">
 					<tr>
-						<th class="tableHeader" colspan="{{salesInfoColumnCount()}}">Sales Information</th>
+						<th class="tableHeader" colspan="6">Sales Information</th>
 					</tr>
 					<tr class="header-row">
 						<td>Previous Sale</td>
-						<td class="text-right" style="padding-right:30px">Price</td>
-						<td>OR Book-Page</td>
+						<td class="text-right">Price</td>
+						<td class="text-center">OR Book-Page</td>
 						<td class="text-center">Qualification Description</td>
 						<td ng-show="salesInfoGrantorName1">Previous Owner 1</td>
 						<td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
 					</tr>
 							<tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
 							  <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
-							  <td class="text-right" style="padding-right:30px">{{sale.salePrice | noCentsCurrency:"$"}}</td>
-							  <td>{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
+							  <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
+							  <td class="text-center">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
 							  <td>{{sale.qualificationDescription}}</td>
 							  <td ng-show="salesInfoGrantorName1">{{sale.grantorName1}}</td>
 							  <td ng-show="salesInfoGrantorName2">{{sale.grantorName2}}</td>
 							</tr>
 				</table>
-			</div>
+
 			<!-- END : Sales Information -->
-			<div class="disclaimer">
-				<p>The Office of the Property Appraiser and Miami-Dade County are continually editing and updating the tax roll and GIS data to reflect the latest property information and GIS positional accuracy. No warranties, expressed or implied, are provided for data and the positional or thematic accuracy of the data herein, its use, or its interpretation. Although this website is periodically updated, this information may not reflect the data currently on file at Miami-Dade County's systems of record. The Property Appraiser and Miami-Dade County assumes no liability either for any errors, omissions, or inaccuracies in the information provided regardless of the cause of such or for any decision made, action taken, or action not taken by the user in reliance upon any information provided herein.</p>
-				<p>See Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a>.<br>
-				For inquiries and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a>.        </p>
-			</div>
-			<div>
-				Generated On : {{getCurrentDate()}}
-			</div>
-		</div>
-	</div>
+			
+</div>
+            
+<div class="disclaimer">
+<p>The Office of the Property Appraiser and Miami-Dade County are continually editing and updating the tax roll and GIS data to reflect the latest property information and GIS positional accuracy. No warranties, expressed or implied, are provided for data and the positional or thematic accuracy of the data herein, its use, or its interpretation. Although this website is periodically updated, this information may not reflect the data currently on file at Miami-Dade County's systems of record. The Property Appraiser and Miami-Dade County assumes no liability either for any errors, omissions, or inaccuracies in the information provided regardless of the cause of such or for any decision made, action taken, or action not taken by the user in reliance upon any information provided herein.</p>
+<p>See Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a>.<br>
+For inquiries and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a>.         
+<p>
+Generated On : {{getCurrentDate()}}
+</p>
+</div>
+
+<!--<div class="print-break"></div>-->
+
+    
+    
+    
+</div> 
 </body>
 </html>
