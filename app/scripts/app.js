@@ -3,7 +3,7 @@
 angular.module('propertySearchApp', ['ngResource', 'ui.mask', 'ui.keypress', 'notificationWidget'])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:folio', {
         templateUrl: 'views/data.html',
         controller: 'MainCtrl'
       })

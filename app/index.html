@@ -46,7 +46,7 @@
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="http://js.arcgis.com/3.8"></script>
+    <script src="http://js.arcgis.com/3.8" data-dojo-config="parseOnLoad: true"></script>
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass/js/affix.js"></script>
@@ -97,6 +97,7 @@
   dojo.require("esri.tasks.query"); 
   dojo.require("esri.toolbars.draw");
   dojo.require("esri.layers.graphics");
+  dojo.require("dojo.parser");
 </script>
 
 </body>

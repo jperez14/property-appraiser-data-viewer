@@ -1,7 +1,5 @@
 <div class="container">
-  
   <div ng-include="'views/header.html'"></div>
-  
 </div><!-- /.container -->
 
 <div class="container">  
@@ -136,8 +134,9 @@
   
   <div class="content main_content_body">
 
+
     <div class="alert alert-danger col-md-12 col-sm-12" ng-show="showError">{{errorMsg}}</div>
-    
+
     <div class="row" ng-show="candidatesList">
       <div class="col-md-12 col-sm-12">
         <div class="property_info tabular_data">
@@ -147,11 +146,14 @@
     </div>
 
     <div class="row">
+
       <div class="col-md-4 col-sm-5">
+        
         <div class="property_info tabular_data" ng-show="property">
           <div ng-include="'views/propertyinformation.html'"></div>
         </div>
       </div>
+
       <div class="col-md-8 col-sm-7"> 
         
         <div class="hero-unit map_container">

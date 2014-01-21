@@ -51,7 +51,7 @@ angular.module('propertySearchApp')
 		                                                deferred.resolve(new candidateService.Candidates(candidatesList));
 		                                              },
 		                                              function(response){
-		                                                deffered.reject(response);
+		                                                deferred.reject(response);
 	                                                      });
 
       return deferred.promise.then(function(candidatesList){
@@ -73,7 +73,7 @@ angular.module('propertySearchApp')
 		                                                  deferred.resolve(new candidateService.Candidates(candidatesList));
 		                                                },
 		                                                function(response){
-		                                                  deffered.reject(response);
+		                                                  deferred.reject(response);
 	                                                        });
 
       return deferred.promise.then(function(candidatesList){
@@ -94,7 +94,7 @@ angular.module('propertySearchApp')
 		                                                       deferred.resolve(new candidateService.Candidates(candidatesList));
 		                                                     },
 		                                                     function(response){
-		                                                       deffered.reject(response);
+		                                                       deferred.reject(response);
 	                                                             });
 
 

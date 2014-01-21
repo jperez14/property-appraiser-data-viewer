@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -23,7 +23,8 @@ angular.module('propertySearchApp')
     // IMPORTANT - Do not move
     function initMap(){
 
-      var map = new esri.Map('map', {logo:false, 
+      var map = new esri.Map('map', {extent:new esri.geometry.Extent(paConfig.initialExtentJson),
+                                     logo:false, 
                                      showAttribution:false}
                              );
 
@@ -40,6 +41,7 @@ angular.module('propertySearchApp')
         dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
         //Add events to map.
         map.on("click", $scope.mapClicked);
+
         map.resize();
       });
       
@@ -68,6 +70,17 @@ angular.module('propertySearchApp')
     // Initialize the map.
     dojo.ready(initMap);
 
+    // Init url params.
+    $scope.folioParam = $routeParams.folio;
+    $scope.$watch('folioParam', function(){
+      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
+        $scope.folio = $scope.folioParam;
+        $scope.searchByFolio();
+      }
+
+    });
+
+
     $scope.joseFlag = true;
 
     $scope.mapActivateZoomInBox = function (){
@@ -84,6 +97,9 @@ angular.module('propertySearchApp')
     $scope.mapZoomOut = function(){
       var extent=$scope.map.extent;
       $scope.map.setExtent(extent.expand(2));
+      var mapLevel = $scope.map.getLevel();
+      if (mapLevel == 8) 
+        $scope.map.setLevel(mapLevel - 1);
     };
 
     $scope.mapZoomToProperty = function(){
