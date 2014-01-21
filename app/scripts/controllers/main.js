@@ -398,7 +398,8 @@ angular.module('propertySearchApp')
           return coord;
         }, function(error){
 	  $scope.showError = true;
-	  $scope.errorMsg = error.message;
+          console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
+	  $scope.errorMsg = "Map could not be displayed.";
         });
 
       // Get boundaries for property
