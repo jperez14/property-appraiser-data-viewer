@@ -119,7 +119,12 @@ angular.module('propertySearchApp')
     };
     
     $scope.mapZoomToFullExtent = function(){
-      $scope.navToolBar.zoomToFullExtent();
+      $scope.map.setExtent(new esri.geometry.Extent(paConfig.initialExtentJson));
+          var geometry = {"x":$scope.property.location.x, 
+                          "y":$scope.property.location.y, 
+                          "spatialReference":{"wkid":2236}};
+      $scope.map.centerAt(geometry);
+      //$scope.navToolBar.zoomToFullExtent();
     };
     
     $scope.mapToggleAerialOn = function(){
