@@ -192,7 +192,7 @@ angular.module('propertySearchApp')
       if (layer.value === true){
         var geometry = esriGisService.getMunicipalityFromPoint($scope, layer, $scope.property.location.x, $scope.property.location.y);
         geometry.then(function(geometry){
-          var myPolygon = {"geometry":geometry, "symbol":paConfig.layerSymbol, "attributes":layer};
+          var myPolygon = {"geometry":geometry, "symbol":layer.layerSymbol, "attributes":layer};
 	  var gra = new esri.Graphic(myPolygon);
 	  $scope.map.getLayer("layers").add(gra);
         });
