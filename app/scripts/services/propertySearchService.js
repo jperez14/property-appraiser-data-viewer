@@ -46,7 +46,11 @@ angular.module('propertySearchApp')
 
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = 'GetOwners';
-      var params = {"ownerName":ownerName, "from":from, "to":to, "endPoint":endPoint};
+      var params = {"ownerName":ownerName, 
+                    "clientAppName":'PropertySearch', 
+                    "from":from, 
+                    "to":to, 
+                    "endPoint":endPoint};
 
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByOwner(params, 
@@ -67,7 +71,11 @@ angular.module('propertySearchApp')
     
     var candidatesByAddress = function(address, unit, from, to, callback){
       var endPoint = "GetAddress";
-      var params = {"myAddress":address, "myUnit":unit, "from":from, "to":to, "endPoint":endPoint};
+      var params = {"myAddress":address, "myUnit":unit, 
+                    "clientAppName":'PropertySearch', 
+                    "from":from, 
+                    "to":to, 
+                    "endPoint":endPoint};
 
       
       var deferred = $q.defer();
@@ -89,7 +97,11 @@ angular.module('propertySearchApp')
     
     var candidatesByPartialFolio = function(partialFolio, from, to, callback){
       var endPoint = "GetPropertySearchByPartialFolio";
-      var params = {"partialFolioNumber":partialFolio, "from":from, "to":to, "endPoint":endPoint};
+      var params = {"partialFolioNumber":partialFolio, 
+                    "clientAppName":'PropertySearch', 
+                    "from":from, 
+                    "to":to, 
+                    "endPoint":endPoint};
       
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByPartialFolio(params, 
