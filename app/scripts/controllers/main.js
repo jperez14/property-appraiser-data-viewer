@@ -86,6 +86,11 @@ angular.module('propertySearchApp')
 //
 //    });
 
+    $scope.$watch('showError', function(){
+      if(!isUndefinedOrNull($scope.map))
+        $scope.map.resize();
+    });
+
 
     $scope.joseFlag = true;
 
