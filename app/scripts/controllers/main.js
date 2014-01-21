@@ -43,6 +43,12 @@ angular.module('propertySearchApp')
         map.on("click", $scope.mapClicked);
 
         map.resize();
+
+        if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
+          $scope.folio = $scope.folioParam;
+          $scope.searchByFolio();
+        }
+
       });
       
       // urls for the map.
@@ -72,13 +78,13 @@ angular.module('propertySearchApp')
 
     // Init url params.
     $scope.folioParam = $routeParams.folio;
-    $scope.$watch('folioParam', function(){
-      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
-        $scope.folio = $scope.folioParam;
-        $scope.searchByFolio();
-      }
-
-    });
+//    $scope.$watch('folioParam', function(){
+//      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
+//        $scope.folio = $scope.folioParam;
+//        $scope.searchByFolio();
+//      }
+//
+//    });
 
 
     $scope.joseFlag = true;

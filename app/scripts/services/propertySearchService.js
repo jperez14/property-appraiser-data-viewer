@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', 'candidateService', 'propertyService', function($resource, $q, candidateService, propertyService){
+  .service('propertySearchService', ['$resource', '$q', 'candidateService', 'propertyService', 'paConfiguration', function($resource, $q, candidateService, propertyService, paConfig){
     
-    var urlBase = "/PaPublicServices/PAGISService.svc/";
+    var urlBase = paConfig.urlPropertyAppraiser;
 
     var PropertyResource = $resource(urlBase + ":endPoint", 
                                      {endPoint:""},
@@ -24,7 +24,10 @@ angular.module('propertySearchApp')
      */
     var propertyByFolio = function(folio){
       var endPoint = 'GetPropertySearchByFolio';
-      var params = {folioNumber:folio, layerId:'4', "endPoint":endPoint};         
+      var params = {folioNumber:folio, 
+                    layerId:'4', 
+                    clientAppName:'PropertySearch', 
+                    endPoint:endPoint};         
 
       var deferred = $q.defer();
       var rawProperty = PropertyResource.propertyByFolio(params, function (){
