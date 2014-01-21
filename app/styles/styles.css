@@ -657,8 +657,9 @@ border-radius: 0px;
 
 .hyperInput:hover { text-decoration: underline;}
 
-.add-main {width:80% !important}
-.add-suite {width:20% !important}
+/* added float:left to resolve IE9 issue */
+.add-main {width:80% !important; float:left;}
+.add-suite {width:20% !important; float:left;}
 
 /* ----------------------------------------------------
 media queries below... do not place styles below this line.
