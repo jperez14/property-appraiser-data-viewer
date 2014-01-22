@@ -26,26 +26,26 @@
                 
                     <span ng-repeat="address in property.siteAddresses">
                         <div class="property-add" ng-show="$index < 1">
-                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}}</span>
-                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}}</span>
-                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}}</span>
+                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}} </span>
+                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}} </span>
+                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}} </span>
                             <span ng-show="address.address"
-                            ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
-                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffixDirection}}</span>
-							<span class="inline">{{address.unit}}</span>
-                            <span>{{}}</span>
+                            ng-class="{'inline':address.address}">{{address.streetSuffix}} </span>
+                            <span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffixDirection}} </span>
+							<span class="inline">{{address.unit}} </span>
+                            <span>{{}} </span>
                             <span class="inline">{{getRenamedMunicipality(address.city)}}</span>
 							<span ng-show="address.address" ng-class="{'inline':address.address}">, </span>
-							<span ng-show="address.address" ng-class="{'inline':address.address}">FL</span>
-                            <span class="inline">{{address.zip}}</span>
+							<span ng-show="address.address" ng-class="{'inline':address.address}">FL </span>
+                            <span class="inline">{{address.zip}} </span>
                         </div>
                         
                         <span ng-show="$index >= 1">
-                            <span class="inline">{{address.streetNumber}}</span>
-                            <span class="inline">{{address.streetPrefix}}</span>
-                            <span class="inline">{{address.streetName}}</span>
-                            <span class="inline">{{address.streetSuffix}}</span>
-                            <span class="inline">{{address.unit}}</span>
+                            <span class="inline">{{address.streetNumber}} </span>
+                            <span class="inline">{{address.streetPrefix}} </span>
+                            <span class="inline">{{address.streetName}} </span>
+                            <span class="inline">{{address.streetSuffix}} </span>
+                            <span class="inline">{{address.unit}} </span>
                         </span>
                     </span>
                     
@@ -70,7 +70,7 @@
 		<tr>
 			<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
 				<div>
-                    <span>{{property.mailingAddress.address1}}</span>
+                    <span>{{property.mailingAddress.address1}} </span>
                     <span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
                     <span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
                     <span class="inline">{{property.mailingAddress.city}}</span>

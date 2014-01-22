@@ -12,7 +12,7 @@ angular.module('propertySearchApp', ['ngResource', 'ui.mask', 'ui.keypress', 'no
         controller: 'PictometryCtrl'
       })
       .when('/reportSummary',{
-        templateUrl: 'views/report/reportsummary.html',
+        templateUrl: 'views/report/reportSummary.html',
         controller: 'ReportSummaryCtrl'
       })
       .when('/reportDetails',{
