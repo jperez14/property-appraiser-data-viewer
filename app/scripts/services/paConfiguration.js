@@ -4,7 +4,7 @@ angular.module('propertySearchApp')
   .constant('paConfiguration', {
     initialExtentJson:{"xmin":807259.5478381776,"ymin":451155.83217993786,"xmax":965259.5478381779,"ymax":570822.4988466047,"spatialReference":{"wkid":2236}},
     wkidJson:{wkid:2236},
-    urlPropertyAppraiser:"/PaPublicServices/PAGISService.svc/",
+    urlPropertyAppraiser:"/PApropertyWebServices/PAGISService.svc/",
     urlCoordFromFolio:"http://S0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_Test/MapServer/18",
     urlAerialMap:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer",
     //urlAerialMap:"http://arcgis.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer",
