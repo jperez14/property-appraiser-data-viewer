@@ -136,13 +136,6 @@ padding-right: 0;
 										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}}</span>
 										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
 										<span class="inline">{{address.unit}}</span>
-										<!--
-                                        <span>{{}}</span>
-										<span class="inline">{{getRenamedMunicipality(address.city)}}</span>
-										<span ng-show="address.address" ng-class="{'inline':address.address}">, </span>
-										<span ng-show="address.address" ng-class="{'inline':address.address}">FL</span>
-										<span class="inline">{{address.zip}}</span>
-                                        -->
 									</div>
 									<span ng-show="$index >= 1">
 										<span class="inline">{{address.streetNumber}}</span>
@@ -176,9 +169,6 @@ padding-right: 0;
 								<span ng-show="property.mailingAddress.city" ng-class="{'inline':property.mailingAddress.city}">, </span>
 								<span class="inline">{{property.mailingAddress.state}}</span>
 								<span class="inline">{{property.mailingAddress.zipCode}}</span>
-                                <!--
-								<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
-                                -->
 							</div>
 						</td>
 					</tr>
@@ -319,10 +309,10 @@ padding-right: 0;
 					</tr>
 					<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
 						<td><strong>{{benefitType}}</strong></td>
-						<td>{{benefitsByYear[property.rollYear1].type}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear1].value | noCentsCurrency:"$"}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear2].value | noCentsCurrency:"$"}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear3].value | noCentsCurrency:"$"}}</td>
+                        <td>{{benefitsByYear.type}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear3].value | noCentsCurrency:"$"}}</td>
 					</tr>
 					<tr>
 						<td colspan="5">Note: Not all benefits are applicable to all
