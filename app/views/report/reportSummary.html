@@ -291,7 +291,7 @@ padding-right: 0;
 					<tr>
 						<th class="tableHeader" colspan="5">Benefits Information</th>
 					</tr>
-					<tr ng-show="true"> <!-- this NG show should be conditional, not just true -->
+					<tr ng-show="showBenefitsMessages()">
 						<td colspan="5">
 							<div class="table-message">
 								<div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>
