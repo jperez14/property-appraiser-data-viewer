@@ -8,8 +8,11 @@ angular.module('propertySearchApp')
       console.log("map has been clicked");
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){
-        var myPromise = $scope.getPropertyByFolio(folioValue);
-        myPromise.then(function(data){}, function(error){});
+        if(folioValue !== "") {
+          var myPromise = $scope.getPropertyByFolio(folioValue);
+          myPromise.then(function(data){}, function(error){});
+        }
+
       }, function(error){});
     };
 
@@ -20,6 +23,8 @@ angular.module('propertySearchApp')
       $scope.map.setExtent(geometry);
     };
 
+    var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
+
     // IMPORTANT - Do not move
     function initMap(){
 
@@ -29,6 +34,8 @@ angular.module('propertySearchApp')
                              );
 
       $scope.map = map;
+      //esri.config.defaults.io.corsDetection = false;
+      //esri.config.defaults.io.corsEnabledServers.push("gisweb.miamidade.gov");
 
       map.on('load',function(){
         console.log("OnLoad is called");
@@ -125,10 +132,13 @@ angular.module('propertySearchApp')
     
     $scope.mapZoomToFullExtent = function(){
       $scope.map.setExtent(new esri.geometry.Extent(paConfig.initialExtentJson));
-          var geometry = {"x":$scope.property.location.x, 
-                          "y":$scope.property.location.y, 
-                          "spatialReference":{"wkid":2236}};
-      $scope.map.centerAt(geometry);
+      if(!isUndefinedOrNull($scope.property.location)){
+        var geometry = {"x":$scope.property.location.x, 
+                        "y":$scope.property.location.y, 
+                        "spatialReference":{"wkid":2236}};
+        $scope.map.centerAt(geometry);
+      }
+
       //$scope.navToolBar.zoomToFullExtent();
     };
     
@@ -408,8 +418,9 @@ angular.module('propertySearchApp')
           return coord;
         }, function(error){
 	  $scope.showError = true;
-          console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
 	  $scope.errorMsg = "Map could not be displayed.";
+          console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
+          //return $q.reject();
         });
 
       // Get boundaries for property
@@ -588,7 +599,7 @@ angular.module('propertySearchApp')
         $window.open(url,'name','height=1000,width=840, location=0');
     };
     
-    var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
+
 
   }]);
 
