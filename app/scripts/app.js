@@ -15,7 +15,7 @@ angular.module('propertySearchApp', ['ngResource', 'ui.mask', 'ui.keypress', 'no
         templateUrl: 'views/reportdetails.html',
         controller: 'ReportSummaryCtrl'
       })
-      .when('/:folio', {
+      .when('/', {
         templateUrl: 'views/data.html',
         controller: 'MainCtrl'
       })

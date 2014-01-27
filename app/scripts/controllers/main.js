@@ -80,11 +80,16 @@ angular.module('propertySearchApp')
 
     };
 
-    // Initialize the map.
-    dojo.ready(initMap);
 
     // Init url params.
-    $scope.folioParam = $routeParams.folio;
+    $scope.$on('$routeChangeSuccess', function(event, routeData){
+      $scope.folioParam = routeData.params.folio;
+
+      // Initialize the map.
+      dojo.ready(initMap);
+    });
+
+//    $scope.folioParam = $routeParams.folio;
 //    $scope.$watch('folioParam', function(){
 //      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
 //        $scope.folio = $scope.folioParam;
@@ -94,8 +99,8 @@ angular.module('propertySearchApp')
 //    });
 
     $scope.$watch('showError', function(){
-      if(!isUndefinedOrNull($scope.map))
-        $scope.map.resize();
+//      if(!isUndefinedOrNull($scope.map))
+//        $scope.map.resize();
     });
 
 
@@ -360,32 +365,15 @@ angular.module('propertySearchApp')
       var folio = $scope.folio;
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
-		$scope.showError = true;
-		$scope.errorMsg = "Please enter at least 6 digits for Folio";
+	$scope.showError = true;
+	$scope.errorMsg = "Please enter at least 6 digits for Folio";
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
-		$scope.getCandidatesByPartialFolio(folio);
+	$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
         var myPromise = $scope.getPropertyByFolio(folio);
-        myPromise.then(function(data){
-		  if(!isUndefinedOrNull($scope.property.location)){
-			  var geometry = {
-				"x":$scope.property.location.x,
-				"y":$scope.property.location.y,
-				"spatialReference":{"wkid":2236}
-			  };
-			  $scope.map.centerAndZoom(geometry, 10);
-		  }
-		  else {
-			$scope.mapZoomToFullExtent();
-		  }
-        }
-                       , function(error){}
-                      );
-
       }
-
     };
     
     $scope.getPropertyByFolio = function(folio){
@@ -400,42 +388,46 @@ angular.module('propertySearchApp')
       $scope.resetLayers();
       $scope.joseFlag = false;
 
-      // Get property data.
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
 	$scope.property = property;
 	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
 	$scope.activeRollYearTab = $scope.property.rollYear1;
+        
+        // Get xy for property and display it in map.
+        esriGisService.getPolygonFromFolio($scope, folio).then(
+          function(polygon){
+
+            // add polygon
+            var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+            $scope.map.getLayer("parcelBoundary").add(graphic);
+
+            // add point 
+            var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
+            graphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
+            $scope.map.getLayer("parcelPoint").add(graphic);
+	    $scope.property.location = coords;
+
+            // zoom into point
+	    var geometry = {
+	      "x":coords.x,
+	      "y":coords.y,
+	      "spatialReference":{"wkid":2236}
+	    };
+	    $scope.map.centerAndZoom(geometry, 10);
+
+          }, function(error){
+            console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
+	    $scope.mapZoomToFullExtent();
+            var message = "Map could not be displayed.";
+	    $scope.errorMsg = message;
+	    $scope.showError = true;
+        });
+
       }, function(error){
 	$scope.showError = true;
 	$scope.errorMsg = error.message;
       });
-
-      // Get xy for property and display it in map.
-      var geometryPromise = esriGisService.getXYFromFolio($scope, folio).then(
-        function(coord){
-          var graphic = esriGisService.getGraphicMarkerFromXY(coord.x, coord.y);
-          $scope.map.getLayer("parcelPoint").add(graphic);
-          return coord;
-        }, function(error){
-	  $scope.showError = true;
-	  $scope.errorMsg = "Map could not be displayed.";
-          console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
-          //return $q.reject();
-        });
-
-      // Get boundaries for property
-      var boundariesPromise = esriGisService.getPolygonFromFolio($scope, folio).then(
-        function(polygon){
-          var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
-          $scope.map.getLayer("parcelBoundary").add(graphic);
-        }, function(error){
-        });
-
-      return $q.all([propertyPromise, geometryPromise]).then(function(data){
-	$scope.property.location = data[1];},function(error){
-	  console.log("Error in getPropertyByFolio ", folio);
-	});
-
+      
     };
     
     $scope.getCandidatesHeight = function(){
