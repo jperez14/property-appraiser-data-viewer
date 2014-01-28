@@ -27,7 +27,7 @@ angular.module('propertySearchApp')
         function(featureSet){
           return featureSet}, 
         function(error){
-          return error;
+          return $q.reject(error);
         }
       );
 
@@ -50,7 +50,8 @@ angular.module('propertySearchApp')
         }, 
         function(error){
           var message = "error when trying to get xy from folio. "
-          return {"error":error, "message":message};
+          return $q.reject({"error":error, "message":message});
+          //return {"error":error, "message":message}; 
         }
       );
 
@@ -79,12 +80,12 @@ angular.module('propertySearchApp')
             return featureSet.features[0].geometry;
 	  }else{
             var message = "No polygon found for folio " + folio;
-            $q.reject({"error":featureSet, "message":message});
+            return $q.reject({"error":featureSet, "message":message});
           }
         }, 
         function(error){
           var message = "error  when getting polygonFormFolio";
-          return {"error":error, "message":message}
+          return $q.reject({"error":error, "message":message});
         }
       );
 
