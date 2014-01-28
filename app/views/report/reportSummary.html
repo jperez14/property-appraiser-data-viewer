@@ -22,6 +22,7 @@
 
 .header {
 	margin-bottom:10px;
+	border:0;
 }
 
 table {
@@ -68,6 +69,7 @@ body {
 max-width:800px;
 padding-left: 0;
 padding-right: 0;
+
 }
 @media (min-width: 1200px) {
 .container {
@@ -85,7 +87,7 @@ padding-right: 0;
 }
 }
 @media print {
-.print-button, .header {
+.print-button {
 	display: none;
 }
 .print-break {
@@ -93,6 +95,9 @@ padding-right: 0;
 }
 }
 
+@page{
+	margin:15px 20px 0;
+}
 
 </style>
 
@@ -102,7 +107,7 @@ padding-right: 0;
 <p class="print-button"><button ng-click="doPrint()">Print</button></p>
 
 <div class="header">
-  <img src="images/banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+  <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
 </div>
 
 
@@ -117,23 +122,20 @@ padding-right: 0;
 						</th>
 					</tr>
 					<tr>
-						<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber}} {{showFolioStatus()}}</td>
+						<td><strong style="display:inline">Folio:</strong></td>
+                        <td>{{property.propertyInfo.folioNumber}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="pi_mailing_address"><strong>Property Address</strong>
+						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+                        <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
 									<div class="property-add" ng-show="$index < 1">
-										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}}</span>
-										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}}</span>
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}} </span>
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}} </span>
 										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}}</span>
 										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
 										<span class="inline">{{address.unit}}</span>
-										<span>{{}}</span>
-										<span class="inline">{{getRenamedMunicipality(address.city)}}</span>
-										<span ng-show="address.address" ng-class="{'inline':address.address}">, </span>
-										<span ng-show="address.address" ng-class="{'inline':address.address}">FL</span>
-										<span class="inline">{{address.zip}}</span>
 									</div>
 									<span ng-show="$index >= 1">
 										<span class="inline">{{address.streetNumber}}</span>
@@ -147,7 +149,8 @@ padding-right: 0;
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><strong>Owner</strong>
+						<td><strong>Owner</strong></td>
+                        <td>
 							<div ng-class="{'owner-overflow' : property.ownersInfo.length > 3}">
 								<div ng-repeat="owner in property.ownersInfo">
 									{{owner.name}}
@@ -156,25 +159,27 @@ padding-right: 0;
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="pi_mailing_address"><strong>Mailing Address</strong>
+						<td class="pi_mailing_address"><strong>Mailing Address</strong></td>
+                        <td>
 							<div>
-								<span>{{property.mailingAddress.address1}}</span>
-								<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}</span>
-								<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}</span>
+								<span>{{property.mailingAddress.address1}}<br></span>
+								<span ng-show="property.mailingAddress.address2">{{property.mailingAddress.address2}}<br></span>
+								<span ng-show="property.mailingAddress.address3">{{property.mailingAddress.address3}}<br></span>
 								<span class="inline">{{property.mailingAddress.city}}</span>
 								<span ng-show="property.mailingAddress.city" ng-class="{'inline':property.mailingAddress.city}">, </span>
 								<span class="inline">{{property.mailingAddress.state}}</span>
 								<span class="inline">{{property.mailingAddress.zipCode}}</span>
-								<span ng-hide="isCountryUSA(property.mailingAddress.country)">{{property.mailingAddress.country}}</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><strong>Primary Zone</strong><div>{{property.propertyInfo.primaryZone}} 
+						<td><strong>Primary Zone</strong></td>
+                        <td><div>{{property.propertyInfo.primaryZone}} 
 									  {{property.propertyInfo.primaryZoneDescription}}</div></td>
 					</tr>
 					<tr>
-						<td colspan="2"><strong>Primary Land Use</strong><div>{{property.propertyInfo.DORCode}}
+						<td><strong>Primary Land Use</strong></td>
+                        <td><div>{{property.propertyInfo.DORCode}}
 						{{property.propertyInfo.DORDescription}}</div></td>
 					</tr>
 					<tr>
@@ -286,7 +291,7 @@ padding-right: 0;
 					<tr>
 						<th class="tableHeader" colspan="5">Benefits Information</th>
 					</tr>
-					<tr ng-show="true"> <!-- this NG show should be conditional, not just true -->
+					<tr ng-show="showBenefitsMessages()">
 						<td colspan="5">
 							<div class="table-message">
 								<div ng-repeat="message in property.benefit.messages[property.rollYear1]">{{message}}</div>
@@ -304,10 +309,10 @@ padding-right: 0;
 					</tr>
 					<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
 						<td><strong>{{benefitType}}</strong></td>
-						<td>{{benefitsByYear[property.rollYear1].type}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear1].value | noCentsCurrency:"$"}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear2].value | noCentsCurrency:"$"}}</td>
-						<td class="text-right">{{benefitsByYear[property.rollYear3].value | noCentsCurrency:"$"}}</td>
+                        <td>{{benefitsByYear.type}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
+						<td class="text-right">{{benefitsByYear.years[property.rollYear3].value | noCentsCurrency:"$"}}</td>
 					</tr>
 					<tr>
 						<td colspan="5">Note: Not all benefits are applicable to all
@@ -322,7 +327,7 @@ padding-right: 0;
 	
 				<table class="print-table">
 					<tr>
-						<th class="tableHeader">Full Legal Description</th>
+						<th class="tableHeader">Short Legal Description</th>
 					</tr>
 							<tr ng-repeat="description in property.legalDescription.parsedDescription">
 							  <td>{{description}}</td>

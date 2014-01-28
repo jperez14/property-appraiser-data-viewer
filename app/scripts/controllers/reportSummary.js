@@ -13,5 +13,10 @@ angular.module('propertySearchApp')
 		var dt = new Date();
 		return dt.getMonth() + 1 + '/' + dt.getDate() + '/' + dt.getFullYear();
 	};
-
+	
+	$scope.showBenefitsMessages = function(){
+		return $scope.property.benefit.messages[$scope.property.rollYear1] != undefined || 
+		$scope.property.benefit.messages[$scope.property.rollYear2] != undefined || 
+		$scope.property.benefit.messages[$scope.property.rollYear3] != undefined;
+	};	
   }]);
