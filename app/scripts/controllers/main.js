@@ -420,6 +420,7 @@ angular.module('propertySearchApp')
             var message = "Map could not be displayed.";
 	    $scope.errorMsg = message;
 	    $scope.showError = true;
+		$('#error-modal').modal('show');
         });
 
       }, function(error){
@@ -481,6 +482,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
+	$scope.joseFlag = true;
 	  clearResults();
       if(_.isEmpty($scope.ownerName))
 	  {
