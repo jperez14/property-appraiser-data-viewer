@@ -9,8 +9,7 @@ angular.module('propertySearchApp')
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){
         if(folioValue !== "") {
-          var myPromise = $scope.getPropertyByFolio(folioValue);
-          myPromise.then(function(data){}, function(error){});
+          $scope.getPropertyByFolio(folioValue);
         }
 
       }, function(error){});
