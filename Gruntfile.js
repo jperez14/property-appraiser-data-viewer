@@ -80,7 +80,7 @@ module.exports = function (grunt) {
       },
       proxies: [{
           context: ['/context','/PApropertyWebServices'],
-          host: 'testweb1panet.miamidade.gov',//'311arcgis.miamidade.gov',
+          host: 'devnet.miamidade.gov',//'311arcgis.miamidade.gov',
           port: 80,
           https: false,
           changeOrigin: false,

@@ -6,8 +6,10 @@
 
 	<div class="results_record" ng-repeat="candidate in candidatesList.candidates | orderBy:['siteAddress']">
 		<span class="record_number">{{$index + 1}}</span>
-		<div class="record_folio"><strong>FOLIO:</strong>
-			<input class="hyperInput" type="text" ui-mask='{{folioMask}}' ng-model='candidate.folio' ng-click="getCandidateFolio(candidate.folio)" readonly="true"> {{showFolioStatus(candidate.status)}}
+		<div class="record_folio"><strong>FOLIO:</strong>        
+            
+            <span ng-click="getCandidateFolio(candidate.folio)">{{candidate.folio | folioMask}}</span> {{showFolioStatus(candidate.status)}}
+
 		</div>
 		<div class="record_desc"><strong>Sub-Division:</strong> {{candidate.subdivisionDescription}}</div>
 		<div class="record_owner"><strong>OWNER:</strong> {{candidate.firstOwner}}</div>
@@ -15,4 +17,6 @@
 		<div class="record_address"><strong>ADDRESS:</strong> {{candidate.siteAddress}}</div>
 		<div class="record_address"><strong>&nbsp;</strong> {{getRenamedMunicipality(candidate.municipality)}}</div>
 	</div>
+
 </div>
+

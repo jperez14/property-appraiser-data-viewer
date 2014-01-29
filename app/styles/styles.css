@@ -281,9 +281,15 @@ span.map-view:hover {
 .loadingContent {text-align:center;}
 
 #error-modal .modal-dialog {}
-#error-modal .modal-content {border-radius:3px;}
-#error-modal .modal-body {padding:20px 10px; text-align:center;}
+#error-modal .modal-content {border-radius:3px; color: #b94a48; background-color: #f2dede; border-color: #eed3d7; font-size:16px;}
+#error-modal .modal-body {padding:35px 10px 20px 10px; text-align:center; position:relative;}
 
+.close-modal {
+	position:absolute;
+	right:3px;
+	top:3px;
+	cursor:pointer
+}
 
 /* result table styles */
 
@@ -651,7 +657,7 @@ border-radius: 0px;
 	font-size: 12px;
 }
 
-.hyperInput {
+.record_folio span {
 	border:none;
 	color: #39599f;
 	font-weight: bold;
@@ -659,7 +665,7 @@ border-radius: 0px;
 	max-width:98px;
 }
 
-.hyperInput:hover { text-decoration: underline;}
+.record_folio span:hover { text-decoration: underline;}
 
 /* added float:left to resolve IE9 issue */
 .add-main {width:80% !important; float:left;}

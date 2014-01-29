@@ -133,6 +133,7 @@
 
 <div class="modal-body">
 
+<img src="../images/close-icon.png" width="24" height="24" alt="Close" class="close-modal" />
 <div>{{errorMsg}}</div>
 
 </div>
@@ -314,6 +315,11 @@
 		$('body').on('click', '.dropdown-menu', function(e){
         	$(this).hasClass('keep_open') && e.stopPropagation(); // This replace if conditional.
     	});
+		
+		//close button for modal
+		$('.close-modal').on('click', function(){
+			$('#error-modal').modal('hide');						   							   
+		});
 		
 	});
 	
