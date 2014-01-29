@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('propertySearchApp', ['ngResource', 'ui.mask', 'ui.keypress', 'notificationWidget'])
+angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.keypress', 'notificationWidget'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/pictometry/:x/:y',{
