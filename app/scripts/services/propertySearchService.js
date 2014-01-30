@@ -7,10 +7,10 @@ angular.module('propertySearchApp')
 
     var PropertyResource = $resource(urlBase + ":endPoint", 
                                      {endPoint:""},
-                                     {propertyByFolio:{method:'GET', withCredentials:true},
-				      candidatesByOwner:{method:'GET', withCredentials:true},
-				      candidatesByAddress:{method:'GET', withCredentials:true},
-				      candidatesByPartialFolio:{method:'GET', withCredentials:true}
+                                     {propertyByFolio:{method:'GET'},
+				      candidatesByOwner:{method:'GET'},
+				      candidatesByAddress:{method:'GET'},
+				      candidatesByPartialFolio:{method:'GET'}
 				     }
                                     );
 

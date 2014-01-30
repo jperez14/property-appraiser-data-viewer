@@ -156,15 +156,11 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("aerial").hide();
     }
     
-
-
-
     $scope.folio = "";
     $scope.property = null;//SharedData.property;;
     $scope.testSharedData = function(){
       $scope.property.rollYear1 = 2014;
     };
-    
     
     $scope.showError = false;
     $scope.errorMsg = "";
@@ -248,6 +244,13 @@ angular.module('propertySearchApp')
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
     };
+
+	$scope.showErrorDialog = function(message){
+		$scope.errorMsg = message;
+		$scope.showError = true;
+		$('#error-modal').modal('show');
+	};
+
     /*
 
       $scope.showFullListOfOwners = function() {
@@ -364,11 +367,10 @@ angular.module('propertySearchApp')
       var folio = $scope.folio;
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
-	$scope.showError = true;
-	$scope.errorMsg = "Please enter at least 6 digits for Folio";
+		$scope.showErrorDialog("Please enter at least 6 digits for Folio");
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
-	$scope.getCandidatesByPartialFolio(folio);
+		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
         var myPromise = $scope.getPropertyByFolio(folio);
@@ -416,16 +418,14 @@ angular.module('propertySearchApp')
 
           }, function(error){
             console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
-	    $scope.mapZoomToFullExtent();
+			$scope.mapZoomToFullExtent();
             var message = "Map could not be displayed.";
-	    $scope.errorMsg = message;
-	    $scope.showError = true;
-		$('#error-modal').modal('show');
+			$scope.showErrorDialog(message);
         });
 
       }, function(error){
-	$scope.showError = true;
-	$scope.errorMsg = error.message;
+		$scope.joseFlag = true;
+		$scope.showErrorDialog(error.message);
       });
       
     };
@@ -459,8 +459,7 @@ angular.module('propertySearchApp')
     
     $scope.fetchNextPage = function() {
       if($scope.toPage >= $scope.candidatesList.total) {
-        $scope.showError = true;
-        $scope.errorMsg = "You have reached the end of the results of your search";
+		$scope.showErrorDialog("You have reached the end of the results of your search");
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
@@ -486,8 +485,7 @@ angular.module('propertySearchApp')
 	  clearResults();
       if(_.isEmpty($scope.ownerName))
 	  {
-		$scope.showError = true;
-		$scope.errorMsg = "Please enter a valid Owner Name";
+		$scope.showErrorDialog("Please enter a valid Owner Name");
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
@@ -495,8 +493,7 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-	    $scope.showError = result.completed;
-	    $scope.errorMsg = result.message;
+		$scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -505,13 +502,11 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showError = !result.completed;
-	  $scope.errorMsg = result.message;
+	  $scope.showErrorDialog(result.message);
 	}
       }, function(error){
-	console.log("getCandidatesByOwner error "+error);
-	$scope.showError = true;
-	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+		console.log("getCandidatesByOwner error "+error);
+		$scope.showErrorDialog("Oops !! The request failed. Please try again later");
       });
     };
 
@@ -519,8 +514,7 @@ angular.module('propertySearchApp')
       clearResults();
       if(_.isEmpty($scope.address))
 	  {
-		$scope.showError = true;
-		$scope.errorMsg = "Please enter a valid Address";
+		$scope.showErrorDialog("Please enter a valid Address");
 		return true;
 	  }
       $scope.isAddressCandidates = true;
@@ -528,8 +522,7 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-	    $scope.showError = result.completed;
-	    $scope.errorMsg = result.message;
+		$scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -538,13 +531,10 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showError = !result.completed;
-	  $scope.errorMsg = result.message;
+	  $scope.showErrorDialog(result.message);
 	}
       }, function(error){
-	console.log("getCandidatesByAddress error "+error);
-	$scope.showError = true;
-	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+		$scope.showErrorDialog("Oops !! The request failed. Please try again later");
       });
 
     };
@@ -556,8 +546,7 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-	    $scope.showError = result.completed;
-	    $scope.errorMsg = result.message;
+		$scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -566,14 +555,12 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showError = !result.completed;
-	  $scope.errorMsg = result.message;
+	  $scope.showErrorDialog(result.message);
 	}
 
       }, function(error){
 	console.log("getCandidatesByPartialFolio error "+error);
-	$scope.showError = true;
-	$scope.errorMsg = "Oops !! The request failed. Please try again later";
+	$scope.showErrorDialog("Oops !! The request failed. Please try again later");
       });
 
     };
