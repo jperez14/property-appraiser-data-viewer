@@ -103,7 +103,7 @@ angular.module('propertySearchApp')
     });
 
 
-    $scope.joseFlag = true;
+    $scope.hideMap = true;
 
     $scope.mapActivateZoomInBox = function (){
       $scope.drawToolBar.activate(esri.toolbars.Draw.EXTENT);
@@ -224,7 +224,6 @@ angular.module('propertySearchApp')
         });
       }
       
-      
     };
     
 
@@ -245,29 +244,14 @@ angular.module('propertySearchApp')
       $scope.salesInfoGrantorName2 = false;
     };
 
-	$scope.showErrorDialog = function(message){
+	$scope.showErrorDialog = function(message, hideMap){
 		$scope.errorMsg = message;
 		$scope.showError = true;
+		if(hideMap)
+			$scope.hideMap = true;
 		$('#error-modal').modal('show');
 	};
 
-    /*
-
-      $scope.showFullListOfOwners = function() {
-      if($scope.property != null && $scope.property.ownersInfo.length > 2)
-      return true;
-      else
-      return false;
-      };
-    */
-    /*
-      $scope.showFullListOfSiteAddresses = function() {
-      if($scope.property != null && $scope.property.siteAddresses.length > 1)
-      return true;
-      else
-      return false;
-      };
-    */
     $scope.showFolioStatus = function(status) {
       if(status != undefined) {
         if(status != null && status != "AC Active")
@@ -367,7 +351,7 @@ angular.module('propertySearchApp')
       var folio = $scope.folio;
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
-		$scope.showErrorDialog("Please enter at least 6 digits for Folio");
+		$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
 		$scope.getCandidatesByPartialFolio(folio);
@@ -387,7 +371,7 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("parcelBoundary").clear();
       $scope.map.getLayer("parcelPoint").clear();
       $scope.resetLayers();
-      $scope.joseFlag = false;
+      $scope.hideMap = false;
 
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
 	$scope.property = property;
@@ -424,8 +408,7 @@ angular.module('propertySearchApp')
         });
 
       }, function(error){
-		$scope.joseFlag = true;
-		$scope.showErrorDialog(error.message);
+		$scope.showErrorDialog(error.message, true);
       });
       
     };
@@ -459,7 +442,7 @@ angular.module('propertySearchApp')
     
     $scope.fetchNextPage = function() {
       if($scope.toPage >= $scope.candidatesList.total) {
-		$scope.showErrorDialog("You have reached the end of the results of your search");
+		$scope.showErrorDialog("You have reached the end of the results of your search", true);
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
@@ -481,11 +464,11 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
-	$scope.joseFlag = true;
+	$scope.hideMap = true;
 	  clearResults();
       if(_.isEmpty($scope.ownerName))
 	  {
-		$scope.showErrorDialog("Please enter a valid Owner Name");
+		$scope.showErrorDialog("Please enter a valid Owner Name", true);
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
@@ -493,7 +476,7 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message);
+		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -502,19 +485,20 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showErrorDialog(result.message);
+	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
 		console.log("getCandidatesByOwner error "+error);
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later");
+		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
     };
 
     $scope.getCandidatesByAddress = function(){
+	  $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address))
 	  {
-		$scope.showErrorDialog("Please enter a valid Address");
+		$scope.showErrorDialog("Please enter a valid Address", true);
 		return true;
 	  }
       $scope.isAddressCandidates = true;
@@ -522,7 +506,7 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message);
+		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -531,22 +515,23 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showErrorDialog(result.message);
+	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later");
+		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
 
     };
 
     $scope.getCandidatesByPartialFolio = function(folio){
+	  $scope.hideMap = true;
       clearResults();
 		$scope.loader = true; //flag hackeysack
       $scope.isPartialFolioCandidates = true;
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message);
+		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio);
@@ -555,12 +540,12 @@ angular.module('propertySearchApp')
 	    $scope.candidatesList = result;
 	}
 	else {
-	  $scope.showErrorDialog(result.message);
+	  $scope.showErrorDialog(result.message, true);
 	}
 
       }, function(error){
-	console.log("getCandidatesByPartialFolio error "+error);
-	$scope.showErrorDialog("Oops !! The request failed. Please try again later");
+		console.log("getCandidatesByPartialFolio error "+error);
+		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
 
     };
