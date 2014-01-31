@@ -26,7 +26,12 @@ angular.module('propertySearchApp')
 
 	var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
 
-    // IMPORTANT - Do not move
+    var isAlphabetic = function(val) {
+		var expr = new RegExp("^[a-zA-Z ]*$");
+		return expr.test(val);
+	};
+	
+	// IMPORTANT - Do not move
     function initMap(){
 
       var map = new esri.Map('map', {extent:new esri.geometry.Extent(paConfig.initialExtentJson),
@@ -479,9 +484,12 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByOwner = function(){
 	$scope.hideMap = true;
 	  clearResults();
-      if(_.isEmpty($scope.ownerName))
-	  {
+      if(_.isEmpty($scope.ownerName)) {
 		$scope.showErrorDialog("Please enter a valid Owner Name", true);
+		return true;
+	  }
+	  else if(!isAlphabetic($scope.ownerName)) {
+		$scope.showErrorDialog("Please enter only aplhabetic characters", true);
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
