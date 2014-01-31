@@ -24,6 +24,8 @@ angular.module('propertySearchApp')
 
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
+	var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
+
     // IMPORTANT - Do not move
     function initMap(){
 
@@ -507,9 +509,18 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByAddress = function(){
 	  $scope.hideMap = true;
       clearResults();
-      if(_.isEmpty($scope.address))
-	  {
+      if(_.isEmpty($scope.address)){
 		$scope.showErrorDialog("Please enter a valid Address", true);
+		return true;
+	  }
+	  else if(isNumber($scope.address)){
+		$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+		return true;
+	  }
+	  else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
+			  $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+			  $scope.address.indexOf("#") >= 0 ) {
+		$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
 		return true;
 	  }
       $scope.isAddressCandidates = true;
