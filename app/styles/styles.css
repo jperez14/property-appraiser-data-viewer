@@ -673,6 +673,10 @@ border-radius: 0px;
 	max-width:98px;
 }
 
+.hover_pointer {
+	cursor:pointer;
+}
+
 .record_folio span:hover { text-decoration: underline;}
 
 /* added float:left to resolve IE9 issue */

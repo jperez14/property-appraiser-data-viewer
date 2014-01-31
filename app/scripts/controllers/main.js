@@ -594,7 +594,30 @@ angular.module('propertySearchApp')
         $window.open(url,'name','height=1000,width=840, location=0');
     };
     
-
+	$scope.getComparableSales = function() {
+		//Create FORM object
+		var salesForm = document.createElement("form");
+		salesForm.method = "post";
+		salesForm.target = "_blank";
+		salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
+		//Append Input
+		//Folio
+		var folioInput = document.createElement("input");
+		folioInput.setAttribute("name", "folio");
+		folioInput.setAttribute("value", $scope.folio);
+		salesForm.appendChild(folioInput);
+		//Cmd
+		var cmdInput = document.createElement("input");
+		cmdInput.setAttribute("name", "Cmd");
+		cmdInput.setAttribute("value", "FOLIO");
+		salesForm.appendChild(cmdInput);
+		//Append Sales Form
+		document.body.appendChild(salesForm);
+		//Submit the Form
+		salesForm.submit();
+		//Remove Sales Form
+		document.body.removeChild(salesForm);
+	};
 
   }]);
 
