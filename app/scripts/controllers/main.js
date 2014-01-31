@@ -167,6 +167,7 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
+	$scope.previousCandidatesList = null;
 
     $scope.isOwnerCandidates = false;
     $scope.isAddressCandidates = false;
@@ -342,9 +343,19 @@ angular.module('propertySearchApp')
 	return false;
     };
 
-    $scope.getCandidateFolio = function(folio) {
+    $scope.getCandidateFolio = function(folio, savePrevious) {
 		$scope.folio = folio;
+		if(isUndefinedOrNull(savePrevious)) {
+			$scope.previousCandidatesList = $scope.candidatesList;
+		}
 		$scope.searchByFolio();
+	};
+	
+	$scope.populatePreviousCandidates = function() {
+		$scope.candidatesList = $scope.previousCandidatesList;
+		$scope.previousCandidatesList = null;
+		$scope.property = null;
+		$scope.hideMap = true;
 	};
 
     $scope.searchByFolio = function(){
@@ -479,7 +490,7 @@ angular.module('propertySearchApp')
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio);
+		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
@@ -509,7 +520,7 @@ angular.module('propertySearchApp')
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio);
+		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
@@ -534,7 +545,7 @@ angular.module('propertySearchApp')
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio);
+		$scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1)
 	    $scope.candidatesList = result;
