@@ -1,0 +1,69 @@
+<html>
+<head>
+
+    <script type="text/javascript">
+
+
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+       
+    function init() {
+    
+        var latitude = getParameterByName("latitude");
+        var longitude = getParameterByName("longitude");
+        var addressPoint = '{"lat":' +  latitude + ',' + '"lon":' + longitude + '}';
+
+	postwith("http://gisweb.miamidade.gov/MDCPictometry/index.aspx", { 'addressPoint': addressPoint }, "iframeGisMap");
+
+
+    }
+
+
+        function postwith(to, d, target) {
+
+            var myForm = document.createElement("form");
+
+            myForm.method = "post";
+            myForm.target = target;
+            myForm.action = to;
+
+            for (var k in d) {
+                var input = document.createElement("input");
+                input.setAttribute("id", k);
+                input.setAttribute("name", k);
+                input.setAttribute("value", d[k]);
+                myForm.appendChild(input);
+            }
+
+
+            document.body.appendChild(myForm);
+
+            myForm.submit();
+
+            document.body.removeChild(myForm);
+
+        }
+
+
+        
+    </script>
+    
+</head>
+    
+<body>
+
+<iframe id="iframeGisMap" name="iframeGisMap" width="800px" height="800px" scrolling="no" style="overflow: hidden; overflow-x: hidden; overflow-y: hidden; border: 1px solid rgb(204, 0, 0);">    
+  <p>Your browser does not support iframes.</p>
+</iframe>
+
+<script>
+  init();
+</script>
+
+</body>
+</html>
