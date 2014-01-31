@@ -5,7 +5,7 @@ angular.module('propertySearchApp')
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
-    var PropertyResource = $resource(urlBase + ":endPoint", 
+    var PropertyResource = $resource(urlBase + ":endPoint",
                                      {endPoint:""},
                                      {propertyByFolio:{method:'GET'},
 				      candidatesByOwner:{method:'GET'},
@@ -23,11 +23,11 @@ angular.module('propertySearchApp')
      * is returned.
      */
     var propertyByFolio = function(folio){
-      var endPoint = 'GetPropertySearchByFolio';
-      var params = {folioNumber:folio, 
-                    layerId:'4', 
-                    clientAppName:'PropertySearch', 
-                    endPoint:endPoint};         
+      var endPoint = "";
+      var params = {"folioNumber":folio, 
+                    "clientAppName":'PropertySearch', 
+                    "Operation":'GetPropertySearchByFolio',
+                   "endPoint":endPoint};         
 
       var deferred = $q.defer();
       var rawProperty = PropertyResource.propertyByFolio(params, function (){
@@ -45,12 +45,13 @@ angular.module('propertySearchApp')
     };
 
     var candidatesByOwner = function(ownerName, from, to, callback) {
-      var endPoint = 'GetOwners';
+      var endPoint = '';
       var params = {"ownerName":ownerName, 
                     "clientAppName":'PropertySearch', 
                     "from":from, 
-                    "to":to, 
-                    "endPoint":endPoint};
+                    "to":to,
+                    "Operation":'GetOwners',
+                    "enPoint":endPoint};
 
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByOwner(params, 
@@ -70,12 +71,14 @@ angular.module('propertySearchApp')
     };
     
     var candidatesByAddress = function(address, unit, from, to, callback){
-      var endPoint = "GetAddress";
+      var endPoint = "";
       var params = {"myAddress":address, "myUnit":unit, 
                     "clientAppName":'PropertySearch', 
                     "from":from, 
                     "to":to, 
-                    "endPoint":endPoint};
+                    "Operation":'GetAddress',
+                    "endPoint": endPoint
+                   };
 
       
       var deferred = $q.defer();
@@ -96,11 +99,12 @@ angular.module('propertySearchApp')
     };
     
     var candidatesByPartialFolio = function(partialFolio, from, to, callback){
-      var endPoint = "GetPropertySearchByPartialFolio";
+      var endPoint = "";
       var params = {"partialFolioNumber":partialFolio, 
                     "clientAppName":'PropertySearch', 
                     "from":from, 
                     "to":to, 
+                    "Operation":"GetPropertySearchByPartialFolio",
                     "endPoint":endPoint};
       
       var deferred = $q.defer();
