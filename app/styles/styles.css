@@ -683,6 +683,15 @@ border-radius: 0px;
 .add-main {width:80% !important; float:left;}
 .add-suite {width:20% !important; float:left;}
 
+.hidden-links a {
+	display:inline-block;
+	overflow:hidden;
+	width:10px;
+	height:10px;
+	margin-right:5px;
+	background-color:#ccc;
+}
+
 /* ----------------------------------------------------
 media queries below... do not place styles below this line.
 ------------------------------------------------------*/

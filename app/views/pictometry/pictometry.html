@@ -1,6 +1,14 @@
 <html>
 <head>
 
+<title>Property Search | Miami-Dade County</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="../../bower_components/bootstrap-sass/dist/css/bootstrap.css">
+
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="../../styles/styles.css">
+
     <script type="text/javascript">
 
 
@@ -53,13 +61,34 @@
         
     </script>
     
+    <style type="text/css">
+    .container {width:820px; padding:0 10px; background-color:#fff;}
+	.header {
+		padding:5px 0;
+		border-top:none;
+		border-bottom:solid 5px #39599f;
+		margin-bottom:10px;
+		}
+	.pic {margin-bottom:10px;}
+    </style>
+    
 </head>
     
 <body>
 
-<iframe id="iframeGisMap" name="iframeGisMap" width="800px" height="800px" scrolling="no" style="overflow: hidden; overflow-x: hidden; overflow-y: hidden; border: 1px solid rgb(204, 0, 0);">    
+<div class="container">
+<div class="header">
+  <img src="../../images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+  <!--<img src="../../images/banner-small-device.png" class="img-responsive visible-xs" alt="Miami-Dade County Property Appraiser">-->
+</div>
+
+<div class="pic">
+<iframe id="iframeGisMap" name="iframeGisMap" width="800px" height="800px" scrolling="no" style="overflow: hidden; overflow-x: hidden; overflow-y: hidden; border:none;">    
   <p>Your browser does not support iframes.</p>
 </iframe>
+</div>
+
+</div>
 
 <script>
   init();
