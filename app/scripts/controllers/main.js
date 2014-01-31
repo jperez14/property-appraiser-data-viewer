@@ -411,6 +411,17 @@ angular.module('propertySearchApp')
 	    };
 	    $scope.map.centerAndZoom(geometry, 10);
 
+            // get latitude and longitude - pictometry needs it.
+           esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
+              .then(function(location){
+                $scope.property.location.latitude = location.latitude;
+                $scope.property.location.longitude = location.longitude;
+                console.log(location);
+              }
+           );
+
+            
+
           }, function(error){
             console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
 			$scope.mapZoomToFullExtent();
@@ -563,7 +574,10 @@ angular.module('propertySearchApp')
 
     $scope.openPictometryWindow = function(){
 
-      var url = '#/pictometry/' + $scope.property.location.x + '/' + $scope.property.location.y;
+      //var url = '#/pictometry/' + $scope.property.location.x + '/' +
+      //$scope.property.location.y;
+      
+      var url = "/views/pictometry/pictometry.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
       $window.open(url);
     };
 

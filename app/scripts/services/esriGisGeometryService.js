@@ -6,9 +6,10 @@ angular.module('propertySearchApp')
 
     var urlBase = paConfiguration.urlGeometryService;
 
+
     var GeometryResource = $resource(urlBase + ":endPoint", 
                                      {endPoint:""},
-                                     {project:{method:'GET'}
+                                     {project:{method:'JSONP'}
 				     }
                                     );
 
@@ -16,7 +17,7 @@ angular.module('propertySearchApp')
       var inSR = 2236;
       var outSR = 4326;
       var geometries = {"geometryType" : "esriGeometryPoint",
-            "geometries" : [{"x": x, "y": y}]}
+            "geometries" : [{"x": x, "y": y}]};
 
       var geometryPromise = project(inSR, outSR, geometries);
       return geometryPromise.then(function(geometry){
@@ -30,6 +31,7 @@ angular.module('propertySearchApp')
                     "outSR":outSpatialReference,
                     "geometries":JSON.stringify(geometries),
                     "f":"json",
+                    "callback": 'JSON_CALLBACK',
                     "endPoint":endPoint
                    };         
 
@@ -38,7 +40,7 @@ angular.module('propertySearchApp')
         deferred.resolve(result);
         //console.log("Some xy was returned", result.geometryType);
       },function(response){
-        console.log("some xy error was returned");
+        console.log("some xy error was returned", response);
       });
      
       return deferred.promise.then(function(geometry){
