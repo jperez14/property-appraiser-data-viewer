@@ -24,7 +24,14 @@ angular.module('propertySearchApp')
 
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
-    // IMPORTANT - Do not move
+	var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
+
+    var isAlphabetic = function(val) {
+		var expr = new RegExp("^[a-zA-Z ]*$");
+		return expr.test(val);
+	};
+	
+	// IMPORTANT - Do not move
     function initMap(){
 
       var map = new esri.Map('map', {extent:new esri.geometry.Extent(paConfig.initialExtentJson),
@@ -488,9 +495,12 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByOwner = function(){
 	$scope.hideMap = true;
 	  clearResults();
-      if(_.isEmpty($scope.ownerName))
-	  {
+      if(_.isEmpty($scope.ownerName)) {
 		$scope.showErrorDialog("Please enter a valid Owner Name", true);
+		return true;
+	  }
+	  else if(!isAlphabetic($scope.ownerName)) {
+		$scope.showErrorDialog("Please enter only aplhabetic characters", true);
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
@@ -518,9 +528,18 @@ angular.module('propertySearchApp')
     $scope.getCandidatesByAddress = function(){
 	  $scope.hideMap = true;
       clearResults();
-      if(_.isEmpty($scope.address))
-	  {
+      if(_.isEmpty($scope.address)){
 		$scope.showErrorDialog("Please enter a valid Address", true);
+		return true;
+	  }
+	  else if(isNumber($scope.address)){
+		$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+		return true;
+	  }
+	  else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
+			  $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+			  $scope.address.indexOf("#") >= 0 ) {
+		$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
 		return true;
 	  }
       $scope.isAddressCandidates = true;
@@ -589,7 +608,30 @@ angular.module('propertySearchApp')
         $window.open(url,'name','height=1000,width=840, location=0');
     };
     
-
+	$scope.getComparableSales = function() {
+		//Create FORM object
+		var salesForm = document.createElement("form");
+		salesForm.method = "post";
+		salesForm.target = "_blank";
+		salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
+		//Append Input
+		//Folio
+		var folioInput = document.createElement("input");
+		folioInput.setAttribute("name", "folio");
+		folioInput.setAttribute("value", $scope.folio);
+		salesForm.appendChild(folioInput);
+		//Cmd
+		var cmdInput = document.createElement("input");
+		cmdInput.setAttribute("name", "Cmd");
+		cmdInput.setAttribute("value", "FOLIO");
+		salesForm.appendChild(cmdInput);
+		//Append Sales Form
+		document.body.appendChild(salesForm);
+		//Submit the Form
+		salesForm.submit();
+		//Remove Sales Form
+		document.body.removeChild(salesForm);
+	};
 
   }]);
 
