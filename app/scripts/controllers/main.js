@@ -245,7 +245,7 @@ angular.module('propertySearchApp')
     function clearResults() {
 
       $scope.showError = false;
-      $scope.property = null;
+      //$scope.property = null;
 	  $scope.propertySiteAddress = "";
       $scope.candidatesList = null;
       $scope.isOwnerCandidates = false;
@@ -377,9 +377,11 @@ angular.module('propertySearchApp')
       var folio = $scope.folio;
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
+		$scope.property = null;
 		$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
+		$scope.property = null;
 		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
@@ -446,6 +448,7 @@ angular.module('propertySearchApp')
         });
 
       }, function(error){
+		$scope.property = null;
 		$scope.showErrorDialog(error.message, true);
       });
       
@@ -505,10 +508,12 @@ angular.module('propertySearchApp')
 	$scope.hideMap = true;
 	  clearResults();
       if(_.isEmpty($scope.ownerName)) {
+	    $scope.property = null;
 		$scope.showErrorDialog("Please enter a valid Owner Name", true);
 		return true;
 	  }
 	  else if(!isAlphabetic($scope.ownerName)) {
+	    $scope.property = null;
 		$scope.showErrorDialog("Please enter only aplhabetic characters", true);
 		return true;
 	  }
@@ -517,18 +522,23 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
+		$scope.property = null;
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
-	  else if(result.candidates.length > 1)
+	  else if(result.candidates.length > 1){
+		$scope.property = null;
 	    $scope.candidatesList = result;
+	  }
 	}
 	else {
+	  $scope.property = null;
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
+	    $scope.property = null;
 		console.log("getCandidatesByOwner error "+error);
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
@@ -538,16 +548,19 @@ angular.module('propertySearchApp')
 	  $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
+	    $scope.property = null;
 		$scope.showErrorDialog("Please enter a valid Address", true);
 		return true;
 	  }
 	  else if(isNumber($scope.address)){
+	    $scope.property = null;
 		$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
 		return true;
 	  }
 	  else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
 			  $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
 			  $scope.address.indexOf("#") >= 0 ) {
+		$scope.property = null;
 		$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
 		return true;
 	  }
@@ -556,18 +569,23 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
+	    $scope.property = null;
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
-	  else if(result.candidates.length > 1)
+	  else if(result.candidates.length > 1) {
+	    $scope.property = null;
 	    $scope.candidatesList = result;
+	  }
 	}
 	else {
+	  $scope.property = null;
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
+	    $scope.property = null;
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
 
@@ -581,19 +599,23 @@ angular.module('propertySearchApp')
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
+	    $scope.property = null;
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1)
+	    $scope.property = null;
 	    $scope.candidatesList = result;
 	}
 	else {
+	  $scope.property = null;
 	  $scope.showErrorDialog(result.message, true);
 	}
 
       }, function(error){
+	    $scope.property = null;
 		console.log("getCandidatesByPartialFolio error "+error);
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
