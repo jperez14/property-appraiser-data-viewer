@@ -171,6 +171,7 @@ angular.module('propertySearchApp')
     
     $scope.folio = "";
     $scope.property = null;//SharedData.property;;
+	$scope.propertySiteAddress = "";
     $scope.testSharedData = function(){
       $scope.property.rollYear1 = 2014;
     };
@@ -245,6 +246,7 @@ angular.module('propertySearchApp')
 
       $scope.showError = false;
       $scope.property = null;
+	  $scope.propertySiteAddress = "";
       $scope.candidatesList = null;
       $scope.isOwnerCandidates = false;
       $scope.isAddressCandidates = false;
@@ -399,6 +401,7 @@ angular.module('propertySearchApp')
 
       var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
 	$scope.property = property;
+	$scope.setPropertySiteAddress(property);
 	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
 	$scope.activeRollYearTab = $scope.property.rollYear1;
         
@@ -614,6 +617,15 @@ angular.module('propertySearchApp')
         $window.open(url,'name','height=1000,width=840, location=0');
     };
     
+	$scope.setPropertySiteAddress = function(property) {
+		if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {
+			$scope.propertySiteAddress = property.siteAddresses[0].streetNumber+" "+property.siteAddresses[0].streetPrefix.trim()+" "+
+				property.siteAddresses[0].streetName.trim()+" "+property.siteAddresses[0].streetSuffix.trim();
+		}
+		else
+			$scope.propertySiteAddress = "";
+	};
+
 	$scope.getComparableSales = function() {
 		//Create FORM object
 		var salesForm = document.createElement("form");
