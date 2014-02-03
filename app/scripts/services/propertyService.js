@@ -580,6 +580,8 @@ angular.module('propertySearchApp')
           result[key] = null;
         else if(data[value] === -1)
           result[key] = null;
+        else if(_.isString(data[value]))
+          result[key] = data[value].trim(); 
         else
           result[key] = data[value]; 
       });

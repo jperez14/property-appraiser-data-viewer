@@ -55,6 +55,12 @@ angular.module('propertySearchApp')
         //Add events to map.
         map.on("click", $scope.mapClicked);
 
+        map.on('extent-change', function(extent) {
+          map.resize();
+          map.reposition();
+        });
+
+
         map.resize();
 
         if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
