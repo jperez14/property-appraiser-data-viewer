@@ -153,6 +153,24 @@ div.search_area .tab-content {
 	z-index: 500;
 }
 
+.north-icon {
+	position:absolute;
+	bottom:10px;
+	right:10px;
+	z-index:500;
+}
+
+.north-icon span {
+	display:inline-block;
+	font-size:11px;
+	padding:3px;
+	background-color:#fff;
+	filter: alpha(opacity = 75);
+	-moz-opacity: 0.75;
+	-khtml-opacity: 0.75;
+	opacity: 0.75;
+}
+
 /*
 .map-button {
 	width:35px;
