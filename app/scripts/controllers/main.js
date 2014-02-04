@@ -27,7 +27,7 @@ angular.module('propertySearchApp')
 	var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
 
     var isAlphabetic = function(val) {
-		var expr = new RegExp("^[a-zA-Z ]*$");
+		var expr = new RegExp("^[a-zA-Z-' ]*$");
 		return expr.test(val);
 	};
 	
@@ -521,26 +521,23 @@ angular.module('propertySearchApp')
 	  }
 	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
+	  $scope.property = null;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.property = null;
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
 	  else if(result.candidates.length > 1){
-		$scope.property = null;
 	    $scope.candidatesList = result;
 	  }
 	}
 	else {
-	  $scope.property = null;
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-	    $scope.property = null;
 		console.log("getCandidatesByOwner error "+error);
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
@@ -568,26 +565,23 @@ angular.module('propertySearchApp')
 	  }
       $scope.isAddressCandidates = true;
 	  $scope.loader = true; //flag hackeysack
+	  $scope.property = null;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-	    $scope.property = null;
 		$scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
 		$scope.getCandidateFolio(result.candidates[0].folio, false);
       }
 	  else if(result.candidates.length > 1) {
-	    $scope.property = null;
 	    $scope.candidatesList = result;
 	  }
 	}
 	else {
-	  $scope.property = null;
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-	    $scope.property = null;
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
 
@@ -681,6 +675,13 @@ angular.module('propertySearchApp')
       document.body.removeChild(salesForm);
     };
 
-  }]);
+	$scope.showStreetView = function() {
+		var url = "/views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
+		var name = "Google Street View";
+		var dimensions = "height=700,width=1000";
+		$window.open(url, name, dimensions);
+	};
+
+}]);
 
 
