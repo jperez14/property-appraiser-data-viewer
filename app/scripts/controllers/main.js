@@ -412,6 +412,7 @@ angular.module('propertySearchApp')
           function(polygon){
 
             // add polygon
+            $scope.property.location = {polygon:polygon};
             var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
             $scope.map.getLayer("parcelBoundary").add(graphic);
 
@@ -419,7 +420,8 @@ angular.module('propertySearchApp')
             var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
             graphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
             $scope.map.getLayer("parcelPoint").add(graphic);
-	    $scope.property.location = coords;
+	    $scope.property.location.x = coords.x;
+	    $scope.property.location.y = coords.y;
 
             // zoom into point
 	    var geometry = {
@@ -638,40 +640,46 @@ angular.module('propertySearchApp')
         $window.property = $scope.property;  
         $window.open(url,'name','height=1000,width=840, location=0');
     };
-    
-	$scope.setPropertySiteAddress = function(property) {
-		if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {
-			$scope.propertySiteAddress = property.siteAddresses[0].streetNumber+" "+property.siteAddresses[0].streetPrefix.trim()+" "+
-				property.siteAddresses[0].streetName.trim()+" "+property.siteAddresses[0].streetSuffix.trim();
-		}
-		else
-			$scope.propertySiteAddress = "";
-	};
 
-	$scope.getComparableSales = function() {
-		//Create FORM object
-		var salesForm = document.createElement("form");
-		salesForm.method = "post";
-		salesForm.target = "_blank";
-		salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
-		//Append Input
-		//Folio
-		var folioInput = document.createElement("input");
-		folioInput.setAttribute("name", "folio");
-		folioInput.setAttribute("value", $scope.folio);
-		salesForm.appendChild(folioInput);
-		//Cmd
-		var cmdInput = document.createElement("input");
-		cmdInput.setAttribute("name", "Cmd");
-		cmdInput.setAttribute("value", "FOLIO");
-		salesForm.appendChild(cmdInput);
-		//Append Sales Form
-		document.body.appendChild(salesForm);
-		//Submit the Form
-		salesForm.submit();
-		//Remove Sales Form
-		document.body.removeChild(salesForm);
-	};
+    $scope.openReportDetailsWindow = function(){
+        var url = '#/detailsSummary/';
+        $window.property = $scope.property;  
+        $window.open(url,'name','height=1000,width=840, location=0');
+    };
+    
+    $scope.setPropertySiteAddress = function(property) {
+      if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {
+	$scope.propertySiteAddress = property.siteAddresses[0].streetNumber+" "+property.siteAddresses[0].streetPrefix.trim()+" "+
+	  property.siteAddresses[0].streetName.trim()+" "+property.siteAddresses[0].streetSuffix.trim();
+      }
+      else
+	$scope.propertySiteAddress = "";
+    };
+
+    $scope.getComparableSales = function() {
+      //Create FORM object
+      var salesForm = document.createElement("form");
+      salesForm.method = "post";
+      salesForm.target = "_blank";
+      salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
+      //Append Input
+      //Folio
+      var folioInput = document.createElement("input");
+      folioInput.setAttribute("name", "folio");
+      folioInput.setAttribute("value", $scope.folio);
+      salesForm.appendChild(folioInput);
+      //Cmd
+      var cmdInput = document.createElement("input");
+      cmdInput.setAttribute("name", "Cmd");
+      cmdInput.setAttribute("value", "FOLIO");
+      salesForm.appendChild(cmdInput);
+      //Append Sales Form
+      document.body.appendChild(salesForm);
+      //Submit the Form
+      salesForm.submit();
+      //Remove Sales Form
+      document.body.removeChild(salesForm);
+    };
 
   }]);
 
