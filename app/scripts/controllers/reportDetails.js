@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('DetailsSummaryCtrl', ['$scope', 'paConfiguration', 'esriGisService', function ($scope, paConfig, esriGisService){
+  .controller('ReportDetailsCtrl', ['$scope', 'paConfiguration', 'esriGisService', function ($scope, paConfig, esriGisService){
 
     $scope.property = window.opener.property;
 

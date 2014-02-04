@@ -11,9 +11,9 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.key
         templateUrl: 'views/report/reportSummary.html',
         controller: 'ReportSummaryCtrl'
       })
-      .when('/detailsSummary',{
+      .when('/reportDetails',{
         templateUrl: 'views/report/reportDetails.html',
-        controller: 'DetailsSummaryCtrl'
+        controller: 'ReportDetailsCtrl'
       })
       .when('/', {
         templateUrl: 'views/data.html',

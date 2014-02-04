@@ -642,7 +642,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.openReportDetailsWindow = function(){
-        var url = '#/detailsSummary/';
+        var url = '#/reportDetails/';
         $window.property = $scope.property;  
         $window.open(url,'name','height=1000,width=840, location=0');
     };
