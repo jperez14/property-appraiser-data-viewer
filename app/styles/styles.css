@@ -733,6 +733,7 @@ div.search_area .nav-tabs {padding-left:10px;}
 .content {padding:10px 10px 0 10px;}
 .main_content_body {padding-bottom:10px;}
 .footer_area {padding:10px;}
+.results_record {height:auto;}
 
 .input-group, .input-group div, .input-group input, .input-group button {display:block; text-align:left;}
 

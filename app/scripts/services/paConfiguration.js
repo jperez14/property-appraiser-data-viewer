@@ -57,7 +57,7 @@ angular.module('propertySearchApp')
     },
     propertyBoundarySymbol:{"color":[0,0,0,0],
                             "outline":{"color":[255,0,0,255],
-                                       "width":1,
+                                       "width":2,
                                        "type":"esriSLS",
                                        "style":"esriSLSSolid"},
                             "type":"esriSFS",
