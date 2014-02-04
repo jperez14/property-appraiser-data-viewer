@@ -636,13 +636,13 @@ angular.module('propertySearchApp')
     $scope.openReportSummaryWindow = function(){
         //$window.open(url);
         //$window.location.href = url;
-        var url = '#/reportSummary/';
+        var url = '#/report/summary';
         $window.property = $scope.property;  
         $window.open(url,'name','height=1000,width=840, location=0');
     };
 
     $scope.openReportDetailsWindow = function(){
-        var url = '#/reportDetails/';
+        var url = '#/report/details';
         $window.property = $scope.property;  
         $window.open(url,'name','height=1000,width=840, location=0');
     };

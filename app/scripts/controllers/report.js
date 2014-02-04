@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('ReportDetailsCtrl', ['$scope', 'paConfiguration', 'esriGisService', function ($scope, paConfig, esriGisService){
+  .controller('ReportCtrl', ['$scope', '$routeParams', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, paConfig, esriGisService){
 
     $scope.property = window.opener.property;
+    $scope.reportType = $routeParams.type;
 
     function initMap(){
 
