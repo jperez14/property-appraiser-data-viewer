@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('ReportSummaryCtrl', ['$scope', 'paConfiguration',  function ($scope, paConfig){
+  .controller('ReportCtrl', ['$scope', '$routeParams', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, paConfig, esriGisService){
 
     $scope.property = window.opener.property;
+    $scope.reportType = $routeParams.type;
 
     function initMap(){
 
@@ -30,7 +31,7 @@ angular.module('propertySearchApp')
 
         map.resize();
 
-        // zoom into point
+        // zoom into point and draw polygon
         if(! _.isUndefined($scope.property.location)){
 	  var geometry = {
 	    "x": $scope.property.location.x,
@@ -38,8 +39,14 @@ angular.module('propertySearchApp')
 	    "spatialReference":{"wkid":2236}
 	  };
 	  $scope.map.centerAndZoom(geometry, 10);
+
+          var polygon = $scope.property.location.polygon;
+          var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+          $scope.map.getLayer("parcelBoundary").add(graphic);
         }
         
+
+
       });
       
       // urls for the map.

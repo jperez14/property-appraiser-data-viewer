@@ -509,6 +509,121 @@ padding-right: 0;
 			<!-- END : Sales Information -->
 			
 </div>
+
+<!-- Details // Land, Building, Extra Features -->
+<div class="print-break" ng-show="reportType == 'details'">
+
+<table class="print-table">
+		<tr>
+			<th class="tableHeader" colspan="7">Land Information</th>
+		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.land, property.rollYear1)">
+			<td colspan="7">
+                <div class="table-message">
+                    <div ng-repeat="message in property.land[property.rollYear1].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
+
+		<tr class="header-row">
+        	<td>Land Use</td>
+			<td class="text-center">Muni Zone</td>
+			<td class="text-center">PA Zone</td>
+			<td class="text-center">Unit Type</td>
+			<td class="text-right fixed-width">Units</td>
+			<td class="text-right fixed-width">Adj Rate</td>
+			<td class="text-right fixed-width">Calc Value</td>
+		</tr>
+
+		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
+			<td>{{land.landUse}}</td>
+            <td class="text-center">{{land.muniZone}}</td>
+			<td class="text-center">{{land.zone}}</td>
+			<td class="text-center">{{land.unitType}}</td>
+			<td class="text-right fixed-width">{{land.units | number:2}}</td>
+			<td class="text-right fixed-width">{{land.adjustedUnitPrice | centsCurrency:"$"}}</td>
+			<td class="text-right fixed-width">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
+
+		</tr>
+
+	</table>
+    
+    <table class="print-table">
+		<tr>
+			<th class="tableHeader" colspan="7">Building Information</th>
+		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)">
+			<td colspan="7">
+                <div class="table-message">
+                    <div ng-repeat="message in property.building[property.rollYear1].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
+
+		<tr class="header-row">
+        
+        	<td class="text-center">Building Number</td>
+        	<td class="text-center">Sub Area</td>
+            <td class="text-center">Year Built</td>
+			<td class="text-right">Actual Area</td>
+            
+			
+			<td class="text-right fixed-width">Effective Area</td>
+			<td class="text-right fixed-width">Adj Rate</td>
+			<td class="text-right fixed-width">Calc Value</td>
+		</tr>
+
+		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
+
+			<td class="text-center">{{building.buildingNo}}</td>
+			<td class="text-center">{{building.segNo}}</td>
+            <td class="text-center">{{building.actual}}</td>
+            <td class="text-right">{{building.actualArea | number}}</td>
+            
+			
+			<td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
+			<td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
+			<td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
+		</tr>
+        
+	</table>
+    
+    <table class="print-table">
+		<tr>
+			<th class="tableHeader" colspan="5">Extra Features</th>
+		</tr>
+        
+        <tr ng-show="isDisplayMessages(property, property.extraFeature, property.rollYear1)">
+			<td colspan="5">
+                <div class="table-message">
+                    <div ng-repeat="message in property.extraFeature[property.rollYear1].message">{{message}}</div>
+                </div>
+            </td>
+		</tr>
+
+
+		<tr class="header-row">
+			<td>Description</td>
+			<td class="text-center">Year Built</td>
+			<td class="text-right fixed-width">Units</td>
+			<td class="text-right fixed-width">Adj Rate</td>
+			<td class="text-right fixed-width">Calc Value</td>
+		</tr>
+
+		<tr ng-repeat="feature in property.extraFeature[property.rollYear1].extraFeaturesInfo | orderBy:'-actualYearBuilt'">
+			<td>{{feature.description}}</td>
+			<td class="text-center">{{feature.actualYearBuilt}}</td>
+
+			<td class="text-right fixed-width">{{feature.units | number}}</td>
+			<td class="text-right fixed-width">{{feature.adjustedUnitPrice | centsCurrency:"$"}}</td>
+			<td class="text-right fixed-width">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
+
+		</tr>
+	</table>
+
+</div>
             
 <div class="disclaimer">
 <p>Office of the Property Appraiser is continually editing and updating the tax roll.  This website is periodically updated, but the information may not reflect the most current information on file in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>

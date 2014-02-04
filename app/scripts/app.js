@@ -7,13 +7,9 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.key
         templateUrl: 'views/pictometry.html',
         controller: 'PictometryCtrl'
       })
-      .when('/reportSummary',{
-        templateUrl: 'views/report/reportSummary.html',
-        controller: 'ReportSummaryCtrl'
-      })
-      .when('/reportDetails',{
-        templateUrl: 'views/reportdetails.html',
-        controller: 'ReportSummaryCtrl'
+      .when('/report/:type',{
+        templateUrl: 'views/report/report.html',
+        controller: 'ReportCtrl'
       })
       .when('/', {
         templateUrl: 'views/data.html',

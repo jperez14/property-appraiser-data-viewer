@@ -6,6 +6,7 @@ html, body{
 
 a, a:visited{
 	color:#39599f;
+	cursor:pointer;
 }
 
 h1, h2, h3, h4, h5 {
@@ -290,7 +291,8 @@ span.map-view:hover {
 
 #error-modal .modal-dialog {}
 #error-modal .modal-content {border-radius:3px; color: #b94a48; background-color: #f2dede; border-color: #eed3d7; font-size:16px;}
-#error-modal .modal-body {padding:35px 10px 20px 10px; text-align:center; position:relative;}
+#error-modal .modal-header {border-bottom:none;}
+#error-modal .modal-body {text-align:center;}
 
 .close-modal {
 	position:absolute;
@@ -733,6 +735,8 @@ div.search_area .nav-tabs {padding-left:10px;}
 .content {padding:10px 10px 0 10px;}
 .main_content_body {padding-bottom:10px;}
 .footer_area {padding:10px;}
+.results_record {height:auto;}
+.layers-list {display:none !important;}
 
 .input-group, .input-group div, .input-group input, .input-group button {display:block; text-align:left;}
 

@@ -36,7 +36,7 @@
   <div class="content">
   
   <!--[if lt IE 9]>
-<div class="alert alert-warning">Internet Explorer 8 is currently not supported in this release. Please upgrade or use a different browser to participate in testing.</div>
+<div class="alert alert-warning">Internet Explorer 8 is not fully supported in this application. Please upgrade or use a different browser to enjoy all features of the Miami-Dade County Property Search.</div>
 <![endif]-->
 
     <div class="search_area">
@@ -44,6 +44,8 @@
       <div class="text-right hidden-xs social-buttons">
 	  <a ng-show="property" ng-click='showStreetView()' target="_blank" class="hover_pointer"><img src="images/man_arrow-8.png" alt="Print" title="Google Street View"></a>
       <a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>
+      <!--<a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>-->
+      <a ng-show="property" class="print-modal"><img src="images/icon-print.png" alt="Print" title="Print"></a>
       <a href="http://www.miamidade.gov/pa/includes/property-search/sendEmail.asp" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>
       <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/icon-facebook.png" alt="Facebook" title="Facebook"></a>
       <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/icon-twitter.png" alt="Twitter" title="Twitter"></a>
@@ -165,12 +167,35 @@
 <div class="modal-dialog">
 <div class="modal-content">
 
+<div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+</div>
+
 <div class="modal-body">
 
-<img src="images/close-icon.png" width="24" height="24" alt="Close" class="close-modal" />
 <div>{{errorMsg}}</div>
 
 </div>
+
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="print-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2 class="modal-title">Print Report</h2>
+</div>
+
+<div class="modal-body">
+    <div><span class="glyphicon glyphicon-print" style="color:#ccc"></span> <a ng-click="openReportSummaryWindow()">Summary Report</a></div>
+    <hr style="margin:7px 0;" />
+    <div> <span class="glyphicon glyphicon-print" style="color:#ccc"></span> <a ng-click="openReportDetailsWindow()">Detail Report</a></div>
+</div>
+
 
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -246,7 +271,7 @@
                 </div>
                 
                 <!-- Layer List  -->
-                <div style="display:inline">
+                <div style="display:inline" class="layers-list">
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">
@@ -351,6 +376,11 @@
 		$('body').on('click', '.dropdown-menu', function(e){
         	$(this).hasClass('keep_open') && e.stopPropagation(); // This replace if conditional.
     	});
+		
+		//print button for modal
+		$('.print-modal').on('click', function(){
+			$('#print-modal').modal('show');						   							   
+		});
 		
 		//close button for modal
 		$('.close-modal').on('click', function(){
