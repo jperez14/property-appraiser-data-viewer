@@ -677,9 +677,7 @@ angular.module('propertySearchApp')
 
 	$scope.showStreetView = function() {
 		var url = "/views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
-		var name = "Google Street View";
-		var dimensions = "height=700,width=1000";
-		$window.open(url, name, dimensions);
+		$window.open(url, "name", "height=700, width=1000, location=0'");
 	};
 
 }]);
