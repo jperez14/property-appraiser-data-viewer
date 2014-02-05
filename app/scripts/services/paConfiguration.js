@@ -27,7 +27,7 @@ angular.module('propertySearchApp')
                                                  "style":"esriSLSSolid"},
                                       "type":"esriSFS",
                                       "style":"esriSFSSolid"}},
-            {label:"Zoning", value:false, url:"", layerSymbol:{"color":[0,100,0,100],
+            {label:"PA Zoning", value:false, url:"http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_test/MapServer/9", layerSymbol:{"color":[0,100,0,100],
                                       "outline":{"color":[0,100,0,255],
                                                  "width":1,
                                                  "type":"esriSLS",
