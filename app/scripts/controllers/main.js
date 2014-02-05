@@ -623,7 +623,7 @@ angular.module('propertySearchApp')
       //var url = '#/pictometry/' + $scope.property.location.x + '/' +
       //$scope.property.location.y;
       
-      var url = "/views/pictometry/pictometry.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
+      var url = "views/pictometry/pictometry.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
       $window.open(url);
     };
 
@@ -676,7 +676,7 @@ angular.module('propertySearchApp')
     };
 
 	$scope.showStreetView = function() {
-		var url = "/views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
+		var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
 		$window.open(url, "name", "height=700, width=1000, location=0'");
 	};
 
