@@ -17,14 +17,14 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-primary {
-color: #ffffff;
-background-color: #46b0e2;
-border-color: #3ca6d7;
+	color: #ffffff;
+	background-color: #46b0e2;
+	border-color: #3ca6d7;
 }
 
 .btn-primary:hover {
-background-color: #3ca6d7;
-border-color: #3ca6d7;
+	background-color: #3ca6d7;
+	border-color: #3ca6d7;
 }
 
 .search_text {
@@ -520,17 +520,17 @@ table tr.table-message td div {
 }
 
 .navbar-collapse {
-padding-right: 0px;
-padding-left: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .navbar-default {
-background-color: #fff;
-border:0;
+	background-color: #fff;
+	border:0;
 }
 
 .navbar {
-border-radius: 0px;
+	border-radius: 0px;
 }
 
 .other_apps {
@@ -722,13 +722,13 @@ media queries below... do not place styles below this line.
 
 @media (max-width: 1000px) {
 .table-oversized {
-width: 100%;
-margin-bottom: 15px;
-overflow-y: hidden;
-overflow-x: scroll;
--ms-overflow-style: -ms-autohiding-scrollbar;
-border: 1px solid #dddddd;
--webkit-overflow-scrolling: touch;
+	width: 100%;
+	margin-bottom: 15px;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	border: 1px solid #dddddd;
+	-webkit-overflow-scrolling: touch;
 }
 .results_record {width:46%;}
 
