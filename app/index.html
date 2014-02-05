@@ -12,7 +12,7 @@
 <title>Property Search | Miami-Dade County</title>
 
 <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap.css">
+<link rel="stylesheet" href="bower_components/bootstrap-sass/dist/css/bootstrap.min.css">
 
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="styles/styles.css">
@@ -22,8 +22,9 @@
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="bower_components/es5-shim/es5-shim.min.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+      <script src="bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
     
 <!--[if lt IE 10]>
@@ -43,31 +44,21 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/bootstrap-sass/dist/js/bootstrap.min.js"></script>
     <script src="http://js.arcgis.com/3.8" data-dojo-config="parseOnLoad: true"></script>
 
         <!-- build:js scripts/plugins.js -->
-        <script src="bower_components/bootstrap-sass/js/affix.js"></script>
-        <script src="bower_components/bootstrap-sass/js/alert.js"></script>
-        <script src="bower_components/bootstrap-sass/js/dropdown.js"></script>
-        <script src="bower_components/bootstrap-sass/js/tooltip.js"></script>
-        <script src="bower_components/bootstrap-sass/js/modal.js"></script>
-        <script src="bower_components/bootstrap-sass/js/transition.js"></script>
-        <script src="bower_components/bootstrap-sass/js/button.js"></script>
-        <script src="bower_components/bootstrap-sass/js/popover.js"></script>
-        <script src="bower_components/bootstrap-sass/js/carousel.js"></script>
-        <script src="bower_components/bootstrap-sass/js/scrollspy.js"></script>
-        <script src="bower_components/bootstrap-sass/js/collapse.js"></script>
-        <script src="bower_components/bootstrap-sass/js/tab.js"></script>
+
         <!-- endbuild -->
 
         <!-- build:js scripts/modules.js -->
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
