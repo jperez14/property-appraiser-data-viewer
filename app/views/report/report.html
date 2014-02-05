@@ -1,6 +1,7 @@
 <html>
 
 <style type="text/css">
+
 .print-container {width:800px;}
 
 .print-button {
@@ -43,7 +44,7 @@ table, th {
 
 th {
 	font-weight:bold;
-	font-size:12px;
+	font-size:12px !important;
 }
 
 
@@ -95,11 +96,22 @@ padding-right: 0;
 }
 }
 
+
 @page{
-	margin:15px 20px 0;
+	margin:30px 20px 0;
 }
 
 </style>
+
+<!--[if lt IE 9]>
+	<style type="text/css">
+    .print-container {font-size:11px !important; zoom:.99 !important; margin:25px 0 0 -30px;}
+    body {padding:0; width:850px;}
+    html {background-color:#fff;}
+    
+    
+    </style>
+    <![endif]-->
 
 <body>
 <div class="print-container">	
