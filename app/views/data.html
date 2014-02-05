@@ -42,12 +42,6 @@
     <div class="search_area">
       
       <div class="text-right hidden-xs social-buttons">
-<!--
-	  <a ng-show="property" ng-click='showStreetView()'
-	  target="_blank"
-	  class="hover_pointer"><img src="images/man_arrow-8.png"
-	  alt="Print" title="Google Street View"></a>
--->
 
       <!--<a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>-->
       <a ng-show="property" class="print-modal"><img src="images/icon-print.png" alt="Print" title="Print"></a>
@@ -269,7 +263,10 @@
                         <li class="divider"></li>
                       	<li><span class="map-view" ng-click="mapToggleStreetOn()">Street Map</span></li>
                         <li class="divider"></li>
-                      	<li><span class="map-view" ng-click="openPictometryWindow()">Angled Aerial Views</span></li>
+                      	<li><span class="map-view"
+                      	ng-click="openPictometryWindow()">Angled Aerial Views</span></li>
+                        <li class="divider"></li>
+                      	<li><span class="map-view" ng-click="showStreetView()">Street View</span></li>
                         <li class="divider"></li>
                       </ul>
                   </div>
