@@ -45,7 +45,7 @@
 
       <!--<a href="#" ng-show="property" target="_blank" ng-click="openReportSummaryWindow()"><img src="images/icon-print.png" alt="Print" title="Print"></a>-->
       <a ng-show="property" class="print-modal"><img src="images/icon-print.png" alt="Print" title="Print"></a>
-      <a href="http://www.miamidade.gov/pa/includes/property-search/sendEmail.asp" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>
+      <!--<a href="http://www.miamidade.gov/pa/includes/property-search/sendEmail.asp" target="_blank"><img src="images/icon-email.png" alt="Email this page" title="Email this page"></a>-->
       <a href="https://www.facebook.com/MiamiDadePA" target="_blank"><img src="images/icon-facebook.png" alt="Facebook" title="Facebook"></a>
       <a href="https://twitter.com/MiamiDadePA" target="_blank"><img src="images/icon-twitter.png" alt="Twitter" title="Twitter"></a>
 
@@ -53,9 +53,9 @@
       
       <!-- Nav tabs -->
       <ul class="nav nav-tabs">
-        <li ng-class="{active: isActiveSearchTab('Address')}"><a ng-click="setActiveSearchTab('Address')">Address</a></li>
-        <li ng-class="{active: isActiveSearchTab('Owner')}"><a ng-click="setActiveSearchTab('Owner')">Owner Name</a></li>
-        <li ng-class="{active: isActiveSearchTab('Folio')}"><a ng-click="setActiveSearchTab('Folio')">Folio</a></li>
+        <li ng-class="{active: isActiveSearchTab('Address')}"><a ng-click="setActiveSearchTab('Address')" id="t-address">Address</a></li>
+        <li ng-class="{active: isActiveSearchTab('Owner')}"><a ng-click="setActiveSearchTab('Owner')" id="t-owner">Owner Name</a></li>
+        <li ng-class="{active: isActiveSearchTab('Folio')}"><a ng-click="setActiveSearchTab('Folio')" id="t-folio">Folio</a></li>
       </ul>
 
 
@@ -98,7 +98,7 @@
             <div class="tab-pane" ng-class="{active: isActiveSearchTab('Owner')}" id="owner-name">
 
               <div class="input-group">
-                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control"
+                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control owner-box"
 					ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
@@ -308,11 +308,11 @@
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/report-homestead-fraud.png" width="16" height="16" alt="Report Homestead Fraud"> <a href="http://www.miamidade.gov/paportal/HomesteadFraud/HomesteadFraud.aspx" target="_blank">Report Homestead Fraud</a></li>
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/compare.png" width="16" height="16" alt="Tax Comparison"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp?Fol={{folio}}" target="_blank">Tax Comparison</a></li>
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/estimator.png" width="16" height="16" alt="Tax Estimator"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp?Fol={{folio}}" target="_blank">Tax Estimator</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{folio}}" target="_blank">TRIM Notice</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{folio}}" target="_blank">View Taxes</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{folio}}" target="_blank">TRIM Notice</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{folio}}" target="_blank">View Taxes</a></li>
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://www.miamidade.gov/pa/online_tools.asp" target="_blank">Additional Online Tools</a></li>
-        <!--<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable Sales"> <a href="http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp" target="_blank">Comparable Sales</a></li>-->
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable Sales"> <a class="hover_pointer" ng-click="getComparableSales()">Comparable Sales</a></li>
+        <!--<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable "> <a href="http://gisims2.miamidade.gov/Myneighborhood/map.asp" target="_blank">Comparable </a></li>-->
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable "> <a class="hover_pointer" ng-click="getComparable()">Comparable </a></li>
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://gisweb.miamidade.gov/environmentalconsiderations/default.aspx?searchtype=address&paramvalue={{propertySiteAddress}}" target="_blank">Environmental Considerations</a></li>
       </ul>
       
@@ -392,6 +392,24 @@
 			$('#error-modal').modal('hide');						   							   
 		});
 		
+		//focus input on tab switch
+		$('#t-address').on('click', function(){
+			setTimeout(
+			   function(){$('.add-main').focus()},300
+			);
+		});
+		
+		$('#t-owner').on('click', function(){
+			setTimeout(
+			   function(){$('.owner-box').focus()},300
+			);
+		});
+		
+		$('#t-folio').on('click', function(){
+			setTimeout(
+			   function(){$('.folio-box').focus()},300
+			);
+		});
 	});
 	
     </script>
@@ -414,10 +432,10 @@
     </div>
     
     
-    <!-- sales full row -->
+    <!--  full row -->
     <div ng-show="property" class="row tabular_data">
       <div class="col-md-12">
-      	<div ng-show="property" ng-include="'views/salesinformation.html'"></div>
+      	<div ng-show="property" ng-include="'views/information.html'"></div>
       </div>
     </div>
     

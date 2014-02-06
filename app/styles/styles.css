@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5 {
 	width:85px;
 }
 
+.pop-icon {
+	display:none;
+}
+
 .prev-search a {
 	display:block;
 	padding-top:19px;
