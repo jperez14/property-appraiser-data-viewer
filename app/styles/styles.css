@@ -379,7 +379,7 @@ background-color: #eee !important;
 }
 
 .table-condensed > tbody > tr.row-divider > td {
-	border-top:8px solid #bbb;
+	border-top:3px solid #bbb;
 }
 
 .double-line {
