@@ -406,20 +406,27 @@ angular.module('propertySearchApp')
 	$scope.setPropertySiteAddress(property);
 	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
 	$scope.activeRollYearTab = $scope.property.rollYear1;
-        
+
+        // When parent folio exists use it to get the polygon.
+        var folioPolygon = "";
         // Get xy for property and display it in map.
-        esriGisService.getPolygonFromFolio($scope, folio).then(
+        if($scope.property.propertyInfo.parentFolio !== "")
+          folioPolygon = $scope.property.propertyInfo.parentFolio;
+        else
+          folioPolygon = folio;
+ 
+        esriGisService.getPolygonFromFolio($scope, folioPolygon).then(
           function(polygon){
 
             // add polygon
             $scope.property.location = {polygon:polygon};
-            var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
-            $scope.map.getLayer("parcelBoundary").add(graphic);
+            var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+            $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
 
             // add point 
             var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
-            graphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
-            $scope.map.getLayer("parcelPoint").add(graphic);
+            var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
+            $scope.map.getLayer("parcelPoint").add(pointGraphic);
 	    $scope.property.location.x = coords.x;
 	    $scope.property.location.y = coords.y;
 
@@ -429,10 +436,11 @@ angular.module('propertySearchApp')
 	      "y":coords.y,
 	      "spatialReference":{"wkid":2236}
 	    };
-	    $scope.map.centerAndZoom(geometry, 10);
+	    //$scope.map.centerAndZoom(geometry, 10);
+            $scope.map.setExtent(polygon.getExtent(), true);
 
             // get latitude and longitude - pictometry needs it.
-           esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
+            esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
               .then(function(location){
                 $scope.property.location.latitude = location.latitude;
                 $scope.property.location.longitude = location.longitude;

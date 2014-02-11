@@ -201,6 +201,7 @@ angular.module('propertySearchApp')
       DORDescription:            "DORDescription",          
       floorCount:                "FloorCount",              
       folioNumber:               "FolioNumber",             
+      parentFolio:               "ParentFolio",
       halfBathroomCount:         "HalfBathroomCount",       
       hxBaseYear:                "HxBaseYear",              
       lotSize:                   "LotSize",                 
@@ -508,11 +509,17 @@ angular.module('propertySearchApp')
       else
         propertyInfo.showCurrentValuesFlag = false;
 
-      // remove dashes from folio number
+      // remove dashes from folio number.
       if(!isUndefinedOrNull(propertyInfo.folioNumber))
         propertyInfo.folioNumber = propertyInfo.folioNumber.replace(/-/g, "");
       else 
         propertyInfo.folioNumber = "";
+
+      // remove dashes from parent folio number.
+      if(!isUndefinedOrNull(propertyInfo.parentFolio))
+        propertyInfo.parentFolio = propertyInfo.parentFolio.replace(/-/g, "");
+      else 
+        propertyInfo.parentFolio = "";
 
       return propertyInfo;
 
