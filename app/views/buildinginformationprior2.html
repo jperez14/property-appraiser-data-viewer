@@ -1,11 +1,11 @@
 <div class="table-responsive table-oversized">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="7">Building Information <span id="building-help" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Building Description" data-content="The content for this pop-over has not yet been provided by J.N."></span></th>
+			<th class="tableHeader" colspan="8">Building Information <span id="building-help" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Building Description" data-content="The content for this pop-over has not yet been provided by J.N."></span></th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.building, property.rollYear3)">
-			<td colspan="7">
+			<td colspan="8">
                 <div class="table-message">
                     <div ng-repeat="message in property.building[property.rollYear3].message">{{message}}</div>
                 </div>
