@@ -343,7 +343,7 @@ padding-right: 0;
 					</tr>
 
 		                        <tr ng-repeat="benefit in property.benefit.benefits | orderBy:'sequence'">
-			                  <td><strong><a href="{{benefit.url}}" target="_blank">{{benefit.description}}</a></strong></td>
+			                  <td><strong>{{benefit.description}}</strong></td>
                                           <td>{{benefit.type}}</td>
                                           <td class="text-right">{{benefit.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
                                           <td class="text-right">{{benefit.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
