@@ -208,10 +208,27 @@ padding-right: 0;
 						<td><strong>Living Units</strong></td>
 						<td>{{property.propertyInfo.unitCount}}</td>
 					</tr>
-					<tr>
-						<td><strong>Adjusted Sq. Footage</strong></td>
-						<td>{{property.propertyInfo.buildingEffectiveArea | number}}</td>
-					</tr>
+		                        <tr>
+			                  <td><strong>Actual Sq. Footage</strong></td>
+
+			                  <td>{{property.propertyInfo.buildingActualArea
+			                    | number}} SQ FT</td>
+		                        </tr>
+
+		                        <tr>
+			                  <td><strong>Living Area Sq. Footage</strong></td>
+
+			                  <td>{{property.propertyInfo.buildingHeatedArea
+			                    | number}} SQ FT</td>
+		                        </tr>
+
+		                        <tr>
+			                  <td><strong>Adjusted Sq. Footage</strong></td>
+
+			                  <td>{{property.propertyInfo.buildingEffectiveArea
+			                    | number}} SQ FT</td>
+		                        </tr>
+
 					<tr>
 						<td><strong>Lot Size</strong></td>
 						<td>{{property.propertyInfo.lotSize | number}} SQ FT</td>
