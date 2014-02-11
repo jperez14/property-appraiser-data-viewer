@@ -10,7 +10,8 @@
 		</tr>
 
 		<tr>
-			<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber}} <span style="font-weight:bold">{{showFolioStatus()}}</span></td>
+			<td colspan="2"><strong style="display:inline">Folio:</strong>
+			{{property.propertyInfo.folioNumber | folioMask}} <span style="font-weight:bold">{{showFolioStatus()}}</span></td>
 		</tr>
         
         <tr>

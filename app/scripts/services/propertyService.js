@@ -508,6 +508,12 @@ angular.module('propertySearchApp')
       else
         propertyInfo.showCurrentValuesFlag = false;
 
+      // remove dashes from folio number
+      if(!isUndefinedOrNull(propertyInfo.folioNumber))
+        propertyInfo.folioNumber = propertyInfo.folioNumber.replace(/-/g, "");
+      else 
+        propertyInfo.folioNumber = "";
+
       return propertyInfo;
 
     };

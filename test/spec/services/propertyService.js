@@ -104,7 +104,7 @@ describe('Service: propertyService', function () {
       DORCode: "0101",
       DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
       floorCount: 1,
-      folioNumber: "01-3126-042-0370",
+      folioNumber: "0131260420370",
       halfBathroomCount: 1,
       hxBaseYear: 0,
       lotSize: 13800,
@@ -128,6 +128,75 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
 
   });
+
+  it('null FolioNumber is mapped to an empty string',function(){
+    var givenProperty = {PropertyInfo: {
+      BathroomCount: 1,
+      BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
+      BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      FloorCount: 1,
+      FolioNumber: null,
+      HalfBathroomCount: 1,
+      HxBaseYear: 0,
+      LotSize: 13800,
+      Neighborhood: 6310,
+      NeighborhoodDescription: "SANTA CLARA ",
+      PercentHomesteadCapped: 0,
+      PlatBook: "6",
+      PlatPage: "141",
+      PrimaryZone: "5700",
+      PrimaryZoneDescription: "DUPLEXES - GENERAL ",
+      Status: "AC Active",
+      Subdivision: "013126042",
+      SubdivisionDescription: "ALLAPATTAH PARK ",
+      UnitCount: 1,
+      YearBuilt: 1949,
+      Municipality: "Miami",
+      ShowCurrentValuesFlag: "Y"
+    }};
+    
+    var expectedProperty = {propertyInfo: {
+      bathroomCount: 1,
+      bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
+      buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      floorCount: 1,
+      folioNumber: "",
+      halfBathroomCount: 1,
+      hxBaseYear: 0,
+      lotSize: 13800,
+      neighborhood: 6310,
+      neighborhoodDescription: "SANTA CLARA",
+      percentHomesteadCapped: 0,
+      platBook: "6",
+      platPage: "141",
+      primaryZone: "5700",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
+      status: "AC Active",
+      subdivision: "013126042",
+      subdivisionDescription: "ALLAPATTAH PARK",
+      unitCount: 1,
+      yearBuilt: 1949,
+      municipality: "Miami",
+      showCurrentValuesFlag: true
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
+
+  });
+
 
 
   // test mailingAddress

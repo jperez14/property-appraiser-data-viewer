@@ -306,10 +306,10 @@
       
       <ul class="row">
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/report-homestead-fraud.png" width="16" height="16" alt="Report Homestead Fraud"> <a href="http://www.miamidade.gov/paportal/HomesteadFraud/HomesteadFraud.aspx" target="_blank">Report Homestead Fraud</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/compare.png" width="16" height="16" alt="Tax Comparison"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp?Fol={{folio}}" target="_blank">Tax Comparison</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/estimator.png" width="16" height="16" alt="Tax Estimator"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp?Fol={{folio}}" target="_blank">Tax Estimator</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{folio}}" target="_blank">TRIM Notice</a></li>
-        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{folio}}" target="_blank">View Taxes</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/compare.png" width="16" height="16" alt="Tax Comparison"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxComparisonStart.asp?Fol={{property.propertyInfo.folioNumber}}" target="_blank">Tax Comparison</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/estimator.png" width="16" height="16" alt="Tax Estimator"> <a href="http://www.miamidade.gov/pa/tax_estimator/TaxEstimator.asp?Fol={{property.propertyInfo.folioNumber}}" target="_blank">Tax Estimator</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{property.propertyInfo.folioNumber}}" target="_blank">TRIM Notice</a></li>
+        <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{property.propertyInfo.folioNumber}}" target="_blank">View Taxes</a></li>
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://www.miamidade.gov/pa/online_tools.asp" target="_blank">Additional Online Tools</a></li>
         <!--<li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable "> <a href="http://gisims2.miamidade.gov/Myneighborhood/map.asp" target="_blank">Comparable </a></li>-->
         <li class="col-md-3 col-sm-3 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable "> <a class="hover_pointer" ng-click="getComparable()">Comparable </a></li>
@@ -484,7 +484,7 @@
     
     
     <div ng-show="property" class="hidden-links">
-    	<a href="http://gisweb.miamidade.gov/PropertySearch/default.html?folio={{folio}}" target="_blank">&nbsp;</a><a href="http://gisims2.miamidade.gov/myhome/propmap.asp?app=propmap&cmd=FINDFOLIO&folio={{folio}}" target="_blank">&nbsp;</a>
+    	<a href="http://gisweb.miamidade.gov/PropertySearch/default.html?folio={{property.propertyInfo.folioNumber}}" target="_blank">&nbsp;</a><a href="http://gisims2.miamidade.gov/myhome/propmap.asp?app=propmap&cmd=FINDFOLIO&folio={{property.propertyInfo.folioNumber}}" target="_blank">&nbsp;</a>
     </div>
 	
   </div>
