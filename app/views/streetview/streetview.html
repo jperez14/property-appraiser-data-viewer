@@ -27,7 +27,7 @@
 		  var mapOptions = {center: latlon, zoom: 14};
 		  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-		  var panoramaOptions = { position: latlon, pov: {heading: 34, pitch: 10}};
+		  var panoramaOptions = { position: latlon, pov: {heading: 180, pitch: 0}};
 		  var panorama = new  google.maps.StreetViewPanorama(document.getElementById('map-canvas'),panoramaOptions);
 		  //var panoroma = map.getStreetView();
 		  //panorama.setPosition(latlon);

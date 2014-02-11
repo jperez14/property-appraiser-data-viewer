@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5 {
 	width:85px;
 }
 
+.pop-icon {
+	display:none;
+}
+
 .prev-search a {
 	display:block;
 	padding-top:19px;
@@ -375,7 +379,7 @@ background-color: #eee !important;
 }
 
 .table-condensed > tbody > tr.row-divider > td {
-	border-top:8px solid #bbb;
+	border-top:3px solid #bbb;
 }
 
 .double-line {
