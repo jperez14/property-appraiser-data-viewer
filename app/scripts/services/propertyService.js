@@ -343,16 +343,25 @@ angular.module('propertySearchApp')
         return benefit;
 
       // Group by benefit description
+      var benefits = {}
+      var sequence = 0;
       _.each(data.BenefitInfos, function(originalBenefit){
         var mappedBenefit = buildObject(originalBenefit, benefitAttr);
-        if(isUndefinedOrNull(benefit.benefits[mappedBenefit.description])){
-          benefit.benefits[mappedBenefit.description] = {years:{},
-                                                         type:mappedBenefit.type,
-                                                         url:mappedBenefit.url};
+        if(isUndefinedOrNull(benefits[mappedBenefit.description])){
+          sequence = sequence + 1;
+          benefits[mappedBenefit.description] = {years:{},
+                                                 type:mappedBenefit.type,
+                                                 url:mappedBenefit.url,
+                                                 description:mappedBenefit.description,
+                                                 sequence:sequence
+                                                };
         }
         
-        benefit.benefits[mappedBenefit.description].years[mappedBenefit.year] = mappedBenefit;
+        benefits[mappedBenefit.description].years[mappedBenefit.year] = mappedBenefit;
       });
+
+      // Extract an array of benefits
+      benefit.benefits = _.values(benefits);
 
       _.each(data.Messages, function(origMessage){
         var message = _.map(origMessage.Message.split("|"), 

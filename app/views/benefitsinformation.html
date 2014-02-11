@@ -24,13 +24,13 @@
 
 		</tr>
 
-		<tr ng-repeat="(benefitType, benefitsByYear) in property.benefit.benefits">
-			<td><strong><a href="{{benefitsByYear.url}}" target="_blank">{{benefitType}}</a></strong></td>
+		<tr ng-repeat="benefit in property.benefit.benefits | orderBy:'sequence'">
+			<td><strong><a href="{{benefit.url}}" target="_blank">{{benefit.description}}</a></strong></td>
 
-                        <td>{{benefitsByYear.type}}</td>
-                        <td class="text-right">{{benefitsByYear.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefitsByYear.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
-                        <td class="text-right">{{benefitsByYear.years[property.rollYear3].value | noCentsCurrency:"$"}}</td>
+                        <td>{{benefit.type}}</td>
+                        <td class="text-right">{{benefit.years[property.rollYear1].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefit.years[property.rollYear2].value | noCentsCurrency:"$"}}</td>
+                        <td class="text-right">{{benefit.years[property.rollYear3].value | noCentsCurrency:"$"}}</td>
 
                 </tr>
 

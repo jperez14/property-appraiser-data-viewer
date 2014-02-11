@@ -101,15 +101,15 @@ describe('Service: propertyService', function () {
       hxBaseYear: 0,
       lotSize: 13800,
       neighborhood: 6310,
-      neighborhoodDescription: "SANTA CLARA ",
+      neighborhoodDescription: "SANTA CLARA",
       percentHomesteadCapped: 0,
       platBook: "6",
       platPage: "141",
       primaryZone: "5700",
-      primaryZoneDescription: "DUPLEXES - GENERAL ",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
       status: "AC Active",
       subdivision: "013126042",
-      subdivisionDescription: "ALLAPATTAH PARK ",
+      subdivisionDescription: "ALLAPATTAH PARK",
       unitCount: 1,
       yearBuilt: 1949,
       municipality: "Miami",
@@ -567,7 +567,7 @@ describe('Service: propertyService', function () {
           PercentCondition: 96,
           RollYear: 2011,
           Units: 100,
-          UseCode: "0034 "
+          UseCode: "0034"
         }],
       Messages:[{
         Message:"My Message",
@@ -586,7 +586,7 @@ describe('Service: propertyService', function () {
           percentCondition: 96,
           year: 2011,
           units: 100,
-          useCode: "0034 "
+          useCode: "0034"
         }],message:["My Message"]
     }}};
     
@@ -705,9 +705,9 @@ describe('Service: propertyService', function () {
       muniZone: "T3 O",
       percentCondition: 1,
       totalAdjustments: 1.0302,
-      unitType: "F ",
+      unitType: "F",
       units: "100.0000",
-      useCode: "00 ",
+      useCode: "00",
       zone: "5700",
       year: 2013
     }],message:["This is test Message1","This is test Message2","This is test Message3"]}
@@ -821,29 +821,33 @@ describe('Service: propertyService', function () {
     
 
     var expectedProperty = {benefit:{
-      benefits:{"Non-Homestead Cap":{type:"Assessment Reduction",
-                                     url:"http://www.miamidade.gov/pa/property_value_cap.asp",
-                                     years:{2011:{
-        description: "Non-Homestead Cap",
-        message: null,
-        year: 2011,
-        type: "Assessment Reduction",
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp",
-        value: 3344
-      },2013:{description: "Non-Homestead Cap",
-              message: null,
-              year: 2013,
-              type: "Assessment Reduction",
-              url: "http://www.miamidade.gov/pa/property_value_cap.asp",
-              value: 3345}}}, 
-                "Save Our Homes":{type:"Assessment Reduction",
-                                  url: "http://www.miamidade.gov/pa/amendment_10.asp",
-                                  years:{2011:{description: "Save Our Homes",
-                                                     message: null,
-                                                     year: 2011,
-                                                     type: "Assessment Reduction",
-                                                     url: "http://www.miamidade.gov/pa/amendment_10.asp",
-                                                     value: 89595}}}},
+      benefits:[{type:"Assessment Reduction",
+                 description:"Non-Homestead Cap",
+                 sequence:1,
+                 url:"http://www.miamidade.gov/pa/property_value_cap.asp",
+                 years:{2011:{
+                   description: "Non-Homestead Cap",
+                   message: null,
+                   year: 2011,
+                   type: "Assessment Reduction",
+                   url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+                   value: 3344
+                 },2013:{description: "Non-Homestead Cap",
+                         message: null,
+                         year: 2013,
+                         type: "Assessment Reduction",
+                         url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+                         value: 3345}}}, 
+                {type:"Assessment Reduction",
+                 description:"Save Our Homes",
+                 sequence:2,
+                 url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                 years:{2011:{description: "Save Our Homes",
+                              message: null,
+                              year: 2011,
+                              type: "Assessment Reduction",
+                              url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                              value: 89595}}}],
       messages:{}
     }};
     

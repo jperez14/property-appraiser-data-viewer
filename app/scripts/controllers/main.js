@@ -675,10 +675,10 @@ angular.module('propertySearchApp')
       document.body.removeChild(salesForm);
     };
 
-	$scope.showStreetView = function() {
-		var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
-		$window.open(url, "name", "height=700, width=1000, location=0'");
-	};
+    $scope.showStreetView = function() {
+      var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
+      $window.open(url, "name", "height=700, width=1000, location=0'");
+    };
 
 }]);
 
