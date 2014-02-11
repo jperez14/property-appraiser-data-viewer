@@ -65,7 +65,11 @@ describe('Service: propertyService', function () {
     var givenProperty = {PropertyInfo: {
       BathroomCount: 1,
       BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
       BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
       DORCode: "0101",
       DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
       FloorCount: 1,
@@ -92,7 +96,11 @@ describe('Service: propertyService', function () {
     var expectedProperty = {propertyInfo: {
       bathroomCount: 1,
       bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
       buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
       DORCode: "0101",
       DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
       floorCount: 1,

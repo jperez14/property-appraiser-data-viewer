@@ -192,7 +192,11 @@ angular.module('propertySearchApp')
     var propertyInfoAttr = {
       bathroomCount:             "BathroomCount",                     
       bedroomCount:              "BedroomCount",            
+      buildingActualArea:        "BuildingActualArea",
+      buildingBaseArea:          "BuildingBaseArea",
       buildingEffectiveArea:     "BuildingEffectiveArea",   
+      buildingGrossArea:         "BuildingGrossArea",
+      buildingHeatedArea:        "BuildingHeatedArea",
       DORCode:                   "DORCode",          
       DORDescription:            "DORDescription",          
       floorCount:                "FloorCount",              
