@@ -65,11 +65,16 @@ describe('Service: propertyService', function () {
     var givenProperty = {PropertyInfo: {
       BathroomCount: 1,
       BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
       BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
       DORCode: "0101",
       DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
       FloorCount: 1,
       FolioNumber: "01-3126-042-0370",
+      ParentFolio: null,
       HalfBathroomCount: 1,
       HxBaseYear: 0,
       LotSize: 13800,
@@ -92,24 +97,29 @@ describe('Service: propertyService', function () {
     var expectedProperty = {propertyInfo: {
       bathroomCount: 1,
       bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
       buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
       DORCode: "0101",
       DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
       floorCount: 1,
-      folioNumber: "01-3126-042-0370",
+      folioNumber: "0131260420370",
+      parentFolio: "",
       halfBathroomCount: 1,
       hxBaseYear: 0,
       lotSize: 13800,
       neighborhood: 6310,
-      neighborhoodDescription: "SANTA CLARA ",
+      neighborhoodDescription: "SANTA CLARA",
       percentHomesteadCapped: 0,
       platBook: "6",
       platPage: "141",
       primaryZone: "5700",
-      primaryZoneDescription: "DUPLEXES - GENERAL ",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
       status: "AC Active",
       subdivision: "013126042",
-      subdivisionDescription: "ALLAPATTAH PARK ",
+      subdivisionDescription: "ALLAPATTAH PARK",
       unitCount: 1,
       yearBuilt: 1949,
       municipality: "Miami",
@@ -120,6 +130,217 @@ describe('Service: propertyService', function () {
     expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
 
   });
+
+  it('remove dashes from parentFolio',function(){
+    var givenProperty = {PropertyInfo: {
+      BathroomCount: 1,
+      BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
+      BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      FloorCount: 1,
+      FolioNumber: "01-3126-042-0370",
+      ParentFolio: "12-3456-789-1234",
+      HalfBathroomCount: 1,
+      HxBaseYear: 0,
+      LotSize: 13800,
+      Neighborhood: 6310,
+      NeighborhoodDescription: "SANTA CLARA ",
+      PercentHomesteadCapped: 0,
+      PlatBook: "6",
+      PlatPage: "141",
+      PrimaryZone: "5700",
+      PrimaryZoneDescription: "DUPLEXES - GENERAL ",
+      Status: "AC Active",
+      Subdivision: "013126042",
+      SubdivisionDescription: "ALLAPATTAH PARK ",
+      UnitCount: 1,
+      YearBuilt: 1949,
+      Municipality: "Miami",
+      ShowCurrentValuesFlag: "Y"
+    }};
+    
+    var expectedProperty = {propertyInfo: {
+      bathroomCount: 1,
+      bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
+      buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      floorCount: 1,
+      folioNumber: "0131260420370",
+      parentFolio: "1234567891234",
+      halfBathroomCount: 1,
+      hxBaseYear: 0,
+      lotSize: 13800,
+      neighborhood: 6310,
+      neighborhoodDescription: "SANTA CLARA",
+      percentHomesteadCapped: 0,
+      platBook: "6",
+      platPage: "141",
+      primaryZone: "5700",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
+      status: "AC Active",
+      subdivision: "013126042",
+      subdivisionDescription: "ALLAPATTAH PARK",
+      unitCount: 1,
+      yearBuilt: 1949,
+      municipality: "Miami",
+      showCurrentValuesFlag: true
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
+
+  });
+
+  it('null FolioNumber is mapped to an empty string',function(){
+    var givenProperty = {PropertyInfo: {
+      BathroomCount: 1,
+      BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
+      BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      FloorCount: 1,
+      FolioNumber: null,
+      ParentFolio: null,
+      HalfBathroomCount: 1,
+      HxBaseYear: 0,
+      LotSize: 13800,
+      Neighborhood: 6310,
+      NeighborhoodDescription: "SANTA CLARA ",
+      PercentHomesteadCapped: 0,
+      PlatBook: "6",
+      PlatPage: "141",
+      PrimaryZone: "5700",
+      PrimaryZoneDescription: "DUPLEXES - GENERAL ",
+      Status: "AC Active",
+      Subdivision: "013126042",
+      SubdivisionDescription: "ALLAPATTAH PARK ",
+      UnitCount: 1,
+      YearBuilt: 1949,
+      Municipality: "Miami",
+      ShowCurrentValuesFlag: "Y"
+    }};
+    
+    var expectedProperty = {propertyInfo: {
+      bathroomCount: 1,
+      bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
+      buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      floorCount: 1,
+      folioNumber: "",
+      parentFolio: "",
+      halfBathroomCount: 1,
+      hxBaseYear: 0,
+      lotSize: 13800,
+      neighborhood: 6310,
+      neighborhoodDescription: "SANTA CLARA",
+      percentHomesteadCapped: 0,
+      platBook: "6",
+      platPage: "141",
+      primaryZone: "5700",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
+      status: "AC Active",
+      subdivision: "013126042",
+      subdivisionDescription: "ALLAPATTAH PARK",
+      unitCount: 1,
+      yearBuilt: 1949,
+      municipality: "Miami",
+      showCurrentValuesFlag: true
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
+
+  });
+
+  it('null ParentFolio is mapped to an empty string',function(){
+    var givenProperty = {PropertyInfo: {
+      BathroomCount: 1,
+      BedroomCount: 3,
+      BuildingActualArea: 3443,
+      BuildingBaseArea: 0,
+      BuildingEffectiveArea: 1848,
+      BuildingGrossArea: 2772,
+      BuildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      FloorCount: 1,
+      FolioNumber: null,
+      ParentFolio: null,
+      HalfBathroomCount: 1,
+      HxBaseYear: 0,
+      LotSize: 13800,
+      Neighborhood: 6310,
+      NeighborhoodDescription: "SANTA CLARA ",
+      PercentHomesteadCapped: 0,
+      PlatBook: "6",
+      PlatPage: "141",
+      PrimaryZone: "5700",
+      PrimaryZoneDescription: "DUPLEXES - GENERAL ",
+      Status: "AC Active",
+      Subdivision: "013126042",
+      SubdivisionDescription: "ALLAPATTAH PARK ",
+      UnitCount: 1,
+      YearBuilt: 1949,
+      Municipality: "Miami",
+      ShowCurrentValuesFlag: "Y"
+    }};
+    
+    var expectedProperty = {propertyInfo: {
+      bathroomCount: 1,
+      bedroomCount: 3,
+      buildingActualArea: 3443,
+      buildingBaseArea: 0,
+      buildingEffectiveArea: 1848,
+      buildingGrossArea: 2772,
+      buildingHeatedArea: 2333,
+      DORCode: "0101",
+      DORDescription: "RESIDENTIAL - SINGLE FAMILY : 1 UNIT",
+      floorCount: 1,
+      folioNumber: "",
+      parentFolio: "",
+      halfBathroomCount: 1,
+      hxBaseYear: 0,
+      lotSize: 13800,
+      neighborhood: 6310,
+      neighborhoodDescription: "SANTA CLARA",
+      percentHomesteadCapped: 0,
+      platBook: "6",
+      platPage: "141",
+      primaryZone: "5700",
+      primaryZoneDescription: "DUPLEXES - GENERAL",
+      status: "AC Active",
+      subdivision: "013126042",
+      subdivisionDescription: "ALLAPATTAH PARK",
+      unitCount: 1,
+      yearBuilt: 1949,
+      municipality: "Miami",
+      showCurrentValuesFlag: true
+    }};
+    
+    var property = new propertyService.Property(givenProperty);
+    expect(property.propertyInfo).toEqual(expectedProperty.propertyInfo);
+
+  });
+
 
 
   // test mailingAddress
@@ -567,7 +788,7 @@ describe('Service: propertyService', function () {
           PercentCondition: 96,
           RollYear: 2011,
           Units: 100,
-          UseCode: "0034 "
+          UseCode: "0034"
         }],
       Messages:[{
         Message:"My Message",
@@ -586,7 +807,7 @@ describe('Service: propertyService', function () {
           percentCondition: 96,
           year: 2011,
           units: 100,
-          useCode: "0034 "
+          useCode: "0034"
         }],message:["My Message"]
     }}};
     
@@ -705,9 +926,9 @@ describe('Service: propertyService', function () {
       muniZone: "T3 O",
       percentCondition: 1,
       totalAdjustments: 1.0302,
-      unitType: "F ",
+      unitType: "F",
       units: "100.0000",
-      useCode: "00 ",
+      useCode: "00",
       zone: "5700",
       year: 2013
     }],message:["This is test Message1","This is test Message2","This is test Message3"]}
@@ -821,29 +1042,33 @@ describe('Service: propertyService', function () {
     
 
     var expectedProperty = {benefit:{
-      benefits:{"Non-Homestead Cap":{type:"Assessment Reduction",
-                                     url:"http://www.miamidade.gov/pa/property_value_cap.asp",
-                                     years:{2011:{
-        description: "Non-Homestead Cap",
-        message: null,
-        year: 2011,
-        type: "Assessment Reduction",
-        url: "http://www.miamidade.gov/pa/property_value_cap.asp",
-        value: 3344
-      },2013:{description: "Non-Homestead Cap",
-              message: null,
-              year: 2013,
-              type: "Assessment Reduction",
-              url: "http://www.miamidade.gov/pa/property_value_cap.asp",
-              value: 3345}}}, 
-                "Save Our Homes":{type:"Assessment Reduction",
-                                  url: "http://www.miamidade.gov/pa/amendment_10.asp",
-                                  years:{2011:{description: "Save Our Homes",
-                                                     message: null,
-                                                     year: 2011,
-                                                     type: "Assessment Reduction",
-                                                     url: "http://www.miamidade.gov/pa/amendment_10.asp",
-                                                     value: 89595}}}},
+      benefits:[{type:"Assessment Reduction",
+                 description:"Non-Homestead Cap",
+                 sequence:1,
+                 url:"http://www.miamidade.gov/pa/property_value_cap.asp",
+                 years:{2011:{
+                   description: "Non-Homestead Cap",
+                   message: null,
+                   year: 2011,
+                   type: "Assessment Reduction",
+                   url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+                   value: 3344
+                 },2013:{description: "Non-Homestead Cap",
+                         message: null,
+                         year: 2013,
+                         type: "Assessment Reduction",
+                         url: "http://www.miamidade.gov/pa/property_value_cap.asp",
+                         value: 3345}}}, 
+                {type:"Assessment Reduction",
+                 description:"Save Our Homes",
+                 sequence:2,
+                 url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                 years:{2011:{description: "Save Our Homes",
+                              message: null,
+                              year: 2011,
+                              type: "Assessment Reduction",
+                              url: "http://www.miamidade.gov/pa/amendment_10.asp",
+                              value: 89595}}}],
       messages:{}
     }};
     

@@ -51,10 +51,14 @@ angular.module('propertySearchApp')
   }])
   .filter('folioMask', ['$filter', '$locale', function (filter, locale) {
 	return function(folio, currencySymbol) {
+          if(!_.isUndefined(folio)){
 		var f1 = folio.substr(0,2);
 		var f2 = folio.substr(2,4);
 		var f3 = folio.substr(6,3);
 		var f4 = folio.substr(9,4);
 		return f1+'-'+f2+'-'+f3+'-'+f4;
+          }else
+            return "";
+
 	};
   }]);

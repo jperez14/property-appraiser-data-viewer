@@ -192,11 +192,16 @@ angular.module('propertySearchApp')
     var propertyInfoAttr = {
       bathroomCount:             "BathroomCount",                     
       bedroomCount:              "BedroomCount",            
+      buildingActualArea:        "BuildingActualArea",
+      buildingBaseArea:          "BuildingBaseArea",
       buildingEffectiveArea:     "BuildingEffectiveArea",   
+      buildingGrossArea:         "BuildingGrossArea",
+      buildingHeatedArea:        "BuildingHeatedArea",
       DORCode:                   "DORCode",          
       DORDescription:            "DORDescription",          
       floorCount:                "FloorCount",              
       folioNumber:               "FolioNumber",             
+      parentFolio:               "ParentFolio",
       halfBathroomCount:         "HalfBathroomCount",       
       hxBaseYear:                "HxBaseYear",              
       lotSize:                   "LotSize",                 
@@ -343,16 +348,25 @@ angular.module('propertySearchApp')
         return benefit;
 
       // Group by benefit description
+      var benefits = {}
+      var sequence = 0;
       _.each(data.BenefitInfos, function(originalBenefit){
         var mappedBenefit = buildObject(originalBenefit, benefitAttr);
-        if(isUndefinedOrNull(benefit.benefits[mappedBenefit.description])){
-          benefit.benefits[mappedBenefit.description] = {years:{},
-                                                         type:mappedBenefit.type,
-                                                         url:mappedBenefit.url};
+        if(isUndefinedOrNull(benefits[mappedBenefit.description])){
+          sequence = sequence + 1;
+          benefits[mappedBenefit.description] = {years:{},
+                                                 type:mappedBenefit.type,
+                                                 url:mappedBenefit.url,
+                                                 description:mappedBenefit.description,
+                                                 sequence:sequence
+                                                };
         }
         
-        benefit.benefits[mappedBenefit.description].years[mappedBenefit.year] = mappedBenefit;
+        benefits[mappedBenefit.description].years[mappedBenefit.year] = mappedBenefit;
       });
+
+      // Extract an array of benefits
+      benefit.benefits = _.values(benefits);
 
       _.each(data.Messages, function(origMessage){
         var message = _.map(origMessage.Message.split("|"), 
@@ -494,6 +508,18 @@ angular.module('propertySearchApp')
         propertyInfo.showCurrentValuesFlag = true;
       else
         propertyInfo.showCurrentValuesFlag = false;
+
+      // remove dashes from folio number.
+      if(!isUndefinedOrNull(propertyInfo.folioNumber))
+        propertyInfo.folioNumber = propertyInfo.folioNumber.replace(/-/g, "");
+      else 
+        propertyInfo.folioNumber = "";
+
+      // remove dashes from parent folio number.
+      if(!isUndefinedOrNull(propertyInfo.parentFolio))
+        propertyInfo.parentFolio = propertyInfo.parentFolio.replace(/-/g, "");
+      else 
+        propertyInfo.parentFolio = "";
 
       return propertyInfo;
 
