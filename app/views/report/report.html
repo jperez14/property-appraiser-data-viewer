@@ -640,11 +640,11 @@ Generated On : {{getCurrentDate()}}
     
     <table class="print-table">
 		<tr>
-			<th class="tableHeader" colspan="7">Building Information</th>
+			<th class="tableHeader" colspan="8">Building Information</th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)">
-			<td colspan="7">
+			<td colspan="8">
                 <div class="table-message">
                     <div ng-repeat="message in property.building[property.rollYear1].message">{{message}}</div>
                 </div>
@@ -652,29 +652,25 @@ Generated On : {{getCurrentDate()}}
 		</tr>
 
 		<tr class="header-row">
-        
-        	<td class="text-center">Building Number</td>
-        	<td class="text-center">Sub Area</td>
-            <td class="text-center">Year Built</td>
-			<td class="text-right">Actual Area</td>
-            
-			
-			<td class="text-right fixed-width">Effective Area</td>
-			<td class="text-right fixed-width">Adj Rate</td>
-			<td class="text-right fixed-width">Calc Value</td>
+        	  <td class="text-center">Building Number</td>
+        	  <td class="text-center">Sub Area</td>
+                  <td class="text-center">Year Built</td>
+		  <td class="text-right">Actual Sq.Ft.</td>
+		  <td class="text-right">Living Sq.Ft.</td>
+		  <td class="text-right fixed-width">Adj Sq.Ft.</td>
+		  <td class="text-right fixed-width">Adj Rate</td>
+		  <td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
 		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
-
-			<td class="text-center">{{building.buildingNo}}</td>
-			<td class="text-center">{{building.segNo}}</td>
-            <td class="text-center">{{building.actual}}</td>
-            <td class="text-right">{{building.actualArea | number}}</td>
-            
-			
-			<td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
-			<td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
-			<td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
+		  <td class="text-center">{{building.buildingNo}}</td>
+		  <td class="text-center">{{building.segNo}}</td>
+                  <td class="text-center">{{building.actual}}</td>
+                  <td class="text-right">{{building.actualArea | number}}</td>
+                  <td class="text-right">{{building.heatedArea | number}}</td>
+		  <td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
+		  <td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
+		  <td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
 		</tr>
         
 	</table>
@@ -807,34 +803,35 @@ Generated On : {{getCurrentDate()}}
     
     <table class="print-table">
 		<tr>
-			<th class="tableHeader" colspan="7">Building Information</th>
+			<th class="tableHeader" colspan="8">Building Information</th>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)">
-			<td colspan="7">
+        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear2)">
+			<td colspan="8">
                 <div class="table-message">
-                    <div ng-repeat="message in property.building[property.rollYear1].message">{{message}}</div>
+                    <div ng-repeat="message in property.building[property.rollYear2].message">{{message}}</div>
                 </div>
             </td>
 		</tr>
+
 
 		<tr class="header-row">
         	  <td class="text-center">Building Number</td>
         	  <td class="text-center">Sub Area</td>
                   <td class="text-center">Year Built</td>
-	          <td class="text-right">Actual Sq.Ft.</td>
-		  <td class="text-right">Living Sq.Ft.</td>            
+		  <td class="text-right">Actual Sq.Ft.</td>
+		  <td class="text-right">Living Sq.Ft.</td>
 		  <td class="text-right fixed-width">Adj Sq.Ft.</td>
 		  <td class="text-right fixed-width">Adj Rate</td>
 		  <td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
+		<tr ng-repeat="building in property.building[(property.rollYear1)-1].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
 		  <td class="text-center">{{building.buildingNo}}</td>
 		  <td class="text-center">{{building.segNo}}</td>
                   <td class="text-center">{{building.actual}}</td>
                   <td class="text-right">{{building.actualArea | number}}</td>
-                  <td class="text-right">{{building.heatedArea | number}}</td>		  
+                  <td class="text-right">{{building.heatedArea | number}}</td>
 		  <td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
 		  <td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
 		  <td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
@@ -970,41 +967,38 @@ Generated On : {{getCurrentDate()}}
     
     <table class="print-table">
 		<tr>
-			<th class="tableHeader" colspan="7">Building Information</th>
+			<th class="tableHeader" colspan="8">Building Information</th>
 		</tr>
         
-        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear1)">
-			<td colspan="7">
+        <tr ng-show="isDisplayMessages(property, property.building, property.rollYear3)">
+			<td colspan="8">
                 <div class="table-message">
-                    <div ng-repeat="message in property.building[property.rollYear1].message">{{message}}</div>
+                    <div ng-repeat="message in property.building[property.rollYear3].message">{{message}}</div>
                 </div>
             </td>
 		</tr>
 
+
 		<tr class="header-row">
-        
-        	<td class="text-center">Building Number</td>
-        	<td class="text-center">Sub Area</td>
-            <td class="text-center">Year Built</td>
-			<td class="text-right">Actual Area</td>
-            
-			
-			<td class="text-right fixed-width">Effective Area</td>
-			<td class="text-right fixed-width">Adj Rate</td>
-			<td class="text-right fixed-width">Calc Value</td>
+        	  <td class="text-center">Building Number</td>
+        	  <td class="text-center">Sub Area</td>
+                  <td class="text-center">Year Built</td>
+		  <td class="text-right">Actual Sq.Ft.</td>
+		  <td class="text-right">Living Sq.Ft.</td>
+		  <td class="text-right fixed-width">Adj Sq.Ft.</td>
+		  <td class="text-right fixed-width">Adj Rate</td>
+		  <td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
-		<tr ng-repeat="building in property.building[property.rollYear1].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
-
-			<td class="text-center">{{building.buildingNo}}</td>
-			<td class="text-center">{{building.segNo}}</td>
-            <td class="text-center">{{building.actual}}</td>
-            <td class="text-right">{{building.actualArea | number}}</td>
-            
-			
-			<td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
-			<td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
-			<td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
+		<tr ng-repeat="building in property.building[(property.rollYear1)-2].buildingsInfo | orderBy:['buildingNo', 'segNo', '-actual']">
+		  <td class="text-center">{{building.buildingNo}}</td>
+		  <td class="text-center">{{building.segNo}}</td>
+                  <td class="text-center">{{building.actual}}</td>
+                  <td class="text-right">{{building.actualArea | number}}</td>
+                  <td class="text-right">{{building.heatedArea | number}}</td>
+		  <td class="text-right fixed-width">{{building.effectiveArea | number}}</td>
+		  <td class="text-right fixed-width">{{building.adjustedBasePrice | centsCurrency:"$"}}</td>
+		  <td class="text-right fixed-width">{{building.depreciatedValue | noCentsCurrency :"$"}}</td>
 		</tr>
         
 	</table>
