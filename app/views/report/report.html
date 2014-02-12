@@ -214,24 +214,24 @@ padding-right: 0;
 						<td>{{property.propertyInfo.unitCount}}</td>
 					</tr>
 		                        <tr>
-			                  <td><strong>Actual Sq. Footage</strong></td>
+			                  <td><strong>Actual Area</strong></td>
 
 			                  <td>{{property.propertyInfo.buildingActualArea
-			                    | number}} SQ FT</td>
+			                    | number}} Sq.Ft</td>
 		                        </tr>
 
 		                        <tr>
-			                  <td><strong>Living Sq. Footage</strong></td>
+			                  <td><strong>Living Area</strong></td>
 
 			                  <td>{{property.propertyInfo.buildingHeatedArea
-			                    | number}} SQ FT</td>
+			                    | number}} Sq.Ft</td>
 		                        </tr>
 
 		                        <tr>
 			                  <td><strong>Adjusted Sq. Footage</strong></td>
 
 			                  <td>{{property.propertyInfo.buildingEffectiveArea
-			                    | number}} SQ FT</td>
+			                    | number}}</td>
 		                        </tr>
 
 					<tr>
@@ -822,9 +822,9 @@ Generated On : {{getCurrentDate()}}
         	  <td class="text-center">Building Number</td>
         	  <td class="text-center">Sub Area</td>
                   <td class="text-center">Year Built</td>
-	          <td class="text-right">Actual Area</td>
+	          <td class="text-right">Actual Sq.Ft.</td>
 		  <td class="text-right">Living Sq.Ft.</td>            
-		  <td class="text-right fixed-width">Effective Area</td>
+		  <td class="text-right fixed-width">Adj Sq.Ft.</td>
 		  <td class="text-right fixed-width">Adj Rate</td>
 		  <td class="text-right fixed-width">Calc Value</td>
 		</tr>
