@@ -1,7 +1,7 @@
 <div class="container">
 <div class="header">
   <img src="images/banner.jpg" class="img-responsive hidden-xs" alt="Miami-Dade County Property Appraiser">
-  <img src="images/banner-small-device.png" class="img-responsive visible-xs" alt="Miami-Dade County Property Appraiser">
+  <img src="images/banner-small-device.jpg" class="img-responsive visible-xs" alt="Miami-Dade County Property Appraiser">
 </div>
 
 <nav class="navbar navbar-default" role="navigation">
@@ -429,7 +429,13 @@
         <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
       </div>
 
+	<div class="col-md-12">
+    	<div ng-show="property" ng-include="'views/salesinformation.html'"></div>
     </div>
+    
+    </div>
+    
+    
     
     
     <!--  full row -->
