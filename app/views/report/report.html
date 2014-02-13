@@ -112,8 +112,11 @@ padding-right: 0;
 <!--[if lt IE 9]>
 	<style type="text/css">
     .print-container {font-size:11px !important; zoom:.99 !important; margin:25px 0 0 -30px;}
-    body {padding:0; width:850px;}
+    body {padding:0;}
     html {background-color:#fff;}
+    .print-left,.print-right{
+    width:385px;
+    }
     
     
     </style>
@@ -533,8 +536,9 @@ padding-right: 0;
 						<td ng-show="salesInfoGrantorName1">Previous Owner 1</td>
 						<td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
 					</tr>
-							<tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
-							  <td>{{sale.dateOfSale | date:"MM/dd/yyyy"}}</td>
+                            
+                            <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
+							  <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
 							  <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
 							  <td class="text-center">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
 							  <td>{{sale.qualificationDescription}}</td>
