@@ -534,7 +534,7 @@ padding-right: 0;
 						<td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
 					</tr>
 							<tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
-							  <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
+							  <td>{{sale.dateOfSale | date:"MM/dd/yyyy"}}</td>
 							  <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
 							  <td class="text-center">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
 							  <td>{{sale.qualificationDescription}}</td>
