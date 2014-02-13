@@ -650,7 +650,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.openComparableSales = function(){
-      var url = "#/comparablesales/" + $scope.propertyInfo.folioNumber;
+      var url = "#/comparablesales/" + $scope.property.propertyInfo.folioNumber;
       $window.open(url);
     };
     
