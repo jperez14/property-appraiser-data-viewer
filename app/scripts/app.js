@@ -11,6 +11,10 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.key
         templateUrl: 'views/report/report.html',
         controller: 'ReportCtrl'
       })
+      .when('/comparablesales/:folio',{
+        templateUrl: 'views/comparablesales.html',
+        controller: 'ComparableSalesCtrl'
+      })
       .when('/', {
         templateUrl: 'views/data.html',
         controller: 'MainCtrl'

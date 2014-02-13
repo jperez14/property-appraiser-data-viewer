@@ -648,6 +648,12 @@ angular.module('propertySearchApp')
         $window.property = $scope.property;  
         $window.open(url,'name','height=1000,width=840, location=0');
     };
+
+    $scope.openComparableSales = function(){
+      var url = "#/comparablesales/" + $scope.propertyInfo.folioNumber;
+      $window.open(url);
+    };
+    
     
     $scope.setPropertySiteAddress = function(property) {
       if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {
@@ -658,30 +664,31 @@ angular.module('propertySearchApp')
 	$scope.propertySiteAddress = "";
     };
 
-    $scope.getComparableSales = function() {
-      //Create FORM object
-      var salesForm = document.createElement("form");
-      salesForm.method = "post";
-      salesForm.target = "_blank";
-      salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
-      //Append Input
-      //Folio
-      var folioInput = document.createElement("input");
-      folioInput.setAttribute("name", "folio");
-      folioInput.setAttribute("value", $scope.folio);
-      salesForm.appendChild(folioInput);
-      //Cmd
-      var cmdInput = document.createElement("input");
-      cmdInput.setAttribute("name", "Cmd");
-      cmdInput.setAttribute("value", "FOLIO");
-      salesForm.appendChild(cmdInput);
-      //Append Sales Form
-      document.body.appendChild(salesForm);
-      //Submit the Form
-      salesForm.submit();
-      //Remove Sales Form
-      document.body.removeChild(salesForm);
-    };
+
+//    $scope.getComparableSales = function() {
+//      //Create FORM object
+//      var salesForm = document.createElement("form");
+//      salesForm.method = "post";
+//      salesForm.target = "_blank";
+//      salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
+//      //Append Input
+//      //Folio
+//      var folioInput = document.createElement("input");
+//      folioInput.setAttribute("name", "folio");
+//      folioInput.setAttribute("value", $scope.folio);
+//      salesForm.appendChild(folioInput);
+//      //Cmd
+//      var cmdInput = document.createElement("input");
+//      cmdInput.setAttribute("name", "Cmd");
+//      cmdInput.setAttribute("value", "FOLIO");
+//      salesForm.appendChild(cmdInput);
+//      //Append Sales Form
+//      document.body.appendChild(salesForm);
+//      //Submit the Form
+//      salesForm.submit();
+//      //Remove Sales Form
+//      document.body.removeChild(salesForm);
+//    };
 
     $scope.showStreetView = function() {
       var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
