@@ -11,6 +11,7 @@
     "angular-cookies": "1.2.10",
     "angular-sanitize": "1.2.10",
     "angular-route": "1.2.10",
+    "angular-local-storage":"~0.0.2",
     "underscore": "~1.5.2",
     "respond": "1.4.2"
   },
