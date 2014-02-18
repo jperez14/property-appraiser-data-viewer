@@ -17,7 +17,6 @@ angular.module('propertySearchApp')
       $scope.map = map;
 
       map.on('load',function(){
-        console.log("OnLoad is called");
         map.disableClickRecenter()	
         map.disableDoubleClickZoom()
         map.disableKeyboardNavigation()
@@ -39,7 +38,6 @@ angular.module('propertySearchApp')
 	    "spatialReference":{"wkid":2236}
 	  };
 	  $scope.map.centerAndZoom(geometry, 10);
-
           var polygon = $scope.property.location.polygon;
           var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
           $scope.map.getLayer("parcelBoundary").add(graphic);

@@ -428,13 +428,13 @@ angular.module('propertySearchApp')
 	    $scope.property.location.x = coords.x;
 	    $scope.property.location.y = coords.y;
 
-            // zoom into point
-	    var geometry = {
-	      "x":coords.x,
-	      "y":coords.y,
-	      "spatialReference":{"wkid":2236}
-	    };
-	    //$scope.map.centerAndZoom(geometry, 10);
+            // zoom into parcel
+//	    var geometry = {
+//	      "x":coords.x,
+//	      "y":coords.y,
+//	      "spatialReference":{"wkid":2236}
+//	    };
+//	    $scope.map.centerAndZoom(geometry, 10);
             $scope.map.setExtent(polygon.getExtent(), true);
 
             // get latitude and longitude - pictometry needs it.
