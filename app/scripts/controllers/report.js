@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('ReportCtrl', ['$scope', '$routeParams', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, paConfig, esriGisService){
+  .controller('ReportCtrl', ['$scope', '$routeParams', 'localStorageService', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, localStorageService, paConfig, esriGisService){
 
-    $scope.property = window.opener.property;
+    $scope.property = localStorageService.get('property');
     $scope.reportType = $routeParams.type;
 
     function initMap(){
@@ -17,7 +17,6 @@ angular.module('propertySearchApp')
       $scope.map = map;
 
       map.on('load',function(){
-        console.log("OnLoad is called");
         map.disableClickRecenter()	
         map.disableDoubleClickZoom()
         map.disableKeyboardNavigation()
@@ -39,7 +38,6 @@ angular.module('propertySearchApp')
 	    "spatialReference":{"wkid":2236}
 	  };
 	  $scope.map.centerAndZoom(geometry, 10);
-
           var polygon = $scope.property.location.polygon;
           var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
           $scope.map.getLayer("parcelBoundary").add(graphic);

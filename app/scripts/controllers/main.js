@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -170,11 +170,8 @@ angular.module('propertySearchApp')
     }
     
     $scope.folio = "";
-    $scope.property = null;//SharedData.property;;
-	$scope.propertySiteAddress = "";
-    $scope.testSharedData = function(){
-      $scope.property.rollYear1 = 2014;
-    };
+    $scope.property = null;//SharedData.property;
+    $scope.propertySiteAddress = "";
     
     $scope.showError = false;
     $scope.errorMsg = "";
@@ -391,6 +388,7 @@ angular.module('propertySearchApp')
     
     $scope.getPropertyByFolio = function(folio){
 
+
       // Clear previous data.
       clearResults();
 
@@ -430,13 +428,13 @@ angular.module('propertySearchApp')
 	    $scope.property.location.x = coords.x;
 	    $scope.property.location.y = coords.y;
 
-            // zoom into point
-	    var geometry = {
-	      "x":coords.x,
-	      "y":coords.y,
-	      "spatialReference":{"wkid":2236}
-	    };
-	    //$scope.map.centerAndZoom(geometry, 10);
+            // zoom into parcel
+//	    var geometry = {
+//	      "x":coords.x,
+//	      "y":coords.y,
+//	      "spatialReference":{"wkid":2236}
+//	    };
+//	    $scope.map.centerAndZoom(geometry, 10);
             $scope.map.setExtent(polygon.getExtent(), true);
 
             // get latitude and longitude - pictometry needs it.
@@ -636,24 +634,23 @@ angular.module('propertySearchApp')
     };
 
     $scope.openReportSummaryWindow = function(){
-        //$window.open(url);
-        //$window.location.href = url;
         var url = '#/report/summary';
-        $window.property = $scope.property;  
+        localStorageService.add('property',$scope.property);
+
         $window.open(url,'name','height=1000,width=840, location=0');
     };
 
     $scope.openReportDetailsWindow = function(){
         var url = '#/report/details';
-        $window.property = $scope.property;  
+        localStorageService.add('property',$scope.property);
+
         $window.open(url,'name','height=1000,width=840, location=0');
     };
 
     $scope.openComparableSales = function(){
-      var url = "#/comparablesales/" + $scope.propertyInfo.folioNumber;
+      var url = "#/comparablesales/" + $scope.property.propertyInfo.folioNumber;
       $window.open(url);
     };
-    
     
     $scope.setPropertySiteAddress = function(property) {
       if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {

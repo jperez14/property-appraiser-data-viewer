@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.keypress', 'notificationWidget'])
-  .config(function ($routeProvider) {
+angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'LocalStorageModule', 'ui.mask', 'ui.keypress', 'notificationWidget'])
+  .config(['$routeProvider','localStorageServiceProvider',function ($routeProvider, localStorageServiceProvider) {
     $routeProvider
       .when('/pictometry/:x/:y',{
         templateUrl: 'views/pictometry.html',
@@ -23,5 +23,6 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'ui.mask', 'ui.key
         redirectTo: '/'
       });
 
+    localStorageServiceProvider.setPrefix('mdcpropertysearch');
 
-  });
+  }]);
