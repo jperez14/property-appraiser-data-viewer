@@ -22,7 +22,7 @@
 }
 
 .header {
-	margin-bottom:10px;
+	/*margin-bottom:10px;*/
 	border:0;
 }
 
@@ -53,6 +53,7 @@ th {
 height:300px;
 border:2px solid #333;
 margin-bottom:10px;
+position:relative;
 	
 }
 
@@ -73,6 +74,37 @@ padding-right: 0;
 }
 
 .add-header {display:none;}
+
+
+
+/*Eric's additionals */
+.print-break .print-table{
+	margin-bottom:20px;
+}
+
+
+.sub-title {
+	text-align:center;
+	font-size:24px;
+}
+
+.property-info-details{
+	width:400px;
+}
+
+.property-info-details, .property-info-details th, .property-info-details td{
+	border:0;
+	
+}
+
+.property-info-details td{
+	padding:5px 0px 5px 0px;
+}
+
+.generated-date{
+	text-align:right;
+}
+
 
 
 @media (min-width: 1200px) {
@@ -131,8 +163,12 @@ padding-right: 0;
   <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
 </div>
 
+<div ng-show="reportType == 'details'" class="sub-title"><span>Detail Report</span></div><div ng-show="reportType == 'summary'" class="sub-title"><span>Summary Report</span></div>
+
+<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
 
 <div class="print-left">
+
           
 			<!-- START : Property Information -->
 			
@@ -363,9 +399,9 @@ padding-right: 0;
 			<!-- END : Benefits Information -->
             
             
-            <!-- START : Full Legal Description -->
+            <!-- START : Full Legal Description (Summary)-->
 	
-				<table class="print-table">
+				<table class="print-table" ng-show="reportType == 'summary'">
 					<tr>
 						<th class="tableHeader">Short Legal Description</th>
 					</tr>
@@ -374,12 +410,16 @@ padding-right: 0;
 							</tr>  
 				</table>
 
-			<!-- END : Full Legal Description -->
+			<!-- END : Full Legal Description (Summary)-->
 </div>
 
 <div class="print-right">
 
 		<div id="printmap" class="print-map">
+        
+         <div class="north-icon">
+          <span>2012 Aerial Photography</span> <img src="images/north.png" width="31" height="26" alt="North">
+         </div>
         </div>
 
 			<!-- START : Taxable Value Information -->
@@ -522,9 +562,9 @@ padding-right: 0;
 
 			<!-- END : Taxable Value Information -->
 
-<!-- START : Sales Information -->
+<!-- START : Sales Information (Summary)-->
 
-				<table class="print-table">
+				<table class="print-table" ng-show="reportType == 'summary'">
 					<tr>
 						<th class="tableHeader" colspan="6">Sales Information</th>
 					</tr>
@@ -547,16 +587,13 @@ padding-right: 0;
 							</tr>
 				</table>
 
-			<!-- END : Sales Information -->
+			<!-- END : Sales Information (Summary)-->
 			
 </div>
 
             <div class="disclaimer">
-<p>Office of the Property Appraiser is continually editing and updating the tax roll.  This website is periodically updated, but the information may not reflect the most current information on file in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-<p>
-Generated On : {{getCurrentDate()}}
-</p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
 
 <!-- Details // Land, Building, Extra Features -->
@@ -566,19 +603,19 @@ Generated On : {{getCurrentDate()}}
   <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
 </div>
 
-
+<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
 
 <!-- START : Property Information -->
 			
-				<table class="print-table">
+				<table class="print-table property-info-details">
 					<tr>
 						<th class="tableHeader" colspan="2">
-							Property Information {{property.rollYear1}}
+							Property Information
 						</th>
 					</tr>
 					<tr>
 						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber}} {{showFolioStatus()}}</td>
+                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
 						<td class="pi_mailing_address"><strong>Property Address</strong></td>
@@ -606,6 +643,8 @@ Generated On : {{getCurrentDate()}}
 				</table>
 
 			<!-- END : Property Information -->
+            
+            <div class="sub-title"><span>Roll Year <strong>{{property.rollYear1}}</strong> Land, Building and Extra-Feature Details</span></div>
 
 <table class="print-table">
 		<tr>
@@ -714,11 +753,8 @@ Generated On : {{getCurrentDate()}}
 	</table>
     
     <div class="disclaimer">
-<p>Office of the Property Appraiser is continually editing and updating the tax roll.  This website is periodically updated, but the information may not reflect the most current information on file in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-<p>
-Generated On : {{getCurrentDate()}}
-</p>
 </div>
    
 </div>
@@ -730,18 +766,19 @@ Generated On : {{getCurrentDate()}}
   <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
 </div>
 
+<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
 
 <!-- START : Property Information -->
 			
-				<table class="print-table">
+				<table class="print-table property-info-details">
 					<tr>
 						<th class="tableHeader" colspan="2">
-							Property Information {{property.rollYear2}}
+							Property Information
 						</th>
 					</tr>
 					<tr>
 						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber}} {{showFolioStatus()}}</td>
+                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
 						<td class="pi_mailing_address"><strong>Property Address</strong></td>
@@ -769,6 +806,8 @@ Generated On : {{getCurrentDate()}}
 				</table>
 
 			<!-- END : Property Information -->
+            
+            <div class="sub-title"><span>Roll Year <strong>{{property.rollYear2}}</strong> Land, Building and Extra-Feature Details</span></div>
 
 <table class="print-table">
 		<tr>
@@ -878,11 +917,8 @@ Generated On : {{getCurrentDate()}}
 	</table>
     
     <div class="disclaimer">
-<p>Office of the Property Appraiser is continually editing and updating the tax roll.  This website is periodically updated, but the information may not reflect the most current information on file in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-<p>
-Generated On : {{getCurrentDate()}}
-</p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
    
 </div>
@@ -894,18 +930,19 @@ Generated On : {{getCurrentDate()}}
   <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
 </div>
 
+<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
 
 <!-- START : Property Information -->
 			
-				<table class="print-table">
+				<table class="print-table property-info-details">
 					<tr>
 						<th class="tableHeader" colspan="2">
-							Property Information {{property.rollYear3}}
+							Property Information
 						</th>
 					</tr>
 					<tr>
 						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber}} {{showFolioStatus()}}</td>
+                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
 						<td class="pi_mailing_address"><strong>Property Address</strong></td>
@@ -933,6 +970,8 @@ Generated On : {{getCurrentDate()}}
 				</table>
 
 			<!-- END : Property Information -->
+            
+            <div class="sub-title"><span>Roll Year <strong>{{property.rollYear3}}</strong> Land, Building and Extra-Feature Details</span></div>
 
 <table class="print-table">
 		<tr>
@@ -1043,13 +1082,105 @@ Generated On : {{getCurrentDate()}}
 	</table>
     
     <div class="disclaimer">
-<p>Office of the Property Appraiser is continually editing and updating the tax roll.  This website is periodically updated, but the information may not reflect the most current information on file in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see Miami-Dade County full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-<p>
-Generated On : {{getCurrentDate()}}
-</p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
    
+</div>
+
+<div class="print-break" ng-show="reportType == 'details'">
+
+<div class="header add-header">
+  <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+</div>
+
+<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
+
+<!-- START : Property Information -->
+			
+				<table class="print-table property-info-details">
+					<tr>
+						<th class="tableHeader" colspan="2">
+							Property Information
+						</th>
+					</tr>
+					<tr>
+						<td><strong style="display:inline">Folio:</strong></td>
+                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
+					</tr>
+					<tr>
+						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+                        <td>
+							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
+								<span ng-repeat="address in property.siteAddresses">
+									<div class="property-add" ng-show="$index < 1">
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetNumber}} </span>
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetPrefix}} </span>
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetName}}</span>
+										<span ng-show="address.address" ng-class="{'inline':address.address}">{{address.streetSuffix}}</span>
+										<span class="inline">{{address.unit}}</span>
+									</div>
+									<span ng-show="$index >= 1">
+										<span class="inline">{{address.streetNumber}}</span>
+										<span class="inline">{{address.streetPrefix}}</span>
+										<span class="inline">{{address.streetName}}</span>
+										<span class="inline">{{address.streetSuffix}}</span>
+										<span class="inline">{{address.unit}}</span>
+									</span>
+								</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			<!-- END : Property Information -->
+
+            <!-- START : Full Legal Description (Detailed)-->
+	
+				<table class="print-table">
+					<tr>
+						<th class="tableHeader">Full Legal Description</th>
+					</tr>
+							<tr ng-repeat="description in property.legalDescription.parsedDescription">
+							  <td>{{description}}</td>
+							</tr>  
+				</table>
+
+			<!-- END : Full Legal Description (Detailed)-->
+            
+            <!-- START : Sales Information (Detailed)-->
+
+				<table class="print-table">
+					<tr>
+						<th class="tableHeader" colspan="6">Sales Information</th>
+					</tr>
+					<tr class="header-row">
+						<td>Previous Sale</td>
+						<td class="text-right">Price</td>
+						<td class="text-center">OR Book-Page</td>
+						<td class="text-center">Qualification Description</td>
+						<td ng-show="salesInfoGrantorName1">Previous Owner 1</td>
+						<td ng-show="salesInfoGrantorName2">Previous Owner 2</td>
+					</tr>
+                            
+                            <tr ng-repeat="sale in property.salesInfo | orderBy:'-dateOfSale'">
+							  <td>{{sale.dateOfSale | date:'MM/dd/yyyy' }}</td>
+							  <td class="text-right">{{sale.salePrice | noCentsCurrency:"$"}}</td>
+							  <td class="text-center">{{sale.officialRecordBook}}-{{sale.officialRecordPage}}</td>
+							  <td>{{sale.qualificationDescription}}</td>
+							  <td ng-show="salesInfoGrantorName1">{{sale.grantorName1}}</td>
+							  <td ng-show="salesInfoGrantorName2">{{sale.grantorName2}}</td>
+							</tr>
+				</table>
+
+			<!-- END : Sales Information (Detailed)-->
+<div class="disclaimer">
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
+</div>
+
+
+
 </div>
             
 
