@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
-      console.log("map has been clicked");
+      $log.debug("Map has been clicked");
       var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
       folio.then(function(folioValue){
         if(folioValue !== "") {
@@ -17,7 +17,7 @@ angular.module('propertySearchApp')
 
     // IMPORTANT - Do not move
     $scope.drawEndHandler  = function (geometry){
-      console.log("DrawEnd Handler completed.");
+      $log.debug("DrawEnd Handler completed.");
       $scope.drawToolBar.deactivate();
       $scope.map.setExtent(geometry);
     };
@@ -44,7 +44,7 @@ angular.module('propertySearchApp')
       //esri.config.defaults.io.corsEnabledServers.push("gisweb.miamidade.gov");
 
       map.on('load',function(){
-        console.log("OnLoad is called");
+        $log.debug("OnLoad is called");
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
         map.hideZoomSlider();
@@ -382,12 +382,90 @@ angular.module('propertySearchApp')
 		$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
-        var myPromise = $scope.getPropertyByFolio(folio);
+        $scope.getPropertyByFolio(folio);
+
       }
     };
     
-    $scope.getPropertyByFolio = function(folio){
 
+    var getProperty = function (folio){
+      var propertyPromise = propertySearchService.getPropertyByFolio(folio);
+
+      return propertyPromise.then(function(property){
+        $log.debug("property with folio", folio, property);
+        $scope.property = property;
+	$scope.setPropertySiteAddress(property);
+	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+	$scope.activeRollYearTab = $scope.property.rollYear1;    
+
+        // When parent folio exists use it to get the polygon.
+        var folioPolygon = "";
+        if($scope.property.propertyInfo.parentFolio !== "")
+          folioPolygon = $scope.property.propertyInfo.parentFolio;
+        else
+          folioPolygon = folio;
+        
+        $log.debug("Folio to search for polygon", folioPolygon);
+        return folioPolygon;
+
+      }, function(error){
+        $log.error("getProperty:propertyPromise error", error);
+	$scope.property = null;
+	$scope.showErrorDialog(error.message, true);
+        $q.reject(error);
+      });
+    }            
+
+
+    var getPolygon = function(folio){
+
+      var polygonPromise = esriGisService.getPolygonFromFolio($scope, folio);
+
+      return polygonPromise.then(function(polygon){
+
+        // add polygon
+        $scope.property.location = {polygon:polygon};
+        var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+        $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+
+        // add point 
+        var coords = {x:polygon.getExtent().getCenter().x,
+                      y:polygon.getExtent().getCenter().y};
+        var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
+        $scope.map.getLayer("parcelPoint").add(pointGraphic);
+	$scope.property.location.x = coords.x;
+	$scope.property.location.y = coords.y;
+
+        $scope.map.setExtent(polygon.getExtent(), true);
+        $log.debug("getPolygon:center coords in polygon", coords);
+        return(coords);
+        
+
+      }, function(error){
+        $log.error("getPolygon:error- ", error);
+	$scope.mapZoomToFullExtent();
+        var message = "Map could not be displayed.";
+	$scope.showErrorDialog(message);
+
+        $q.reject(error);
+      });
+
+    }
+
+    
+    var getLatitudeLongitude = function(coords){
+      var latLongPromise = esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y);
+
+      return latLongPromise.then(function(location){
+        $log.debug("getLatitudeLongitude: latitude longitude", location);
+        $scope.property.location.latitude = location.latitude;
+        $scope.property.location.longitude = location.longitude;
+
+      });
+    }
+
+
+    $scope.getPropertyByFolio = function(folio){
 
       // Clear previous data.
       clearResults();
@@ -396,71 +474,98 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("layers").clear();
       $scope.map.getLayer("parcelBoundary").clear();
       $scope.map.getLayer("parcelPoint").clear();
-      $scope.resetLayers();
+      //$scope.resetLayers();
       $scope.hideMap = false;
 
-      var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
-	$scope.property = property;
-	$scope.setPropertySiteAddress(property);
-	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-	$scope.activeRollYearTab = $scope.property.rollYear1;
-
-        // When parent folio exists use it to get the polygon.
-        var folioPolygon = "";
-        // Get xy for property and display it in map.
-        if($scope.property.propertyInfo.parentFolio !== "")
-          folioPolygon = $scope.property.propertyInfo.parentFolio;
-        else
-          folioPolygon = folio;
- 
-        esriGisService.getPolygonFromFolio($scope, folioPolygon).then(
-          function(polygon){
-
-            // add polygon
-            $scope.property.location = {polygon:polygon};
-            var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
-            $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
-
-            // add point 
-            var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
-            var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
-            $scope.map.getLayer("parcelPoint").add(pointGraphic);
-	    $scope.property.location.x = coords.x;
-	    $scope.property.location.y = coords.y;
-
-            // zoom into parcel
-//	    var geometry = {
-//	      "x":coords.x,
-//	      "y":coords.y,
-//	      "spatialReference":{"wkid":2236}
-//	    };
-//	    $scope.map.centerAndZoom(geometry, 10);
-            $scope.map.setExtent(polygon.getExtent(), true);
-
-            // get latitude and longitude - pictometry needs it.
-            esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
-              .then(function(location){
-                $scope.property.location.latitude = location.latitude;
-                $scope.property.location.longitude = location.longitude;
-                console.log(location);
-              }
-           );
-
-            
-
-          }, function(error){
-            console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
-			$scope.mapZoomToFullExtent();
-            var message = "Map could not be displayed.";
-			$scope.showErrorDialog(message);
+      getProperty(folio)
+        .then(getPolygon)
+        .then(getLatitudeLongitude)
+        .then(function(){
+          _.each($scope.layers, function(layer){
+            $scope.turnLayerOnOff(layer);
+          });
+        })
+        .catch(function(error){
+          $log.error("getPropertyByFolio:catch", error);
         });
+    }
+    
 
-      }, function(error){
-		$scope.property = null;
-		$scope.showErrorDialog(error.message, true);
-      });
-      
-    };
+//    $scope.getPropertyByFolio = function(folio){
+//
+//
+//      // Clear previous data.
+//      clearResults();
+//
+//      $scope.map.graphics.clear();
+//      $scope.map.getLayer("layers").clear();
+//      $scope.map.getLayer("parcelBoundary").clear();
+//      $scope.map.getLayer("parcelPoint").clear();
+//      $scope.resetLayers();
+//      $scope.hideMap = false;
+//
+//      var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
+//	$scope.property = property;
+//	$scope.setPropertySiteAddress(property);
+//	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
+//	$scope.activeRollYearTab = $scope.property.rollYear1;
+//
+//        // When parent folio exists use it to get the polygon.
+//        var folioPolygon = "";
+//        // Get xy for property and display it in map.
+//        if($scope.property.propertyInfo.parentFolio !== "")
+//          folioPolygon = $scope.property.propertyInfo.parentFolio;
+//        else
+//          folioPolygon = folio;
+//        
+//        esriGisService.getPolygonFromFolio($scope, folioPolygon).then(
+//          function(polygon){
+//
+//            // add polygon
+//            $scope.property.location = {polygon:polygon};
+//            var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+//            $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+//
+//            // add point 
+//            var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
+//            var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
+//            $scope.map.getLayer("parcelPoint").add(pointGraphic);
+//	    $scope.property.location.x = coords.x;
+//	    $scope.property.location.y = coords.y;
+//
+//            // zoom into parcel
+//            //	    var geometry = {
+//            //	      "x":coords.x,
+//            //	      "y":coords.y,
+//            //	      "spatialReference":{"wkid":2236}
+//            //	    };
+//            //	    $scope.map.centerAndZoom(geometry, 10);
+//            $scope.map.setExtent(polygon.getExtent(), true);
+//
+//            // get latitude and longitude - pictometry needs it.
+//            esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
+//              .then(function(location){
+//                $scope.property.location.latitude = location.latitude;
+//                $scope.property.location.longitude = location.longitude;
+//                console.log(location);
+//              }
+//                   );
+//
+//            
+//
+//          }, function(error){
+//            console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
+//	    $scope.mapZoomToFullExtent();
+//            var message = "Map could not be displayed.";
+//	    $scope.showErrorDialog(message);
+//          });
+//
+//      }, function(error){
+//	$scope.property = null;
+//	$scope.showErrorDialog(error.message, true);
+//      });
+//      
+//    };
     
     $scope.getCandidatesHeight = function(){
       if($scope.candidatesList == null)
@@ -481,12 +586,12 @@ angular.module('propertySearchApp')
 
     $scope.candidatesPaginationSuccess = function(result){
       $scope.candidatesList.candidates = _.union($scope.candidatesList.candidates, result.candidates);
-      console.log("candidates updated", $scope.candidatesList);
+      $log.debug("candidates updated", $scope.candidatesList);
     };
     $scope.candidatesPaginationFailure = function(error) {
       $scope.fromPage = $scope.fromPage - $scope.itemsPerFetch;
       $scope.toPage = $scope.toPage - $scope.itemsPerFetch;
-      console.log("error when fetching nextPage of candidates"+error);
+      $log.error("error when fetching nextPage of candidates", error);
     };
     
     $scope.fetchNextPage = function() {
@@ -544,7 +649,7 @@ angular.module('propertySearchApp')
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-		console.log("getCandidatesByOwner error "+error);
+		$log.error("getCandidatesByOwner error ", error);
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
     };
@@ -618,7 +723,7 @@ angular.module('propertySearchApp')
 
       }, function(error){
 	    $scope.property = null;
-		console.log("getCandidatesByPartialFolio error "+error);
+		$log.error("getCandidatesByPartialFolio error ", error);
 		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
       });
 
