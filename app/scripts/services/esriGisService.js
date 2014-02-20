@@ -111,7 +111,23 @@ angular.module('propertySearchApp')
       } ,function(error){return error;});
     };
 
-    var municipalityFromPoint = function($scope, layer, x, y){
+    
+    var featureFromPointLayerIntersection = function($scope, layer, x, y){
+      var url = layer.url;
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
+        if(featureSet.features.length > 0){
+          return {geometry:featureSet.features[0].geometry, 
+           attributes:featureSet.features[0].attributes}
+        }
+
+        else
+          return null;
+        
+      } ,function(error){return error;});
+      
+    };
+
+    var geometryFromPointLayerIntersection = function($scope, layer, x, y){
       var url = layer.url;
       return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
         if(featureSet.features.length > 0)
@@ -120,7 +136,6 @@ angular.module('propertySearchApp')
           return null;
         
       } ,function(error){return error;});
-
       
     };
     
@@ -163,7 +178,8 @@ angular.module('propertySearchApp')
             getPolygonFromFolio:polygonFromFolio,
             getGraphicMarkerFromPolygon:graphicMarkerFromPolygon,
             getFolioFromPoint:folioFromPoint,
-            getMunicipalityFromPoint:municipalityFromPoint
+            getGeometryFromPointLayerIntersection:geometryFromPointLayerIntersection,
+            getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection
            };
 
   }]);

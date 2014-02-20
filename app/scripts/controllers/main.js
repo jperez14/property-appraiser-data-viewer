@@ -219,20 +219,34 @@ angular.module('propertySearchApp')
       });
     };
     
+    $scope.layerData = {};
+    $scope.showLayerData = function(){
+      return ! _.isEqual($scope.layerData,{})
+    }
+    
+    
+
     $scope.turnLayerOnOff = function(layer){
 
       if (layer.value === true){
-        var geometry = esriGisService.getMunicipalityFromPoint($scope, layer, $scope.property.location.x, $scope.property.location.y);
-        geometry.then(function(geometry){
-          var myPolygon = {"geometry":geometry, "symbol":layer.layerSymbol, "attributes":layer};
+        var featurePromise = esriGisService.getFeatureFromPointLayerIntersection($scope, layer, $scope.property.location.x, $scope.property.location.y);
+
+        featurePromise.then(function(feature){
+
+          var myPolygon = {"geometry":feature.geometry, "symbol":layer.layerSymbol, "attributes":layer};
 	  var gra = new esri.Graphic(myPolygon);
 	  $scope.map.getLayer("layers").add(gra);
+
+          $scope.layerData[layer.label] = feature.attributes[layer.attributes[0]];
         });
       }else{
         _.each($scope.map.getLayer("layers").graphics, function(graphicLayer){
           if(graphicLayer.attributes !== null)
-            if(graphicLayer.attributes.label === layer.label)
+            if(graphicLayer.attributes.label === layer.label){
 	      $scope.map.getLayer("layers").remove(graphicLayer);              
+              delete $scope.layerData[layer.label];
+            }
+
         });
       }
       
