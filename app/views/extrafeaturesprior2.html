@@ -17,7 +17,7 @@
 			<td>Description</td>
 			<td class="text-center">Year Built</td>
 			<td class="text-right fixed-width">Units</td>
-			<td class="text-right fixed-width">Adj Rate</td>
+
 			<td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
@@ -27,7 +27,7 @@
 			<td class="text-center">{{feature.actualYearBuilt}}</td>
 
 			<td class="text-right fixed-width">{{feature.units | number}}</td>
-			<td class="text-right fixed-width">{{feature.adjustedUnitPrice | centsCurrency:"$"}}</td>
+
 			<td class="text-right fixed-width">{{feature.depreciatedValue | noCentsCurrency:"$"}}</td>
 
 		</tr>

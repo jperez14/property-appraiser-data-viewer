@@ -18,7 +18,7 @@
 			<td class="text-center">PA Zone</td>
 			<td class="text-center">Unit Type</td>
 			<td class="text-right fixed-width">Units</td>
-			<td class="text-right fixed-width">Adj Rate</td>
+
 			<td class="text-right fixed-width">Calc Value</td>
 		</tr>
 
@@ -28,7 +28,7 @@
 			<td class="text-center">{{land.zone}}</td>
 			<td class="text-center">{{land.unitType}}</td>
 			<td class="text-right fixed-width">{{land.units | number:2}}</td>
-			<td class="text-right fixed-width">{{land.adjustedUnitPrice | centsCurrency:"$"}}</td>
+
 			<td class="text-right fixed-width">{{land.calculatedValue | noCentsCurrency:"$"}}</td>
 
 		</tr>
