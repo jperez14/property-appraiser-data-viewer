@@ -290,9 +290,9 @@
           </div>
           
           <div class="active-layers" ng-show="showLayerData()">
-            <span id="layer-muni">{{layerData.Municipality}}</span>
-            <span id="layer-district">{{layerData['Commission District']}}</span>
-            <span id="layer-zoning">{{layerData['PA Zoning']}}</span>
+            <span id="layer-muni" ng-show="layerData.Municipality">{{layerData.Municipality}}</span>
+            <span id="layer-district" ng-show="layerData['Commission District']">{{layerData['Commission District']}}</span>
+            <span id="layer-zoning" ng-show="layerData['PA Zoning']">{{layerData['PA Zoning']}}</span>
           </div>
           
           
