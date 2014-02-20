@@ -1,68 +1,185 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .constant('paConfiguration', {
-    initialExtentJson:{"xmin":807259.5478381776,"ymin":451155.83217993786,"xmax":965259.5478381779,"ymax":570822.4988466047,"spatialReference":{"wkid":2236}},
-    wkidJson:{wkid:2236},
-    urlPropertyAppraiser:"/PApublicServiceProxy/PaServicesProxy.ashx",
-    urlAerialMap:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/MDCImagery/MapServer",
-    urlStreetMap:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MapCache/BaseMap/MapServer",
-    urlCoordFromFolio:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/19",
-    urlParcelLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/8",
-    urlParcelBoundariesLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/1",
-    urlMunicipalityLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/2",
-    urlGeometryService:"http://gisweb.miamidade.gov/ArcGIS/rest/services/Geometry/GeometryServer/",
+  .service('esriGisService',['$q', 'paConfiguration',  function ($q, paConfig) {
 
-    layers:[{label:"Municipality", value:false, url:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/2", layerSymbol:{"color":[0,34,102,100],
-                                      "outline":{"color":[0,34,102,255],
-                                                 "width":1,
-                                                 "type":"esriSLS",
-                                                 "style":"esriSLSSolid"},
-                                      "type":"esriSFS",
-                                      "style":"esriSFSSolid"},
-            attributes:['NAME']},
-            {label:"Commission District", value:false, url:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/9",layerSymbol:{"color":[166,42,42, 100],
-                                      "outline":{"color":[166,42,42,255],
-                                                 "width":1,
-                                                 "type":"esriSLS",
-                                                 "style":"esriSLSSolid"},
-                                      "type":"esriSFS",
-                                      "style":"esriSFSSolid"},
-            attributes:['ID']},
-            {label:"PA Zoning", value:false, url:"http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_test/MapServer/9", layerSymbol:{"color":[0,100,0,100],
-                                      "outline":{"color":[0,100,0,255],
-                                                 "width":1,
-                                                 "type":"esriSLS",
-                                                 "style":"esriSLSSolid"},
-                                      "type":"esriSFS",
-                                      "style":"esriSFSSolid"},
-            attributes:['ZONEDESC']}],
+    var queryLayer = function($scope, url, whereClause, returnGeometry){
+      
+      // build query.
+      var queryTask = new esri.tasks.QueryTask(url);
+      var query = new esri.tasks.Query();
+      query.returnGeometry = returnGeometry;
+      query.where = whereClause;
+      query.outFields = ["*"];
+
+      // execute query.
+      var deferred = $q.defer();
+      queryTask.execute(query,function (featureSet) {
+        deferred.resolve(featureSet);
+        $scope.$apply();
+      }, function (error) {
+        deferred.reject(error);
+        $scope.$apply();
+      });
+
+      // return promise.
+      return deferred.promise.then(
+        function(featureSet){
+          return featureSet}, 
+        function(error){
+          return $q.reject(error);
+        }
+      );
+
+    }
+        
+    var xyFromFolio = function($scope, folio){
+
+      var url = paConfig.urlCoordFromFolio;       
+      var whereClause = "CHILD=" + folio;
+      return queryLayer($scope, url, whereClause, false).then(
+        function(featureSet){
+	  if(featureSet.features != undefined && featureSet.features.length > 0) {
+	    return {
+	      "x":featureSet.features[0].attributes.X_COORD,
+	      "y":featureSet.features[0].attributes.Y_COORD};
+	  }else{
+            var message = "No xy found for folio " + folio;
+	    return $q.reject({error:featureSet, message:message});
+	  }
+        }, 
+        function(error){
+          var message = "error when trying to get xy from folio. "
+          return $q.reject({"error":error, "message":message});
+          //return {"error":error, "message":message}; 
+        }
+      );
+
+    };
+
+    var graphicMarkerFromXY = function(x, y){
+      	  var point = {
+            "geometry":{
+	      "x":x,
+	      "y":y,
+	      "spatialReference":{"wkid":2236}},
+            "symbol":paConfig.propertyMarkerPictureSymbol
+          };
+	  
+      return new esri.Graphic(point);
+    }
+    
+
+    var polygonFromFolio = function($scope, folio){
+
+      var url = paConfig.urlParcelBoundariesLayer;
+      var whereClause = "FOLIO=" + folio;
+      return queryLayer($scope, url, whereClause, true).then(
+        function(featureSet){
+	  if(featureSet.features != undefined && featureSet.features.length > 0) {
+            return featureSet.features[0].geometry;
+	  }else{
+            var message = "No polygon found for folio " + folio;
+            return $q.reject({"error":featureSet, "message":message});
+          }
+        }, 
+        function(error){
+          var message = "error  when getting polygonFormFolio";
+          return $q.reject({"error":error, "message":message});
+        }
+      );
+
+    };
 
 
-    propertyMarkerSymbol:{"color":[255,0,0,128],
-			  "size":6,
-                          "angle":0,
-                          "xoffset":0,
-                          "yoffset":0,
-                          "type":"esriSMS",
-			  "style":"esriSMSSquare",
-			  "outline":{"color":[0,0,0,255],
-                                     "width":1,
-                                     "type":"esriSLS",
-                                     "style":"esriSLSSolid"}
-                         },
-    propertyMarkerPictureSymbol:{
-      "url":"images/map-pin-64.png", 
-      "height":40,
-      "width":40,
-      "type":"esriPMS",
-      "angle": 0
-    },
-    propertyBoundarySymbol:{"color":[0,0,0,0],
-                            "outline":{"color":[255,0,0,255],
-                                       "width":2,
-                                       "type":"esriSLS",
-                                       "style":"esriSLSSolid"},
-                            "type":"esriSFS",
-                            "style":"esriSFSSolid"}
-  });
+    var graphicMarkerFromPolygon = function(polygon){
+
+	  var boundary = {"geometry":polygon,
+                          "symbol":paConfig.propertyBoundarySymbol};
+	  return new esri.Graphic(boundary);
+    };
+
+
+    var folioFromPoint = function ($scope, x, y){
+      var url = paConfig.urlParcelLayer;
+      return featuresFromPointLayerIntersection($scope, x, y, url, false).then(function(featureSet){
+        if(featureSet.features.length > 0)
+          return featureSet.features[0].attributes.FOLIO;
+        else
+          return "";
+        
+      } ,function(error){return error;});
+    };
+
+    
+    var featureFromPointLayerIntersection = function($scope, layer, x, y){
+      var url = layer.url;
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
+        if(featureSet.features.length > 0){
+          return {geometry:featureSet.features[0].geometry, 
+           attributes:featureSet.features[0].attributes}
+        }
+
+        else
+          return null;
+        
+      } ,function(error){return error;});
+      
+    };
+
+    var geometryFromPointLayerIntersection = function($scope, layer, x, y){
+      var url = layer.url;
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
+        if(featureSet.features.length > 0)
+          return featureSet.features[0].geometry;
+        else
+          return null;
+        
+      } ,function(error){return error;});
+      
+    };
+    
+    var featuresFromPointLayerIntersection = function ($scope, x, y, url, returnGeometry){
+      // build hte query.
+      var point = new esri.geometry.Point(x, y, new esri.SpatialReference(paConfig.wkidJson));
+      var query = new esri.tasks.Query();
+      query.geometry = point;
+      query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_INTERSECTS;
+      query.returnGeometry = returnGeometry;
+      query.outFields = ["*"];
+      query.outSpatialReference = paConfig.wkidJson; 
+
+      // execute the query.
+      var queryTask = new esri.tasks.QueryTask(url);
+
+      var deferred = $q.defer();
+      queryTask.execute(query,function (featureSet) {
+        deferred.resolve(featureSet);
+        $scope.$apply();
+      }, function (error) {
+        deferred.reject(error);
+        $scope.$apply();
+      });
+
+
+      return deferred.promise.then(function(featureSet){
+        console.log("featureSet",featureSet);
+        return featureSet}, function(error){
+          console.log('Getting pointFromFolio ERROR: ',error);
+          return error;});
+
+    };
+
+    
+
+    // public API
+    return {getXYFromFolio:xyFromFolio,
+            getGraphicMarkerFromXY:graphicMarkerFromXY,
+            getPolygonFromFolio:polygonFromFolio,
+            getGraphicMarkerFromPolygon:graphicMarkerFromPolygon,
+            getFolioFromPoint:folioFromPoint,
+            getGeometryFromPointLayerIntersection:geometryFromPointLayerIntersection,
+            getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection
+           };
+
+  }]);
