@@ -11,7 +11,6 @@ angular.module('propertySearchApp')
       query.returnGeometry = returnGeometry;
       query.where = whereClause;
       query.outFields = ["*"];
-
       // execute query.
       var deferred = $q.defer();
       queryTask.execute(query,function (featureSet) {
@@ -36,7 +35,7 @@ angular.module('propertySearchApp')
     var xyFromFolio = function($scope, folio){
 
       var url = paConfig.urlCoordFromFolio;       
-      var whereClause = "CHILD=" + folio;
+      var whereClause = "CHILD='" + folio + "'";
       return queryLayer($scope, url, whereClause, false).then(
         function(featureSet){
 	  if(featureSet.features != undefined && featureSet.features.length > 0) {
@@ -73,7 +72,7 @@ angular.module('propertySearchApp')
     var polygonFromFolio = function($scope, folio){
 
       var url = paConfig.urlParcelBoundariesLayer;
-      var whereClause = "FOLIO=" + folio;
+      var whereClause = "FOLIO='" + folio + "'";
       return queryLayer($scope, url, whereClause, true).then(
         function(featureSet){
 	  if(featureSet.features != undefined && featureSet.features.length > 0) {
