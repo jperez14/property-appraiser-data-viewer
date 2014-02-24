@@ -370,19 +370,19 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidateFolio = function(folio, savePrevious) {
-		$scope.folio = folio;
-		if(isUndefinedOrNull(savePrevious)) {
-			$scope.previousCandidatesList = $scope.candidatesList;
-		}
-		$scope.searchByFolio();
-	};
-	
-	$scope.populatePreviousCandidates = function() {
-		$scope.candidatesList = $scope.previousCandidatesList;
-		$scope.previousCandidatesList = null;
-		$scope.property = null;
-		$scope.hideMap = true;
-	};
+      $scope.folio = folio;
+      if(isUndefinedOrNull(savePrevious)) {
+	$scope.previousCandidatesList = $scope.candidatesList;
+      }
+      $scope.searchByFolio();
+    };
+    
+    $scope.populatePreviousCandidates = function() {
+      $scope.candidatesList = $scope.previousCandidatesList;
+      $scope.previousCandidatesList = null;
+      $scope.property = null;
+      $scope.hideMap = true;
+    };
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
@@ -400,7 +400,6 @@ angular.module('propertySearchApp')
 
       }
     };
-    
 
     var getProperty = function (folio){
       var propertyPromise = propertySearchService.getPropertyByFolio(folio);
@@ -428,15 +427,13 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog(error.message, true);
         $q.reject(error);
       });
-    }            
+    };            
 
 
     var getPolygon = function(folio){
-
       var polygonPromise = esriGisService.getPolygonFromFolio($scope, folio);
 
       return polygonPromise.then(function(polygon){
-
         // add polygon
         $scope.property.location = {polygon:polygon};
         var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
@@ -464,7 +461,7 @@ angular.module('propertySearchApp')
         $q.reject(error);
       });
 
-    }
+    };
 
     
     var getLatitudeLongitude = function(coords){
@@ -476,7 +473,7 @@ angular.module('propertySearchApp')
         $scope.property.location.longitude = location.longitude;
 
       });
-    }
+    };
 
 
     $scope.getPropertyByFolio = function(folio){
@@ -502,7 +499,7 @@ angular.module('propertySearchApp')
         .catch(function(error){
           $log.error("getPropertyByFolio:catch", error);
         });
-    }
+    };
     
 
 //    $scope.getPropertyByFolio = function(folio){
