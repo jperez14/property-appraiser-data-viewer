@@ -592,7 +592,8 @@ table tr.table-message td div {
 }
 
 #site_nav li {
-	width:14.2585%;
+	/*width:14.2585%;*/
+	width:11.05%;
 }
 
 
@@ -742,7 +743,8 @@ media queries below... do not place styles below this line.
 ------------------------------------------------------*/
 
 @media (max-width: 1032px) { 
-#site_nav li a {height:75px;}
+/*#site_nav li a {height:75px;}*/
+#site_nav {font-size:16px;}
 }
 
 @media (max-width: 1000px) {
@@ -766,9 +768,9 @@ media queries below... do not place styles below this line.
 }
 
 @media (max-width: 767px) {
-#site_nav {border:none;}
-#site_nav li {width:100%;}
-#site_nav li a {height:55px;}
+#site_nav {border:none; font-size:18px;}
+#site_nav li {width:100% !important;}
+#site_nav li a {height:55px; border-right:none;}
 .navbar-default {background-color: #fff;}
 .search_text {width:100px;}
 div.search_area .nav-tabs {padding-left:10px;}
