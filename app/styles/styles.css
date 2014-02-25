@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .pop-icon {
-	display:none;
+	/*display:none;*/
 }
 
 .prev-search a {
@@ -760,6 +760,9 @@ media queries below... do not place styles below this line.
 .mb-zoombox {display:none}
 
 .fixed-width {width:100px;}
+
+.pop-icon {display:none;}
+
 }
 
 @media (max-width: 767px) {
