@@ -645,41 +645,41 @@ angular.module('propertySearchApp')
 	}
       }, function(error){
 		$log.error("getCandidatesByOwner error ", error);
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+		$scope.showErrorDialog("The request failed. Please try again later", true);
       });
     };
 
     $scope.getCandidatesByAddress = function(){
-	  $scope.hideMap = true;
+      $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter a valid Address", true);
-		return true;
-	  }
-	  else if(isNumber($scope.address)){
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
-		return true;
-	  }
-	  else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
-			  $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
-			  $scope.address.indexOf("#") >= 0 ) {
-		$scope.property = null;
-		$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
-		return true;
-	  }
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address", true);
+	return true;
+      }
+      else if(isNumber($scope.address)){
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+	return true;
+      }
+      else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
+	      $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+	      $scope.address.indexOf("#") >= 0 ) {
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
+	return true;
+      }
       $scope.isAddressCandidates = true;
-	  $scope.loader = true; //flag hackeysack
-	  $scope.property = null;
+      $scope.loader = true; //flag hackeysack
+      $scope.property = null;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio, false);
-      }
+	    $scope.getCandidateFolio(result.candidates[0].folio, false);
+          }
 	  else if(result.candidates.length > 1) {
 	    $scope.candidatesList = result;
 	  }
@@ -688,28 +688,28 @@ angular.module('propertySearchApp')
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
 
     };
 
     $scope.getCandidatesByPartialFolio = function(folio){
-	  $scope.hideMap = true;
+      $scope.hideMap = true;
       clearResults();
-		$scope.loader = true; //flag hackeysack
+      $scope.loader = true; //flag hackeysack
       $scope.isPartialFolioCandidates = true;
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
 	    $scope.property = null;
-		$scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio, false);
+	    $scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1)
 	    $scope.property = null;
-	    $scope.candidatesList = result;
+	  $scope.candidatesList = result;
 	}
 	else {
 	  $scope.property = null;
@@ -717,9 +717,9 @@ angular.module('propertySearchApp')
 	}
 
       }, function(error){
-	    $scope.property = null;
-		$log.error("getCandidatesByPartialFolio error ", error);
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+	$scope.property = null;
+	$log.error("getCandidatesByPartialFolio error ", error);
+	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
 
     };
