@@ -105,7 +105,14 @@ padding-right: 0;
 	text-align:right;
 }
 
+.pi_mailing_address {
+	width:108px;
+}
 
+.property-add {
+	margin-bottom:2px;
+	margin-top:2px;
+}
 
 @media (min-width: 1200px) {
 .container {
@@ -183,7 +190,7 @@ padding-right: 0;
                         <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+						<td class="pi_mailing_address"><strong>Property Address:</strong></td>
                         <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
@@ -592,7 +599,7 @@ padding-right: 0;
 </div>
 
             <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
 
@@ -614,11 +621,10 @@ padding-right: 0;
 						</th>
 					</tr>
 					<tr>
-						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
+						<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+						<td class="pi_mailing_address"><strong>Property Address:</strong></td>
                         <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
@@ -753,7 +759,7 @@ padding-right: 0;
 	</table>
     
     <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
 </div>
    
@@ -777,11 +783,10 @@ padding-right: 0;
 						</th>
 					</tr>
 					<tr>
-						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
+						<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+						<td class="pi_mailing_address"><strong>Property Address:</strong></td>
                         <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
@@ -917,7 +922,7 @@ padding-right: 0;
 	</table>
     
     <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
    
@@ -941,11 +946,10 @@ padding-right: 0;
 						</th>
 					</tr>
 					<tr>
-						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
+						<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+						<td class="pi_mailing_address"><strong>Property Address:</strong></td>
                         <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
@@ -1082,7 +1086,7 @@ padding-right: 0;
 	</table>
     
     <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
 </div>
    
@@ -1105,11 +1109,10 @@ padding-right: 0;
 						</th>
 					</tr>
 					<tr>
-						<td><strong style="display:inline">Folio:</strong></td>
-                        <td>{{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
+						<td colspan="2"><strong style="display:inline">Folio:</strong> {{property.propertyInfo.folioNumber | folioMask}} {{showFolioStatus()}}</td>
 					</tr>
 					<tr>
-						<td class="pi_mailing_address"><strong>Property Address</strong></td>
+						<td class="pi_mailing_address"><strong>Property Address:</strong></td>
                         <td>
 							<div ng-class="{'address-overflow' : property.siteAddresses.length > 5}">
 								<span ng-repeat="address in property.siteAddresses">
@@ -1175,7 +1178,7 @@ padding-right: 0;
 
 			<!-- END : Sales Information (Detailed)-->
 <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record in our systems of record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
+<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
 <p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
 </div>
 
