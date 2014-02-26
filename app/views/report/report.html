@@ -114,6 +114,10 @@ padding-right: 0;
 	margin-top:2px;
 }
 
+.inquiries {
+	display:none;
+}
+
 @media (min-width: 1200px) {
 .container {
 	width: 780px;
@@ -165,6 +169,7 @@ padding-right: 0;
 <div class="print-container">	
     
 <p class="print-button"><button ng-click="doPrint()">Print</button></p>
+
 
 <div class="header">
   <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
@@ -598,10 +603,7 @@ padding-right: 0;
 			
 </div>
 
-            <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
-</div>
+            <div ng-include="'views/disclaimer.html'"></div>
 
 <!-- Details // Land, Building, Extra Features -->
 <div class="print-break" ng-show="reportType == 'details'">
@@ -758,10 +760,7 @@ padding-right: 0;
 		</tr>
 	</table>
     
-    <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-</div>
+    <div ng-include="'views/disclaimer.html'"></div>
    
 </div>
 
@@ -921,10 +920,7 @@ padding-right: 0;
 		</tr>
 	</table>
     
-    <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
-</div>
+    <div ng-include="'views/disclaimer.html'"></div>
    
 </div>
 
@@ -1085,10 +1081,7 @@ padding-right: 0;
 		</tr>
 	</table>
     
-    <div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>
-</div>
+    <div ng-include="'views/disclaimer.html'"></div>
    
 </div>
 
@@ -1177,10 +1170,7 @@ padding-right: 0;
 				</table>
 
 			<!-- END : Sales Information (Detailed)-->
-<div class="disclaimer">
-<p>The Office of the Property Appraiser is continually editing and updating the tax roll.  This website may not reflect the most current information on record. The Property Appraiser and Miami-Dade County assumes no liability, see full disclaimer and User Agreement at <a href="http://www.miamidade.gov/info/disclaimer.asp">http://www.miamidade.gov/info/disclaimer.asp</a></p>
-<p>For inquires and suggestions email us at <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">http://www.miamidade.gov/pa/email/ASP/formNew.asp</a></p>      
-</div>
+<div ng-include="'views/disclaimer.html'"></div>
 
 
 
