@@ -5,26 +5,20 @@ angular.module('propertySearchApp')
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
-      $log.debug("Map has been clicked");
-      var folio = esriGisService.getFolioFromPoint($scope, event.mapPoint.x, event.mapPoint.y);
-      folio.then(function(folioValue){
-        if(folioValue !== "") {
-          $scope.getPropertyByFolio(folioValue);
-        }
-
-      }, function(error){});
+      $log.debug("mapClicked: Map has been clicked:", event.mapPoint.x, event.mapPoint.y);
+      $scope.getPropertyByXY(event.mapPoint.x, event.mapPoint.y);
     };
 
     // IMPORTANT - Do not move
     $scope.drawEndHandler  = function (geometry){
-      $log.debug("DrawEnd Handler completed.");
+      $log.debug("DrawEndHandler: completed.");
       $scope.drawToolBar.deactivate();
       $scope.map.setExtent(geometry);
     };
 
     var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)};
 
-	var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
+    var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
 
     var isAlphabetic = function(val) {
 		var expr = new RegExp("^[a-zA-Z-' ]*$");
@@ -370,19 +364,19 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidateFolio = function(folio, savePrevious) {
-		$scope.folio = folio;
-		if(isUndefinedOrNull(savePrevious)) {
-			$scope.previousCandidatesList = $scope.candidatesList;
-		}
-		$scope.searchByFolio();
-	};
-	
-	$scope.populatePreviousCandidates = function() {
-		$scope.candidatesList = $scope.previousCandidatesList;
-		$scope.previousCandidatesList = null;
-		$scope.property = null;
-		$scope.hideMap = true;
-	};
+      $scope.folio = folio;
+      if(isUndefinedOrNull(savePrevious)) {
+	$scope.previousCandidatesList = $scope.candidatesList;
+      }
+      $scope.searchByFolio();
+    };
+    
+    $scope.populatePreviousCandidates = function() {
+      $scope.candidatesList = $scope.previousCandidatesList;
+      $scope.previousCandidatesList = null;
+      $scope.property = null;
+      $scope.hideMap = true;
+    };
 
     $scope.searchByFolio = function(){
       var folio = $scope.folio;
@@ -400,7 +394,6 @@ angular.module('propertySearchApp')
 
       }
     };
-    
 
     var getProperty = function (folio){
       var propertyPromise = propertySearchService.getPropertyByFolio(folio);
@@ -428,15 +421,13 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog(error.message, true);
         $q.reject(error);
       });
-    }            
+    };            
 
 
     var getPolygon = function(folio){
-
       var polygonPromise = esriGisService.getPolygonFromFolio($scope, folio);
 
       return polygonPromise.then(function(polygon){
-
         // add polygon
         $scope.property.location = {polygon:polygon};
         var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
@@ -464,7 +455,7 @@ angular.module('propertySearchApp')
         $q.reject(error);
       });
 
-    }
+    };
 
     
     var getLatitudeLongitude = function(coords){
@@ -476,8 +467,74 @@ angular.module('propertySearchApp')
         $scope.property.location.longitude = location.longitude;
 
       });
-    }
+    };
 
+    var getGeometryAndFolioFromXY = function(x, y){
+      var gisPropertyPromise = esriGisService.getGeometryAndFolioFromXY($scope, x, y);
+      return gisPropertyPromise.then(function(gisProperty){
+        if (gisProperty.folio !== ""){
+          clearResults();
+          $scope.map.graphics.clear();
+          $scope.map.getLayer("layers").clear();
+          $scope.map.getLayer("parcelBoundary").clear();
+          $scope.map.getLayer("parcelPoint").clear();
+
+          return gisProperty;
+        }
+        else {
+          var message = "getGeometryAndFolioFromXY: no folio found for x,y"
+          return $q.reject({"error":null, "message":message})
+        }
+
+           
+      }, function(error){
+        $log.error("getGeometryAndFolioFromXY", error);
+        $scope.showErrorDialog(error.message, true);
+        return $q.reject(error);
+      });  
+    };
+
+    var getPropertyAndAddPolygon = function(gisProperty){
+      return getProperty(gisProperty.folio).then(function(foio){
+        
+        // add polygon
+        var polygon = gisProperty.geometry;
+        $scope.property.location = {polygon:polygon};
+        var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+        $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+
+        // add point 
+        var coords = {x:polygon.getExtent().getCenter().x,
+                      y:polygon.getExtent().getCenter().y};
+        var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
+        $scope.map.getLayer("parcelPoint").add(pointGraphic);
+	$scope.property.location.x = coords.x;
+	$scope.property.location.y = coords.y;
+
+        $scope.map.setExtent(polygon.getExtent(), true);
+        $log.debug("getPolygon:center coords in polygon", coords);
+        return(coords);
+
+      });
+    };
+
+
+    $scope.getPropertyByXY = function(x, y){
+
+      getGeometryAndFolioFromXY(x, y)
+      .then(getPropertyAndAddPolygon)
+      .then(getLatitudeLongitude)
+      .then(function(){
+          _.each($scope.layers, function(layer){
+            $scope.turnLayerOnOff(layer);
+          });
+        })
+        .catch(function(error){
+          $log.error("getPropertyByXY:catch", error);
+        });
+          
+    };
+    
 
     $scope.getPropertyByFolio = function(folio){
 
@@ -502,84 +559,8 @@ angular.module('propertySearchApp')
         .catch(function(error){
           $log.error("getPropertyByFolio:catch", error);
         });
-    }
+    };
     
-
-//    $scope.getPropertyByFolio = function(folio){
-//
-//
-//      // Clear previous data.
-//      clearResults();
-//
-//      $scope.map.graphics.clear();
-//      $scope.map.getLayer("layers").clear();
-//      $scope.map.getLayer("parcelBoundary").clear();
-//      $scope.map.getLayer("parcelPoint").clear();
-//      $scope.resetLayers();
-//      $scope.hideMap = false;
-//
-//      var propertyPromise = propertySearchService.getPropertyByFolio(folio).then(function(property){
-//	$scope.property = property;
-//	$scope.setPropertySiteAddress(property);
-//	$scope.showHideSalesInfoGrantorColumns($scope.property.salesInfo);
-//	$scope.activeRollYearTab = $scope.property.rollYear1;
-//
-//        // When parent folio exists use it to get the polygon.
-//        var folioPolygon = "";
-//        // Get xy for property and display it in map.
-//        if($scope.property.propertyInfo.parentFolio !== "")
-//          folioPolygon = $scope.property.propertyInfo.parentFolio;
-//        else
-//          folioPolygon = folio;
-//        
-//        esriGisService.getPolygonFromFolio($scope, folioPolygon).then(
-//          function(polygon){
-//
-//            // add polygon
-//            $scope.property.location = {polygon:polygon};
-//            var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
-//            $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
-//
-//            // add point 
-//            var coords = {x:polygon.getExtent().getCenter().x,y:polygon.getExtent().getCenter().y};
-//            var pointGraphic = esriGisService.getGraphicMarkerFromXY(coords.x, coords.y);
-//            $scope.map.getLayer("parcelPoint").add(pointGraphic);
-//	    $scope.property.location.x = coords.x;
-//	    $scope.property.location.y = coords.y;
-//
-//            // zoom into parcel
-//            //	    var geometry = {
-//            //	      "x":coords.x,
-//            //	      "y":coords.y,
-//            //	      "spatialReference":{"wkid":2236}
-//            //	    };
-//            //	    $scope.map.centerAndZoom(geometry, 10);
-//            $scope.map.setExtent(polygon.getExtent(), true);
-//
-//            // get latitude and longitude - pictometry needs it.
-//            esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y)
-//              .then(function(location){
-//                $scope.property.location.latitude = location.latitude;
-//                $scope.property.location.longitude = location.longitude;
-//                console.log(location);
-//              }
-//                   );
-//
-//            
-//
-//          }, function(error){
-//            console.log("getPropertyByFolio:getXYFromFolio Error- ", error);
-//	    $scope.mapZoomToFullExtent();
-//            var message = "Map could not be displayed.";
-//	    $scope.showErrorDialog(message);
-//          });
-//
-//      }, function(error){
-//	$scope.property = null;
-//	$scope.showErrorDialog(error.message, true);
-//      });
-//      
-//    };
     
     $scope.getCandidatesHeight = function(){
       if($scope.candidatesList == null)
@@ -664,41 +645,41 @@ angular.module('propertySearchApp')
 	}
       }, function(error){
 		$log.error("getCandidatesByOwner error ", error);
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+		$scope.showErrorDialog("The request failed. Please try again later", true);
       });
     };
 
     $scope.getCandidatesByAddress = function(){
-	  $scope.hideMap = true;
+      $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter a valid Address", true);
-		return true;
-	  }
-	  else if(isNumber($scope.address)){
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
-		return true;
-	  }
-	  else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
-			  $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
-			  $scope.address.indexOf("#") >= 0 ) {
-		$scope.property = null;
-		$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
-		return true;
-	  }
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address", true);
+	return true;
+      }
+      else if(isNumber($scope.address)){
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+	return true;
+      }
+      else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
+	      $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+	      $scope.address.indexOf("#") >= 0 ) {
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
+	return true;
+      }
       $scope.isAddressCandidates = true;
-	  $scope.loader = true; //flag hackeysack
-	  $scope.property = null;
+      $scope.loader = true; //flag hackeysack
+      $scope.property = null;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio, false);
-      }
+	    $scope.getCandidateFolio(result.candidates[0].folio, false);
+          }
 	  else if(result.candidates.length > 1) {
 	    $scope.candidatesList = result;
 	  }
@@ -707,28 +688,28 @@ angular.module('propertySearchApp')
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
 
     };
 
     $scope.getCandidatesByPartialFolio = function(folio){
-	  $scope.hideMap = true;
+      $scope.hideMap = true;
       clearResults();
-		$scope.loader = true; //flag hackeysack
+      $scope.loader = true; //flag hackeysack
       $scope.isPartialFolioCandidates = true;
       propertySearchService.getCandidatesByPartialFolio(folio, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
 	    $scope.property = null;
-		$scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio, false);
+	    $scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1)
 	    $scope.property = null;
-	    $scope.candidatesList = result;
+	  $scope.candidatesList = result;
 	}
 	else {
 	  $scope.property = null;
@@ -736,9 +717,9 @@ angular.module('propertySearchApp')
 	}
 
       }, function(error){
-	    $scope.property = null;
-		$log.error("getCandidatesByPartialFolio error ", error);
-		$scope.showErrorDialog("Oops !! The request failed. Please try again later", true);
+	$scope.property = null;
+	$log.error("getCandidatesByPartialFolio error ", error);
+	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
 
     };

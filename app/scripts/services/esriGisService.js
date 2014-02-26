@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('esriGisService',['$q', 'paConfiguration',  function ($q, paConfig) {
+  .service('esriGisService',['$q', '$log', 'paConfiguration',  function ($q, $log, paConfig) {
 
     var queryLayer = function($scope, url, whereClause, returnGeometry){
       
@@ -110,6 +110,28 @@ angular.module('propertySearchApp')
       } ,function(error){return error;});
     };
 
+    var geometryAndFolioFromXY = function($scope, x, y){
+      var url = paConfig.urlParcelLayer;
+
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(
+        function(featureSet){
+	  if(featureSet.features != undefined && featureSet.features.length > 0) {
+            var data = {geometry:featureSet.features[0].geometry, 
+                      folio:featureSet.features[0].attributes.FOLIO};
+            return data;
+	  }else{
+            $log.debug("geometryAndFolioFromXY: No folio found in x,y ", x, y, url, featureSet);
+            return {geometry:null, folio:""}
+          }
+        }, 
+        function(error){
+          $log.error("geometryAndFolioFromXY: error ", error);
+          var message = "error  when getting geometryAndFolioFromXY";
+          return $q.reject({"error":error, "message":message});
+        }
+      );
+    };
+    
     
     var featureFromPointLayerIntersection = function($scope, layer, x, y){
       var url = layer.url;
@@ -162,9 +184,9 @@ angular.module('propertySearchApp')
 
 
       return deferred.promise.then(function(featureSet){
-        console.log("featureSet",featureSet);
+        $log.debug("featuresFromPointLayerIntersection:features",featureSet);
         return featureSet}, function(error){
-          console.log('Getting pointFromFolio ERROR: ',error);
+          $log.error('featuresFromPointLayerIntersection:error ',error);
           return error;});
 
     };
@@ -178,7 +200,8 @@ angular.module('propertySearchApp')
             getGraphicMarkerFromPolygon:graphicMarkerFromPolygon,
             getFolioFromPoint:folioFromPoint,
             getGeometryFromPointLayerIntersection:geometryFromPointLayerIntersection,
-            getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection
+            getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection,
+            getGeometryAndFolioFromXY:geometryAndFolioFromXY
            };
 
   }]);
