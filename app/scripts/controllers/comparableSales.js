@@ -3,7 +3,7 @@
 angular.module('propertySearchApp')
   .controller('ComparableSalesCtrl', ['$scope', '$routeParams', function ($scope, $routeParams){
 
-    $scope.folio = $routeParams.folio;
+    $scope.folio = $routeParams.folio || "";
     
     var postwith = function (to, d, target) {
       console.log(d);
