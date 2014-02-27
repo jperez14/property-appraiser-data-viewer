@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', 'candidateService', 'propertyService', 'paConfiguration', function($resource, $q, candidateService, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidateService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidateService, propertyService, paConfig){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -40,6 +40,7 @@ angular.module('propertySearchApp')
       return deferred.promise.then(function(property){
 	return property;
       }, function(response){
+        $log.error("propertySearchService:propertyByFolio:", urlBase, folio, response);
         return $q.reject({message:response});
       });
     };
@@ -65,7 +66,8 @@ angular.module('propertySearchApp')
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
       }, function(response){
-        return response;
+        $log.error("propertySearchService:candidatesByOwner:", urlBase, ownerName, response);
+        return $q.reject(response);
       });
 
     };
@@ -93,7 +95,8 @@ angular.module('propertySearchApp')
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
       }, function(response){
-        return response;
+        $log.error("propertySearchService:candidatesByAddress:", urlBase, address, unit, response);
+        return $q.reject(response);
       });
 
     };
@@ -120,7 +123,8 @@ angular.module('propertySearchApp')
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
       }, function(response){
-        return response;
+        $log.error("propertySearchService:candidatesByPartialFolio:", urlBase, partialFolio, response);
+        return $q.reject(response);
       });
 
     };
