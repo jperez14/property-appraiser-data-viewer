@@ -37,15 +37,16 @@ angular.module('propertySearchApp')
                                                  "style":"esriSLSSolid"},
                                       "type":"esriSFS",
                                       "style":"esriSFSSolid"},
-            attributes:['ID']},
-            {label:"PA Zoning", value:false, url:"http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_test/MapServer/9", layerSymbol:{"color":[0,100,0,100],
-                                      "outline":{"color":[0,100,0,255],
-                                                 "width":1,
-                                                 "type":"esriSLS",
-                                                 "style":"esriSLSSolid"},
-                                      "type":"esriSFS",
-                                      "style":"esriSFSSolid"},
-            attributes:['ZONEDESC']}],
+            attributes:['ID']}
+//            {label:"PA Zoning", value:false, url:"http://s0142357.miamidade.gov/ArcGIS/rest/services/MD_PropertySearchApp_test/MapServer/9", layerSymbol:{"color":[0,100,0,100],
+//                                      "outline":{"color":[0,100,0,255],
+//                                                 "width":1,
+//                                                 "type":"esriSLS",
+//                                                 "style":"esriSLSSolid"},
+//                                      "type":"esriSFS",
+//                                      "style":"esriSFSSolid"},
+//            attributes:['ZONEDESC']}
+           ],
 
 
     propertyMarkerSymbol:{"color":[255,0,0,128],
