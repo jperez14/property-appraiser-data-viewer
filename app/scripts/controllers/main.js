@@ -419,7 +419,7 @@ angular.module('propertySearchApp')
         $log.error("getProperty:propertyPromise error", error);
 	$scope.property = null;
 	$scope.showErrorDialog(error.message, true);
-        $q.reject(error);
+        return $q.reject(error);
       });
     };            
 
@@ -495,7 +495,7 @@ angular.module('propertySearchApp')
     };
 
     var getPropertyAndAddPolygon = function(gisProperty){
-      return getProperty(gisProperty.folio).then(function(foio){
+      return getProperty(gisProperty.folio).then(function(folio){
         
         // add polygon
         var polygon = gisProperty.geometry;

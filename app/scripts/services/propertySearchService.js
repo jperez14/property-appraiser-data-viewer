@@ -35,7 +35,9 @@ angular.module('propertySearchApp')
           deferred.resolve(new propertyService.Property(rawProperty));
         else
           deferred.reject(rawProperty.Message)
-      }, function(response){deferred.reject("Ooops The request failed. Try again later.")});
+      }, function(response){
+        $log.error("propertySearchService:propertyByFolio:", urlBase, folio, response);
+        deferred.reject("The request failed. Try again later.")});
       
       return deferred.promise.then(function(property){
 	return property;
