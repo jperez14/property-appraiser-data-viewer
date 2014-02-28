@@ -323,6 +323,36 @@ span.map-view:hover {
 	text-decoration:underline;
 }
 
+
+/* styles from PA website */
+
+#footer-bottom {
+	background-color:#304b86 !important;
+
+	color:#fff;
+	padding:25px 0 10px 0;
+	margin:0 -25px -25px -25px;
+	
+}
+
+.footer-bottom-container {
+	margin:10px 15px 0 0;
+	float:right;	
+}
+
+.footer-bottom-container span a {
+	padding:0 10px;
+	float:left;
+	border-left:solid 1px #fff;
+	text-decoration:underline;
+
+}
+
+.footer-bottom-container img {
+	margin:-20px 0 0 15px;
+	float:right;
+}
+
 /* loader + error modal */
 
 #load-modal, #error-modal {overflow-y:hidden;}
