@@ -528,8 +528,7 @@ angular.module('propertySearchApp')
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
           });
-        })
-        .catch(function(error){
+        })['catch'](function(error){
           $log.error("getPropertyByXY:catch", error);
         });
           
@@ -555,8 +554,7 @@ angular.module('propertySearchApp')
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
           });
-        })
-        .catch(function(error){
+        })['catch'](function(error){
           $log.error("getPropertyByFolio:catch", error);
         });
     };
