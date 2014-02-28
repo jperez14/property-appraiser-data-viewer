@@ -344,6 +344,7 @@ span.map-view:hover {
 	padding:0 10px;
 	float:left;
 	border-left:solid 1px #fff;
+	color:#fff;
 	text-decoration:underline;
 
 }
