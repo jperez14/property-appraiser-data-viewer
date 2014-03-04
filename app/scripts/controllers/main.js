@@ -620,7 +620,7 @@ angular.module('propertySearchApp')
 	  }
 	  else if(!isAlphabetic($scope.ownerName)) {
 	    $scope.property = null;
-		$scope.showErrorDialog("Please enter only aplhabetic characters", true);
+		$scope.showErrorDialog("Please enter only alphabetic characters", true);
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
