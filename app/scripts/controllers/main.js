@@ -604,7 +604,7 @@ angular.module('propertySearchApp')
 	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
 	}
 	if($scope.isPartialFolioCandidates === true) {
-	  propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage)
+	  propertySearchService.getCandidatesByPartialFolio($scope.folio, $scope.fromPage, $scope.toPage)
 	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
 	}
       }
