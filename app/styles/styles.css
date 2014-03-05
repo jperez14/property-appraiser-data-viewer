@@ -550,6 +550,11 @@ background-color: #eeeeee;
 	font-size:11px;
 }
 
+.sketch-message {
+	padding:10px 0 0 0 ;
+	border-top:1px solid #ccc;
+}
+
 /*
 table tr.table-message td {
 	background-color:#fff !important;
