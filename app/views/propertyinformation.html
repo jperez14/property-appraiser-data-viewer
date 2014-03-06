@@ -117,21 +117,21 @@
 			<td><strong>Actual Area</strong></td>
 
 			<td>{{property.propertyInfo.buildingGrossArea
-			| number}} Sq.Ft</td>
+			| number}} <span ng-show="property.propertyInfo.buildingGrossArea">Sq.Ft</span></td>
 		</tr>
 
 		<tr>
 			<td><strong>Living Area</strong></td>
 
 			<td>{{property.propertyInfo.buildingHeatedArea
-			| number}} Sq.Ft</td>
+			| number}} <span ng-show="property.propertyInfo.buildingHeatedArea">Sq.Ft</span></td>
 		</tr>
 
 		<tr>
 			<td><strong>Adjusted Area</strong></td>
 
 			<td>{{property.propertyInfo.buildingEffectiveArea
-			| number}} Sq.Ft</td>
+			| number}} <span ng-show="property.propertyInfo.buildingEffectiveArea">Sq.Ft</span></td>
 		</tr>
 
 		<tr>
