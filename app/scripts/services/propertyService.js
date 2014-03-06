@@ -128,7 +128,7 @@ angular.module('propertySearchApp')
       segNo:              "SegNo",               
       totalAdjustedPoints:"TotalAdjustedPoints", 
       traversePoints:     "TraversePoints",
-      year:               "RollYear"       
+      year:               "RollYear"
     };
     
 
@@ -425,8 +425,12 @@ angular.module('propertySearchApp')
       _.each(data.BuildingInfos, function(origBuildingInfo){
         var buildingInfo = buildObject(origBuildingInfo, buildingInfoAttr);
         if(isUndefinedOrNull(building[buildingInfo.year]))
-          building[buildingInfo.year] = {buildingsInfo:[], message:[]};
-        building[buildingInfo.year].buildingsInfo.push(buildingInfo); 
+          building[buildingInfo.year] = {buildingsInfo:[], message:[], showSketch:false};
+        // assign building information
+        building[buildingInfo.year].buildingsInfo.push(buildingInfo);
+        // assign sketck flag
+        if(buildingInfo.traversePoints === 'Y') 
+          building[buildingInfo.year].showSketch = true; 
       });
 
       // Add messages to each key year.

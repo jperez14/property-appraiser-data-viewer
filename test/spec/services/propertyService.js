@@ -760,6 +760,140 @@ describe('Service: propertyService', function () {
 
   });
 
+  // test buildingInfo
+  it('Building empty object maps to land object with empty values', function(){
+    var property = new propertyService.Property({Building:{}});
+    expect(property.building).toEqual({});
+  });
+
+  it('Building null maps to land object with empty values', function(){
+    var property = new propertyService.Property({Building:null});
+    expect(property.building).toEqual({});
+  });
+
+  it('Building does not exist maps to land object with empty values', function(){
+    var property = new propertyService.Property({});
+    expect(property.building).toEqual({});
+  });
+
+
+  it('map incoming Building fields to our building model fields, showSketches is true',function(){
+    var givenProperty = {Building:{
+      BuildingInfos: [
+        {
+          Actual: 1949,
+          ActualArea: 1848,
+          AdjustedBasePrice: 27,
+          BuildingNo: 1,
+          DepreciatedValue: 49896,
+          Effective: 1949,
+          EffectiveArea: 1848,
+          GrossArea: -1,
+          HeatedArea: -1,
+          Message: null,
+          PercentComp: 1,
+          PercentageGood: 37.5,
+          ReplacementCostNew: 133056,
+          RollYear: 2011,
+          SegNo: 1,
+          TotalAdjustedPoints: 100,
+          TraversePoints: "Y"
+        }],
+      Messages:[{
+        Message:"My Message",
+        Year:2011
+      }]}};
+    
+
+    var expectedProperty = {building:{2011:{
+      buildingsInfo: [
+        {
+          actual: 1949,
+          actualArea: 1848,
+          adjustedBasePrice: 27,
+          buildingNo: 1,
+          depreciatedValue: 49896,
+          effective: 1949,
+          effectiveArea: 1848,
+          grossArea: null,
+          heatedArea: null,
+          percentComp: 1,
+          percentageGood: 37.5,
+          replacementCostNew: 133056,
+          year: 2011,
+          segNo: 1,
+          totalAdjustedPoints: 100,
+          traversePoints: "Y"
+        }],
+      message:["My Message"],
+      showSketch:true
+    }}};
+    
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.building).toEqual(expectedProperty.building);
+
+  });
+
+  it('map incoming Building fields to our building model fields, showSketches is false',function(){
+    var givenProperty = {Building:{
+      BuildingInfos: [
+        {
+          Actual: 1949,
+          ActualArea: 1848,
+          AdjustedBasePrice: 27,
+          BuildingNo: 1,
+          DepreciatedValue: 49896,
+          Effective: 1949,
+          EffectiveArea: 1848,
+          GrossArea: -1,
+          HeatedArea: -1,
+          Message: null,
+          PercentComp: 1,
+          PercentageGood: 37.5,
+          ReplacementCostNew: 133056,
+          RollYear: 2011,
+          SegNo: 1,
+          TotalAdjustedPoints: 100,
+          TraversePoints: "N"
+        }],
+      Messages:[{
+        Message:"My Message",
+        Year:2011
+      }]}};
+    
+
+    var expectedProperty = {building:{2011:{
+      buildingsInfo: [
+        {
+          actual: 1949,
+          actualArea: 1848,
+          adjustedBasePrice: 27,
+          buildingNo: 1,
+          depreciatedValue: 49896,
+          effective: 1949,
+          effectiveArea: 1848,
+          grossArea: null,
+          heatedArea: null,
+          percentComp: 1,
+          percentageGood: 37.5,
+          replacementCostNew: 133056,
+          year: 2011,
+          segNo: 1,
+          totalAdjustedPoints: 100,
+          traversePoints: "N"
+        }],
+      message:["My Message"],
+      showSketch:false
+    }}};
+    
+
+    var property = new propertyService.Property(givenProperty);
+    expect(property.building).toEqual(expectedProperty.building);
+
+  });
+
+
   // test extraFeature
   it('ExtraFeature empty object maps to land object with empty values', function(){
     var property = new propertyService.Property({ExtraFeature:{}});
@@ -817,65 +951,7 @@ describe('Service: propertyService', function () {
 
   });
 
-  //  it('map incoming ExtraFeatures fields to our extraFeatures model fields with several years',function(){
-  //    var givenProperty = {ExtraFeature:{ExtraFeatureInfos: [{
-  //      ActualYearBuilt: 1994,
-  //      AdjustedUnitPrice: 8,
-  //      DepreciatedValue: 672,
-  //      Description: "Chain-link Fence 4-5 ft high",
-  //      Units: 100,
-  //      UseCode: "0034 ",
-  //      RollYear: 2013
-  //    },{
-  //      ActualYearBuilt: 1997,
-  //      AdjustedUnitPrice: 5,
-  //      DepreciatedValue: 6,
-  //      Description: "Another Fence",
-  //      Units: 9,
-  //      UseCode: "0033 ",
-  //      RollYear: 2012
-  //    },{
-  //      ActualYearBuilt: 1985,
-  //      AdjustedUnitPrice: 8,
-  //      DepreciatedValue: 500,
-  //      Description: "Ugly Fence",
-  //      Units: 101,
-  //      UseCode: "0034 ",
-  //      RollYear: 2013
-  //    }]}};
-  //    
-  //
-  //    var expectedProperty = {extraFeature:{extraFeatures:{2013:[{
-  //      actualYearBuilt: 1994,
-  //      adjustedUnitPrice: 8,
-  //      depreciatedValue: 672,
-  //      description: "Chain-link Fence 4-5 ft high",
-  //      units: 100,
-  //      useCode: "0034 ",
-  //      rollYear: 2013
-  //    },{
-  //      actualYearBuilt: 1985,
-  //      adjustedUnitPrice: 8,
-  //      depreciatedValue: 500,
-  //      description: "Ugly Fence",
-  //      units: 101,
-  //      useCode: "0034 ",
-  //      rollYear: 2013
-  //    }],2012:[{
-  //      actualYearBuilt: 1997,
-  //      adjustedUnitPrice: 5,
-  //      depreciatedValue: 6,
-  //      description: "Another Fence",
-  //      units: 9,
-  //      useCode: "0033 ",
-  //      rollYear: 2012
-  //    }]}}};
-  //    
-  //
-  //    var property = new propertyService.Property(givenProperty);
-  //    expect(property.extraFeature).toEqual(expectedProperty.extraFeature);
-  //
-  //  });
+
 
   // test land
   it('Land empty object maps to land object with empty values', function(){
@@ -939,63 +1015,6 @@ describe('Service: propertyService', function () {
     expect(property.land).toEqual(expectedProperty.land);
 
   });
-
-  //  it('map incoming Landlines fields to our landLines model fields with several years.',function(){
-  //    var givenProperty = {Land:{Landlines: [{
-  //      AdjustedUnitPrice: "278.1540",
-  //      CalculatedValue: "27815",
-  //      Depth: 0,
-  //      FrontFeet: 0,
-  //      LandUse: "GENERAL",
-  //      LandlineType: "C",
-  //      MuniZone: "T3 O",
-  //      PercentCondition: 1,
-  //      TotalAdjustments: 1.0302,
-  //      UnitType: "F ",
-  //      Units: "100.0000",
-  //      UseCode: "00 ",
-  //      Zone: "5700",
-  //      RollYear: 2013
-  //    },{
-  //      AdjustedUnitPrice: "278.1546",
-  //      CalculatedValue: "26816",
-  //      Depth: 0,
-  //      FrontFeet: 0,
-  //      LandUse: "GENERAL",
-  //      LandlineType: "C",
-  //      MuniZone: "T3 O",
-  //      PercentCondition: 1,
-  //      TotalAdjustments: 1.0306,
-  //      UnitType: "F ",
-  //      Units: "100.0000",
-  //      UseCode: "00 ",
-  //      Zone: "5700",
-  //      RollYear: 2012
-  //    },{
-  //      AdjustedUnitPrice: "278.1547",
-  //      CalculatedValue: "27817",
-  //      Depth: 0,
-  //      FrontFeet: 0,
-  //      LandUse: "GENERAL",
-  //      LandlineType: "C",
-  //      MuniZone: "T3 O",
-  //      PercentCondition: 1,
-  //      TotalAdjustments: 1.0307,
-  //      UnitType: "F ",
-  //      Units: "100.0000",
-  //      UseCode: "00 ",
-  //      Zone: "5700",
-  //      RollYear: 2013
-  //    }]}};
-  //    
-  //
-  //    var expectedProperty = {land:};
-  //    
-  //
-  //    var property = new propertyService.Property(givenProperty);
-  //    expect(property.land).toEqual(expectedProperty.land);
-  //
-  //  });
 
 
 
