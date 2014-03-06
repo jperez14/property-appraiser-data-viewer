@@ -278,7 +278,9 @@ angular.module('propertySearchApp')
     };
 
     var buildSiteAddresses = function(data){
-      return buildArray(data, siteAddressAttr);      
+	  return _.filter(buildArray(data, siteAddressAttr), function(val) {
+		return val.address.length > 0;
+	  });
     };
 
     var buildAssessment = function(data){

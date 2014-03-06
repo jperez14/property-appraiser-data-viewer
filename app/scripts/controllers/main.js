@@ -751,7 +751,7 @@ angular.module('propertySearchApp')
     };
     
     $scope.setPropertySiteAddress = function(property) {
-      if(property != null && !_.isEmpty(property.siteAddresses[0].address.trim())) {
+      if(property != null && property.siteAddresses.length > 0 && !_.isEmpty(property.siteAddresses[0].address.trim())) {
 	$scope.propertySiteAddress = property.siteAddresses[0].streetNumber+" "+property.siteAddresses[0].streetPrefix.trim()+" "+
 	  property.siteAddresses[0].streetName.trim()+" "+property.siteAddresses[0].streetSuffix.trim();
       }
