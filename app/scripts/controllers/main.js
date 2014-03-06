@@ -74,8 +74,8 @@ angular.module('propertySearchApp')
       var streetLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlStreet, {id:"street"});
       var parcels = new esri.layers.FeatureLayer(urlParcelLayer);
       var layers = new esri.layers.GraphicsLayer({id:"layers"});
-      var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:2252});
-      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:2251});
+      var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:6002});
+      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:6001});
       map.addLayer(aerialLayer);
       map.addLayer(streetLayer);
       map.addLayer(parcels);
