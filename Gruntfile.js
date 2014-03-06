@@ -79,7 +79,7 @@ module.exports = function (grunt) {
         hostname: '0.0.0.0'
       },
       proxies: [{
-          context: ['/context','/PApublicServiceProxy'],
+          context: ['/context','/PApublicServiceProxy', '/PAPortal'],
           host: 'testweb1panet.miamidade.gov',
           port: 80,
           https: false,

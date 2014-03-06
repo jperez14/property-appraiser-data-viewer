@@ -35,10 +35,11 @@
 		</tr>
 
 		<!-- sketch placeholder - make sure to show / hide entire TR -->
-		<tr>
+		<tr ng-show="property.building[property.rollYear1].showSketch">
 			<td colspan="7">
                 <div class="sketch-message">
-                    <img src="images/sketches.png" width="16" height="16" alt="Building Sketches"> <a href="#">Building Sketches Available!</a>
+                    <img src="images/sketches.png" width="16" height="16" alt="Building Sketches"> 
+					<a href="/PAPortal/PropertySearch/Sketch.aspx?Folio={{property.propertyInfo.folioNumber}}&year={{property.rollYear1}}" target="_blank">Building Sketches Available!</a>
                 </div>
             </td>
 		</tr>
