@@ -604,7 +604,7 @@ angular.module('propertySearchApp')
 	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
 	}
 	if($scope.isPartialFolioCandidates === true) {
-	  propertySearchService.getCandidatesByPartialFolio(partialFolio, $scope.fromPage, $scope.toPage)
+	  propertySearchService.getCandidatesByPartialFolio($scope.folio, $scope.fromPage, $scope.toPage)
 	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
 	}
       }
@@ -620,7 +620,7 @@ angular.module('propertySearchApp')
 	  }
 	  else if(!isAlphabetic($scope.ownerName)) {
 	    $scope.property = null;
-		$scope.showErrorDialog("Please enter only aplhabetic characters", true);
+		$scope.showErrorDialog("Please enter only alphabetic characters", true);
 		return true;
 	  }
 	  $scope.loader = true; //flag hackeysack
@@ -787,7 +787,8 @@ angular.module('propertySearchApp')
 
     $scope.showStreetView = function() {
       var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
-      $window.open(url, "name", "height=700, width=1000, location=0'");
+	  //$window.open(url, "name", "height=700, width=1000, location=0'"); //Opens in new window
+	  $window.open(url, '_blank'); //Opens in new tab
     };
 
 }]);

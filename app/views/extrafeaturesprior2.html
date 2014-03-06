@@ -1,11 +1,11 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="5">Extra Features <span id="extra-help3" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Extra Feature  Information:" data-content="Identifies and lists property features such as pools, patios, and fences on a property and their corresponding assessed values.  The sum of the extra feature values is reflected in the Assessment Information section."></span></th>
+			<th class="tableHeader" colspan="4">Extra Features <span id="extra-help3" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Extra Feature  Information:" data-content="Identifies and lists property features such as pools, patios, and fences on a property and their corresponding assessed values.  The sum of the extra feature values is reflected in the Assessment Information section."></span></th>
 		</tr>
         
 		<tr ng-show="isDisplayMessages(property, property.extraFeature, property.rollYear3)">
-			<td colspan="5">
+			<td colspan="4">
                 <div class="table-message">
                     <div ng-repeat="message in property.extraFeature[property.rollYear3].message">{{message}}</div>
                 </div>
