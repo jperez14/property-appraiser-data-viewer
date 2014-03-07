@@ -791,6 +791,38 @@ angular.module('propertySearchApp')
 	  $window.open(url, '_blank'); //Opens in new tab
     };
 
+    $scope.streetViewImage = false;
+    $scope.toggleStreetViewImage = function(){
+      if($scope.streetViewImage)
+        $scope.streetViewImage = false;
+      else
+        $scope.streetViewImage = true;
+    };
+
+    $scope.streetViewImageAddress = function(){
+
+      if(!isUndefinedOrNull($scope.property)) {
+        console.log("THIIS IS 1",$scope.property);
+        if(!isUndefinedOrNull($scope.property.siteAddresses))
+          if(!isUndefinedOrNull($scope.property.siteAddresses[0])){
+            console.log("HTIS IS IT", $scope.property.siteAddresses[0]);
+
+          var address = $scope.property.siteAddresses[0];
+          var city = $scope.getRenamedMunicipality(address.city);
+          console.log(city);
+          var fullAddress = " " + address.streetNumber + " " + address.streetPrefix + " " + address.streetName + " " + address.streetSuffix + " " + address.streetSuffixDirection + " "  +address.unit + city  + " , FL";
+            console.log("FULL ADDRESS IS ", fullAddress);
+            return fullAddress;
+          }
+
+      }else{
+        return "";
+      }
+       
+
+    }
+    
+
 }]);
 
 

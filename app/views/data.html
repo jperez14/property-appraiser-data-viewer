@@ -243,6 +243,9 @@
           <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()" data-toggle="tooltip" data-placement="top" title="Zoom out to full extent"></span>
           <span class="map-button mb-initial" ng-click="mapZoomToProperty()" data-toggle="tooltip" data-placement="top" title="Return to property"></span>
                     
+          <span class="map-button mb-initial"
+          ng-click="toggleStreetViewImage()" data-toggle="tooltip"
+          data-placement="top" title="Show street view image"></span>
           	 <div id="map_lc">
             
                 <!-- Arial Year - just need to replace current with year and attach handlers
@@ -291,6 +294,10 @@
           
           </div>
           
+          <div ng-show="streetViewImage">
+            <img src="http://maps.googleapis.com/maps/api/streetview?size=635x640&location={{streetViewImageAddress()}}&fov=90&pitch=0&sensor=false">
+          </div>
+         
           <div class="active-layers" ng-show="showLayerData()">
             <span id="layer-muni" ng-show="layerData.Municipality">{{layerData.Municipality}}</span>
             <span id="layer-zip" ng-show="layerData['Zip Code']">{{layerData['Zip Code']}}</span>
