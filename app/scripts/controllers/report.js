@@ -14,6 +14,8 @@ angular.module('propertySearchApp')
                               showAttribution:false}
                             );
 
+      var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"});
+
       $scope.map = map;
 
       map.on('load',function(){
