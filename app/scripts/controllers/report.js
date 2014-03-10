@@ -4,12 +4,13 @@ angular.module('propertySearchApp')
   .controller('ReportCtrl', ['$scope', '$routeParams', 'localStorageService', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, localStorageService, paConfig, esriGisService){
 
     $scope.property = localStorageService.get('property');
+    $scope.mapReference = localStorageService.get('map');
     $scope.reportType = $routeParams.type;
 
     function initMap(){
 
       var map = new esri.Map('printmap', 
-                             {extent:new esri.geometry.Extent(paConfig.initialExtentJson), 
+                             {extent:new esri.geometry.Extent($scope.mapReference.extent), 
                               logo:false, 
                               showAttribution:false}
                             );
@@ -39,10 +40,15 @@ angular.module('propertySearchApp')
 	    "y": $scope.property.location.y,
 	    "spatialReference":{"wkid":2236}
 	  };
-	  $scope.map.centerAndZoom(geometry, 10);
+
           var polygon = $scope.property.location.polygon;
-          var graphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
-          $scope.map.getLayer("parcelBoundary").add(graphic);
+          var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+          $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+
+          var pointGraphic = esriGisService.getGraphicMarkerFromXY(geometry.x, geometry.y)
+          $scope.map.getLayer("parcelPoint").add(pointGraphic);
+
+	  //$scope.map.centerAndZoom(geometry, $scope.mapReference.level);
         }
         
 
@@ -57,8 +63,8 @@ angular.module('propertySearchApp')
       var aerialLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlAerial, {id:"aerial"});
       var streetLayer = new esri.layers.ArcGISTiledMapServiceLayer(urlStreet, {id:"street"});
       var layers = new esri.layers.GraphicsLayer({id:"layers"});
-      var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:2252});
-      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:2251});
+      var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:24000});
+      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:23999});
       map.addLayer(aerialLayer);
       map.addLayer(streetLayer);
       map.addLayer(parcelBoundary);
