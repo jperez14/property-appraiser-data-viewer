@@ -33,6 +33,8 @@ angular.module('propertySearchApp')
                                      showAttribution:false}
                              );
 
+      var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"});
+
       $scope.map = map;
       //esri.config.defaults.io.corsDetection = false;
       //esri.config.defaults.io.corsEnabledServers.push("gisweb.miamidade.gov");
