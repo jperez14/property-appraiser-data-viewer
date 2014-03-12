@@ -425,32 +425,17 @@
 		
 		
 		//fix for gingerbread
-		function isTouchDevice(){
-			try{
-				document.createEvent("TouchEvent");
-				return true;
-			}catch(e){
-				return false;
-			}
-		}
-		
-		function touchScroll(id){
-			if(isTouchDevice()){ //if touch events exist...
-				var el= $('.table-responsive');
-				var scrollStartPos=0;
-		 
-				$('.table-responsive').addEventListener("touchstart", function(event) {
-					scrollStartPos=this.scrollTop+event.touches[0].pageX;
-					event.preventDefault();
-				},false);
-		 
-				$('.table-responsive').addEventListener("touchmove", function(event) {
-					this.scrollTop=scrollStartPos-event.touches[0].pageX;
-					event.preventDefault();
-				},false);
-			}
-		}
-		
+		var start = navigator.userAgent.indexOf("Android ");
+            var majorversion = navigator.userAgent.substr(start+8,1)
+            if (majorversion < 3) { 
+
+                //alert('This is an android device running an OS < 3')
+
+                document.querySelector("meta[name=viewport]").setAttribute(
+                  'content', 
+                  'width=700px, initial-scale=0.45, maximum-scale=1.0, user-scalable=1');
+
+            }
 		
 	});
 	

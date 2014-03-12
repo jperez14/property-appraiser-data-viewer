@@ -564,6 +564,8 @@ angular.module('propertySearchApp')
     
     
     $scope.getCandidatesHeight = function(){
+      if ($scope.isGingerbread()) return {height:'auto'};
+
       if($scope.candidatesList == null)
 	return {height:'560px'};
       else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 2)
@@ -802,6 +804,15 @@ angular.module('propertySearchApp')
       var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
 	  //$window.open(url, "name", "height=700, width=1000, location=0'"); //Opens in new window
 	  $window.open(url, '_blank'); //Opens in new tab
+    };
+
+    $scope.isGingerbread = function() {
+      var start = navigator.userAgent.indexOf("Android ");
+      var majorversion = navigator.userAgent.substr(start+8,1)
+      if (majorversion < 3)
+        return true; 
+      else 
+        return false;
     };
 
 }]);
