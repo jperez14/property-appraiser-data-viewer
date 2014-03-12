@@ -663,6 +663,14 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
 	return true;
       }
+	  else if($scope.address.indexOf('-') > 0) {
+	    var regex = new RegExp("-", 'g');
+	    if(isNumber($scope.address.replace(regex, ''))) {
+		  $scope.property = null;
+		  $scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+		  return true;
+		}
+	  }
       else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
 	      $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
 	      $scope.address.indexOf("#") >= 0 ) {
