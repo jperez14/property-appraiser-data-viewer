@@ -273,6 +273,24 @@ span.map-view:hover {
 	cursor:pointer;
 }
 
+.esriScalebarSecondNumber {
+	left: 80% !important;
+}
+
+.esriScalebar {
+	width: auto !important;
+	height: 20px;
+	left: 10px !important;
+	bottom: 10px !important;
+	padding: 5px;
+	background-color: #fff;
+	-webkit-filter: alpha(opacity = 90);
+	filter: alpha(opacity = 90);
+	-moz-opacity: 0.90;
+	-khtml-opacity: 0.90;
+	opacity: 0.90;
+}
+
 .footer_area {
 	background-color:#39599f;
 	padding:25px;
