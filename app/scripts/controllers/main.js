@@ -569,11 +569,11 @@ angular.module('propertySearchApp')
       if($scope.candidatesList == null)
 	return {height:'560px'};
       else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 2)
-	return {height:'215px'};
+	return {height:'225px'};
       else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 4)
-	return {height:'330px'};
+	return {height:'360px'};
       else if($scope.candidatesList != null && $scope.candidatesList.candidates.length <= 6)
-	return {height:'445px'};
+	return {height:'490px'};
       else if($scope.candidatesList != null && $scope.candidatesList.candidates.length >= 7)
 	return {height:'560px'};
       else
