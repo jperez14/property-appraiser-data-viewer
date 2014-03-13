@@ -672,9 +672,11 @@ angular.module('propertySearchApp')
       }
 	  else if($scope.address.indexOf('-') > 0) {
 	    var regex = new RegExp("-", 'g');
-	    if(isNumber($scope.address.replace(regex, ''))) {
+		var replacedAddr = $scope.address.replace(regex, '');
+	    if(isNumber(replacedAddr)) {
 		  $scope.property = null;
-		  $scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+		  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+		  $scope.getCandidateFolio(replacedAddr, false);
 		  return true;
 		}
 	  }
