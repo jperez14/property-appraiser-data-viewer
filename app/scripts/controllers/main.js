@@ -540,7 +540,6 @@ angular.module('propertySearchApp')
 
     $scope.getPropertyByFolio = function(folio){
 
-      console.log("the map is", $scope.map);
       // Clear previous data.
       clearResults();
 
