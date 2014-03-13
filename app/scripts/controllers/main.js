@@ -182,7 +182,7 @@ angular.module('propertySearchApp')
     $scope.fromPage = 1;
     $scope.toPage = 200;
     $scope.itemsPerFetch = 200;
-
+	$scope.isEndOfResults = false;
     
     $scope.address = "";
 
@@ -260,6 +260,7 @@ angular.module('propertySearchApp')
       $scope.isPartialFolioCandidates = false;
       $scope.fromPage = 1;
       $scope.toPage = 200;
+      $scope.isEndOfResults = false;
       $scope.activeRollYearTab = 0;
 
 
@@ -593,7 +594,11 @@ angular.module('propertySearchApp')
     };
     
     $scope.fetchNextPage = function() {
+	  if($scope.isEndOfResults) {
+	    return true;
+	  }
       if($scope.toPage >= $scope.candidatesList.total) {
+		$scope.isEndOfResults = true;
 		$scope.showErrorDialog("You have reached the end of the results of your search", true);
       }
       else {
