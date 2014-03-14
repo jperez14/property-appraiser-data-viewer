@@ -15,7 +15,7 @@ angular.module('propertySearchApp')
                               showAttribution:false}
                             );
 
-      var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"});
+      var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"}, dojo.byId("scale-container"));
 
       $scope.map = map;
 
