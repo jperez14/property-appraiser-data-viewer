@@ -174,7 +174,7 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
-	$scope.previousCandidatesList = null;
+	$scope.previousCandidatesInfo = null;
 
     $scope.isOwnerCandidates = false;
     $scope.isAddressCandidates = false;
@@ -369,14 +369,28 @@ angular.module('propertySearchApp')
     $scope.getCandidateFolio = function(folio, savePrevious) {
       $scope.folio = folio;
       if(isUndefinedOrNull(savePrevious)) {
-	$scope.previousCandidatesList = $scope.candidatesList;
+	    $scope.previousCandidatesInfo = {
+		  'candidatesList':$scope.candidatesList,
+		  'isEndOfResults':$scope.isEndOfResults,
+		  'fromPage':$scope.fromPage,
+		  'toPage':$scope.toPage,
+          'isOwnerCandidates':$scope.isOwnerCandidates,
+          'isAddressCandidates':$scope.isAddressCandidates,
+          'isPartialFolioCandidates':$scope.isPartialFolioCandidates
+		};
       }
       $scope.searchByFolio();
     };
     
     $scope.populatePreviousCandidates = function() {
-      $scope.candidatesList = $scope.previousCandidatesList;
-      $scope.previousCandidatesList = null;
+	  $scope.isEndOfResults = $scope.previousCandidatesInfo.isEndOfResults;
+	  $scope.fromPage = $scope.previousCandidatesInfo.fromPage;
+	  $scope.toPage = $scope.previousCandidatesInfo.toPage;
+      $scope.candidatesList = $scope.previousCandidatesInfo.candidatesList;
+      $scope.isOwnerCandidates = $scope.previousCandidatesInfo.isOwnerCandidates;
+      $scope.isAddressCandidates = $scope.previousCandidatesInfo.isAddressCandidates;
+      $scope.isPartialFolioCandidates = $scope.previousCandidatesInfo.isPartialFolioCandidates;
+      $scope.previousCandidatesInfo = null;
       $scope.property = null;
       $scope.hideMap = true;
     };
