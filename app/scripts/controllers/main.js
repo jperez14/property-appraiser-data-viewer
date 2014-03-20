@@ -674,14 +674,14 @@ angular.module('propertySearchApp')
       $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
-	$scope.property = null;
-	$scope.showErrorDialog("Please enter a valid Address", true);
-	return true;
+	    $scope.property = null;
+	    $scope.showErrorDialog("Please enter a valid Address", true);
+	    return true;
       }
       else if(isNumber($scope.address)){
-	$scope.property = null;
-	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
-	return true;
+	    $scope.property = null;
+	    $scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+	    return true;
       }
 	  else if($scope.address.indexOf('-') > 0) {
 	    var regex = new RegExp("-", 'g');
@@ -689,6 +689,7 @@ angular.module('propertySearchApp')
 	    if(isNumber(replacedAddr)) {
 		  $scope.property = null;
 		  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+		  $scope.setActiveSearchTab('Folio');
 		  $scope.getCandidateFolio(replacedAddr, false);
 		  return true;
 		}
