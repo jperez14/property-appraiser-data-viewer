@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -657,6 +657,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByAddress = function(){
+
       $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
@@ -669,16 +670,16 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
 	return true;
       }
-	  else if($scope.address.indexOf('-') > 0) {
-	    var regex = new RegExp("-", 'g');
-		var replacedAddr = $scope.address.replace(regex, '');
-	    if(isNumber(replacedAddr)) {
-		  $scope.property = null;
-		  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
-		  $scope.getCandidateFolio(replacedAddr, false);
-		  return true;
-		}
-	  }
+      else if($scope.address.indexOf('-') > 0) {
+	var regex = new RegExp("-", 'g');
+	var replacedAddr = $scope.address.replace(regex, '');
+	if(isNumber(replacedAddr)) {
+	  $scope.property = null;
+	  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+	  $scope.getCandidateFolio(replacedAddr, false);
+	  return true;
+	}
+      }
       else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
 	      $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
 	      $scope.address.indexOf("#") >= 0 ) {
@@ -702,7 +703,19 @@ angular.module('propertySearchApp')
 	  }
 	}
 	else {
-	  $scope.showErrorDialog(result.message, true);
+          var message = result.message;
+          candidate.getCandidates($scope.address).then(function(candidates){
+
+            if(candidates.length == 0)
+              $scope.showErrorDialog(message, true);
+            else if(candidates.length == 1)
+              $scope.getCandidateFolio(candidates[0].folio, false);
+            else
+	      $scope.candidatesList = {candidates:candidates};              
+              
+          });
+
+
 	}
       }, function(error){
 	$scope.showErrorDialog("The request failed. Please try again later", true);
