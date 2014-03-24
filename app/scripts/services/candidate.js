@@ -60,15 +60,19 @@ angular.module('propertySearchApp')
       return filterCandidates(candidates); 
     };
     
-	var candidatesFromPACandidates = function(paCandidates) {
-	  // Convert pa candidates to our candidate model.
+
+    /**
+     * map an array of PA candidates to an array of candidates objects
+     */   
+    var candidatesFromPACandidates = function(paCandidates) {
+      // Convert pa candidates to our candidate model.
       var candidates = _.map(paCandidates, function(paCandidate){
         return candidateFromPaCandidate(paCandidate);
       }); 
       return filterCandidates(candidates); 
     };
-	
-	var filterCandidates = function(candidates) {
+    
+    var filterCandidates = function(candidates) {
       // filter out candidates with no folio.
       return _.filter(candidates, function(candidate){
         if(utils.isUndefinedOrNull(candidate.folio))
@@ -78,32 +82,32 @@ angular.module('propertySearchApp')
         else
           return true;
       });
-	};
-	
-	var candidateFromPaCandidate = function(paCandidate) {
+    };
+    
+    var candidateFromPaCandidate = function(paCandidate) {
       var candidate = new Candidate();
       if(utils.isUndefinedOrNull(paCandidate))
         return candidate;
 
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.SiteAddress))
-          candidate.siteAddress = paCandidate.SiteAddress;
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Municipality))
-          candidate.municipality = paCandidate.Municipality;
-		if(!utils.isTypeUndefined(paCandidate.Strap))
-          candidate.folio = paCandidate.Strap.trim().replace(/-/g, "");
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner1))
-          candidate.firstOwner = paCandidate.Owner1;
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner2))
-          candidate.secondOwner = paCandidate.Owner2;
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner3))
-          candidate.thirdOwner = paCandidate.Owner3;
-        if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Status))
-		  candidate.status = paCandidate.Status;
-		if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.SubdivisionDescription))
-		  candidate.subdivisionDescription = paCandidate.SubdivisionDescription;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.SiteAddress))
+        candidate.siteAddress = paCandidate.SiteAddress;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Municipality))
+        candidate.municipality = paCandidate.Municipality;
+      if(!utils.isTypeUndefined(paCandidate.Strap))
+        candidate.folio = paCandidate.Strap.trim().replace(/-/g, "");
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner1))
+        candidate.firstOwner = paCandidate.Owner1;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner2))
+        candidate.secondOwner = paCandidate.Owner2;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Owner3))
+        candidate.thirdOwner = paCandidate.Owner3;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.Status))
+	candidate.status = paCandidate.Status;
+      if(!utils.isTypeUndefinedOrIsEmpty(paCandidate.SubdivisionDescription))
+	candidate.subdivisionDescription = paCandidate.SubdivisionDescription;
 
-	return candidate;
-	};
+      return candidate;
+    };
 
     var getCandidates = function(candidateAddress){
       var promise = esriGisLocatorService.candidates20(candidateAddress);
@@ -124,7 +128,7 @@ angular.module('propertySearchApp')
           return $q.reject(candidates);
           
         });
-     };
+    };
     
 
     var municipalities = {
@@ -175,4 +179,4 @@ angular.module('propertySearchApp')
     };
     
     
-}]);
+  }]);
