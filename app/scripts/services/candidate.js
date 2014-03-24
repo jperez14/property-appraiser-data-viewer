@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .factory('candidate', ['utils', 'esriGisLocatorService', function (utils, esriGisLocatorService) {
+  .factory('candidate', ['$q', '$log', 'utils', 'esriGisLocatorService', function ($q, $log, utils, esriGisLocatorService) {
 
     var Candidate = function(){
 
@@ -20,7 +20,7 @@ angular.module('propertySearchApp')
       this.completed = null;
       this.message = null;
       this.total = null;
-      this.canidates = [];
+      this.candidates = [];
     };
     
     /**
@@ -75,8 +75,21 @@ angular.module('propertySearchApp')
       var promise = esriGisLocatorService.candidates20(candidateAddress);
       return promise.then(
         function(data){
-          return candidatesFromEsriCandidates(data.candidates)
-        }, function(error){});
+          var candidates = new Candidates();
+          candidates.completed = true;
+          candidates.message = "";
+          candidates.candidates = candidatesFromEsriCandidates(data.candidates);
+          candidates.total = candidates.candidates.length;
+          $log.debug("candidate:getCandidates esri candidates are ", candidateAddress, candidates);
+          return candidates;
+        }, function(error){
+          $log.error("candidate:getCandidates ", error);
+          var candidates = new Candidates();
+          candidates.completed = false;
+          candidates.message = "Error while getting candidates from locator."
+          return $q.reject(candidates);
+          
+        });
      };
     
 

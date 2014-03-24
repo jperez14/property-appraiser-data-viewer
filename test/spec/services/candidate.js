@@ -7,9 +7,66 @@ describe('Service: candidate', function () {
 
   // instantiate service
   var candidate;
-  beforeEach(inject(function (_candidate_) {
+  var esriGisLocatorService;
+  var  $q;
+  var $rootScope;
+
+  beforeEach(inject(function (_candidate_, _esriGisLocatorService_, _$q_, _$rootScope_) {
     candidate = _candidate_;
+    esriGisLocatorService = _esriGisLocatorService_;
+    $rootScope = _$rootScope_;
+    $q = _$q_;
+    
+//    var deferred = $q.defer();
+//    deferred.resolve({candidates:[{
+//                                address: "111 NW 1ST ST, 1, 33128",
+//                                score: 87.35,
+//                                attributes: {Street_ID: "0141370230020"}
+//                                }]});
+//
+//    spyOn(esriGisLocatorService, 'candidates20').andReturn(deferred.promise);
+
   }));
+
+  it('succeed while getting candidates from the esri locator20 service.',function(){
+
+    var deferred = $q.defer();
+    deferred.resolve({candidates:[{
+                                address: "111 NW 1ST ST, 1, 33128",
+                                score: 87.35,
+                                attributes: {Street_ID: "0141370230020"}
+                                }]});
+
+    spyOn(esriGisLocatorService, 'candidates20').andReturn(deferred.promise);
+
+    var promise = candidate.getCandidates("11826 sw 97");
+    promise.then(function(candidates){
+      expect(candidates.completed).toBe(true);
+      expect(candidates.total).toBe(1);
+      expect(candidates.candidates[0].folio).toEqual("0141370230020");
+    });
+
+    $rootScope.$apply();
+    
+  });
+
+  it('fail while getting candidates from the esri locator20 service.',function(){
+
+    var deferred = $q.defer();
+    deferred.reject({message:"", error:"some error"});
+
+    spyOn(esriGisLocatorService, 'candidates20').andReturn(deferred.promise);
+
+    var promise = candidate.getCandidates("11826 sw 97");
+    promise.then(function(candidates){
+      expect(true).toBe(false);
+    }, function(candidates){
+      expect(candidates.completed).toBe(false);
+    });
+
+    $rootScope.$apply();
+    
+  });
 
   it('candidate test starting ...', function () {
     expect(!!candidate).toBe(true);
@@ -287,6 +344,7 @@ describe('Service: candidate', function () {
 
   });
 
+  
 
 });
 

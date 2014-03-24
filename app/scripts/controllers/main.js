@@ -704,15 +704,17 @@ angular.module('propertySearchApp')
 	}
 	else {
           var message = result.message;
-          candidate.getCandidates($scope.address).then(function(candidates){
+          candidate.getCandidates($scope.address).then(function(result){
 
-            if(candidates.length == 0)
+            if(result.candidates.length == 0)
               $scope.showErrorDialog(message, true);
-            else if(candidates.length == 1)
-              $scope.getCandidateFolio(candidates[0].folio, false);
+            else if(result.candidates.length == 1)
+              $scope.getCandidateFolio(result.candidates[0].folio, false);
             else
-	      $scope.candidatesList = {candidates:candidates};              
-              
+	      $scope.candidatesList = {candidates:result.candidates};              
+            
+          },function(error){
+	    $scope.showErrorDialog("The request failed. Please try again later", true);
           });
 
 
