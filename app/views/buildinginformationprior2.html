@@ -1,7 +1,11 @@
 <div class="table-responsive table-oversized">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="7">Building Information <span id="building-help3" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Building Information:" data-content="Identifies and lists building(s) and additions on a property and their corresponding values.  The sum of building values is reflected in the Assessment Information section."></span></th>
+			<th class="tableHeader" colspan="7">Building Information <span id="building-help3" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Building Information:" data-html="true" data-content="<p>Identifies and lists building(s) and additions on a property and their corresponding values. The sum of building values is reflected in the Assessment Information section.</p> <p><strong>Building Actual Area</strong> -  is the sum total of all measured areas within the subject property.</p>  
+  
+<p><strong>Building Livable Area</strong> - for residential properties it represents the space used for habitation purposes.  On commercial properties, where livable is not applicable, this will mirror the Actual Area.</p>
+
+<p><strong>Building Adjusted Area</strong> - is the Property Appraiser’s office internal unit of measure used for calculating the area’s value.</p>"></span></th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.building, property.rollYear3)">
