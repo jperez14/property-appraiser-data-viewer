@@ -100,7 +100,7 @@
             <div class="tab-pane" ng-class="{active: isActiveSearchTab('Owner')}" id="owner-name">
 
               <div class="input-group">
-                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control owner-box"
+                <input type="text" value="Owner Name" name="ownerName" id="search_box" placeholder="Owner Name" class="form-control owner-box"
 					ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">

@@ -709,6 +709,7 @@ angular.module('propertySearchApp')
 			else {
 			  $scope.ownerName = $scope.address;
 			  $scope.setActiveSearchTab('Owner');
+			  $('[name="ownerName"]').removeClass('placeholder'); //Temp Fix
 			  $scope.getCandidatesByOwner();
 			}
 		  }
