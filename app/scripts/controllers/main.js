@@ -634,7 +634,7 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
-	$scope.hideMap = true;
+	  $scope.hideMap = true;
 	  clearResults();
       if(_.isEmpty($scope.ownerName)) {
 	    $scope.property = null;
@@ -670,7 +670,7 @@ angular.module('propertySearchApp')
       });
     };
 
-    $scope.getCandidatesByAddress = function(){
+    $scope.validateAddress = function(){
       $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
@@ -695,12 +695,36 @@ angular.module('propertySearchApp')
 		}
 	  }
       else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
-	      $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
-	      $scope.address.indexOf("#") >= 0 ) {
-	$scope.property = null;
-	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
-	return true;
+        $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+	    $scope.address.indexOf("#") >= 0 ) {
+	    $scope.property = null;
+	    $scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
+	    return true;
       }
+	  else if(isAlphabetic($scope.address)) {
+		propertySearchService.getHasValidStreetName($scope.address).then(function(result){
+		  if(result.completed == true) {
+		    if(result.valid == true)
+			  $scope.getCandidatesByAddress();
+			else {
+			  $scope.ownerName = $scope.address;
+			  $scope.setActiveSearchTab('Owner');
+			  $scope.getCandidatesByOwner();
+			}
+		  }
+		  else {
+		    $scope.showErrorDialog(result.message, true);
+		  }
+		}, function(error){
+		  $scope.showErrorDialog("The request failed. Please try again later", true);
+		  return true;
+		});
+	  }
+	  else 
+	    $scope.getCandidatesByAddress();
+	};
+
+	$scope.getCandidatesByAddress = function(){
       $scope.isAddressCandidates = true;
       $scope.loader = true; //flag hackeysack
       $scope.property = null;

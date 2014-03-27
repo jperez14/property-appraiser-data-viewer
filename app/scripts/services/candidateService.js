@@ -114,11 +114,17 @@ angular.module('propertySearchApp')
         return true;
     };
     
+	var hasValidStreetName = function(rawData){
+	  this.completed = rawData.Completed;
+	  this.message = rawData.Message;
+	  this.valid = rawData.Valid;
+	}
 
     // Public API
     return {
       Candidates: Candidates,
-      isCandidatesFound: isCandidatesFound
+      isCandidatesFound: isCandidatesFound,
+	  hasValidStreetName: hasValidStreetName
     };
     
   });

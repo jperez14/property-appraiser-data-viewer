@@ -10,7 +10,8 @@ angular.module('propertySearchApp')
                                      {propertyByFolio:{method:'GET'},
 				      candidatesByOwner:{method:'GET'},
 				      candidatesByAddress:{method:'GET'},
-				      candidatesByPartialFolio:{method:'GET'}
+				      candidatesByPartialFolio:{method:'GET'},
+					  hasValidStreetName:{method:'GET'}
 				     }
                                     );
 
@@ -131,12 +132,38 @@ angular.module('propertySearchApp')
 
     };
     
+	var hasValidStreetName = function(address, callback){
+	  var endPoint = "";
+      var params = {"myAddress":address, 
+                    "clientAppName":'PropertySearch', 
+                    "Operation":"ContainsValidStreetName",
+                    "endPoint":endPoint};
+	
+      var deferred = $q.defer();
+	  
+      var isValidStreet = PropertyResource.hasValidStreetName(params, 
+	                                                        function(){
+		                                                  deferred.resolve(new candidateService.hasValidStreetName(isValidStreet));
+		                                                },
+		                                                function(response){
+		                                                  deferred.reject(response);
+	                                                        });
+
+      return deferred.promise.then(function(isValidStreet){
+	return isValidStreet;
+      }, function(response){
+        $log.error("propertySearchService:hasValidStreetName:", response);
+        return $q.reject(response);
+      });
+
+	};
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
 	    getCandidatesByOwner:candidatesByOwner,
 	    getCandidatesByAddress:candidatesByAddress,
-	    getCandidatesByPartialFolio:candidatesByPartialFolio
+	    getCandidatesByPartialFolio:candidatesByPartialFolio,
+		getHasValidStreetName:hasValidStreetName
            };
 
   }]);
