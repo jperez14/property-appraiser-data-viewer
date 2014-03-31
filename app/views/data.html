@@ -83,10 +83,10 @@
               <div class="input-group">
                 
                  <input type="text" value="Address" name="" id="search_box" placeholder="111 NW 1 St" class="form-control add-main"
-					ng-model='address' ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}" >
-                 <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'getCandidatesByAddress()'}">
+					ng-model='address' ng-click="showError=false" ui-keypress="{13:'validateAddress()'}" >
+                 <input type="text" value="" name="" id="search_box" placeholder="Suite" class="form-control add-suite" ng-model="suite" ng-click="showError=false" ui-keypress="{13:'validateAddress()'}">
                 <span class="input-group-btn">
-                  <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByAddress()">
+                  <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="validateAddress()">
                     <span class="glyphicon glyphicon-search"></span>
                   </button>
                 </span>
@@ -100,7 +100,7 @@
             <div class="tab-pane" ng-class="{active: isActiveSearchTab('Owner')}" id="owner-name">
 
               <div class="input-group">
-                <input type="text" value="Owner Name" name="" id="search_box" placeholder="Owner Name" class="form-control owner-box"
+                <input type="text" value="Owner Name" name="ownerName" id="search_box" placeholder="Owner Name" class="form-control owner-box"
 					ng-model='ownerName' ng-click="showError=false" ui-keypress="{13:'getCandidatesByOwner()'}">
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesByOwner()">
