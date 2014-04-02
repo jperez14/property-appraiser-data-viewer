@@ -691,8 +691,11 @@ angular.module('propertySearchApp')
 		  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
 		  $scope.setActiveSearchTab('Folio');
 		  $scope.getCandidateFolio(replacedAddr, false);
-		  return true;
 		}
+        else if(isAlphabetic($scope.address))
+		  $scope.getHasValidStreetName($scope.address);
+		else 
+		  $scope.getCandidatesByAddress();
 	  }
       else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
         $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
@@ -702,12 +705,19 @@ angular.module('propertySearchApp')
 	    return true;
       }
 	  else if(isAlphabetic($scope.address)) {
-		propertySearchService.getHasValidStreetName($scope.address).then(function(result){
+	    $scope.getHasValidStreetName($scope.address);
+	  }
+	  else 
+	    $scope.getCandidatesByAddress();
+	};
+
+	$scope.getHasValidStreetName = function(address) {
+		propertySearchService.getHasValidStreetName(address).then(function(result){
 		  if(result.completed == true) {
 		    if(result.valid == true)
 			  $scope.getCandidatesByAddress();
 			else {
-			  $scope.ownerName = $scope.address;
+			  $scope.ownerName = address;
 			  $scope.setActiveSearchTab('Owner');
 			  $('[name="ownerName"]').removeClass('placeholder'); //Temp Fix
 			  $scope.getCandidatesByOwner();
@@ -720,11 +730,8 @@ angular.module('propertySearchApp')
 		  $scope.showErrorDialog("The request failed. Please try again later", true);
 		  return true;
 		});
-	  }
-	  else 
-	    $scope.getCandidatesByAddress();
 	};
-
+	
 	$scope.getCandidatesByAddress = function(){
       $scope.isAddressCandidates = true;
       $scope.loader = true; //flag hackeysack
