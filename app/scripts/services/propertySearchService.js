@@ -104,7 +104,7 @@ angular.module('propertySearchApp')
 
     };
     
-    var candidatesByAddress = function(address, unit, from, to, callback){
+    var candidatesByAddressFromPA = function(address, unit, from, to, callback){
       var endPoint = "";
       var params = {"myAddress":address, "myUnit":unit, 
                     "clientAppName":'PropertySearch', 
@@ -207,15 +207,40 @@ angular.module('propertySearchApp')
     };
 
 
+    var candidatesByAddress = function(address, unit, from, to){
+      var promise = candidatesByAddressFromPA(address, unit, from, to);
+      
+      return promise.then(function(result){
+	if(result.completed == true) {
+          return result;
+	}
+	else {
+          var message = result.message;
+          return candidatesByAddressFromEsri(address).then(function(result){
+            if(result.candidates.length == 0)
+              result.message = message;
+            return result;
+          },function(error){
+            $q.reject({error:error, message:"The request failed. Please try again later"});
+          });
+	}
+      }, function(error){
+            $q.reject({error:error, message:"The request failed. Please try again later"});
+      });
+
+    };
+    
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
             getPropertiesByFolios:propertiesByFolios,
 	    getCandidatesByOwner:candidatesByOwner,
+            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
+            getCandidatesByAddressFromPA:candidatesByAddressFromPA,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
-	    getHasValidStreetName:hasValidStreetName,
-            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri
+	    getHasValidStreetName:hasValidStreetName
+
 
 
            };

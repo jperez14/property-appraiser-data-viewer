@@ -743,36 +743,19 @@ angular.module('propertySearchApp')
       $scope.loader = true; //flag hackeysack
       $scope.property = null;
       propertySearchService.getCandidatesByAddress($scope.address, $scope.suite, $scope.fromPage, $scope.toPage).then(function(result){
-	if(result.completed == true) {
-	  if(result.candidates.length == 0) {
-	    $scope.showErrorDialog(result.message, true);
-	  }
-	  else if(result.candidates.length == 1){
-	    $scope.getCandidateFolio(result.candidates[0].folio, false);
-          }
-	  else if(result.candidates.length > 1) {
-	    $scope.candidatesList = result;
-	  }
+
+	if(result.candidates.length == 0) {
+	  $scope.showErrorDialog(result.message, true);
 	}
-	else {
-          var message = result.message;
-          propertySearchService.getCandidatesByAddressFromEsri($scope.address).then(function(result){
-
-            if(result.candidates.length == 0)
-              $scope.showErrorDialog(message, true);
-            else if(result.candidates.length == 1)
-              $scope.getCandidateFolio(result.candidates[0].folio, false);
-            else
-	      $scope.candidatesList = {candidates:result.candidates};              
-            
-          },function(error){
-	    $scope.showErrorDialog("The request failed. Please try again later", true);
-          });
-
-
+	else if(result.candidates.length == 1){
+	  $scope.getCandidateFolio(result.candidates[0].folio, false);
+        }
+	else if(result.candidates.length > 1) {
+	  $scope.candidatesList = result;
 	}
+
       }, function(error){
-	$scope.showErrorDialog("The request failed. Please try again later", true);
+	$scope.showErrorDialog(error.message, true);
       });
 
     };
