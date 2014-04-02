@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', '$log', 'candidateService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidateService, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, propertyService, paConfig){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -88,7 +88,7 @@ angular.module('propertySearchApp')
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByOwner(params, 
 	                                                      function(){
-		                                                deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
 		                                              },
 		                                              function(response){
 		                                                deferred.reject(response);
@@ -117,7 +117,7 @@ angular.module('propertySearchApp')
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByAddress(params, 
 	                                                        function(){
-		                                                  deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                  deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
 		                                                },
 		                                                function(response){
 		                                                  deferred.reject(response);
@@ -144,7 +144,7 @@ angular.module('propertySearchApp')
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByPartialFolio(params, 
 	                                                             function(){
-		                                                       deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                       deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
 		                                                     },
 		                                                     function(response){
 		                                                       deferred.reject(response);
