@@ -17,7 +17,7 @@ angular.module('propertySearchApp')
 
 
     /**
-     * Requests property information by folio.
+     * Requests property information by folio. s
      * When Folio is found return the property. 
      * When the Folio does not exist, or the request
      * failed an object of the form {message:"some message"}
