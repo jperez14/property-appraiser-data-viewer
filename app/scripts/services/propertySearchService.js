@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, esriGisLocatorService, propertyService, paConfig){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -160,12 +160,27 @@ angular.module('propertySearchApp')
 
     };
     
+    var candidatesByAddressFromEsri = function(candidateAddress){
+      var promise = esriGisLocatorService.candidates20(candidateAddress);
+      return promise.then(
+        function(data){
+          var candidates = candidate.getCandidatesFromEsriData(data);
+          $log.debug("propertySearchService:candidatesByAddressFromEsri esri candidates are ", candidateAddress, candidates);
+          return candidates;
+        }, function(error){
+          $log.error("propertySearchService:candidatesByAddressFromEsri ", error);
+          var candidates = candidate.candidatesFromEsriData({error:true});
+          return $q.reject(candidates);
+        });
+    };
+
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
             getPropertiesByFolios:propertiesByFolios,
 	    getCandidatesByOwner:candidatesByOwner,
 	    getCandidatesByAddress:candidatesByAddress,
+            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio
            };
 

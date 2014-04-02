@@ -140,10 +140,16 @@ angular.module('propertySearchApp')
       var candidates = new Candidates();
       
       if(!utils.isUndefinedOrNull(data)) {
+
+        if(data.error === true){
+          candidates.completed = false;
+          candidates.message = "Error while getting candidates from locator.";
+        } else{
 	    candidates.completed = true;
 	    candidates.message = "";
             candidates.candidates = candidatesFromEsriCandidates(data.candidates);
             candidates.total = candidates.candidates.length;
+        }
 
       }
 
@@ -217,8 +223,7 @@ angular.module('propertySearchApp')
       candidateFromEsriCandidate: candidateFromEsriCandidate,
       candidatesFromEsriCandidates: candidatesFromEsriCandidates,
       getCandidatesFromPaData: candidatesFromPaData,
-      getCandidatesFromEriData: candidatesFromEsriData,
-      getCandidates: getCandidates
+      getCandidatesFromEsriData: candidatesFromEsriData
     };
     
     

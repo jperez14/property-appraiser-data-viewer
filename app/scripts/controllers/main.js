@@ -714,7 +714,7 @@ angular.module('propertySearchApp')
 	}
 	else {
           var message = result.message;
-          candidate.getCandidates($scope.address).then(function(result){
+          propertySearchService.getCandidatesByAddressFromEsri($scope.address).then(function(result){
 
             if(result.candidates.length == 0)
               $scope.showErrorDialog(message, true);
