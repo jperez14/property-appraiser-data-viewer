@@ -12,6 +12,7 @@ angular.module('propertySearchApp')
     urlParcelBoundariesLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/1",
     urlMunicipalityLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/2",
     urlGeometryService:"http://gisweb.miamidade.gov/ArcGIS/rest/services/Geometry/GeometryServer/",
+    urlLocatorService:"http://gisws.miamidade.gov/ArcGIS/rest/services/MDC_Locators/",
 
     layers:[{label:"Municipality", value:false, url:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/2", layerSymbol:{"color":[0,34,102,100],
                                       "outline":{"color":[0,34,102,255],

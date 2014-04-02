@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -21,17 +21,17 @@ angular.module('propertySearchApp')
     var isNumber = function(val){ return eval('/^\\d+$/').test(val);};
 
     var isAlphabetic = function(val) {
-		var expr = new RegExp("^[a-zA-Z-' ]*$");
-		return expr.test(val);
-	};
-	
-	// IMPORTANT - Do not move
+      var expr = new RegExp("^[a-zA-Z-' ]*$");
+      return expr.test(val);
+    };
+    
+    // IMPORTANT - Do not move
     function initMap(){
 
       var map = new esri.Map('map', {extent:new esri.geometry.Extent(paConfig.initialExtentJson),
                                      logo:false, 
                                      showAttribution:false}
-                             );
+                            );
 
       var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"}, dojo.byId("scale-container"));
 
@@ -97,18 +97,18 @@ angular.module('propertySearchApp')
       dojo.ready(initMap);
     });
 
-//    $scope.folioParam = $routeParams.folio;
-//    $scope.$watch('folioParam', function(){
-//      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
-//        $scope.folio = $scope.folioParam;
-//        $scope.searchByFolio();
-//      }
-//
-//    });
+    //    $scope.folioParam = $routeParams.folio;
+    //    $scope.$watch('folioParam', function(){
+    //      if(!isUndefinedOrNull($scope.folioParam) && $scope.folioParam != ""){
+    //        $scope.folio = $scope.folioParam;
+    //        $scope.searchByFolio();
+    //      }
+    //
+    //    });
 
     $scope.$watch('showError', function(){
-//      if(!isUndefinedOrNull($scope.map))
-//        $scope.map.resize();
+      //      if(!isUndefinedOrNull($scope.map))
+      //        $scope.map.resize();
     });
 
 
@@ -174,7 +174,7 @@ angular.module('propertySearchApp')
     
     $scope.ownerName = "";
     $scope.candidatesList = null;
-	$scope.previousCandidatesInfo = null;
+    $scope.previousCandidatesInfo = null;
 
     $scope.isOwnerCandidates = false;
     $scope.isAddressCandidates = false;
@@ -182,7 +182,7 @@ angular.module('propertySearchApp')
     $scope.fromPage = 1;
     $scope.toPage = 200;
     $scope.itemsPerFetch = 200;
-	$scope.isEndOfResults = false;
+    $scope.isEndOfResults = false;
     
     $scope.address = "";
 
@@ -253,7 +253,7 @@ angular.module('propertySearchApp')
 
       $scope.showError = false;
       //$scope.property = null;
-	  $scope.propertySiteAddress = "";
+      $scope.propertySiteAddress = "";
       $scope.candidatesList = null;
       $scope.isOwnerCandidates = false;
       $scope.isAddressCandidates = false;
@@ -268,13 +268,13 @@ angular.module('propertySearchApp')
       $scope.salesInfoGrantorName2 = false;
     };
 
-	$scope.showErrorDialog = function(message, hideMap){
-		$scope.errorMsg = message;
-		$scope.showError = true;
-		if(hideMap)
-			$scope.hideMap = true;
-		$('#error-modal').modal('show');
-	};
+    $scope.showErrorDialog = function(message, hideMap){
+      $scope.errorMsg = message;
+      $scope.showError = true;
+      if(hideMap)
+	$scope.hideMap = true;
+      $('#error-modal').modal('show');
+    };
 
     $scope.showFolioStatus = function(status) {
       if(status != undefined) {
@@ -282,16 +282,16 @@ angular.module('propertySearchApp')
           return "("+ status.substr(2).trim() +")";
         else
           return "";
-	  }
-	  if(status == undefined && $scope.property != null) {
-		if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
-	      return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
-		}
-		else
-	      return "";
-		}
+      }
+      if(status == undefined && $scope.property != null) {
+	if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
+	  return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
+	}
+	else
+	  return "";
+      }
       else
-		return "";
+	return "";
     };
 
     $scope.getRenamedMunicipality = function(municipality) {
@@ -369,23 +369,23 @@ angular.module('propertySearchApp')
     $scope.getCandidateFolio = function(folio, savePrevious) {
       $scope.folio = folio;
       if(isUndefinedOrNull(savePrevious)) {
-	    $scope.previousCandidatesInfo = {
-		  'candidatesList':$scope.candidatesList,
-		  'isEndOfResults':$scope.isEndOfResults,
-		  'fromPage':$scope.fromPage,
-		  'toPage':$scope.toPage,
+	$scope.previousCandidatesInfo = {
+	  'candidatesList':$scope.candidatesList,
+	  'isEndOfResults':$scope.isEndOfResults,
+	  'fromPage':$scope.fromPage,
+	  'toPage':$scope.toPage,
           'isOwnerCandidates':$scope.isOwnerCandidates,
           'isAddressCandidates':$scope.isAddressCandidates,
           'isPartialFolioCandidates':$scope.isPartialFolioCandidates
-		};
+	};
       }
       $scope.searchByFolio();
     };
     
     $scope.populatePreviousCandidates = function() {
-	  $scope.isEndOfResults = $scope.previousCandidatesInfo.isEndOfResults;
-	  $scope.fromPage = $scope.previousCandidatesInfo.fromPage;
-	  $scope.toPage = $scope.previousCandidatesInfo.toPage;
+      $scope.isEndOfResults = $scope.previousCandidatesInfo.isEndOfResults;
+      $scope.fromPage = $scope.previousCandidatesInfo.fromPage;
+      $scope.toPage = $scope.previousCandidatesInfo.toPage;
       $scope.candidatesList = $scope.previousCandidatesInfo.candidatesList;
       $scope.isOwnerCandidates = $scope.previousCandidatesInfo.isOwnerCandidates;
       $scope.isAddressCandidates = $scope.previousCandidatesInfo.isAddressCandidates;
@@ -399,12 +399,12 @@ angular.module('propertySearchApp')
       var folio = $scope.folio;
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
-		$scope.property = null;
-		$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
-		$scope.property = null;
-		$scope.getCandidatesByPartialFolio(folio);
+	$scope.property = null;
+	$scope.getCandidatesByPartialFolio(folio);
       }
       else if(folio != undefined && folio.length == 13){
         $scope.getPropertyByFolio(folio);
@@ -503,7 +503,7 @@ angular.module('propertySearchApp')
           return $q.reject({"error":null, "message":message})
         }
 
-           
+        
       }, function(error){
         $log.error("getGeometryAndFolioFromXY", error);
         $scope.showErrorDialog(error.message, true);
@@ -539,20 +539,30 @@ angular.module('propertySearchApp')
     $scope.getPropertyByXY = function(x, y){
 
       getGeometryAndFolioFromXY(x, y)
-      .then(getPropertyAndAddPolygon)
-      .then(getLatitudeLongitude)
-      .then(function(){
+        .then(getPropertyAndAddPolygon)
+        .then(getLatitudeLongitude)
+        .then(function(){
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
           });
         })['catch'](function(error){
           $log.error("getPropertyByXY:catch", error);
         });
-          
+      
     };
     
 
     $scope.getPropertyByFolio = function(folio){
+
+      var folios = ["3088100000033",
+                    "3068290000393",
+                    "0242030960170",
+                    "0431180012201",
+                    "3049120741070", 
+                    "043120010021A", 
+                    "3040320070791", 
+                    "3050050195030"];
+      propertySearchService.getPropertiesByFolios(folios);
 
       // Clear previous data.
       clearResults();
@@ -607,12 +617,12 @@ angular.module('propertySearchApp')
     };
     
     $scope.fetchNextPage = function() {
-	  if($scope.isEndOfResults) {
-	    return true;
-	  }
+      if($scope.isEndOfResults) {
+	return true;
+      }
       if($scope.toPage >= $scope.candidatesList.total) {
-		$scope.isEndOfResults = true;
-		$scope.showErrorDialog("You have reached the end of the results of your search", true);
+	$scope.isEndOfResults = true;
+	$scope.showErrorDialog("You have reached the end of the results of your search", true);
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
@@ -634,29 +644,29 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
-	  $scope.hideMap = true;
-	  clearResults();
+      $scope.hideMap = true;
+      clearResults();
       if(_.isEmpty($scope.ownerName)) {
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter a valid Owner Name", true);
-		return true;
-	  }
-	  else if(!isAlphabetic($scope.ownerName)) {
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter only alphabetic characters", true);
-		return true;
-	  }
-	  $scope.loader = true; //flag hackeysack
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Owner Name", true);
+	return true;
+      }
+      else if(!isAlphabetic($scope.ownerName)) {
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter only alphabetic characters", true);
+	return true;
+      }
+      $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
-	  $scope.property = null;
+      $scope.property = null;
       propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(function(result){
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
-		$scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message, true);
 	  }
 	  else if(result.candidates.length == 1){
-		$scope.getCandidateFolio(result.candidates[0].folio, false);
-      }
+	    $scope.getCandidateFolio(result.candidates[0].folio, false);
+          }
 	  else if(result.candidates.length > 1){
 	    $scope.candidatesList = result;
 	  }
@@ -665,67 +675,70 @@ angular.module('propertySearchApp')
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
-		$log.error("getCandidatesByOwner error ", error);
-		$scope.showErrorDialog("The request failed. Please try again later", true);
+	$log.error("getCandidatesByOwner error ", error);
+	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
     };
+
 
     $scope.validateAddress = function(){
       $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
-	    $scope.property = null;
-	    $scope.showErrorDialog("Please enter a valid Address", true);
-	    return true;
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address", true);
+	return true;
       }
       else if(isNumber($scope.address)){
-	    $scope.property = null;
-	    $scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
-	    return true;
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+	return true;
       }
-	  else if($scope.address.indexOf('-') > 0) {
-	    var regex = new RegExp("-", 'g');
-		var replacedAddr = $scope.address.replace(regex, '');
-	    if(isNumber(replacedAddr)) {
-		  $scope.property = null;
-		  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
-		  $scope.setActiveSearchTab('Folio');
-		  $scope.getCandidateFolio(replacedAddr, false);
-		  return true;
-		}
-	  }
-      else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
-        $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
-	    $scope.address.indexOf("#") >= 0 ) {
-	    $scope.property = null;
-	    $scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
-	    return true;
-      }
-	  else if(isAlphabetic($scope.address)) {
-		propertySearchService.getHasValidStreetName($scope.address).then(function(result){
-		  if(result.completed == true) {
-		    if(result.valid == true)
-			  $scope.getCandidatesByAddress();
-			else {
-			  $scope.ownerName = $scope.address;
-			  $scope.setActiveSearchTab('Owner');
-			  $('[name="ownerName"]').removeClass('placeholder'); //Temp Fix
-			  $scope.getCandidatesByOwner();
-			}
-		  }
-		  else {
-		    $scope.showErrorDialog(result.message, true);
-		  }
-		}, function(error){
-		  $scope.showErrorDialog("The request failed. Please try again later", true);
-		  return true;
-		});
-	  }
-	  else 
-	    $scope.getCandidatesByAddress();
-	};
 
-	$scope.getCandidatesByAddress = function(){
+      else if($scope.address.indexOf('-') > 0) {
+	var regex = new RegExp("-", 'g');
+	var replacedAddr = $scope.address.replace(regex, '');
+	if(isNumber(replacedAddr)) {
+	  $scope.property = null;
+	  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+	  $scope.setActiveSearchTab('Folio');
+	  $scope.getCandidateFolio(replacedAddr, false);
+	  return true;
+	}
+      }
+
+      else if($scope.address.toUpperCase().indexOf("APT") >= 0 || $scope.address.toUpperCase().indexOf("APARTMENT") >= 0 || 
+              $scope.address.toUpperCase().indexOf("UNIT") >= 0 || $scope.address.toUpperCase().indexOf("SUITE") >= 0 || 
+	      $scope.address.indexOf("#") >= 0 ) {
+	$scope.property = null;
+	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
+	return true;
+      }
+      else if(isAlphabetic($scope.address)) {
+	propertySearchService.getHasValidStreetName($scope.address).then(function(result){
+	  if(result.completed == true) {
+	    if(result.valid == true)
+	      $scope.getCandidatesByAddress();
+	    else {
+	      $scope.ownerName = $scope.address;
+	      $scope.setActiveSearchTab('Owner');
+	      $('[name="ownerName"]').removeClass('placeholder'); //Temp Fix
+	      $scope.getCandidatesByOwner();
+	    }
+	  }
+	  else {
+	    $scope.showErrorDialog(result.message, true);
+	  }
+	}, function(error){
+	  $scope.showErrorDialog("The request failed. Please try again later", true);
+	  return true;
+	});
+      }
+      else 
+	$scope.getCandidatesByAddress();
+    };
+
+    $scope.getCandidatesByAddress = function(){
       $scope.isAddressCandidates = true;
       $scope.loader = true; //flag hackeysack
       $scope.property = null;
@@ -742,7 +755,21 @@ angular.module('propertySearchApp')
 	  }
 	}
 	else {
-	  $scope.showErrorDialog(result.message, true);
+          var message = result.message;
+          propertySearchService.getCandidatesByAddressFromEsri($scope.address).then(function(result){
+
+            if(result.candidates.length == 0)
+              $scope.showErrorDialog(message, true);
+            else if(result.candidates.length == 1)
+              $scope.getCandidateFolio(result.candidates[0].folio, false);
+            else
+	      $scope.candidatesList = {candidates:result.candidates};              
+            
+          },function(error){
+	    $scope.showErrorDialog("The request failed. Please try again later", true);
+          });
+
+
 	}
       }, function(error){
 	$scope.showErrorDialog("The request failed. Please try again later", true);
@@ -791,19 +818,19 @@ angular.module('propertySearchApp')
     };
 
     $scope.openReportSummaryWindow = function(){
-        var url = '#/report/summary';
-        localStorageService.add('property',$scope.property);
-        localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
+      var url = '#/report/summary';
+      localStorageService.add('property',$scope.property);
+      localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
 
-        $window.open(url,'name','height=1000,width=840, location=0');
+      $window.open(url,'name','height=1000,width=840, location=0');
     };
 
     $scope.openReportDetailsWindow = function(){
-        var url = '#/report/details';
-        localStorageService.add('property',$scope.property);
-        localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
+      var url = '#/report/details';
+      localStorageService.add('property',$scope.property);
+      localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
 
-        $window.open(url,'name','height=1000,width=840, location=0');
+      $window.open(url,'name','height=1000,width=840, location=0');
     };
 
     $scope.openComparableSales = function(){
@@ -821,35 +848,35 @@ angular.module('propertySearchApp')
     };
 
 
-//    $scope.getComparableSales = function() {
-//      //Create FORM object
-//      var salesForm = document.createElement("form");
-//      salesForm.method = "post";
-//      salesForm.target = "_blank";
-//      salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
-//      //Append Input
-//      //Folio
-//      var folioInput = document.createElement("input");
-//      folioInput.setAttribute("name", "folio");
-//      folioInput.setAttribute("value", $scope.folio);
-//      salesForm.appendChild(folioInput);
-//      //Cmd
-//      var cmdInput = document.createElement("input");
-//      cmdInput.setAttribute("name", "Cmd");
-//      cmdInput.setAttribute("value", "FOLIO");
-//      salesForm.appendChild(cmdInput);
-//      //Append Sales Form
-//      document.body.appendChild(salesForm);
-//      //Submit the Form
-//      salesForm.submit();
-//      //Remove Sales Form
-//      document.body.removeChild(salesForm);
-//    };
+    //    $scope.getComparableSales = function() {
+    //      //Create FORM object
+    //      var salesForm = document.createElement("form");
+    //      salesForm.method = "post";
+    //      salesForm.target = "_blank";
+    //      salesForm.action = "http://gisims2.miamidade.gov/Myneighborhood/salesmap.asp";
+    //      //Append Input
+    //      //Folio
+    //      var folioInput = document.createElement("input");
+    //      folioInput.setAttribute("name", "folio");
+    //      folioInput.setAttribute("value", $scope.folio);
+    //      salesForm.appendChild(folioInput);
+    //      //Cmd
+    //      var cmdInput = document.createElement("input");
+    //      cmdInput.setAttribute("name", "Cmd");
+    //      cmdInput.setAttribute("value", "FOLIO");
+    //      salesForm.appendChild(cmdInput);
+    //      //Append Sales Form
+    //      document.body.appendChild(salesForm);
+    //      //Submit the Form
+    //      salesForm.submit();
+    //      //Remove Sales Form
+    //      document.body.removeChild(salesForm);
+    //    };
 
     $scope.showStreetView = function() {
       var url = "views/streetview/streetview.html?latitude=" + $scope.property.location.latitude + "&longitude="+$scope.property.location.longitude;
-	  //$window.open(url, "name", "height=700, width=1000, location=0'"); //Opens in new window
-	  $window.open(url, '_blank'); //Opens in new tab
+      //$window.open(url, "name", "height=700, width=1000, location=0'"); //Opens in new window
+      $window.open(url, '_blank'); //Opens in new tab
     };
 
     $scope.isGingerbread = function() {
@@ -861,6 +888,6 @@ angular.module('propertySearchApp')
         return false;
     };
 
-}]);
+  }]);
 
 
