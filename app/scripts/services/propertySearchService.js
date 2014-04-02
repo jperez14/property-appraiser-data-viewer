@@ -174,9 +174,9 @@ angular.module('propertySearchApp')
       var isValidStreet = PropertyResource.hasValidStreetName(params, 
 	                                                      function(){
 		                                                deferred.resolve({
-	                                                          completed = isValidStreet.Completed;
-	                                                          message = isValidStreet.Message;
-	                                                          valid = isValidStreet.Valid;
+	                                                          completed:isValidStreet.Completed,
+	                                                          message:isValidStreet.Message,
+	                                                          valid:isValidStreet.Valid
 	                                                        });
 		                                              },
 		                                              function(response){
@@ -214,8 +214,8 @@ angular.module('propertySearchApp')
 	    getCandidatesByOwner:candidatesByOwner,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
-	    getHasValidStreetName:hasValidStreetName
-            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
+	    getHasValidStreetName:hasValidStreetName,
+            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri
 
 
            };
