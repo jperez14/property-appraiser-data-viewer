@@ -21,7 +21,7 @@ angular.module('propertySearchApp')
      * When the Folio does not exist, or the request
      * failed an object of the form {message:"some message"}
      * is returned.
-     */
+     **/
     var propertyByFolio = function(folio){
       var endPoint = "";
       var params = {"folioNumber":folio, 
@@ -46,6 +46,35 @@ angular.module('propertySearchApp')
         return $q.reject({message:response});
       });
     };
+
+
+    /**
+     * return a promise where the data returned by that promise is an array of
+     * propertyService.Property objects for each one of
+     * the folios. It discard folios that are not found.
+     * When passing an empty array of folios or null the promise
+     * returns an ampty array as data.
+     **/
+    var propertiesByFolios = function(folios){
+      self = this;
+      var propertyPromises = [];
+      
+      // Get a promise for each folio.
+      _.each(folios, function(folio){
+        propertyPromises.push(self.getPropertyByFolio(folio).then(
+          function(data){return data},
+          function(response){return null }
+         ));
+      });
+
+      // Discard not existing properties.
+      var all = $q.all(propertyPromises);
+      return all.then(function(data){
+        $log.debug("propertySearchService:propertiesByFolios: ", data)
+        return _.filter(data, function(property){return property != null});
+      });
+    };
+    
 
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = '';
@@ -134,6 +163,7 @@ angular.module('propertySearchApp')
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
+            getPropertiesByFolios:propertiesByFolios,
 	    getCandidatesByOwner:candidatesByOwner,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio

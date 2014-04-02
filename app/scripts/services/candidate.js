@@ -72,17 +72,7 @@ angular.module('propertySearchApp')
       return filterCandidates(candidates); 
     };
     
-    var filterCandidates = function(candidates) {
-      // filter out candidates with no folio.
-      return _.filter(candidates, function(candidate){
-        if(utils.isUndefinedOrNull(candidate.folio))
-          return false;
-        else if(candidate.folio === "")
-          return false;
-        else
-          return true;
-      });
-    };
+
     
     var candidateFromPaCandidate = function(paCandidate) {
       var candidate = new Candidate();
@@ -107,6 +97,57 @@ angular.module('propertySearchApp')
 	candidate.subdivisionDescription = paCandidate.SubdivisionDescription;
 
       return candidate;
+    };
+
+    /**
+     *  filter out candidates with no folio.
+     **/
+    var filterCandidates = function(candidates) {
+
+      return _.filter(candidates, function(candidate){
+        if(utils.isUndefinedOrNull(candidate.folio))
+          return false;
+        else if(candidate.folio === "")
+          return false;
+        else
+          return true;
+      });
+    };
+
+    /**
+     * receives raw data from paCandidates and it is going to return
+     * a candidate.Candidates model
+     **/
+    var candidatesFromPaData = function(data){
+      var candidates = new Candidates();
+      
+      if(!utils.isUndefinedOrNull(data)) {
+	    candidates.completed = data.Completed;
+	    candidates.message = data.Message;
+	    candidates.total = data.Total;
+            candidates.candidates = candidatesFromPACandidates(data.MinimumPropertyInfos);
+      }
+      
+      return candidates;
+
+    };
+    
+    /**
+     * receives raw data from esriCandidates and it is going to return
+     * a candidate.Candidates model
+     **/
+    var candidatesFromEsriData = function(data){
+      var candidates = new Candidates();
+      
+      if(!utils.isUndefinedOrNull(data)) {
+	    candidates.completed = true;
+	    candidates.message = "";
+            candidates.candidates = candidatesFromEsriCandidates(data.candidates);
+            candidates.total = candidates.candidates.length;
+
+      }
+
+      return candidates;
     };
 
     var getCandidates = function(candidateAddress){
@@ -175,6 +216,8 @@ angular.module('propertySearchApp')
       Candidate: Candidate,
       candidateFromEsriCandidate: candidateFromEsriCandidate,
       candidatesFromEsriCandidates: candidatesFromEsriCandidates,
+      getCandidatesFromPaData: candidatesFromPaData,
+      getCandidatesFromEriData: candidatesFromEsriData,
       getCandidates: getCandidates
     };
     

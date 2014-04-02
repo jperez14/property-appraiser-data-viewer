@@ -540,6 +540,16 @@ angular.module('propertySearchApp')
 
     $scope.getPropertyByFolio = function(folio){
 
+      var folios = ["3088100000033",
+                    "3068290000393",
+                    "0242030960170",
+                    "0431180012201",
+                    "3049120741070", 
+                    "043120010021A", 
+                    "3040320070791", 
+                    "3050050195030"];
+      propertySearchService.getPropertiesByFolios(folios);
+
       // Clear previous data.
       clearResults();
 
