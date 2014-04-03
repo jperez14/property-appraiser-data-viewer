@@ -641,11 +641,11 @@ angular.module('propertySearchApp')
 		$scope.showErrorDialog("Please enter a valid Owner Name", true);
 		return true;
 	  }
-	  else if(!isAlphabetic($scope.ownerName)) {
-	    $scope.property = null;
-		$scope.showErrorDialog("Please enter only alphabetic characters", true);
-		return true;
-	  }
+	  //else if(!isAlphabetic($scope.ownerName)) {
+	  //$scope.property = null;
+	  //$scope.showErrorDialog("Please enter only alphabetic characters", true);
+	  //return true;
+	  //}
 	  $scope.loader = true; //flag hackeysack
       $scope.isOwnerCandidates = true;
 	  $scope.property = null;
