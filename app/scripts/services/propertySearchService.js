@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', '$log', 'candidateService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidateService, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, esriGisLocatorService, propertyService, paConfig){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -11,24 +11,24 @@ angular.module('propertySearchApp')
 				      candidatesByOwner:{method:'GET'},
 				      candidatesByAddress:{method:'GET'},
 				      candidatesByPartialFolio:{method:'GET'},
-					  hasValidStreetName:{method:'GET'}
+				      hasValidStreetName:{method:'GET'}
 				     }
                                     );
 
 
     /**
-     * Requests property information by folio.
+     * Requests property information by folio. s
      * When Folio is found return the property. 
      * When the Folio does not exist, or the request
      * failed an object of the form {message:"some message"}
      * is returned.
-     */
+     **/
     var propertyByFolio = function(folio){
       var endPoint = "";
       var params = {"folioNumber":folio, 
                     "clientAppName":'PropertySearch', 
                     "Operation":'GetPropertySearchByFolio',
-                   "endPoint":endPoint};         
+                    "endPoint":endPoint};         
 
       var deferred = $q.defer();
       var rawProperty = PropertyResource.propertyByFolio(params, function (){
@@ -48,6 +48,35 @@ angular.module('propertySearchApp')
       });
     };
 
+
+    /**
+     * return a promise where the data returned by that promise is an array of
+     * propertyService.Property objects for each one of
+     * the folios. It discard folios that are not found.
+     * When passing an empty array of folios or null the promise
+     * returns an ampty array as data.
+     **/
+    var propertiesByFolios = function(folios){
+      //self = this;
+      var propertyPromises = [];
+      
+      // Get a promise for each folio.
+      _.each(folios, function(folio){
+        propertyPromises.push(propertyByFolio(folio).then(
+          function(data){return data},
+          function(response){return null }
+        ));
+      });
+
+      // Discard not existing properties.
+      var all = $q.all(propertyPromises);
+      return all.then(function(data){
+        $log.debug("propertySearchService:propertiesByFolios: ", data)
+        return _.filter(data, function(property){return property != null});
+      });
+    };
+    
+
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = '';
       var params = {"ownerName":ownerName, 
@@ -60,7 +89,7 @@ angular.module('propertySearchApp')
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByOwner(params, 
 	                                                      function(){
-		                                                deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
 		                                              },
 		                                              function(response){
 		                                                deferred.reject(response);
@@ -75,7 +104,7 @@ angular.module('propertySearchApp')
 
     };
     
-    var candidatesByAddress = function(address, unit, from, to, callback){
+    var candidatesByAddressFromPA = function(address, unit, from, to, callback){
       var endPoint = "";
       var params = {"myAddress":address, "myUnit":unit, 
                     "clientAppName":'PropertySearch', 
@@ -88,12 +117,12 @@ angular.module('propertySearchApp')
       
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByAddress(params, 
-	                                                        function(){
-		                                                  deferred.resolve(new candidateService.Candidates(candidatesList));
-		                                                },
-		                                                function(response){
-		                                                  deferred.reject(response);
-	                                                        });
+        function(){
+          deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
+        },
+        function(response){
+          deferred.reject(response);
+        });
 
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
@@ -116,7 +145,7 @@ angular.module('propertySearchApp')
       var deferred = $q.defer();
       var candidatesList = PropertyResource.candidatesByPartialFolio(params, 
 	                                                             function(){
-		                                                       deferred.resolve(new candidateService.Candidates(candidatesList));
+		                                                       deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
 		                                                     },
 		                                                     function(response){
 		                                                       deferred.reject(response);
@@ -132,22 +161,27 @@ angular.module('propertySearchApp')
 
     };
     
-	var hasValidStreetName = function(address, callback){
-	  var endPoint = "";
+
+    var hasValidStreetName = function(address, callback){
+      var endPoint = "";
       var params = {"myAddress":address, 
                     "clientAppName":'PropertySearch', 
                     "Operation":"ContainsValidStreetName",
                     "endPoint":endPoint};
-	
+      
       var deferred = $q.defer();
-	  
+      
       var isValidStreet = PropertyResource.hasValidStreetName(params, 
-	                                                        function(){
-		                                                  deferred.resolve(new candidateService.hasValidStreetName(isValidStreet));
-		                                                },
-		                                                function(response){
-		                                                  deferred.reject(response);
+	                                                      function(){
+		                                                deferred.resolve({
+	                                                          completed:isValidStreet.Completed,
+	                                                          message:isValidStreet.Message,
+	                                                          valid:isValidStreet.Valid
 	                                                        });
+		                                              },
+		                                              function(response){
+		                                                deferred.reject(response);
+	                                                      });
 
       return deferred.promise.then(function(isValidStreet){
 	return isValidStreet;
@@ -156,14 +190,69 @@ angular.module('propertySearchApp')
         return $q.reject(response);
       });
 
-	};
+    };
+
+    var candidatesByAddressFromEsri = function(candidateAddress){
+      var promise = esriGisLocatorService.candidates20(candidateAddress);
+      return promise.then(
+        function(data){
+          var candidates = candidate.getCandidatesFromEsriData(data);
+          $log.debug("propertySearchService:candidatesByAddressFromEsri esri candidates are ", candidateAddress, candidates);
+          return candidates;
+        }, function(error){
+          $log.error("propertySearchService:candidatesByAddressFromEsri ", error);
+          var candidates = candidate.candidatesFromEsriData({error:true});
+          return $q.reject(candidates);
+        });
+    };
+
+
+    var candidatesByAddressFromEsri2 = function(candidateAddress){
+      var promise = candidatesByAddressFromEsri(candidateAddress);
+      return promise.then(function(candidates){
+        var folios = _.pluck(candidates.candidates, 'folio');
+        return propertiesByFolios(folios).then(function(properties){
+          return candidate.getCandidatesFromProperties(properties);
+          
+        });
+      });
+    };
+
+
+
+    var candidatesByAddress = function(address, unit, from, to){
+      var promise = candidatesByAddressFromPA(address, unit, from, to);
+      
+      return promise.then(function(result){
+	if(result.completed == true) {
+          return result;
+	}
+	else {
+          var message = result.message;
+          return candidatesByAddressFromEsri2(address).then(function(result){
+            if(result.candidates.length == 0)
+              result.message = message;
+            return result;
+          },function(error){
+            return $q.reject({error:error, message:"The request failed. Please try again later"});
+          });
+	}
+      }, function(error){
+            return $q.reject({error:error, message:"The request failed. Please try again later"});
+      });
+
+    };
+    
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
+            getPropertiesByFolios:propertiesByFolios,
 	    getCandidatesByOwner:candidatesByOwner,
+            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
+            getCandidatesByAddressFromPA:candidatesByAddressFromPA,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
-		getHasValidStreetName:hasValidStreetName
+	    getHasValidStreetName:hasValidStreetName
            };
 
   }]);
