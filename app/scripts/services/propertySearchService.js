@@ -57,12 +57,12 @@ angular.module('propertySearchApp')
      * returns an ampty array as data.
      **/
     var propertiesByFolios = function(folios){
-      self = this;
+      //self = this;
       var propertyPromises = [];
       
       // Get a promise for each folio.
       _.each(folios, function(folio){
-        propertyPromises.push(self.getPropertyByFolio(folio).then(
+        propertyPromises.push(propertyByFolio(folio).then(
           function(data){return data},
           function(response){return null }
         ));
@@ -207,6 +207,19 @@ angular.module('propertySearchApp')
     };
 
 
+    var candidatesByAddressFromEsri2 = function(candidateAddress){
+      var promise = candidatesByAddressFromEsri(candidateAddress);
+      return promise.then(function(candidates){
+        var folios = _.pluck(candidates.candidates, 'folio');
+        return propertiesByFolios(folios).then(function(properties){
+          return candidate.getCandidatesFromProperties(properties);
+          
+        });
+      });
+    };
+
+
+
     var candidatesByAddress = function(address, unit, from, to){
       var promise = candidatesByAddressFromPA(address, unit, from, to);
       
@@ -216,16 +229,16 @@ angular.module('propertySearchApp')
 	}
 	else {
           var message = result.message;
-          return candidatesByAddressFromEsri(address).then(function(result){
+          return candidatesByAddressFromEsri2(address).then(function(result){
             if(result.candidates.length == 0)
               result.message = message;
             return result;
           },function(error){
-            $q.reject({error:error, message:"The request failed. Please try again later"});
+            return $q.reject({error:error, message:"The request failed. Please try again later"});
           });
 	}
       }, function(error){
-            $q.reject({error:error, message:"The request failed. Please try again later"});
+            return $q.reject({error:error, message:"The request failed. Please try again later"});
       });
 
     };
@@ -240,9 +253,6 @@ angular.module('propertySearchApp')
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
 	    getHasValidStreetName:hasValidStreetName
-
-
-
            };
 
   }]);

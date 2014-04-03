@@ -46,34 +46,6 @@ angular.module('propertySearchApp')
       return candidate;
     }
     
-
-    /**
-     * map an array of esri candidates to an array of candidates objects
-     */   
-    var candidatesFromEsriCandidates = function(esriCandidates){
-      
-      // Convert esri candidates to our candidate model.
-      var candidates = _.map(esriCandidates, function(esriCandidate){
-        return candidateFromEsriCandidate(esriCandidate);
-      }); 
-
-      return filterCandidates(candidates); 
-    };
-    
-
-    /**
-     * map an array of PA candidates to an array of candidates objects
-     */   
-    var candidatesFromPACandidates = function(paCandidates) {
-      // Convert pa candidates to our candidate model.
-      var candidates = _.map(paCandidates, function(paCandidate){
-        return candidateFromPaCandidate(paCandidate);
-      }); 
-      return filterCandidates(candidates); 
-    };
-    
-
-    
     var candidateFromPaCandidate = function(paCandidate) {
       var candidate = new Candidate();
       if(utils.isUndefinedOrNull(paCandidate))
@@ -99,15 +71,93 @@ angular.module('propertySearchApp')
       return candidate;
     };
 
+    var candidateFromProperty = function(property){
+      var candidate = new Candidate();
+      if(utils.isUndefinedOrNull(property))
+        return candidate;
+
+      if(!utils.isUndefinedOrNull(property.siteAddresses[0])){
+        var streetNumber = property.siteAddresses[0].streetNumber;
+        var streetPrefix = property.siteAddresses[0].streetPrefix;
+        var streetName = property.siteAddresses[0].streetName;
+        var streetSuffix = property.siteAddresses[0].streetSuffix;
+        var streetSuffixDirection = property.siteAddresses[0].streetSuffixDirection;
+        candidate.siteAddress = streetNumber + " " + streetPrefix + " " + streetName +
+          " " + streetSuffix + " " + streetSuffixDirection;
+
+        candidate.municipality = property.siteAddresses[0].city;
+      }else{
+        candidate.siteAddress = "";
+        candidate.municipality = "";
+      }
+
+      if(!utils.isUndefinedOrNull(property.ownersInfo[0]))
+        candidate.firstOwner = property.ownersInfo[0].name;
+
+      if(!utils.isUndefinedOrNull(property.ownersInfo[1]))
+        candidate.secondOwner = property.ownersInfo[1].name;
+
+      if(!utils.isUndefinedOrNull(property.ownersInfo[2]))
+        candidate.third = property.ownersInfo[2].name;
+
+      candidate.folio = property.propertyInfo.folioNumber;      
+      candidate.subdivisionDescription = property.propertyInfo.subdivisionDescription;
+
+      return candidate;
+      
+    };
+    
+
+    /**
+     * map an array of esri candidates to an array of candidates objects
+     */   
+    var candidatesFromEsriCandidates = function(esriCandidates){
+      
+      // Convert esri candidates to our candidate model.
+      var candidates = _.map(esriCandidates, function(esriCandidate){
+        return candidateFromEsriCandidate(esriCandidate);
+      }); 
+
+      return filterCandidatesWithNoFolio(candidates); 
+    };
+    
+
+    /**
+     * map an array of PA candidates to an array of candidates objects
+     */   
+    var candidatesFromPACandidates = function(paCandidates) {
+      // Convert pa candidates to our candidate model.
+      var candidates = _.map(paCandidates, function(paCandidate){
+        return candidateFromPaCandidate(paCandidate);
+      }); 
+      return filterCandidatesWithNoFolio(candidates); 
+    };
+    
+
     /**
      *  filter out candidates with no folio.
      **/
-    var filterCandidates = function(candidates) {
+    var filterCandidatesWithNoFolio = function(candidates) {
 
       return _.filter(candidates, function(candidate){
         if(utils.isUndefinedOrNull(candidate.folio))
           return false;
         else if(candidate.folio === "")
+          return false;
+        else
+          return true;
+      });
+    };
+
+    /**
+     *  filter out candidates with no address.
+     **/
+    var filterCandidatesWithNoAddress = function(candidates) {
+
+      return _.filter(candidates, function(candidate){
+        if(utils.isUndefinedOrNull(candidate.siteAddress))
+          return false;
+        else if(candidate.siteAddress === "")
           return false;
         else
           return true;
@@ -156,25 +206,24 @@ angular.module('propertySearchApp')
       return candidates;
     };
 
-    var getCandidates = function(candidateAddress){
-      var promise = esriGisLocatorService.candidates20(candidateAddress);
-      return promise.then(
-        function(data){
-          var candidates = new Candidates();
-          candidates.completed = true;
-          candidates.message = "";
-          candidates.candidates = candidatesFromEsriCandidates(data.candidates);
-          candidates.total = candidates.candidates.length;
-          $log.debug("candidate:getCandidates esri candidates are ", candidateAddress, candidates);
-          return candidates;
-        }, function(error){
-          $log.error("candidate:getCandidates ", error);
-          var candidates = new Candidates();
-          candidates.completed = false;
-          candidates.message = "Error while getting candidates from locator."
-          return $q.reject(candidates);
-          
-        });
+    
+    var candidatesFromProperties = function(properties){
+
+      var candidatesArray = _.map(properties, function(property){
+        return candidateFromProperty(property);
+      }); 
+
+
+      var candidates = new Candidates();
+      if(!utils.isUndefinedOrNull(filterCandidatesWithNoAddress(candidatesArray))){
+	    candidates.completed = true;
+	    candidates.message = "";
+            candidates.candidates = filterCandidatesWithNoAddress(candidatesArray);
+            candidates.total = candidates.candidates.length;
+        
+      }
+      
+      return candidates;
     };
     
 
@@ -222,6 +271,7 @@ angular.module('propertySearchApp')
       Candidate: Candidate,
       candidateFromEsriCandidate: candidateFromEsriCandidate,
       candidatesFromEsriCandidates: candidatesFromEsriCandidates,
+      getCandidatesFromProperties: candidatesFromProperties,
       getCandidatesFromPaData: candidatesFromPaData,
       getCandidatesFromEsriData: candidatesFromEsriData
     };
