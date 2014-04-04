@@ -227,16 +227,18 @@ angular.module('propertySearchApp')
 	if(result.completed == true) {
           return result;
 	}
-	else {
-          var message = result.message;
-          return candidatesByAddressFromEsri2(address).then(function(result){
-            if(result.candidates.length == 0)
-              result.message = message;
-            return result;
-          },function(error){
-            return $q.reject({error:error, message:"The request failed. Please try again later"});
-          });
-	}
+        else
+          return $q.reject({error:{}, message:result.message})
+//	else {
+//          var message = result.message;
+//          return candidatesByAddressFromEsri2(address).then(function(result){
+//            if(result.candidates.length == 0)
+//              result.message = message;
+//            return result;
+//          },function(error){
+//            return $q.reject({error:error, message:"The request failed. Please try again later"});
+//          });
+//	}
       }, function(error){
             return $q.reject({error:error, message:"The request failed. Please try again later"});
       });
