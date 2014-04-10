@@ -29,6 +29,26 @@ describe('Service: propertySearchService', function () {
     LegalDescription: {Description: "A|B|C"}
   };
 
+  var mockProperty1 = {
+    AssessmentInfo: {AssessedValueCurrent: 70067},
+    ClassifiedAgInfo: {Acreage: 0},
+    Completed: true,
+    District: 1,
+    ExemptionInfo: {AgDifferentialValueCurrent: 0},
+    PropertyInfo: {FolioNumber: "01-3126-042-0371"},
+    LegalDescription: {Description: "A|B|C"}
+  };
+
+  var mockProperty2 = {
+    AssessmentInfo: {AssessedValueCurrent: 70067},
+    ClassifiedAgInfo: {Acreage: 0},
+    Completed: true,
+    District: 1,
+    ExemptionInfo: {AgDifferentialValueCurrent: 0},
+    PropertyInfo: {FolioNumber: "01-3126-042-0372"},
+    LegalDescription: {Description: "A|B|C"}
+  };
+
   var mockFolioDoesNotExistResponse = {
     Completed:true,
     Message:"Folio does not exist",
@@ -52,10 +72,13 @@ describe('Service: propertySearchService', function () {
     $rootScope = _$rootScope_;
     $q = _$q_;
 
-    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetPropertySearchByFolio?folioNumber=0131260420370&layerId=4').respond(mockProperty);
-    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetPropertySearchByFolio?folioNumber=1111111111111&layerId=4').respond(mockFolioDoesNotExistResponse);
-    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetOwners?from=1&ownerName=Michael+Sarasti&to=200').respond(mockCandidatesList);
-    $httpBackend.when('GET', '/PaPublicServices/PAGISService.svc/GetAddress?from=1&myAddress=7244+SW+72+St&myUnit=&to=200').respond(mockCandidatesList);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetPropertySearchByFolio&clientAppName=PropertySearch&folioNumber=0131260420370').respond(mockProperty);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetPropertySearchByFolio&clientAppName=PropertySearch&folioNumber=0131260420371').respond(mockProperty1);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetPropertySearchByFolio&clientAppName=PropertySearch&folioNumber=0131260420372').respond(mockProperty2);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetPropertySearchByFolio&clientAppName=PropertySearch&folioNumber=1111111111111').respond(mockFolioDoesNotExistResponse);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetOwners&clientAppName=PropertySearch&enPoint=&from=1&ownerName=Michael+Sarasti&to=200').respond(mockCandidatesList);
+    $httpBackend.when('GET', '/PApublicServiceProxy/PaServicesProxy.ashx?Operation=GetAddress&clientAppName=PropertySearch&from=1&myAddress=7244+SW+72+St&myUnit=&to=200').respond(mockCandidatesList);
+
   }));
 
   it('should do something', function () {
@@ -65,7 +88,7 @@ describe('Service: propertySearchService', function () {
   it('propertyByFolio success', function(){
     var property = propertySearchService.getPropertyByFolio('0131260420370');
     property.then(function(myProperty){
-      expect(myProperty.propertyInfo.folioNumber).toBe("01-3126-042-0370");
+      expect(myProperty.propertyInfo.folioNumber).toBe("0131260420370");
       expect(myProperty.legalDescription.parsedDescription).toEqual(["A","B","C"]);
     },function(response){
       expect(true).toBe(false);
