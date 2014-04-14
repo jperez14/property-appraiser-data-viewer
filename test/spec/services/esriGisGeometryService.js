@@ -24,7 +24,7 @@ describe('Service: esriGisGeometryService', function () {
     $httpBackend = _$httpBackend_;
     $rootScope = _$rootScope_;
 
-    $httpBackend.when('GET', '/ArcGIS/rest/services/Geometry/GeometryServer/project?f=json&geometries=%7B%22geometryType%22:%22esriGeometryPoint%22,%22geometries%22:%5B%7B%22x%22:857869.753,%22y%22:488913.937%7D%5D%7D&inSR=2236&outSR=4326').respond(mockGeometryResult);
+    $httpBackend.when('JSONP', 'http://gisweb.miamidade.gov/ArcGIS/rest/services/Geometry/GeometryServer/project?callback=JSON_CALLBACK&f=json&geometries=%7B%22geometryType%22:%22esriGeometryPoint%22,%22geometries%22:%5B%7B%22x%22:857869.753,%22y%22:488913.937%7D%5D%7D&inSR=2236&outSR=4326').respond(mockGeometryResult);
 
   }));
 

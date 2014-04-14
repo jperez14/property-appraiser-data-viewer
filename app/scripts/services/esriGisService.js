@@ -68,7 +68,18 @@ angular.module('propertySearchApp')
       return new esri.Graphic(point);
     }
     
-
+	var joinGeometries = function(featureSet){
+	    var geometry = featureSet.features[0].geometry;
+		_.each(featureSet.features, function(feature, index){
+		    if (index == 0)
+			  return;
+			_.each(feature.geometry.rings, function(ring){
+				geometry.rings.push(ring);
+			});
+		});
+		return geometry;
+	}
+	
     var polygonFromFolio = function($scope, folio){
 
       var url = paConfig.urlParcelBoundariesLayer;
@@ -76,7 +87,8 @@ angular.module('propertySearchApp')
       return queryLayer($scope, url, whereClause, true).then(
         function(featureSet){
 	  if(featureSet.features != undefined && featureSet.features.length > 0) {
-            return featureSet.features[0].geometry;
+	    return joinGeometries(featureSet);
+		//return featureSet.features[0].geometry;
 	  }else{
             var message = "No polygon found for folio " + folio;
             return $q.reject({"error":featureSet, "message":message});

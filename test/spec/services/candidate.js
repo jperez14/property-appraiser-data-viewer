@@ -344,8 +344,24 @@ describe('Service: candidate', function () {
 
   });
 
+  it('should do something', function () {
+    expect(!!candidate).toBe(true);
+  });
   
+  it('A new Candidate object returns null values for all fields', function(){
+    var Candidate = new candidate.Candidate();
+    expect(Candidate.siteAddress).toEqual(null);
+    expect(Candidate.municipality).toEqual(null);
+    expect(Candidate.folio).toEqual(null);
+    expect(Candidate.firstOwner).toEqual(null);
+    expect(Candidate.secondOwner).toEqual(null);
+    expect(Candidate.thirdOwner).toEqual(null);
+    expect(Candidate.status).toEqual(null);
+    expect(Candidate.subdivisionDescription).toEqual(null);
+  });
 
+  
+  
 });
 
 

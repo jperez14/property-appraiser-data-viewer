@@ -846,6 +846,17 @@ table tr.table-message td div {
 	margin-top: 5px;
 }
 
+.description-block span {
+	display: block;
+	padding: 4px;
+	margin:2px -5px;
+
+}
+
+.description-block span:nth-child(odd) {
+	background-color: #eeeeee;
+}
+
 /* ----------------------------------------------------
 media queries below... do not place styles below this line.
 ------------------------------------------------------*/
