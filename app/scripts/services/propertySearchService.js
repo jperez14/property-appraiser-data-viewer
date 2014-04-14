@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, esriGisLocatorService, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'esriGisService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, esriGisLocatorService, esriGisService, propertyService, paConfig){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -192,43 +192,123 @@ angular.module('propertySearchApp')
 
     };
 
-    var candidatesByAddressFromEsri = function(candidateAddress){
-      var promise = esriGisLocatorService.candidates20(candidateAddress);
+
+
+  var candidatesByAddress = function(address, unit, from, to){
+    var promise = candidatesByAddressFromPA(address, unit, from, to);
+
+    return promise.then(
+      function(result){
+        if(result.completed == true) 
+          return result;
+        else
+          var message = result.message;
+          return candidatesByAddressFromEsri(address).then(function(result){
+          if(result.candidates.length == 0)
+              result.message = message;
+          return result;
+          });
+      }, function(error){
+        return $q.reject({error:error, message:"The request failed. Please try again later"});
+      });
+  };
+
+   var candidatesByAddressFromEsri = function(address){
+      var promise = esriGisLocatorService.locator20(address);
       return promise.then(
         function(data){
-          var candidates = candidate.getCandidatesFromEsriData(data);
-          $log.debug("propertySearchService:candidatesByAddressFromEsri esri candidates are ", candidateAddress, candidates);
-          return candidates;
+          $log.debug("getCandidatesByAddressFromEsri: data from locator", data);
+          if(data.found){
+            return esriCandidateRoute(data);
+          }else{
+            return noEsriCandidateRoute(data.candidates);
+          }
         }, function(error){
-          $log.error("propertySearchService:candidatesByAddressFromEsri ", error);
           var candidates = candidate.candidatesFromEsriData({error:true});
+          $log.error("getCandidatesByAddressFromEsri. returning default candidates", error, candidates);
           return $q.reject(candidates);
         });
+    }
+
+    var esriCandidateRoute = function(data){
+      var candidates = candidate.getCandidatesFromEsriData(data);
+      var folios = _.pluck(candidates.candidates, 'folio');
+      return propertiesByFolios(folios)
+      .then(candidate.getCandidatesFromProperties);
+    }
+
+    var noEsriCandidateRoute = function(candidates){
+      var x = candidates[0].location.x;
+      var y = candidates[0].location.y;
+      var url = paConfig.urlParcelBoundariesLayer;
+
+      return esriGisService.getFeaturesInCircle(x, y, 100, url, false)
+        .then(propertiesFromFeatures)
+        .then(candidate.getCandidatesFromProperties);
+    };
+    
+    var propertiesFromFeatures = function(features){
+      var folios = _.map(features, function(feature){return feature.attributes.FOLIO});
+      var promise = propertiesByFolios(folios);
+      return promise.then(function(properties){return properties});
     };
 
 
-    var candidatesByAddressFromEsri2 = function(candidateAddress){
-      var promise = candidatesByAddressFromEsri(candidateAddress);
-      return promise.then(function(candidates){
-        var folios = _.pluck(candidates.candidates, 'folio');
-        return propertiesByFolios(folios).then(function(properties){
-          return candidate.getCandidatesFromProperties(properties);
-          
-        });
-      });
-    };
 
 
-
-    var candidatesByAddress = function(address, unit, from, to){
-      var promise = candidatesByAddressFromPA(address, unit, from, to);
-      
-      return promise.then(function(result){
-	if(result.completed == true) {
-          return result;
-	}
-        else
-          return $q.reject({error:{}, message:result.message})
+//    var candidatesByAddressFromEsri = function(candidateAddress){
+//      var promise = esriGisLocatorService.locator20(candidateAddress);
+//      return promise.then(
+//        function(data){
+//          var candidates = candidate.getCandidatesFromEsriData(data);
+//          $log.debug("propertySearchService:candidatesByAddressFromEsri esri candidates are ", candidateAddress, candidates);
+//          return candidates;
+//        }, function(error){
+//          $log.error("propertySearchService:candidatesByAddressFromEsri ", error);
+//          var candidates = candidate.candidatesFromEsriData({error:true});
+//          return $q.reject(candidates);
+//        });
+//    };
+//
+//
+//
+//
+//    var candidatesByAddressFromEsri2 = function(candidateAddress){
+//      var promise = candidatesByAddressFromEsri(candidateAddress);
+//      return promise.then(function(candidates){
+//
+//        if(candidates.found){
+//          var folios = _.pluck(candidates.candidates, 'folio');
+//          return propertiesByFolios(folios).then(function(properties){
+//            return candidate.getCandidatesFromProperties(properties);
+//          });          
+//        } else {
+//          var x = candidates.candidates[0].location.x;
+//          var y = candidates.candidates[0].location.y;
+//          var url = paConfig.urlMunicipalityLayer;
+//          // get features from circle
+//          var featuresPromise = esriGisService.featuresInCircle(x, y, 100, url, false);
+//          featuresPromise.then(function(featureSet){
+//            console.log("FEATURESET", featureSet);
+//          });
+//          
+//        }
+//
+//
+//      });
+//    };
+//
+//
+//
+//    var candidatesByAddress = function(address, unit, from, to){
+//      var promise = candidatesByAddressFromPA(address, unit, from, to);
+//      
+//      return promise.then(function(result){
+//	if(result.completed == true) {
+//          return result;
+//	}
+////        else
+////          return $q.reject({error:{}, message:result.message})
 //	else {
 //          var message = result.message;
 //          return candidatesByAddressFromEsri2(address).then(function(result){
@@ -239,12 +319,47 @@ angular.module('propertySearchApp')
 //            return $q.reject({error:error, message:"The request failed. Please try again later"});
 //          });
 //	}
-      }, function(error){
-            return $q.reject({error:error, message:"The request failed. Please try again later"});
-      });
-
-    };
+//      }, function(error){
+//            return $q.reject({error:error, message:"The request failed. Please try again later"});
+//      });
+//
+//    };
     
+
+//*****************************************************************
+//    var getCandidatesByAddressFromEsri_1 = function(address){
+//      var promise = esriGisLocatorService.locator20(candidateAddress);
+//      return promise.then(
+//        function(data){
+//          if(data.found){
+//            return candidate.getCandidatesFromEsriData(data.cadidates);
+//          }else{
+//            return noEsriCandidateRoute(data.candidates);
+//          }
+//        }, function(error){
+//          var candidates = candidate.candidatesFromEsriData({error:true});
+//          return $q.reject(candidates);
+//        });
+//    }
+//
+//    var noEsriCandidateRoute = function(candidates){
+//      return esriGisService.featuresInCircle(x, y, 100, url, false)
+//      .then(propertiesFromCandidates);
+//    }
+//
+//    var populateCandidatesWithOwnerData_1 = function(candidates){
+//      var folios = _.pluck(candidates.candidates, 'folio');
+//      var promise = propertiesByFolios(folios);
+//
+//      return promise.then(function(properties){
+//        return candidate.getCandidatesFromProperties(properties);
+//      });
+//      
+//    }
+
+//    getCandidatesByAddressFromEsri_1("someAddress")
+//    .then(populateCandidatesWithOwnerData_1, getFeaturesInCircle)
+//    .
 
     // public API
     return {getPropertyByFolio:propertyByFolio,

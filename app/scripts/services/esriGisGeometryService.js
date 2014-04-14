@@ -10,8 +10,7 @@ angular.module('propertySearchApp')
     var GeometryResource = $resource(urlBase + ":endPoint", 
                                      {endPoint:""},
                                      {project:{method:'JSONP'}
-				     }
-                                    );
+				     });
 
     var xyToLatitudeLongitude = function(x, y){
       var inSR = 2236;
@@ -51,9 +50,24 @@ angular.module('propertySearchApp')
  
     };
     
+    /**
+     * Produce a circle geometry with center at (x,y) and radius radius
+     **/
+    var circleGeometry = function(x, y, radius){
+      var spatialReference = new esri.SpatialReference(paConfiguration.wkidJson);
+      var center = new esri.geometry.Point(x, y, spatialReference);
+      return new esri.geometry.Circle({
+        center: center,
+        radius: radius,
+        numberOfPoints: 4,
+      }); 
+    };
+    
+
 
     // public API
-    return {xyToLatitudeLongitude:xyToLatitudeLongitude};
+    return {xyToLatitudeLongitude:xyToLatitudeLongitude,
+            getCircleGeometry:circleGeometry};
 
 }]);
 

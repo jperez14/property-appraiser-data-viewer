@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService',  function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -141,6 +141,7 @@ angular.module('propertySearchApp')
                           "spatialReference":{"wkid":2236}};
           $scope.map.centerAndZoom(geometry, 10);
         }
+      
     };
     
     $scope.mapZoomToFullExtent = function(){
@@ -554,6 +555,8 @@ angular.module('propertySearchApp')
 
     $scope.getPropertyByFolio = function(folio){
 
+
+
       // Clear previous data.
       clearResults();
 
@@ -563,6 +566,9 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("parcelPoint").clear();
       //$scope.resetLayers();
       $scope.hideMap = false;
+
+
+
 
       getProperty(folio)
         .then(getPolygon)
@@ -736,7 +742,9 @@ angular.module('propertySearchApp')
 	return true;
       });
     };
-    
+
+
+
     $scope.getCandidatesByAddress = function(){
 
       $scope.isAddressCandidates = true;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('esriGisService',['$q', '$log', 'paConfiguration',  function ($q, $log, paConfig) {
+  .service('esriGisService',['$q', '$log', 'paConfiguration', 'esriGisGeometryService',  function ($q, $log, paConfig, esriGisGeometryService) {
 
     var queryLayer = function($scope, url, whereClause, returnGeometry){
       
@@ -191,7 +191,39 @@ angular.module('propertySearchApp')
 
     };
 
-    
+    var featuresInCircle = function (x, y, radius, url, returnGeometry){
+
+      // Get circle buffer to intersect with the layer.
+      var geometryCircle = esriGisGeometryService.getCircleGeometry(x, y, radius);
+
+      var query = new esri.tasks.Query();
+      query.geometry = geometryCircle;
+      query.spatialRelationship = esri.tasks.Query.SPATIAL_REL_OVERLAPS;
+      query.returnGeometry = returnGeometry;
+      query.outFields = ["*"];
+      query.outSpatialReference = paConfig.wkidJson; 
+
+      // execute the query.
+      var queryTask = new esri.tasks.QueryTask(url);
+
+      var deferred = $q.defer();
+      queryTask.execute(query,function (featureSet) {
+        deferred.resolve(featureSet);
+        $scope.$apply();
+      }, function (error) {
+        deferred.reject(error);
+        $scope.$apply();
+      });
+
+      // return promise
+      return deferred.promise.then(function(featureSet){
+        $log.debug("esriGisService:featuresInCircle",featureSet);
+        return featureSet.features}, function(error){
+          $log.error('esriGisService:featuresInCircle ',error);
+          return $q.reject(error);});
+
+    };
+
 
     // public API
     return {getXYFromFolio:xyFromFolio,
@@ -201,6 +233,7 @@ angular.module('propertySearchApp')
             getFolioFromPoint:folioFromPoint,
             getGeometryFromPointLayerIntersection:geometryFromPointLayerIntersection,
             getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection,
+            getFeaturesInCircle:featuresInCircle,
             getGeometryAndFolioFromXY:geometryAndFolioFromXY
            };
 
