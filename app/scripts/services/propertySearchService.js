@@ -224,7 +224,7 @@ angular.module('propertySearchApp')
             return noEsriCandidateRoute(data.candidates);
           }
         }, function(error){
-          var candidates = candidate.candidatesFromEsriData({error:true});
+          var candidates = candidate.getCandidatesFromEsriData({error:true});
           $log.error("getCandidatesByAddressFromEsri. returning default candidates", error, candidates);
           return $q.reject(candidates);
         });
