@@ -504,6 +504,8 @@ angular.module('propertySearchApp')
           $scope.map.getLayer("parcelBoundary").clear();
           $scope.map.getLayer("parcelPoint").clear();
 
+          $scope.hideMap = false;
+
           return gisProperty;
         }
         else {
