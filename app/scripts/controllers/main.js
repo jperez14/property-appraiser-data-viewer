@@ -111,6 +111,13 @@ angular.module('propertySearchApp')
       //        $scope.map.resize();
     });
 
+    $scope.$watch('hideMap', function(){
+      if($scope.map){
+          $scope.map.resize();
+          $scope.map.reposition();
+      }
+
+    });
 
     $scope.hideMap = true;
 
@@ -676,7 +683,6 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
     };
-
 
     $scope.validateAddress = function(){
       $scope.hideMap = true;

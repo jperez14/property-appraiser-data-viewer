@@ -229,11 +229,12 @@
         </div>
       </div>
 
-      <div class="col-md-8 col-sm-7"> 
+      <div class="col-sm-7" ng-class="{'col-md-12': hideMap, 'col-md-8': !hideMap}"> 
         
         <div class="hero-unit map_container">
         
-          <div id="map" class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: hideMap}">
+          <!--class="map_area map_absolute" ng-style="mapStyle" ng-class="{map_absolute: hideMap}"-->
+          <div id="map" >
           
           <div class="lc_container">
           
@@ -255,7 +256,7 @@
                 </div> -->
                 
                 <!-- Map View List  -->
-                <div style="display:inline">
+                <div style="display:inline" ng-hide='hideMap'>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Map View <span class="caret"></span></button>
                       <ul class="dropdown-menu layer-ul" role="menu">
@@ -275,7 +276,7 @@
                 </div>
                 
                 <!-- Layer List  -->
-                <div style="display:inline" class="layers-list">
+                <div style="display:inline" class="layers-list" ng-hide='hideMap'>
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">
