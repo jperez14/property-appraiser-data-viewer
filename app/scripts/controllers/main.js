@@ -129,7 +129,9 @@ angular.module('propertySearchApp')
         }
 
         if($scope.mapState == "SmallMap"){
-          $window.setTimeout(function(){$scope.mapZoomToProperty();}, 1500);
+          $window.setTimeout(function(){$scope.map.setExtent($scope.property.location.polygon.getExtent(), true);}, 1500);
+                  
+          //$window.setTimeout(function(){$scope.mapZoomToProperty();}, 1500);
         }
 
 
