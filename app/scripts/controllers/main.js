@@ -317,6 +317,12 @@ angular.module('propertySearchApp')
 
       $scope.salesInfoGrantorName1 = false;
       $scope.salesInfoGrantorName2 = false;
+
+      // Clear the layers
+      $scope.map.graphics.clear();
+      $scope.map.getLayer("layers").clear();
+      $scope.map.getLayer("parcelBoundary").clear();
+      $scope.map.getLayer("parcelPoint").clear();
     };
 
     $scope.showErrorDialog = function(message){
@@ -544,11 +550,6 @@ angular.module('propertySearchApp')
       return gisPropertyPromise.then(function(gisProperty){
         if (gisProperty.folio !== ""){
           clearResults();
-          $scope.map.graphics.clear();
-          $scope.map.getLayer("layers").clear();
-          $scope.map.getLayer("parcelBoundary").clear();
-          $scope.map.getLayer("parcelPoint").clear();
-
           return gisProperty;
         }
         else {
@@ -609,12 +610,6 @@ angular.module('propertySearchApp')
 
       // Clear previous data.
       clearResults();
-
-      $scope.map.graphics.clear();
-      $scope.map.getLayer("layers").clear();
-      $scope.map.getLayer("parcelBoundary").clear();
-      $scope.map.getLayer("parcelPoint").clear();
-      //$scope.resetLayers();
 
       getProperty(folio)
         .then(getPolygon)
