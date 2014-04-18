@@ -138,8 +138,6 @@ angular.module('propertySearchApp')
     });
 
 
-    $scope.hideMap = true;
-
     $scope.mapState = "BigMap";
 
     $scope.mapStyleState = function(){
@@ -321,11 +319,9 @@ angular.module('propertySearchApp')
       $scope.salesInfoGrantorName2 = false;
     };
 
-    $scope.showErrorDialog = function(message, hideMap){
+    $scope.showErrorDialog = function(message){
       $scope.errorMsg = message;
       $scope.showError = true;
-      if(hideMap)
-	$scope.hideMap = true;
       $('#error-modal').modal('show');
     };
 
@@ -446,7 +442,6 @@ angular.module('propertySearchApp')
       $scope.previousCandidatesInfo = null;
       $scope.property = null;
       $scope.mapState = "NoMap";
-      $scope.hideMap = true;
     };
 
     $scope.searchByFolio = function(){
@@ -455,7 +450,7 @@ angular.module('propertySearchApp')
       if (folio != undefined && folio.length < 6 ) {
 	$scope.property = null;
         $scope.mapState = "BigMap";            
-	$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
+	$scope.showErrorDialog("Please enter at least 6 digits for Folio");
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
 	$scope.property = null;
@@ -493,7 +488,7 @@ angular.module('propertySearchApp')
         $log.error("getProperty:propertyPromise error", error);
 	$scope.property = null;
         $scope.mapState = "BigMap";            
-	$scope.showErrorDialog(error.message, true);
+	$scope.showErrorDialog(error.message);
         return $q.reject(error);
       });
     };            
@@ -554,8 +549,6 @@ angular.module('propertySearchApp')
           $scope.map.getLayer("parcelBoundary").clear();
           $scope.map.getLayer("parcelPoint").clear();
 
-          $scope.hideMap = false;
-
           return gisProperty;
         }
         else {
@@ -566,7 +559,7 @@ angular.module('propertySearchApp')
         
       }, function(error){
         $log.error("getGeometryAndFolioFromXY", error);
-        $scope.showErrorDialog(error.message, true);
+        $scope.showErrorDialog(error.message);
         return $q.reject(error);
       });  
     };
@@ -622,7 +615,6 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("parcelBoundary").clear();
       $scope.map.getLayer("parcelPoint").clear();
       //$scope.resetLayers();
-      $scope.hideMap = false;
 
       getProperty(folio)
         .then(getPolygon)
@@ -672,7 +664,7 @@ angular.module('propertySearchApp')
       }
       if($scope.toPage >= $scope.candidatesList.total) {
 	$scope.isEndOfResults = true;
-	$scope.showErrorDialog("You have reached the end of the results of your search", true);
+	$scope.showErrorDialog("You have reached the end of the results of your search");
       }
       else {
 	$scope.fromPage = $scope.fromPage + $scope.itemsPerFetch;
@@ -694,17 +686,16 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCandidatesByOwner = function(){
-      $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.ownerName)) {
 	$scope.property = null;
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog("Please enter a valid Owner Name", true);
+	$scope.showErrorDialog("Please enter a valid Owner Name");
 	return true;
       }
       //else if(!isAlphabetic($scope.ownerName)) {
       //$scope.property = null;
-      //$scope.showErrorDialog("Please enter only alphabetic characters", true);
+      //$scope.showErrorDialog("Please enter only alphabetic characters");
       //return true;
       //}
       $scope.loader = true; //flag hackeysack
@@ -716,7 +707,7 @@ angular.module('propertySearchApp')
 	if(result.completed == true) {
 	  if(result.candidates.length == 0) {
             $scope.mapState = "BigMap";
-	    $scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
@@ -728,29 +719,28 @@ angular.module('propertySearchApp')
 	}
 	else {
           $scope.mapState = "BigMap";
-	  $scope.showErrorDialog(result.message, true);
+	  $scope.showErrorDialog(result.message);
 	}
       }, function(error){
 	$log.error("getCandidatesByOwner error ", error);
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog("The request failed. Please try again later", true);
+	$scope.showErrorDialog("The request failed. Please try again later");
       });
     };
 
 
     $scope.validateAddress = function(){
-      $scope.hideMap = true;
       clearResults();
       if(_.isEmpty($scope.address)){
 	$scope.property = null;
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog("Please enter a valid Address", true);
+	$scope.showErrorDialog("Please enter a valid Address");
 	return true;
       }
       else if(isNumber($scope.address)){
 	$scope.property = null;
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address", true);
+	$scope.showErrorDialog("Please enter a valid Address, only numeric characters is an invalid Address");
 	return true;
       }
 
@@ -759,7 +749,7 @@ angular.module('propertySearchApp')
 	var replacedAddr = $scope.address.replace(regex, '');
 	if(isNumber(replacedAddr)) {
 	  $scope.property = null;
-	  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.", true);
+	  //$scope.showErrorDialog("Invalid address – looks like you entered a folio number.");
 	  $scope.setActiveSearchTab('Folio');
 	  $scope.getCandidateFolio(replacedAddr, false);
 	}
@@ -774,7 +764,7 @@ angular.module('propertySearchApp')
 	      $scope.address.indexOf("#") >= 0 ) {
 	$scope.property = null;
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite", true);
+	$scope.showErrorDialog("Please enter Apt/Apartment/Unit/Suite/# in the field for Suite");
 	return true;
       }
 
@@ -798,10 +788,10 @@ angular.module('propertySearchApp')
 	  }
 	}
 	else {
-	  $scope.showErrorDialog(result.message, true);
+	  $scope.showErrorDialog(result.message);
 	}
       }, function(error){
-	$scope.showErrorDialog("The request failed. Please try again later", true);
+	$scope.showErrorDialog("The request failed. Please try again later");
 	return true;
       });
     };
@@ -818,7 +808,7 @@ angular.module('propertySearchApp')
 
 	if(result.candidates.length == 0) {
           $scope.mapState = "BigMap";
-	  $scope.showErrorDialog(result.message, true);
+	  $scope.showErrorDialog(result.message);
 	}
 	else if(result.candidates.length == 1){
           $scope.mapState = "SmallMap";
@@ -831,13 +821,12 @@ angular.module('propertySearchApp')
 
       }, function(error){
         $scope.mapState = "BigMap";
-	$scope.showErrorDialog(error.message, true);
+	$scope.showErrorDialog(error.message);
       });
 
     };
 
     $scope.getCandidatesByPartialFolio = function(folio){
-      $scope.hideMap = true;
       $scope.mapState = "NoMap";
       clearResults();
       $scope.loader = true; //flag hackeysack
@@ -847,7 +836,7 @@ angular.module('propertySearchApp')
 	  if(result.candidates.length == 0) {
 	    $scope.property = null;
             $scope.mapState = "BigMap";            
-	    $scope.showErrorDialog(result.message, true);
+	    $scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
             $scope.mapState = "SmallMap";                        
@@ -861,14 +850,14 @@ angular.module('propertySearchApp')
 	else {
 	  $scope.property = null;
           $scope.mapState = "BigMap";            
-	  $scope.showErrorDialog(result.message, true);
+	  $scope.showErrorDialog(result.message);
 	}
 
       }, function(error){
 	$scope.property = null;
         $scope.mapState = "BigMap";            
 	$log.error("getCandidatesByPartialFolio error ", error);
-	$scope.showErrorDialog("The request failed. Please try again later", true);
+	$scope.showErrorDialog("The request failed. Please try again later");
       });
 
     };
