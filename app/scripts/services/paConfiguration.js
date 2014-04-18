@@ -2,6 +2,8 @@
 
 angular.module('propertySearchApp')
   .constant('paConfiguration', {
+    clientAppName:"PropertySearch",
+    clientAppNameGeo :"PropertySearch_Geo",
     initialExtentJson:{"xmin":807259.5478381776,"ymin":451155.83217993786,"xmax":965259.5478381779,"ymax":570822.4988466047,"spatialReference":{"wkid":2236}},
     wkidJson:{wkid:2236},
     urlPropertyAppraiser:"/PApublicServiceProxy/PaServicesProxy.ashx",

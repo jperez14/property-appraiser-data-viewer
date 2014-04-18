@@ -23,10 +23,11 @@ angular.module('propertySearchApp')
      * failed an object of the form {message:"some message"}
      * is returned.
      **/
-    var propertyByFolio = function(folio){
+    var propertyByFolio = function(folio, clientAppName){
+
       var endPoint = "";
       var params = {"folioNumber":folio, 
-                    "clientAppName":'PropertySearch', 
+                    "clientAppName":clientAppName || paConfig.clientAppName, 
                     "Operation":'GetPropertySearchByFolio',
                     "endPoint":endPoint};         
 
@@ -56,13 +57,13 @@ angular.module('propertySearchApp')
      * When passing an empty array of folios or null the promise
      * returns an ampty array as data.
      **/
-    var propertiesByFolios = function(folios){
+    var propertiesByFolios = function(folios, clientAppName){
       //self = this;
       var propertyPromises = [];
       
       // Get a promise for each folio.
       _.each(folios, function(folio){
-        propertyPromises.push(propertyByFolio(folio).then(
+        propertyPromises.push(propertyByFolio(folio, clientAppName).then(
           function(data){return data},
           function(response){return null }
         ));
@@ -80,7 +81,7 @@ angular.module('propertySearchApp')
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = '';
       var params = {"ownerName":ownerName, 
-                    "clientAppName":'PropertySearch', 
+                    "clientAppName":paConfig.clientAppName, 
                     "from":from, 
                     "to":to,
                     "Operation":'GetOwners',
@@ -107,7 +108,7 @@ angular.module('propertySearchApp')
     var candidatesByAddressFromPA = function(address, unit, from, to, callback){
       var endPoint = "";
       var params = {"myAddress":address, "myUnit":unit, 
-                    "clientAppName":'PropertySearch', 
+                    "clientAppName":paConfig.clientAppName, 
                     "from":from, 
                     "to":to, 
                     "Operation":'GetAddress',
@@ -136,7 +137,7 @@ angular.module('propertySearchApp')
     var candidatesByPartialFolio = function(partialFolio, from, to, callback){
       var endPoint = "";
       var params = {"partialFolioNumber":partialFolio, 
-                    "clientAppName":'PropertySearch', 
+                    "clientAppName":paConfig.clientAppName, 
                     "from":from, 
                     "to":to, 
                     "Operation":"GetPropertySearchByPartialFolio",
@@ -165,7 +166,7 @@ angular.module('propertySearchApp')
     var hasValidStreetName = function(address, callback){
       var endPoint = "";
       var params = {"myAddress":address, 
-                    "clientAppName":'PropertySearch', 
+                    "clientAppName":paConfig.clientAppName, 
                     "Operation":"ContainsValidStreetName",
                     "endPoint":endPoint};
       
@@ -233,7 +234,7 @@ angular.module('propertySearchApp')
     var esriCandidateRoute = function(data){
       var candidates = candidate.getCandidatesFromEsriData(data);
       var folios = _.pluck(candidates.candidates, 'folio');
-      return propertiesByFolios(folios)
+      return propertiesByFolios(folios, paConfig.clientAppNameGeo)
       .then(candidate.getCandidatesFromProperties);
     }
 
@@ -249,7 +250,7 @@ angular.module('propertySearchApp')
     
     var propertiesFromFeatures = function(features){
       var folios = _.map(features, function(feature){return feature.attributes.FOLIO});
-      var promise = propertiesByFolios(folios);
+      var promise = propertiesByFolios(folios, paConfig.clientAppNameGeo);
       return promise.then(function(properties){return properties});
     };
 
