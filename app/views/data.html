@@ -242,7 +242,9 @@
           <span class="map-button mb-zoomout" ng-click="mapZoomOut()" data-toggle="tooltip" data-placement="top" title="Zoom out on the map"></span>
           <span class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()" data-toggle="tooltip" data-placement="top" title="Zoom map to a drawn area"></span>
           <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()" data-toggle="tooltip" data-placement="top" title="Zoom out to full extent"></span>
-          <span class="map-button mb-initial" ng-click="mapZoomToProperty()" data-toggle="tooltip" data-placement="top" title="Return to property"></span>
+          <span class="map-button mb-initial"
+          ng-click="mapZoomToProperty()" data-toggle="tooltip"
+          data-placement="top" title="Return to property" ng-hide="mapState == 'BigMap'"></span>
                     
           	 <div id="map_lc">
             
@@ -256,7 +258,7 @@
                 </div> -->
                 
                 <!-- Map View List  -->
-                <div style="display:inline" ng-hide='hideMap'>
+                <div style="display:inline" ng-hide="mapState == 'BigMap'">
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Map View <span class="caret"></span></button>
                       <ul class="dropdown-menu layer-ul" role="menu">
@@ -276,7 +278,8 @@
                 </div>
                 
                 <!-- Layer List  -->
-                <div style="display:inline" class="layers-list" ng-hide='hideMap'>
+                <div style="display:inline" class="layers-list"
+                     ng-hide="mapState == 'BigMap'">
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Layers <span class="caret"></span></button>
                       <ul class="dropdown-menu keep_open layer-ul" role="menu">

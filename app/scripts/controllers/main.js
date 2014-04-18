@@ -123,15 +123,13 @@ angular.module('propertySearchApp')
     $scope.$watch('mapState', function(){
       if($scope.map){
         if($scope.mapState == "BigMap"){
-          //$scope.map.resize();
-          //$scope.map.reposition();
-          $scope.mapZoomToFullExtent();
+          $scope.map.resize();
+          $scope.map.reposition();
+          $window.setTimeout(function(){$scope.map.setExtent(new esri.geometry.Extent(paConfig.initialExtentJson));}, 1000);
         }
 
         if($scope.mapState == "SmallMap"){
-          $scope.mapZoomToProperty();
-          //$window.setTimeout(function(){$scope.mapZoomToProperty();}, 1000);
-
+          $window.setTimeout(function(){$scope.mapZoomToProperty();}, 1500);
         }
 
 
@@ -145,24 +143,21 @@ angular.module('propertySearchApp')
     $scope.mapState = "BigMap";
 
     $scope.mapStyleState = function(){
-      console.log("WE ARE HANGCHING THE STYLE OF MAP");
+
 //      if($scope.map){
 //        $scope.map.resize();
 //        $scope.map.reposition();
 //      }
 
       if($scope.mapState === "BigMap"){
-        console.log("MAPSTYLE BIG");
         return "col-md-12 col-sm-12";
       }
 
       if($scope.mapState === "SmallMap"){
-        console.log("MAPSTYLE SMALL");
         return "col-md-8 col-sm-7";
       }
 
       if($scope.mapState === "NoMap"){
-        console.log("MAPSTYLE NO MAP");
         return "no_map";
       }
 
@@ -450,6 +445,7 @@ angular.module('propertySearchApp')
       $scope.isPartialFolioCandidates = $scope.previousCandidatesInfo.isPartialFolioCandidates;
       $scope.previousCandidatesInfo = null;
       $scope.property = null;
+      $scope.mapState = "NoMap";
       $scope.hideMap = true;
     };
 
@@ -458,7 +454,7 @@ angular.module('propertySearchApp')
       clearResults();
       if (folio != undefined && folio.length < 6 ) {
 	$scope.property = null;
-        $scope.mapState = "NoMap";            
+        $scope.mapState = "BigMap";            
 	$scope.showErrorDialog("Please enter at least 6 digits for Folio", true);
       }
       else if(folio != undefined && folio.length >=6 && folio.length < 13) {
@@ -496,7 +492,7 @@ angular.module('propertySearchApp')
       }, function(error){
         $log.error("getProperty:propertyPromise error", error);
 	$scope.property = null;
-        $scope.mapState = "NoMap";            
+        $scope.mapState = "BigMap";            
 	$scope.showErrorDialog(error.message, true);
         return $q.reject(error);
       });
@@ -702,7 +698,7 @@ angular.module('propertySearchApp')
       clearResults();
       if(_.isEmpty($scope.ownerName)) {
 	$scope.property = null;
-        $scope.mapState = "NoMap";
+        $scope.mapState = "BigMap";
 	$scope.showErrorDialog("Please enter a valid Owner Name", true);
 	return true;
       }
@@ -731,10 +727,12 @@ angular.module('propertySearchApp')
 	  }
 	}
 	else {
+          $scope.mapState = "BigMap";
 	  $scope.showErrorDialog(result.message, true);
 	}
       }, function(error){
 	$log.error("getCandidatesByOwner error ", error);
+        $scope.mapState = "BigMap";
 	$scope.showErrorDialog("The request failed. Please try again later", true);
       });
     };
