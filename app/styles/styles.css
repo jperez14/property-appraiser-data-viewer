@@ -143,6 +143,10 @@ div.search_area .tab-content {
 	position:absolute;
 }
 
+.no_map {
+    display:none;
+}
+
 /*
 .lc_container {padding:10px; width:100%; position:absolute; z-index:500}
 */
