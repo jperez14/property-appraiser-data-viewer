@@ -129,8 +129,10 @@ angular.module('propertySearchApp')
         }
 
         if($scope.mapState == "SmallMap"){
-          $window.setTimeout(function(){$scope.map.setExtent($scope.property.location.polygon.getExtent(), true);}, 1500);
-                  
+          $window.setTimeout(function(){
+            if(!isUndefinedOrNull($scope.property))
+              if(!isUndefinedOrNull($scope.property.location))
+                $scope.map.setExtent($scope.property.location.polygon.getExtent(), true);}, 1500);
           //$window.setTimeout(function(){$scope.mapZoomToProperty();}, 1500);
         }
 
@@ -475,7 +477,7 @@ angular.module('propertySearchApp')
       var propertyPromise = propertySearchService.getPropertyByFolio(folio);
 
       return propertyPromise.then(function(property){
-        $log.debug("property with folio", folio, property);
+        $log.debug("getProperty:property with folio", folio, property);
         $scope.property = property;
         $scope.mapState = "SmallMap";            
 	$scope.setPropertySiteAddress(property);
@@ -484,12 +486,14 @@ angular.module('propertySearchApp')
 
         // When parent folio exists use it to get the polygon.
         var folioPolygon = "";
-        if($scope.property.propertyInfo.parentFolio !== "")
+        if($scope.property.propertyInfo.parentFolio !== "") {
           folioPolygon = $scope.property.propertyInfo.parentFolio;
-        else
+          $log.debug("getProperty:Parent folio is", folioPolygon);
+        }
+        else 
           folioPolygon = folio;
         
-        $log.debug("Folio to search for polygon", folioPolygon);
+        $log.debug("getProperty:Folio to search for polygon", folioPolygon);
         return folioPolygon;
 
       }, function(error){
@@ -530,7 +534,7 @@ angular.module('propertySearchApp')
         var message = "Map could not be displayed.";
 	$scope.showErrorDialog(message);
 
-        $q.reject(error);
+        return $q.reject(error);
       });
 
     };
