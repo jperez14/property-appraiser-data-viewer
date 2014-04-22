@@ -9,6 +9,10 @@ angular.module('propertySearchApp')
       $scope.getPropertyByXY(event.mapPoint.x, event.mapPoint.y);
     };
 
+    $scope.mapDoubleClicked = function(event){
+      $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
+    }
+
     // IMPORTANT - Do not move
     $scope.drawEndHandler  = function (geometry){
       $log.debug("DrawEndHandler: completed.");
@@ -44,12 +48,15 @@ angular.module('propertySearchApp')
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
         map.hideZoomSlider();
-
+        console.log("DOUBLE CLICK", map.theDoubleClickZoom);
+        map.disableDoubleClickZoom();
+        
         $scope.navToolBar  = new esri.toolbars.Navigation(map);
         $scope.drawToolBar = new esri.toolbars.Draw(map);
         dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
         //Add events to map.
         map.on("click", $scope.mapClicked);
+        map.on("dbl-click", $scope.mapDoubleClicked);
 
         map.on('extent-change', function(extent) {
           map.resize();
@@ -595,6 +602,9 @@ angular.module('propertySearchApp')
       });
     };
 
+    $scope.getCondosByXY = function(x, y){
+      
+    };
 
     $scope.getPropertyByXY = function(x, y){
 
