@@ -11,6 +11,7 @@ angular.module('propertySearchApp')
 
     $scope.mapDoubleClicked = function(event){
       $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
+      $scope.getCondosByXY(event.mapPoint.x, event.mapPoint.y);
     }
 
     // IMPORTANT - Do not move
@@ -558,6 +559,26 @@ angular.module('propertySearchApp')
       });
     };
 
+    var getGeometryOrCondoFlgAndFolioFromXY = function(x, y){
+      var gisPropertyPromise = esriGisService.getGeometryOrCondoFlgAndFolioFromXY($scope, x, y);
+      return gisPropertyPromise.then(function(gisProperty){
+        if (gisProperty.folio !== ""){
+          clearResults();
+          return gisProperty;
+        }
+        else {
+          var message = "getGeometryOrCondoFlgAndFolioFromXY: no folio found for x,y"
+          return $q.reject({"error":null, "message":message})
+        }
+
+        
+      }, function(error){
+        $log.error("getGeometryOrCondoFlgAndFolioFromXY", error);
+        $scope.showErrorDialog(error.message);
+        return $q.reject(error);
+      });  
+    };
+
     var getGeometryAndFolioFromXY = function(x, y){
       var gisPropertyPromise = esriGisService.getGeometryAndFolioFromXY($scope, x, y);
       return gisPropertyPromise.then(function(gisProperty){
@@ -578,7 +599,18 @@ angular.module('propertySearchApp')
       });  
     };
 
-    var getPropertyAndAddPolygon = function(gisProperty){
+    var getPropertyOrCondoAndAddPolygon = function(gisProperty){
+	  if(gisProperty.geometry) {
+	    getPropertyAndAddPolygon(gisProperty)
+		.then(getLatitudeLongitude);
+	  }
+	  else {
+	    $scope.folio = gisProperty.folio.substr(0,9);
+	    $scope.searchByFolio();
+	  }
+	};
+	
+	var getPropertyAndAddPolygon = function(gisProperty){
       return getProperty(gisProperty.folio).then(function(folio){
         
         // add polygon
@@ -603,7 +635,16 @@ angular.module('propertySearchApp')
     };
 
     $scope.getCondosByXY = function(x, y){
-      
+
+	  getGeometryOrCondoFlgAndFolioFromXY(x, y)
+	    .then(getPropertyOrCondoAndAddPolygon)
+        .then(function(){
+          _.each($scope.layers, function(layer){
+            $scope.turnLayerOnOff(layer);
+          });
+        })['catch'](function(error){
+          $log.error("getPropertyByXY:catch", error);
+      });
     };
 
     $scope.getPropertyByXY = function(x, y){
