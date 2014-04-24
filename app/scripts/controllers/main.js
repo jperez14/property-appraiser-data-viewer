@@ -11,7 +11,19 @@ angular.module('propertySearchApp')
 
     $scope.mapDoubleClicked = function(event){
       $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
-      $scope.getCondosByXY(event.mapPoint.x, event.mapPoint.y);
+	  var gisPropertyPromise = getCondoFlgAndFolioFromXY(event.mapPoint.x, event.mapPoint.y);
+      gisPropertyPromise.then(function(gisProperty){
+	    if(gisProperty.condoFlg == 'C') {
+		  $scope.folio = gisProperty.folio.substr(0,9);
+		  $scope.searchByFolio();
+		}
+		else
+		  $scope.getPropertyByFolio(gisProperty.folio);
+      }, function(error){
+        $log.error("mapDoubleClicked", error);
+        $scope.showErrorDialog(error.message);
+        return $q.reject(error);
+      });  
     }
 
     // IMPORTANT - Do not move
@@ -559,21 +571,19 @@ angular.module('propertySearchApp')
       });
     };
 
-    var getGeometryOrCondoFlgAndFolioFromXY = function(x, y){
-      var gisPropertyPromise = esriGisService.getGeometryOrCondoFlgAndFolioFromXY($scope, x, y);
+    var getCondoFlgAndFolioFromXY = function(x, y){
+      var gisPropertyPromise = esriGisService.getCondoFlgAndFolioFromXY($scope, x, y);
       return gisPropertyPromise.then(function(gisProperty){
         if (gisProperty.folio !== ""){
           clearResults();
           return gisProperty;
         }
         else {
-          var message = "getGeometryOrCondoFlgAndFolioFromXY: no folio found for x,y"
+          var message = "getCondoFlgAndFolioFromXY: no folio found for x,y"
           return $q.reject({"error":null, "message":message})
         }
-
-        
       }, function(error){
-        $log.error("getGeometryOrCondoFlgAndFolioFromXY", error);
+        $log.error("getCondoFlgAndFolioFromXY", error);
         $scope.showErrorDialog(error.message);
         return $q.reject(error);
       });  
@@ -599,17 +609,6 @@ angular.module('propertySearchApp')
       });  
     };
 
-    var getPropertyOrCondoAndAddPolygon = function(gisProperty){
-	  if(gisProperty.geometry) {
-	    getPropertyAndAddPolygon(gisProperty)
-		.then(getLatitudeLongitude);
-	  }
-	  else {
-	    $scope.folio = gisProperty.folio.substr(0,9);
-	    $scope.searchByFolio();
-	  }
-	};
-	
 	var getPropertyAndAddPolygon = function(gisProperty){
       return getProperty(gisProperty.folio).then(function(folio){
         
@@ -631,19 +630,6 @@ angular.module('propertySearchApp')
         $log.debug("getPolygon:center coords in polygon", coords);
         return(coords);
 
-      });
-    };
-
-    $scope.getCondosByXY = function(x, y){
-
-	  getGeometryOrCondoFlgAndFolioFromXY(x, y)
-	    .then(getPropertyOrCondoAndAddPolygon)
-        .then(function(){
-          _.each($scope.layers, function(layer){
-            $scope.turnLayerOnOff(layer);
-          });
-        })['catch'](function(error){
-          $log.error("getPropertyByXY:catch", error);
       });
     };
 
