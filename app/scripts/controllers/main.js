@@ -13,9 +13,10 @@ angular.module('propertySearchApp')
       $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
 	  var gisPropertyPromise = getCondoFlgAndFolioFromXY(event.mapPoint.x, event.mapPoint.y);
       gisPropertyPromise.then(function(gisProperty){
-	    if(gisProperty.condoFlg == 'C') {
+	    if(gisProperty.condoFlg == true) {
 		  $scope.folio = gisProperty.folio.substr(0,9);
 		  $scope.searchByFolio();
+		  //$scope.getCandidatesByPartialFolio(gisProperty.folio.substr(0,9));
 		}
 		else
 		  $scope.getPropertyByFolio(gisProperty.folio);

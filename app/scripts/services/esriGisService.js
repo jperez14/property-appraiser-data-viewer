@@ -128,8 +128,8 @@ angular.module('propertySearchApp')
       return featuresFromPointLayerIntersection($scope, x, y, url, true).then(
         function(featureSet){
 		  if(featureSet.features != undefined && featureSet.features.length > 0) {
-			var data = {condoFlg:featureSet.features[0].attributes.CONDOFLG,
-					folio:featureSet.features[0].attributes.FOLIO};
+			var data = {folio:featureSet.features[0].attributes.FOLIO};
+			data.condoFlg = featureSet.features[0].attributes.CONDOFLG == 'C' ? true : false;
 			return data;
 		  }else{
 				$log.debug("condoFlgAndFolioFromXY: No folio found in x,y ", x, y, url, featureSet);
