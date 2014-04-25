@@ -13,13 +13,11 @@ angular.module('propertySearchApp')
       $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
 	  var gisPropertyPromise = getCondoFlgAndFolioFromXY(event.mapPoint.x, event.mapPoint.y);
       gisPropertyPromise.then(function(gisProperty){
-	    if(gisProperty.condoFlg == true) {
+	    if(gisProperty.condoFlg == true)
 		  $scope.folio = gisProperty.folio.substr(0,9);
-		  $scope.searchByFolio();
-		  //$scope.getCandidatesByPartialFolio(gisProperty.folio.substr(0,9));
-		}
 		else
-		  $scope.getPropertyByFolio(gisProperty.folio);
+		  $scope.folio = gisProperty.folio;
+		$scope.searchByFolio();
       }, function(error){
         $log.error("mapDoubleClicked", error);
         $scope.showErrorDialog(error.message);
@@ -576,7 +574,6 @@ angular.module('propertySearchApp')
       var gisPropertyPromise = esriGisService.getCondoFlgAndFolioFromXY($scope, x, y);
       return gisPropertyPromise.then(function(gisProperty){
         if (gisProperty.folio !== ""){
-          clearResults();
           return gisProperty;
         }
         else {
