@@ -863,6 +863,21 @@ angular.module('propertySearchApp')
 
     };
 
+$scope.$on('LocalStorageModule.notification.setitem', function(event, parameters) {
+  console.log("TRYING TO HANDLE storage change");
+  alert("something happened in localstorage");
+   parameters.key;  // contains the key that changed
+   parameters.newvalue;  // contains the new value
+});
+
+
+    $scope.openDetachMap = function(){
+      var url = '#/detachmap';
+      localStorageService.add('property',$scope.property);
+      $window.windowScope = $scope;
+      $window.open(url,'name','height=1000,width=840, location=0');
+    };
+
     $scope.openPictometryWindow = function(){
 
       //var url = '#/pictometry/' + $scope.property.location.x + '/' +

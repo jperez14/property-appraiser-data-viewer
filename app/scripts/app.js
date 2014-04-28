@@ -15,6 +15,10 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'LocalStorageModul
         templateUrl: 'views/comparablesales.html',
         controller: 'ComparableSalesCtrl'
       })
+      .when('/detachmap', {
+        templateUrl: 'views/detachmap.html',
+        controller: 'DetachMapCtrl'
+      })
       .when('/', {
         templateUrl: 'views/data.html',
         controller: 'MainCtrl'
