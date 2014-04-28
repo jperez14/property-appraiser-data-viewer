@@ -1,12 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Property Appraiser Detach Map</title>
+</head>
 <body>
 
-<button ng-click="attachMapToParent()">Attach Map</button>
+	<div class=""col-md-12 col-sm-12"">
+		<div class="hero-unit map_container">
+			<div id="detachmap">
+				<div class="lc_container">
+					<span class="map-button mb-zoomin" ng-click="mapZoomIn()"
+						data-toggle="tooltip" data-placement="top"
+						title="Zoom in on the map"></span> <span
+						class="map-button mb-zoomout" ng-click="mapZoomOut()"
+						data-toggle="tooltip" data-placement="top"
+						title="Zoom out on the map"></span> <span
+						class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"
+						data-toggle="tooltip" data-placement="top"
+						title="Zoom map to a drawn area"></span> <span
+						class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()"
+						data-toggle="tooltip" data-placement="top"
+						title="Zoom out to full extent"></span> <span
+						class="map-button mb-initial" ng-click="mapZoomToProperty()"
+						data-toggle="tooltip" data-placement="top"
+						title="Return to property" ng-hide="mapState == 'BigMap'">
+					</span>
+				</div>
+	
+				<div class="north-icon">
 
-<div >
-  <div id="detachmap" style="width:800px;height:600px">
-  </div>
-</div>
+					<div class="img-container">
+						<img src="images/north.png" width="31" height="26" alt="North">
+					</div>
+
+					<div id="scale-container">
+						<span>2012 Aerial Photography</span>
+					</div>
+
+				</div>
+
+
+			</div>
+			<!-- end map_area -->
+		</div>
+
+	</div>
+
 
 </body>
-</hmtl>
+</html>

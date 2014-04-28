@@ -863,12 +863,12 @@ angular.module('propertySearchApp')
 
     };
 
-$scope.$on('LocalStorageModule.notification.setitem', function(event, parameters) {
-  console.log("TRYING TO HANDLE storage change");
-  alert("something happened in localstorage");
-   parameters.key;  // contains the key that changed
-   parameters.newvalue;  // contains the new value
-});
+//$scope.$on('LocalStorageModule.notification.setitem', function(event, parameters) {
+//  console.log("TRYING TO HANDLE storage change");
+//  alert("something happened in localstorage");
+//   parameters.key;  // contains the key that changed
+//   parameters.newvalue;  // contains the new value
+//});
 
 
     $scope.openDetachMap = function(){

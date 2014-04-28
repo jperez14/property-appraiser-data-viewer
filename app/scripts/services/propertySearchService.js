@@ -195,24 +195,24 @@ angular.module('propertySearchApp')
 
 
 
-  var candidatesByAddress = function(address, unit, from, to){
-    var promise = candidatesByAddressFromPA(address, unit, from, to);
+    var candidatesByAddress = function(address, unit, from, to){
+      var promise = candidatesByAddressFromPA(address, unit, from, to);
 
-    return promise.then(
-      function(result){
-        if(result.completed == true) 
-          return result;
-        else
-          var message = result.message;
+      return promise.then(
+        function(result){
+          if(result.completed == true) 
+            return result;
+          else
+            var message = result.message;
           return candidatesByAddressFromEsri(address).then(function(result){
-          if(result.candidates.length == 0)
+            if(result.candidates.length == 0)
               result.message = message;
-          return result;
+            return result;
           });
-      }, function(error){
-        return $q.reject({error:error, message:"The request failed. Please try again later"});
-      });
-  };
+        }, function(error){
+          return $q.reject({error:error, message:"The request failed. Please try again later"});
+        });
+   };
 
    var candidatesByAddressFromEsri = function(address){
       var promise = esriGisLocatorService.locator20(address);
