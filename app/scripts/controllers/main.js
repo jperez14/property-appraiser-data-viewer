@@ -875,7 +875,7 @@ angular.module('propertySearchApp')
       var url = '#/detachmap';
       localStorageService.add('property',$scope.property);
       $window.windowScope = $scope;
-      $window.open(url,'name','height=1000,width=840, location=0');
+      $window.open(url,'name','height=1000, width=840, location=0');
     };
 
     $scope.openPictometryWindow = function(){

@@ -93,7 +93,6 @@ angular.module('propertySearchApp')
 
 
     $scope.attachMapToParent = function(){
-      console.log("the things in parent window scope are", window.opener.windowScope);
       window.opener.windowScope.map = $scope.map;
     };
 
