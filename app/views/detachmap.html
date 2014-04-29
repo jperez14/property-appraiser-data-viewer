@@ -1,53 +1,105 @@
 <style>
-      html, body, .container, #detachmap {
-        height: 100%;
-        max-width:100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background-color: #FFF;
-        overflow: hidden;
-        font-family: "Trebuchet MS";
-      }
+html,body,.container,#detachmap {
+	height: 100%;
+	max-width: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #FFF;
+	overflow: hidden;
+	font-family: "Trebuchet MS";
+}
 </style>
-			<div id="detachmap">
+<div id="detachmap">
 
-				<div class="lc_container">
-					<span class="map-button mb-zoomin" ng-click="mapZoomIn()"
-						data-toggle="tooltip" data-placement="top"
-						title="Zoom in on the map"></span> <span
-						class="map-button mb-zoomout" ng-click="mapZoomOut()"
-						data-toggle="tooltip" data-placement="top"
-						title="Zoom out on the map"></span> <span
-						class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"
-						data-toggle="tooltip" data-placement="top"
-						title="Zoom map to a drawn area"></span> <span
-						class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()"
-						data-toggle="tooltip" data-placement="top"
-						title="Zoom out to full extent"></span> <span
-						class="map-button mb-initial" ng-click="mapZoomToProperty()"
-						data-toggle="tooltip" data-placement="top"
-						title="Return to property" ng-hide="mapState == 'BigMap'">
-					</span>
+	<div class="lc_container">
+		<span class="map-button mb-zoomin" ng-click="mapZoomIn()"
+			data-toggle="tooltip" data-placement="top" title="Zoom in on the map"></span>
+		<span class="map-button mb-zoomout" ng-click="mapZoomOut()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom out on the map"></span> <span
+			class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom map to a drawn area"></span> <span
+			class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom out to full extent"></span> <span
+			class="map-button mb-initial" ng-click="mapZoomToProperty()"
+			data-toggle="tooltip" data-placement="top" title="Return to property"
+			ng-hide="mapState == 'BigMap'"> </span>
+
+		<div id="map_lc">
+
+			<!-- Map View List  -->
+			<div style="display: inline" ng-hide="mapState == 'BigMap'">
+				<div class="btn-group">
+					<button type="button"
+						class="btn btn-default btn-sm dropdown-toggle layer-drop"
+						data-toggle="dropdown">
+						Map View <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu layer-ul" role="menu">
+						<li>Choose your desired view below.</li>
+						<li class="divider"></li>
+						<li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial
+								Map</span></li>
+						<li class="divider"></li>
+						<li><span class="map-view" ng-click="mapToggleStreetOn()">Street
+								Map</span></li>
+						<li class="divider"></li>
+						<li><span class="map-view" ng-click="openPictometryWindow()">Angled
+								Aerial Views</span></li>
+						<li class="divider"></li>
+						<li><span class="map-view" ng-click="showStreetView()">Google
+								Street View</span></li>
+						<li class="divider"></li>
+					</ul>
 				</div>
-	
-				<div class="north-icon">
-
-					<div class="img-container">
-						<img src="images/north.png" width="31" height="26" alt="North">
-					</div>
-
-					<div id="scale-container">
-						<span>2012 Aerial Photography</span>
-					</div>
-
-				</div>
-
-
 			</div>
 
-			<!-- end map_area -->
+			<!-- Layer List  -->
+			<div style="display: inline" class="layers-list"
+				ng-hide="mapState == 'BigMap'">
+				<div class="btn-group">
+					<button type="button"
+						class="btn btn-default btn-sm dropdown-toggle layer-drop"
+						data-toggle="dropdown">
+						Layers <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu keep_open layer-ul" role="menu">
+						<li>Toggle layers by checking the options below.</li>
+						<li class="divider"></li>
+						<li ng-repeat="layer in layers"><input type="checkbox"
+							ng-model="layer.value" ng-change="turnLayerOnOff(layer)">
+							{{layer.label}}</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<!-- end map_lc -->
+
+
+	</div>
+
+	<div class="north-icon">
+
+		<div class="img-container">
+			<img src="images/north.png" width="31" height="26" alt="North">
+		</div>
+
+		<div id="scale-container">
+			<span>2012 Aerial Photography</span>
+		</div>
+
+	</div>
+
+
+</div>
+
+<!-- end map_area -->
 
 

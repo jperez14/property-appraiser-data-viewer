@@ -31,6 +31,30 @@ angular.module('propertySearchApp')
       $scope.parentScope.mapClicked(event);
     };
 
+    $scope.mapToggleAerialOn = function(){
+      $scope.parentScope.mapToggleAerialOn();
+    };
+
+    $scope.mapToggleStreetOn = function(){
+      $scope.parentScope.mapToggleStreetOn();
+    };
+
+    $scope.openPictometryWindow = function(){
+      $scope.parentScope.openPictometryWindow();
+    };
+
+    $scope.showStreetView = function(){
+      $scope.parentScope.showStreetView();
+    };
+
+    $scope.attachMap = function(){
+      $scope.parentScope.attachMap();
+    };
+    
+    
+    
+    
+
 
     function initMap(){
 
