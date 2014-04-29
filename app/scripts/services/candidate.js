@@ -215,10 +215,10 @@ angular.module('propertySearchApp')
 
 
       var candidates = new Candidates();
-      if(!utils.isUndefinedOrNull(filterCandidatesWithNoAddress(candidatesArray))){
+      if(!utils.isUndefinedOrNull((candidatesArray))){
 	    candidates.completed = true;
 	    candidates.message = "";
-            candidates.candidates = filterCandidatesWithNoAddress(candidatesArray);
+            candidates.candidates = candidatesArray;
             candidates.total = candidates.candidates.length;
         
       }
