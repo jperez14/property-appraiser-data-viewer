@@ -6,6 +6,7 @@ angular.module('propertySearchApp')
     var Property = function(data) {
 
       this.propertyInfo = {};
+      this.additionalInfo = {};
       this.mailingAddress = {};
       this.classifiedAgInfo = {};
       this.legalDescription = {};
@@ -51,7 +52,7 @@ angular.module('propertySearchApp')
         this.siteAddresses = buildSiteAddresses([]);
         this.salesInfo = buildSalesInfo([]);
         this.ownersInfo = buildOwnersInfo([]);
-
+        this.additionalInfo = buildAdditionalInfo({});
 
       }
       else{
@@ -78,7 +79,7 @@ angular.module('propertySearchApp')
         this.salesInfo = buildSalesInfo(data.SalesInfos);
         this.ownersInfo = buildOwnersInfo(data.OwnerInfos);
         this.benefit = buildBenefit(data.Benefit);
-
+        this.additionalInfo = buildAdditionalInfo(data.Additionals);
       }
     };
 
@@ -283,7 +284,30 @@ angular.module('propertySearchApp')
 	  });
     };
 
-    var buildAssessment = function(data){
+    var buildAdditionalInfo = function(data){
+	  var additionalInfo = {infoList:[]};
+	  if(isUndefinedOrNull(data))
+	    return {};
+	  _.each(data.AddtionalInfo, function(origAdditionalInfo){
+	    var info = {key:origAdditionalInfo.InfoName, value:origAdditionalInfo.InfoValue};
+		info.isUrl = (info.value.indexOf('http') > -1) ? true : false;
+	    additionalInfo.infoList.push(info);
+	  });
+	  if(! _.isNull(data.HeaderMessage))
+        additionalInfo.headers = _.map(data.HeaderMessage.split("|"), 
+                                                   function(value){return value.trim();});
+      else
+        additionalInfo.headers = [];
+	  if(! _.isNull(data.FooterMessage))
+        additionalInfo.footers = _.map(data.FooterMessage.split("|"), 
+                                                   function(value){return value.trim();});
+      else
+        additionalInfo.footers = [];
+	  
+	  return additionalInfo;
+	};
+
+	var buildAssessment = function(data){
 
       var assessment = {};
       if(isUndefinedOrNull(data))
