@@ -4,6 +4,7 @@ angular.module('propertySearchApp')
   .controller('DetachMapCtrl', ['$scope', '$routeParams', 'localStorageService', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, localStorageService, paConfig, esriGisService){
 
     $scope.parentScope = window.opener.windowScope;
+    window.onunload = $scope.parentScope.attachMap;
 
 
     $scope.mapZoomIn = function(){

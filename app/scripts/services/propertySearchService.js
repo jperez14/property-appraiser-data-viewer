@@ -72,7 +72,7 @@ angular.module('propertySearchApp')
       // Discard not existing properties.
       var all = $q.all(propertyPromises);
       return all.then(function(data){
-        $log.debug("propertySearchService:propertiesByFolios: ", data)
+        $log.debug("propertySearchService:propertiesByFolios: ", data);
         return _.filter(data, function(property){return property != null});
       });
     };

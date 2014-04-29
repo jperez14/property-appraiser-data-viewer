@@ -35,7 +35,9 @@ angular.module('propertySearchApp')
 
       var scalebar = new esri.dijit.Scalebar({map: map, scalebarStyle:"line"}, dojo.byId("scale-container"));
 
-      $scope.map = map;
+      $scope.attachedMap = map;
+      $scope.map = $scope.attachedMap;
+      
       //esri.config.defaults.io.corsDetection = false;
       //esri.config.defaults.io.corsEnabledServers.push("gisweb.miamidade.gov");
 
@@ -46,7 +48,8 @@ angular.module('propertySearchApp')
         map.hideZoomSlider();
 
         $scope.navToolBar  = new esri.toolbars.Navigation(map);
-        $scope.drawToolBar = new esri.toolbars.Draw(map);
+        $scope.attachedDrawToolBar = new esri.toolbars.Draw(map);
+        $scope.drawToolBar = $scope.attachedDrawToolBar;
         dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
         //Add events to map.
         map.on("click", $scope.mapClicked);
@@ -871,12 +874,21 @@ angular.module('propertySearchApp')
 //});
 
 
-    $scope.openDetachMap = function(){
+    $scope.detachMap = function(){
       var url = '#/detachmap';
-      localStorageService.add('property',$scope.property);
       $window.windowScope = $scope;
-      $window.open(url,'name','height=1000, width=840, location=0');
+      $scope.detachedMapWindow = $window.open(url,'name','height=1000, width=840, location=0');
     };
+
+    $scope.attachMap = function(){
+      $scope.detachedMapWindow.close();
+      $scope.map = $scope.attachedMap;
+      $scope.drawToolBar = $scope.attachedDrawToolBar;
+    };
+
+   $window.onunload = $scope.attachMap;
+
+
 
     $scope.openPictometryWindow = function(){
 
