@@ -3,75 +3,18 @@
 		<tr>
 			<th class="tableHeader" colspan="2">Additional Information</th>
 		</tr>
-
-		<tr>
-			<td colspan="2">* The information listed below is not derived
-				from the Property Appraiser's Office records. It is provided for
-				convenience and is derived from other Miami-Dade County
-				resources.</td>
+		<tr ng-repeat="header in property.additionalInfo.headers">
+			<td colspan="2">{{header}}</td>
 		</tr>
-
-		<tr>
-			<td><strong>Business Incentives:</strong></td>
-
-			<td><a href="#"><span
-					class="glyphicon glyphicon-new-window"></span></a></td>
+		<tr ng-repeat="info in property.additionalInfo.infoList">
+			<td><strong>{{info.key}}:</strong></td>
+			<td ng-show="info.isUrl == true">
+				<a ng-href="{{info.value}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
+			</td>
+			<td ng-show="info.isUrl == false">{{info.value}}</td>
 		</tr>
-
-		<tr>
-			<td><strong>Community Development District:</strong></td>
-
-			<td>NONE</td>
-		</tr>
-
-		<tr>
-			<td><strong>Community Redevelopment Area:</strong></td>
-
-			<td>NONE</td>
-		</tr>
-
-		<tr>
-			<td><strong>Empowerment Zone:</strong></td>
-
-			<td>NONE</td>
-		</tr>
-
-		<tr>
-			<td><strong>Enterprise Zone:</strong></td>
-
-			<td>NONE</td>
-		</tr>
-
-		<tr>
-			<td><strong>Zoning Land Use:</strong></td>
-
-			<td>11 - SINGLE FAMILY HOME</td>
-		</tr>
-
-		<tr>
-			<td><strong>Urban Development Boundary:</strong></td>
-
-			<td>INSIDE URBAN DEVELOPMENT BOUNDRY</td>
-		</tr>
-
-		<tr>
-			<td><strong>Zoning:</strong></td>
-
-			<td>RU-1 SINGLE-FAMILY RESIDENTIAL DISTRICT 7</td>
-		</tr>
-
-		<tr>
-			<td><strong>Non-Ad Valorem:</strong></td>
-
-			<td><a href="#"><span
-					class="glyphicon glyphicon-new-window"></span></a></td>
-		</tr>
-
-		<tr>
-			<td><strong>Environmental Considerations:</strong></td>
-
-			<td><a href="#"><span
-					class="glyphicon glyphicon-new-window"></span></a></td>
+		<tr ng-repeat="footer in property.additionalInfo.footers track by $index">
+			<td colspan="2">{{footer}}</td>
 		</tr>
 	</table>
 </div>
