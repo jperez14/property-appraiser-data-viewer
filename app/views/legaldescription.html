@@ -11,7 +11,10 @@
 
                 <tr>
                   <td class="description-block">
-                  <span ng-repeat="description in property.legalDescription.parsedDescription">{{description}}<br></span>
+                    <div ng-class="{'legal-overflow' : property.legalDescription.parsedDescription.length > 10}">
+                      <span ng-repeat="description in property.legalDescription.parsedDescription"> {{description}}<br>
+                      </span>
+                    </div>
                   </td>
                 </tr> 
 	</table>

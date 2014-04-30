@@ -489,6 +489,14 @@ background-color: #eee !important;
 	height: 45px;
 }
 
+.legal-overflow{
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 250px;
+	margin: 0px -4px;
+	padding-left: 4px;
+}
+
 .address-overflow {
 	overflow-y: auto;
 	height: 95px;
