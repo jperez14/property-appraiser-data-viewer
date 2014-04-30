@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .factory('propertyService', function () {
+  .factory('propertyService', ['utils', function (utils) {
 
     var Property = function(data) {
 
@@ -27,7 +27,7 @@ angular.module('propertySearchApp')
       this.completed = null;
 
       
-      if(isUndefinedOrNull(data)) {
+      if(utils.isUndefinedOrNull(data)) {
 
         this.district = null;
         this.geoParcel = null;
@@ -286,7 +286,7 @@ angular.module('propertySearchApp')
     var buildAssessment = function(data){
 
       var assessment = {};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       // Switch the AssessmentInfo array into a map with key the year.
@@ -298,11 +298,11 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        if(! isUndefinedOrNull(origMessage.Message)){
+        if(! utils.isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
           // add the message array to the year.
-          if(isUndefinedOrNull(assessment[origMessage.Year]))
+          if(utils.isUndefinedOrNull(assessment[origMessage.Year]))
             assessment[origMessage.Year] = {assessmentInfo:[], message:[]};
           assessment[origMessage.Year].message = message; 
         }
@@ -316,7 +316,7 @@ angular.module('propertySearchApp')
     var buildTaxable = function(data){
 
       var taxable = {};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       // Switch the TaxableInfo array into a map with key the year.
@@ -328,11 +328,11 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        if(! isUndefinedOrNull(origMessage.Message)){
+        if(! utils.isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
           // add the message array to the year.
-          if(isUndefinedOrNull(taxable[origMessage.Year]))
+          if(utils.isUndefinedOrNull(taxable[origMessage.Year]))
             taxable[origMessage.Year] = {taxableInfo:[], message:[]};
           taxable[origMessage.Year].message = message; 
         }
@@ -346,7 +346,7 @@ angular.module('propertySearchApp')
 
     var buildBenefit= function(data){
       var benefit = {benefits:{}, messages:{}};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return benefit;
 
       // Group by benefit description
@@ -354,7 +354,7 @@ angular.module('propertySearchApp')
       var sequence = 0;
       _.each(data.BenefitInfos, function(originalBenefit){
         var mappedBenefit = buildObject(originalBenefit, benefitAttr);
-        if(isUndefinedOrNull(benefits[mappedBenefit.description])){
+        if(utils.isUndefinedOrNull(benefits[mappedBenefit.description])){
           sequence = sequence + 1;
           benefits[mappedBenefit.description] = {years:{},
                                                  type:mappedBenefit.type,
@@ -385,24 +385,24 @@ angular.module('propertySearchApp')
     var buildLand = function(data){
 
       var land = {};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       // Switch the Landlines array into a map with key the year.
       _.each(data.Landlines, function(origLandLine){
         var landLine = buildObject(origLandLine, landLineAttr);
-        if(isUndefinedOrNull(land[landLine.year]))
+        if(utils.isUndefinedOrNull(land[landLine.year]))
           land[landLine.year] = {landLines:[], message:[]};
         land[landLine.year].landLines.push(landLine); 
       });
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        if(! isUndefinedOrNull(origMessage.Message)){
+        if(! utils.isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
           // add the message array to the year.
-          if(isUndefinedOrNull(land[origMessage.Year]))
+          if(utils.isUndefinedOrNull(land[origMessage.Year]))
             land[origMessage.Year] = {landLines:[], message:[]};
           land[origMessage.Year].message = message; 
         }
@@ -420,13 +420,13 @@ angular.module('propertySearchApp')
     var buildBuilding = function(data){
 
       var building = {};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       // Switch the Buildinglines array into a map with key the year.
       _.each(data.BuildingInfos, function(origBuildingInfo){
         var buildingInfo = buildObject(origBuildingInfo, buildingInfoAttr);
-        if(isUndefinedOrNull(building[buildingInfo.year]))
+        if(utils.isUndefinedOrNull(building[buildingInfo.year]))
           building[buildingInfo.year] = {buildingsInfo:[], message:[], showSketch:false};
         // assign building information
         building[buildingInfo.year].buildingsInfo.push(buildingInfo);
@@ -437,11 +437,11 @@ angular.module('propertySearchApp')
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        if(! isUndefinedOrNull(origMessage.Message)){
+        if(! utils.isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
           // add the message array to the year.
-          if(isUndefinedOrNull(building[origMessage.Year]))
+          if(utils.isUndefinedOrNull(building[origMessage.Year]))
             building[origMessage.Year] = {buildingsInfo:[], message:[]};
           building[origMessage.Year].message = message; 
         }
@@ -457,24 +457,24 @@ angular.module('propertySearchApp')
     var buildExtraFeature = function(data){
 
       var extraFeature = {};
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       // Switch the ExtraFeaturelines array into a map with key the year.
       _.each(data.ExtraFeatureInfos, function(origExtraFeatureInfo){
         var extraFeatureInfo = buildObject(origExtraFeatureInfo, extraFeatureAttr);
-        if(isUndefinedOrNull(extraFeature[extraFeatureInfo.year]))
+        if(utils.isUndefinedOrNull(extraFeature[extraFeatureInfo.year]))
           extraFeature[extraFeatureInfo.year] = {extraFeaturesInfo:[], message:[]};
         extraFeature[extraFeatureInfo.year].extraFeaturesInfo.push(extraFeatureInfo); 
       });
 
       // Add messages to each key year.
       _.each(data.Messages, function(origMessage){
-        if(! isUndefinedOrNull(origMessage.Message)){
+        if(! utils.isUndefinedOrNull(origMessage.Message)){
           var message = _.map(origMessage.Message.split("|"), 
                               function(value){return value.trim();});
           // add the message array to the year.
-          if(isUndefinedOrNull(extraFeature[origMessage.Year]))
+          if(utils.isUndefinedOrNull(extraFeature[origMessage.Year]))
             extraFeature[origMessage.Year] = {extraFeaturesInfo:[], message:[]};
           extraFeature[origMessage.Year].message = message; 
         }
@@ -516,13 +516,13 @@ angular.module('propertySearchApp')
         propertyInfo.showCurrentValuesFlag = false;
 
       // remove dashes from folio number.
-      if(!isUndefinedOrNull(propertyInfo.folioNumber))
+      if(!utils.isUndefinedOrNull(propertyInfo.folioNumber))
         propertyInfo.folioNumber = propertyInfo.folioNumber.replace(/-/g, "");
       else 
         propertyInfo.folioNumber = "";
 
       // remove dashes from parent folio number.
-      if(!isUndefinedOrNull(propertyInfo.parentFolio))
+      if(!utils.isUndefinedOrNull(propertyInfo.parentFolio))
         propertyInfo.parentFolio = propertyInfo.parentFolio.replace(/-/g, "");
       else 
         propertyInfo.parentFolio = "";
@@ -549,7 +549,7 @@ angular.module('propertySearchApp')
       var legalDescription = {};      
 
       _.each(legalDescriptionAttr, function(value, key){
-        if(isUndefinedOrNull(data))
+        if(utils.isUndefinedOrNull(data))
           legalDescription[key] = null;
         else if ( _.isUndefined(data[value]))
           legalDescription[key] = null;
@@ -572,7 +572,7 @@ angular.module('propertySearchApp')
     var buildArray = function(data, attributes){
       
       // data not given - return an empty array.
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return [];
 
       var result = [];
@@ -584,7 +584,7 @@ angular.module('propertySearchApp')
         });
         //change field types if required
         _.each(fieldTypeChanger, function(value, key){
-          if(!isUndefinedOrNull(newValue[key])){
+          if(!utils.isUndefinedOrNull(newValue[key])){
             if(value === "Date"){
               newValue[key] = new Date(newValue[key]);
             }
@@ -606,7 +606,7 @@ angular.module('propertySearchApp')
       var result = {};      
 
       _.each(attributes, function(value, key){
-        if(isUndefinedOrNull(data))
+        if(utils.isUndefinedOrNull(data))
           result[key] = null;
         else if ( _.isUndefined(data[value]))
           result[key] = null;
@@ -625,7 +625,7 @@ angular.module('propertySearchApp')
     var buildMapByYear = function(data, attributes){
 
       // data not given - return an empty array.
-      if(isUndefinedOrNull(data))
+      if(utils.isUndefinedOrNull(data))
         return {};
       
       var result = {};
@@ -649,9 +649,6 @@ angular.module('propertySearchApp')
 
     };
 
-
-    var isUndefinedOrNull = function(val){ return _.isUndefined(val) || _.isNull(val)}
-
     var isPropertyValid = function(rawProperty){
       if(rawProperty.Completed === false)
         return false;
@@ -670,4 +667,4 @@ angular.module('propertySearchApp')
     };
     
     
-  });
+  }]);
