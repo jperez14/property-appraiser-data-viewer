@@ -229,18 +229,24 @@ div.search_area .tab-content {
 .mb-fullextent {background-position:-60px 0;}
 .mb-zoombox {background-position:-90px 0;}
 .mb-initial {background-position:-150px 0;}
+.mb-detach {background-position:-180px 0;}
+.mb-attach {background-position:-210px 0;}
 /* hover state */
 .mb-zoomin:hover {background-position:0 31px;}
 .mb-zoomout:hover {background-position:-30px 31px;}
 .mb-fullextent:hover {background-position:-60px 31px;}
 .mb-zoombox:hover {background-position:-90px 31px;}
 .mb-initial:hover {background-position:-150px 31px;}
+.mb-detach:hover {background-position:-180px 31px;}
+.mb-attach:hover {background-position:-210px 31px;}
 /* active state - mainly for zoombox - add class "mb-active" to keep on */
 .mb-zoomin .mb-active {background-position:0 31px;}
 .mb-zoomout .mb-active {background-position:-30px 31px;}
 .mb-fullextent .mb-active {background-position:-60px 31px;}
 .mb-zoombox .mb-active {background-position:-90px 31px;}
 .mb-initial .mb-active {background-position:-150px 31px;}
+.mb-detach .mb-active {background-position:-180px 31px;}
+.mb-attach .mb-active {background-position:-210px 31px;}
 
 
 #map_lc {
@@ -583,6 +589,10 @@ background-color: #eeeeee;
 
 .tableHeader span.glyphicon:hover {
 	cursor:pointer;
+}
+
+.prop_info_width {
+	width:50%;
 }
 
 .popover-title {

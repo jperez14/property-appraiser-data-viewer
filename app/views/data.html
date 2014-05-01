@@ -44,11 +44,13 @@
     <div class="search_area">
       
       <div class="text-right social-buttons hidden-xs">
+      <!--
       <a ng-click="detachMap()"><img src="images/icon-print.png"
       alt="Detach Map" title="Detach Map"></a>
       <div class="text-right social-buttons hidden-xs">
       <a ng-click="attachMap()"><img src="images/icon-twitter.png"
       alt="Attach Map" title="Attach Map"></a>
+      -->
       <a ng-show="property" class="print-modal"><img src="images/icon-print.png" alt="Print" title="Print"></a>
 
       <a href="http://www.miamidade.gov/pa/property-search-help.asp" target="_blank"><img src="images/icon-help.png" alt="Property Search Help" title="Property Search Help"></a>
@@ -227,14 +229,14 @@
 
     <div class="row">
 
-      <div class="col-md-4 col-sm-5">
+      <div class="col-md-4 col-sm-5" id="prop_hook">
         
         <div class="property_info tabular_data" ng-show="property">
           <div ng-include="'views/propertyinformation.html'"></div>
         </div>
       </div>
 
-      <div ng-class="mapStyleState()"> 
+      <div ng-class="mapStyleState()" id="map_hook"> 
         
         <div class="hero-unit map_container">
         
@@ -247,9 +249,8 @@
           <span class="map-button mb-zoomout" ng-click="mapZoomOut()" data-toggle="tooltip" data-placement="top" title="Zoom out on the map"></span>
           <span class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()" data-toggle="tooltip" data-placement="top" title="Zoom map to a drawn area"></span>
           <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()" data-toggle="tooltip" data-placement="top" title="Zoom out to full extent"></span>
-          <span class="map-button mb-initial"
-          ng-click="mapZoomToProperty()" data-toggle="tooltip"
-          data-placement="top" title="Return to property" ng-hide="mapState == 'BigMap'"></span>
+          <span class="map-button mb-initial" ng-click="mapZoomToProperty()" data-toggle="tooltip" data-placement="top" title="Return to property" ng-hide="mapState == 'BigMap'"></span>
+          <span class="map-button mb-detach" ng-click="detachMap()" data-toggle="tooltip" data-placement="top" title="Detach map to new window"></span>
                     
           	 <div id="map_lc">
             

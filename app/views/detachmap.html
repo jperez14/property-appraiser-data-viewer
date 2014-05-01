@@ -10,7 +10,6 @@ html,body,.container,#detachmap {
 body {
 	background-color: #FFF;
 	overflow: hidden;
-	font-family: "Trebuchet MS";
 }
 </style>
 <div id="detachmap">
@@ -30,6 +29,7 @@ body {
 			class="map-button mb-initial" ng-click="mapZoomToProperty()"
 			data-toggle="tooltip" data-placement="top" title="Return to property"
 			ng-hide="mapState == 'BigMap'"> </span>
+			<span class="map-button mb-attach" ng-click="attachMap()" data-toggle="tooltip" data-placement="top" title="Attach map to application window"></span>
 
 		<div id="map_lc">
 
