@@ -877,10 +877,10 @@ angular.module('propertySearchApp')
     $scope.detachMap = function(){
       var url = '#/detachmap';
       $window.windowScope = $scope;
-      $scope.detachedMapWindow = $window.open(url,'name','height=760, width=1020, location=0');
+      $scope.detachedMapWindow = $window.open(url,'detached','height=760, width=1020, location=0');
       $('#map_hook').hide();
       $('#prop_hook').removeClass('col-md-4 col-sm-5').addClass('col-md-12 col-sm-12');
-      $('.prop_info_width').css('width','25%');
+      $('.prop_info_width').css('width','140px');
     };
 
     $scope.attachMap = function(){
@@ -889,6 +889,7 @@ angular.module('propertySearchApp')
       $scope.drawToolBar = $scope.attachedDrawToolBar;
       $('#map_hook').show();
       $('#prop_hook').removeClass('col-md-12 col-sm-12').addClass('col-md-4 col-sm-5');
+      $('.prop_info_width').removeAttr('style');
     };
 
    $window.onunload = $scope.attachMap;
