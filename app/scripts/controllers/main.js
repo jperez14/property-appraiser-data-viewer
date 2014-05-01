@@ -890,7 +890,7 @@ angular.module('propertySearchApp')
       $scope.map = $scope.attachedMap;
       $scope.map.setExtent(extent, true);
       $scope.drawToolBar = $scope.attachedDrawToolBar;
-      $('#map_hook').show();
+      $('#map_hook').removeAttr('style');
       $('#prop_hook').removeClass('col-md-12 col-sm-12').addClass('col-md-4 col-sm-5');
       $('.prop_info_width').removeAttr('style');
     };
