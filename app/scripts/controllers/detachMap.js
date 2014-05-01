@@ -4,7 +4,7 @@ angular.module('propertySearchApp')
   .controller('DetachMapCtrl', ['$scope', '$routeParams', 'localStorageService', 'paConfiguration', 'esriGisService', function ($scope, $routeParams, localStorageService, paConfig, esriGisService){
 
     $scope.parentScope = window.opener.windowScope;
-    window.onunload = $scope.parentScope.attachMap;
+    //window.onunload = $scope.parentScope.attachMap;
 
 
     $scope.mapZoomIn = function(){
@@ -48,9 +48,15 @@ angular.module('propertySearchApp')
     };
 
     $scope.attachMap = function(){
+      //$scope.parentScope.attachMap($scope.map.extent);
       $scope.parentScope.attachMap();
     };
     
+    $scope.close = function(){
+      window.close();
+    };
+
+    window.onunload = $scope.attachMap;
     
     
     
@@ -110,6 +116,7 @@ angular.module('propertySearchApp')
       map.addLayer(parcelPoint);
       streetLayer.hide(); 
 
+      $scope.map.setExtent($scope.parentScope.map.extent, true);
       $scope.parentScope.map = $scope.map;
 
     };

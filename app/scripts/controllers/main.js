@@ -881,8 +881,16 @@ angular.module('propertySearchApp')
     };
 
     $scope.attachMap = function(){
-      $scope.detachedMapWindow.close();
+      var extent = $scope.map.extent;
+      console.log("the exente is ", extent);
+      //$scope.attachedMap.setExtent(extent,true);
+      //$scope.detachedMapWindow.close();
+
       $scope.map = $scope.attachedMap;
+      //$scope.map.resize();
+      //$scope.map.reposition();
+      //console.log("the greetings are", greetings);
+      $scope.map.setExtent(extent, true);
       $scope.drawToolBar = $scope.attachedDrawToolBar;
     };
 
