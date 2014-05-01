@@ -12,6 +12,8 @@ body {
 	overflow: hidden;
 }
 </style>
+
+
 <div id="detachmap">
 
 	<div class="lc_container">
@@ -29,7 +31,7 @@ body {
 			class="map-button mb-initial" ng-click="mapZoomToProperty()"
 			data-toggle="tooltip" data-placement="top" title="Return to property"
 			ng-hide="mapState == 'BigMap'"> </span>
-			<span class="map-button mb-attach" ng-click="attachMap()" data-toggle="tooltip" data-placement="top" title="Attach map to application window"></span>
+			<span class="map-button mb-attach" ng-click="close()" data-toggle="tooltip" data-placement="top" title="Attach map to application window"></span>
 
 		<div id="map_lc">
 
