@@ -286,7 +286,7 @@ angular.module('propertySearchApp')
 
     var buildAdditionalInfo = function(data){
 	  var additionalInfo = {infoList:[]};
-	  if(isUndefinedOrNull(data))
+	  if(utils.isUndefinedOrNull(data))
 	    return {};
 	  _.each(data.AddtionalInfo, function(origAdditionalInfo){
 	    var info = {key:origAdditionalInfo.InfoName, value:origAdditionalInfo.InfoValue};
