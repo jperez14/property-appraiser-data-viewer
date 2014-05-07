@@ -217,13 +217,21 @@ padding-right: 0;
 							</div>
 						</td>
 					</tr>
-					<tr>
+					<tr ng-show="reportType == 'summary'">
 						<td><strong>Owner</strong></td>
-                        <td>
+            <td>
 							<div ng-class="{'owner-overflow' : property.ownersInfo.length > 3}">
 								<div ng-repeat="owner in property.ownersInfo">
 									{{owner.name}}
 								</div>
+							</div>
+						</td>
+					</tr>
+					<tr ng-show="reportType == 'details'">
+						<td><strong>Owner</strong></td>
+            <td>
+							<div ng-repeat="owner in property.ownersInfo">
+							{{owner.name}}
 							</div>
 						</td>
 					</tr>
