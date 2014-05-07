@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .factory('propertyService', ['utils', function (utils) {
+  .factory('propertyService', ['$log', 'utils', 'paConfiguration', 'esriGisService',function ($log, utils, paConfig, esriGisService) {
 
     var Property = function(data) {
 
@@ -684,10 +684,43 @@ angular.module('propertySearchApp')
     };
 
 
+    var additionalInfoFromGIS = function($scope ,property){
+      var x = property.location.x;
+      var y = property.location.y;
+      return esriGisService.getFeatureFromPointMultiLayerIntersection($scope, paConfig.additionalInfoLayers, x, y).then(function(additionalInfoData){
+       var additionalInfoGIS =  _.object(_.keys(additionalInfoData), 
+                 _.map(_.values(additionalInfoData), function(value, index){
+                   var attribute = paConfig.additionalInfoLayers[index].attributes[0];
+                   if(!utils.isUndefinedOrNull(value))
+                     return value.attributes[attribute];
+                   else
+                     return "NONE";
+                 }));
+        $log.debug("propertyService:additionalInfoFromGIS", additionalInfoGIS);
+        var additionalInfo = _.map(property.additionalInfo.infoList, function(info){
+          var infoTmp = _.clone(info);
+          if(additionalInfoGIS[infoTmp.key])
+            infoTmp.value = additionalInfoGIS[infoTmp.key];
+          if(paConfig.additionalInfoUrls[infoTmp.key]){
+            infoTmp.value = paConfig.additionalInfoUrls[infoTmp.key];
+            infoTmp.isUrl = true;
+          }
+
+          return infoTmp;
+        });
+        $log.debug("propertyService:additionalInfoFromGIS:additionalInfo", additionalInfo);
+        return additionalInfo;
+      });
+
+
+    };
+    
+
     // Public API
     return {
       Property: Property,
-      isPropertyValid: isPropertyValid
+      isPropertyValid: isPropertyValid,
+      additionalInfoFromGIS: additionalInfoFromGIS
     };
     
     

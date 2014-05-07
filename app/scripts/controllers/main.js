@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService',  function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', 'propertyService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData, propertyService) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -623,6 +623,9 @@ angular.module('propertySearchApp')
         .then(function(){
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
+          });
+          propertyService.additionalInfoFromGIS($scope, $scope.property).then(function(additionalInfo){
+            $scope.property.additionalInfo.infoList = additionalInfo;
           });
         })['catch'](function(error){
           $log.error("getPropertyByFolio:catch", error);
