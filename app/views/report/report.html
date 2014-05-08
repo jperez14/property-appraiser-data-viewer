@@ -420,15 +420,17 @@ padding-right: 0;
             
             
             <!-- START : Full Legal Description (Summary)-->
-	
+
+			<div ng-class="{'short-legal-overflow' : property.legalDescription.parsedDescription.length > 5}">
 				<table class="print-table" ng-show="reportType == 'summary'">
 					<tr>
 						<th class="tableHeader">Short Legal Description</th>
 					</tr>
 							<tr ng-repeat="description in property.legalDescription.parsedDescription">
 							  <td>{{description}}</td>
-							</tr>  
+							</tr>	
 				</table>
+		</div>
 
 			<!-- END : Full Legal Description (Summary)-->
 </div>

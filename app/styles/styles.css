@@ -497,6 +497,11 @@ background-color: #eee !important;
 	padding-left: 4px;
 }
 
+.short-legal-overflow{
+	overflow: hidden;
+	height: 130px;
+}
+
 .address-overflow {
 	overflow-y: auto;
 	height: 95px;
