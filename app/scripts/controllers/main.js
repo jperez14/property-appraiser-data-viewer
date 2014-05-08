@@ -840,13 +840,15 @@ angular.module('propertySearchApp')
 	    $scope.showErrorDialog(result.message);
 	  }
 	  else if(result.candidates.length == 1){
-            $scope.mapState = "SmallMap";                        
+        $scope.isPartialFolioCandidates = false;
+        $scope.mapState = "SmallMap";
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
-	  else if(result.candidates.length > 1)
+	  else if(result.candidates.length > 1) {
 	    $scope.property = null;
-          $scope.mapState = "NoMap";
-	  $scope.candidatesList = result;
+        $scope.mapState = "NoMap";
+	    $scope.candidatesList = result;
+	  }
 	}
 	else {
 	  $scope.property = null;
