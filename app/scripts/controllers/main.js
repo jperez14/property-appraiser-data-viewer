@@ -877,7 +877,7 @@ angular.module('propertySearchApp')
       localStorageService.add('property',$scope.property);
       localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
 
-      $window.open(url,'name','height=1000, width=840, location=0');
+      $window.open(url,'name','height=1000, width=840, location=0, scrollbars=yes');
     };
 
     $scope.openReportDetailsWindow = function(){
