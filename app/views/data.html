@@ -57,6 +57,7 @@
       <ul class="nav nav-tabs">
         <li ng-class="{active: isActiveSearchTab('Address')}"><a ng-click="setActiveSearchTab('Address')" id="t-address">Address</a></li>
         <li ng-class="{active: isActiveSearchTab('Owner')}"><a ng-click="setActiveSearchTab('Owner')" id="t-owner">Owner Name</a></li>
+        <li ng-class="{active: isActiveSearchTab('Division')}"><a ng-click="setActiveSearchTab('Division')" id="t-owner">Sub Division</a></li>
         <li ng-class="{active: isActiveSearchTab('Folio')}"><a ng-click="setActiveSearchTab('Folio')" id="t-folio">Folio</a></li>
       </ul>
 
@@ -111,7 +112,20 @@
 
 
             </div>
-            
+
+            <div class="tab-pane" ng-class="{active: isActiveSearchTab('Division')}" id="sub-division">
+
+              <div class="input-group">
+                <input type="text" value="Sub Division" name="subDivision" id="search_box" placeholder="Sub Division" class="form-control division-box"
+					ng-model='subDivision' ng-click="showError=false" ui-keypress="{13:'getCandidatesBySubDivision()'}">
+                <span class="input-group-btn">
+                  <button class="btn btn-default btn-primary" id="search_submit" type="button" ng-click="getCandidatesBySubDivision()">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+
+            </div>
             
             <div class="tab-pane" ng-class="{active: isActiveSearchTab('Folio')}" id="folio">
 

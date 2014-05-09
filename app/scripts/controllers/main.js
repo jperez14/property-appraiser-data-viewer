@@ -246,13 +246,15 @@ angular.module('propertySearchApp')
     $scope.showError = false;
     $scope.errorMsg = "";
     
-    $scope.ownerName = "";
+    $scope.subDivision = "";
+	$scope.ownerName = "";
     $scope.candidatesList = null;
     $scope.previousCandidatesInfo = null;
 
     $scope.isOwnerCandidates = false;
     $scope.isAddressCandidates = false;
     $scope.isPartialFolioCandidates = false;
+	$scope.isSubDivisionCandidates = false;
     $scope.fromPage = 1;
     $scope.toPage = 200;
     $scope.itemsPerFetch = 200;
@@ -332,6 +334,7 @@ angular.module('propertySearchApp')
       $scope.isOwnerCandidates = false;
       $scope.isAddressCandidates = false;
       $scope.isPartialFolioCandidates = false;
+	  $scope.isSubDivisionCandidates = false;
       $scope.fromPage = 1;
       $scope.toPage = 200;
       $scope.isEndOfResults = false;
@@ -454,7 +457,8 @@ angular.module('propertySearchApp')
 	  'toPage':$scope.toPage,
           'isOwnerCandidates':$scope.isOwnerCandidates,
           'isAddressCandidates':$scope.isAddressCandidates,
-          'isPartialFolioCandidates':$scope.isPartialFolioCandidates
+          'isPartialFolioCandidates':$scope.isPartialFolioCandidates,
+		  'isSubDivisionCandidates':$scope.isSubDivisionCandidates
 	};
       }
       $scope.searchByFolio();
@@ -468,6 +472,7 @@ angular.module('propertySearchApp')
       $scope.isOwnerCandidates = $scope.previousCandidatesInfo.isOwnerCandidates;
       $scope.isAddressCandidates = $scope.previousCandidatesInfo.isAddressCandidates;
       $scope.isPartialFolioCandidates = $scope.previousCandidatesInfo.isPartialFolioCandidates;
+	  $scope.isSubDivisionCandidates = $scope.previousCandidatesInfo.isSubDivisionCandidates;
       $scope.previousCandidatesInfo = null;
       $scope.property = null;
       $scope.mapState = "NoMap";
@@ -721,10 +726,53 @@ angular.module('propertySearchApp')
 	  propertySearchService.getCandidatesByPartialFolio($scope.folio, $scope.fromPage, $scope.toPage)
 	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
 	}
+	if($scope.isSubDivisionCandidates === true) {
+	  propertySearchService.getCandidatesBySubDivision($scope.subDivision, $scope.fromPage, $scope.toPage)
+	    .then($scope.candidatesPaginationSuccess, $scope.candidatesPaginationFailure);
+	}
       }
     };
 
-    $scope.getCandidatesByOwner = function(){
+    $scope.getCandidatesBySubDivision = function(){
+	  clearResults();
+	  if(_.isEmpty($scope.subDivision)){
+	    $scope.property = null;
+		$scope.mapState = "BigMap";
+		$scope.showErrorDialog("Please enter a valid Sub Division");
+		return true;
+	  }
+	  $scope.loader = true; //flag hackeysack
+	  
+	  $scope.isSubDivisionCandidates = true;
+	  $scope.property = null;
+	  $scope.mapState = "NoMap";
+	  propertySearchService.getCandidatesBySubDivision($scope.subDivision, $scope.fromPage, $scope.toPage)
+	  .then(function(result){
+	    if(result.completed == true){
+		  if(result.candidates.length == 0) {
+		    $scope.mapState = "BigMap";
+			$scope.showErrorDialog(result.message);
+		  }
+		  else if(result.candidates.length == 1) {
+		    $scope.getCandidateFolio(result.candidates[0].folio, false);
+		  }
+		  else if(result.candidates.length > 1) {
+            $scope.mapState = "NoMap";
+	        $scope.candidatesList = result;
+		  }
+		}
+		else{
+          $scope.mapState = "BigMap";
+	      $scope.showErrorDialog(result.message);
+		}
+	  }, function(error){
+           $log.error("getCandidatesBySubDivision error ", error);
+           $scope.mapState = "BigMap";
+           $scope.showErrorDialog("The request failed. Please try again later");
+      });
+	};
+	
+	$scope.getCandidatesByOwner = function(){
       clearResults();
       if(_.isEmpty($scope.ownerName)) {
 	$scope.property = null;

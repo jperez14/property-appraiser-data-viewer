@@ -8,6 +8,7 @@ angular.module('propertySearchApp')
     var PropertyResource = $resource(urlBase + ":endPoint",
                                      {endPoint:""},
                                      {propertyByFolio:{method:'GET'},
+					  candidatesBySubDivision:{method:'GET'},
 				      candidatesByOwner:{method:'GET'},
 				      candidatesByAddress:{method:'GET'},
 				      candidatesByPartialFolio:{method:'GET'},
@@ -77,6 +78,31 @@ angular.module('propertySearchApp')
       });
     };
     
+    var candidatesBySubDivision = function(subDivision, from, to, callback) {
+      var endPoint = '';
+      var params = {"subDivisionName":subDivision, 
+                    "clientAppName":paConfig.clientAppName, 
+                    "from":from, 
+                    "to":to,
+                    "Operation":'GetPropertySearchBySubDivision',
+                    "enPoint":endPoint};
+
+      var deferred = $q.defer();
+      var candidatesList = PropertyResource.candidatesBySubDivision(params, 
+        function(){
+          deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
+		}, function(response){
+		  deferred.reject(response);
+	    });
+
+      return deferred.promise.then(function(candidatesList){
+	    return candidatesList;
+      }, function(response){
+        $log.error("propertySearchService:candidatesBySubDivision:", urlBase, subDivision, response);
+        return $q.reject(response);
+      });
+
+    };
 
     var candidatesByOwner = function(ownerName, from, to, callback) {
       var endPoint = '';
@@ -366,8 +392,9 @@ angular.module('propertySearchApp')
     return {getPropertyByFolio:propertyByFolio,
             getPropertiesByFolios:propertiesByFolios,
 	    getCandidatesByOwner:candidatesByOwner,
-            getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
-            getCandidatesByAddressFromPA:candidatesByAddressFromPA,
+		getCandidatesBySubDivision:candidatesBySubDivision,
+        getCandidatesByAddressFromEsri:candidatesByAddressFromEsri,
+        getCandidatesByAddressFromPA:candidatesByAddressFromPA,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
 	    getHasValidStreetName:hasValidStreetName
