@@ -9,6 +9,22 @@ angular.module('propertySearchApp')
       $scope.getPropertyByXY(event.mapPoint.x, event.mapPoint.y);
     };
 
+    $scope.mapDoubleClicked = function(event){
+      $log.debug("mapDoubleClicked", event.mapPoint.x, event.mapPoint.y);
+	  var gisPropertyPromise = getCondoFlgAndFolioFromXY(event.mapPoint.x, event.mapPoint.y);
+      gisPropertyPromise.then(function(gisProperty){
+	    if(gisProperty.condoFlg == true)
+		  $scope.folio = gisProperty.folio.substr(0,9);
+		else
+		  $scope.folio = gisProperty.folio;
+		$scope.searchByFolio();
+      }, function(error){
+        $log.error("mapDoubleClicked", error);
+        $scope.showErrorDialog(error.message);
+        return $q.reject(error);
+      });  
+    }
+
     // IMPORTANT - Do not move
     $scope.drawEndHandler  = function (geometry){
       $log.debug("DrawEndHandler: completed.");
@@ -44,12 +60,15 @@ angular.module('propertySearchApp')
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
         map.hideZoomSlider();
-
+        console.log("DOUBLE CLICK", map.theDoubleClickZoom);
+        map.disableDoubleClickZoom();
+        
         $scope.navToolBar  = new esri.toolbars.Navigation(map);
         $scope.drawToolBar = new esri.toolbars.Draw(map);
         dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
         //Add events to map.
         map.on("click", $scope.mapClicked);
+        map.on("dbl-click", $scope.mapDoubleClicked);
 
         map.on('extent-change', function(extent) {
           map.resize();
@@ -551,6 +570,23 @@ angular.module('propertySearchApp')
       });
     };
 
+    var getCondoFlgAndFolioFromXY = function(x, y){
+      var gisPropertyPromise = esriGisService.getCondoFlgAndFolioFromXY($scope, x, y);
+      return gisPropertyPromise.then(function(gisProperty){
+        if (gisProperty.folio !== ""){
+          return gisProperty;
+        }
+        else {
+          var message = "getCondoFlgAndFolioFromXY: no folio found for x,y"
+          return $q.reject({"error":null, "message":message})
+        }
+      }, function(error){
+        $log.error("getCondoFlgAndFolioFromXY", error);
+        $scope.showErrorDialog(error.message);
+        return $q.reject(error);
+      });  
+    };
+
     var getGeometryAndFolioFromXY = function(x, y){
       var gisPropertyPromise = esriGisService.getGeometryAndFolioFromXY($scope, x, y);
       return gisPropertyPromise.then(function(gisProperty){
@@ -571,7 +607,7 @@ angular.module('propertySearchApp')
       });  
     };
 
-    var getPropertyAndAddPolygon = function(gisProperty){
+	var getPropertyAndAddPolygon = function(gisProperty){
       return getProperty(gisProperty.folio).then(function(folio){
         
         // add polygon
@@ -594,7 +630,6 @@ angular.module('propertySearchApp')
 
       });
     };
-
 
     $scope.getPropertyByXY = function(x, y){
 

@@ -122,6 +122,28 @@ angular.module('propertySearchApp')
       } ,function(error){return error;});
     };
 
+    var condoFlgAndFolioFromXY = function($scope, x, y){
+      var url = paConfig.urlParcelLayer;
+
+      return featuresFromPointLayerIntersection($scope, x, y, url, true).then(
+        function(featureSet){
+		  if(featureSet.features != undefined && featureSet.features.length > 0) {
+			var data = {folio:featureSet.features[0].attributes.FOLIO};
+			data.condoFlg = featureSet.features[0].attributes.CONDOFLG == 'C' ? true : false;
+			return data;
+		  }else{
+				$log.debug("condoFlgAndFolioFromXY: No folio found in x,y ", x, y, url, featureSet);
+				return {geometry:null, folio:""}
+		  }
+        }, 
+        function(error){
+          $log.error("condoFlgAndFolioFromXY: error ", error);
+          var message = "error  when getting condoFlgAndFolioFromXY";
+          return $q.reject({"error":error, "message":message});
+        }
+      );
+    };
+
     var geometryAndFolioFromXY = function($scope, x, y){
       var url = paConfig.urlParcelLayer;
 
@@ -276,7 +298,8 @@ angular.module('propertySearchApp')
             getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection,
             getFeatureFromPointMultiLayerIntersection:featureFromPointMultiLayerIntersection,
             getFeaturesInCircle:featuresInCircle,
-            getGeometryAndFolioFromXY:geometryAndFolioFromXY
+            getGeometryAndFolioFromXY:geometryAndFolioFromXY,
+			getCondoFlgAndFolioFromXY:condoFlgAndFolioFromXY
            };
 
   }]);
