@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('esriGisService',['$q', '$log', 'paConfiguration', 'esriGisGeometryService',  function ($q, $log, paConfig, esriGisGeometryService) {
+  .service('esriGisService',['$q', '$log', 'paConfiguration', 'esriGisGeometryService', 'utils',  function ($q, $log, paConfig, esriGisGeometryService, utils) {
 
     var queryLayer = function($scope, url, whereClause, returnGeometry){
       
@@ -145,10 +145,39 @@ angular.module('propertySearchApp')
     };
     
     
+    var featureFromPointMultiLayerIntersection = function($scope, layers, x, y){
+      var featurePromises = [];
+
+      // Get a promise for each layer.
+      _.each(layers, function(layer){
+        console.log("The layer to be called is ", layer.url);
+        featurePromises.push(featureFromPointLayerIntersection($scope, layer, x, y).then(
+          function(data){
+            return data;
+          },
+          function(response){
+            return null;
+          }
+        ));
+      });
+
+
+      var all = $q.all(featurePromises);
+      return all.then(function(data){
+
+        var keys = _.pluck(layers, 'label');
+        var mapResult =  _.object(keys, data);
+        $log.debug("esriGisService:featureFromPointMultiLayerIntersection: ", mapResult);
+        return mapResult;
+      });
+
+      
+    };
+
     var featureFromPointLayerIntersection = function($scope, layer, x, y){
       var url = layer.url;
       return featuresFromPointLayerIntersection($scope, x, y, url, true).then(function(featureSet){
-        if(featureSet.features.length > 0){
+        if(!utils.isUndefinedOrNull(featureSet.features) && featureSet.features.length > 0){
           return {geometry:featureSet.features[0].geometry, 
            attributes:featureSet.features[0].attributes}
         }
@@ -245,6 +274,7 @@ angular.module('propertySearchApp')
             getFolioFromPoint:folioFromPoint,
             getGeometryFromPointLayerIntersection:geometryFromPointLayerIntersection,
             getFeatureFromPointLayerIntersection:featureFromPointLayerIntersection,
+            getFeatureFromPointMultiLayerIntersection:featureFromPointMultiLayerIntersection,
             getFeaturesInCircle:featuresInCircle,
             getGeometryAndFolioFromXY:geometryAndFolioFromXY
            };
