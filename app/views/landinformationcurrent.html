@@ -1,11 +1,11 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-striped">
 		<tr>
-			<th class="tableHeader" colspan="6">Land Information <span id="land-help1" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Land Information:" data-content="Identifies and lists land components on the property and their corresponding assessed values.  The sum of land values is reflected in the Assessment Information section."></span></th>
+			<th class="tableHeader" colspan="8">Land Information <span id="land-help1" class="glyphicon glyphicon-info-sign pop-icon" data-toggle="popover" title="Land Information:" data-content="Identifies and lists land components on the property and their corresponding assessed values.  The sum of land values is reflected in the Assessment Information section."></span></th>
 		</tr>
         
         <tr ng-show="isDisplayMessages(property, property.land, property.rollYear1)">
-			<td colspan="6">
+			<td colspan="8">
                 <div class="table-message">
                     <div ng-repeat="message in property.land[property.rollYear1].message">{{message}}</div>
                 </div>
@@ -15,7 +15,9 @@
 		<tr class="header-row">
         	<td>Land Use</td>
 			<td class="text-center">Muni Zone</td>
+			<td class="text-center">Muni Zone Desc</td>
 			<td class="text-center">PA Zone</td>
+			<td class="text-center">PA Zone Desc</td>
 			<td class="text-center">Unit Type</td>
 			<td class="text-right fixed-width">Units</td>
 
@@ -25,7 +27,9 @@
 		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
 			<td>{{land.landUse}}</td>
             <td class="text-center">{{land.muniZone}}</td>
+            <td class="text-center">{{land.muniZoneDesc}}</td>
 			<td class="text-center">{{land.zone}}</td>
+            <td class="text-center">{{land.paZoneDesc}}</td>
 			<td class="text-center">{{land.unitType}}</td>
 			<td class="text-right fixed-width">{{land.units | number:2}}</td>
 

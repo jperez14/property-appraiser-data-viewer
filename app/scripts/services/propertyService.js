@@ -104,12 +104,14 @@ angular.module('propertySearchApp')
       landUse:             "LandUse",          
       landlineType:        "LandlineType",     
       muniZone:            "MuniZone",         
-      percentCondition:    "PercentCondition", 
+      muniZoneDesc:        "MuniZoneDescription",
+	  percentCondition:    "PercentCondition", 
       totalAdjustments:    "TotalAdjustments", 
       unitType:            "UnitType",         
       units:               "Units",            
       useCode:             "UseCode",          
       zone:                "Zone",
+	  paZoneDesc:          "PAZoneDescription",
       year:                "RollYear"              
     };  
 
