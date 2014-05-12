@@ -107,7 +107,7 @@ angular.module('propertySearchApp')
       var parcels = new esri.layers.FeatureLayer(urlParcelLayer);
       var layers = new esri.layers.GraphicsLayer({id:"layers"});
       var parcelPoint = esri.layers.GraphicsLayer({id:"parcelPoint", maxScale:24000});
-      var parcelBoundary = esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:23999});
+      var parcelBoundary = new esri.layers.GraphicsLayer({id:"parcelBoundary", minScale:23999});
       map.addLayer(aerialLayer);
       map.addLayer(streetLayer);
       map.addLayer(parcels);
@@ -116,7 +116,24 @@ angular.module('propertySearchApp')
       map.addLayer(parcelPoint);
       streetLayer.hide(); 
 
+      // set intial extent and property.
       $scope.map.setExtent($scope.parentScope.map.extent, true);
+      if(! _.isUndefined($scope.parentScope.property.location)){
+	var geometry = {
+	  "x": $scope.parentScope.property.location.x,
+	  "y": $scope.parentScope.property.location.y,
+	  "spatialReference":{"wkid":2236}
+	};
+
+        var polygon = $scope.parentScope.property.location.polygon;
+        var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+        $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+
+        var pointGraphic = esriGisService.getGraphicMarkerFromXY(geometry.x, geometry.y)
+        $scope.map.getLayer("parcelPoint").add(pointGraphic);
+
+      }
+
       $scope.parentScope.map = $scope.map;
 
     };

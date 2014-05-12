@@ -542,7 +542,7 @@ angular.module('propertySearchApp')
 
     };
 
-    
+
     var getLatitudeLongitude = function(coords){
       var latLongPromise = esriGisGeometryService.xyToLatitudeLongitude(coords.x, coords.y);
 
@@ -886,9 +886,26 @@ angular.module('propertySearchApp')
     $scope.attachMap = function(){
       var extent = $scope.map.extent;
       //$scope.detachedMapWindow.close();
-
       $scope.map = $scope.attachedMap;
       $scope.map.setExtent(extent, true);
+
+      if(! _.isUndefined($scope.property.location)){
+	var geometry = {
+	  "x": $scope.property.location.x,
+	  "y": $scope.property.location.y,
+	  "spatialReference":{"wkid":2236}
+	};
+
+        var polygon = $scope.property.location.polygon;
+        var polygonGraphic = esriGisService.getGraphicMarkerFromPolygon(polygon);
+        $scope.map.getLayer("parcelBoundary").add(polygonGraphic);
+
+        var pointGraphic = esriGisService.getGraphicMarkerFromXY(geometry.x, geometry.y)
+        $scope.map.getLayer("parcelPoint").add(pointGraphic);
+
+      }      
+
+
       $scope.drawToolBar = $scope.attachedDrawToolBar;
       $('#map_hook').removeAttr('style');
       $('#prop_hook').removeClass('col-md-12 col-sm-12').addClass('col-md-4 col-sm-5');
