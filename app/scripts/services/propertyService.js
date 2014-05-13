@@ -715,9 +715,9 @@ angular.module('propertySearchApp')
         var cloneData = _.clone(data);
         if(data.label === 'Zoning'){
           if(folioMatch.test(folio))
-            cloneData.url = data.url + '3';              
-          else
             cloneData.url = data.url + '4';              
+          else
+            cloneData.url = data.url + '5';              
         }
         return cloneData;
       });
@@ -751,10 +751,19 @@ angular.module('propertySearchApp')
                 tmpParamValue = property.location.x; 
               if(paramKey === 'y')
                 tmpParamValue = property.location.y;
-              if(paramKey === 'address')
-                tmpParamValue = property.siteAddresses[0].address;  
-              if(paramKey === 'paramvalue')
-                tmpParamValue = property.siteAddresses[0].address;  
+              if(paramKey === 'address') {
+                if(!utils.isUndefinedOrNull(property.siteAddresses[0]))
+                  tmpParamValue = property.siteAddresses[0].address;  
+                else
+                  tmpParamValue = "";
+              }
+              if(paramKey === 'paramvalue'){
+                if(!utils.isUndefinedOrNull(property.siteAddresses[0]))
+                  tmpParamValue = property.siteAddresses[0].address;  
+                else
+                  tmpParamValue = "";
+              }
+
               return memo + paramKey + '=' + tmpParamValue + '&'; 
             }, '?');
 
