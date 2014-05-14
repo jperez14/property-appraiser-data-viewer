@@ -3,8 +3,12 @@
 		<tr>
 			<th class="tableHeader" colspan="2">Additional Information</th>
 		</tr>
-		<tr ng-repeat="header in property.additionalInfo.headers">
-			<td colspan="2">{{header}}</td>
+		<tr ng-show="true">
+			<td colspan="2">
+				<div class="table-message">
+					<div ng-repeat="header in property.additionalInfo.headers">{{header}}</div>
+				</div>
+			</td>
 		</tr>
 		<tr ng-repeat="info in property.additionalInfo.infoList">
 			<td><strong>{{info.key}}:</strong></td>
@@ -13,8 +17,12 @@
 			</td>
 			<td ng-show="info.isUrl == false">{{info.value}}</td>
 		</tr>
-		<tr ng-repeat="footer in property.additionalInfo.footers track by $index">
-			<td colspan="2">{{footer}}</td>
+		<tr ng-show="true">
+			<td colspan="2">
+				<div class="table-message">
+					<div ng-repeat="footer in property.additionalInfo.footers track by $index">{{footer}}</div>
+				</div>
+			</td>
 		</tr>
 	</table>
 </div>
