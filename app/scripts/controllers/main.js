@@ -357,29 +357,24 @@ angular.module('propertySearchApp')
       $('#error-modal').modal('show');
     };
 
-    $scope.showFolioStatus = function(status) {
-      if(status != undefined) {
-        if(status != null && status != "AC Active")
-          return "("+ status.substr(2).trim() +")";
-        else
-          return "";
+    $scope.showPropertyFolioStatus = function() {
+      if($scope.property != null) {
+	    if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
+	      return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
+	    }
+	    else
+	      return "";
       }
-      if(status == undefined && $scope.property != null) {
-	if($scope.property.propertyInfo.status != null && $scope.property.propertyInfo.status != "AC Active") {
-	  return "("+ $scope.property.propertyInfo.status.substr(2).trim() +")";
-	}
-	else
-	  return "";
-      }
-      else
-	return "";
+	  else
+	    return "";
+	};
+
+	$scope.showFolioStatus = function(status) {
+      return candidate.getFolioStatus(status);
     };
 
     $scope.getRenamedMunicipality = function(municipality) {
-      if(municipality.toUpperCase() === 'UNINCORPORATED COUNTY')
-	return "Miami";
-      else
-	return municipality;
+	  return candidate.getRenamedMunicipality(municipality);
     };
     
     $scope.isCountryUSA = function(country) {
@@ -960,7 +955,24 @@ angular.module('propertySearchApp')
       $window.open(url);
     };
 
-    $scope.openReportSummaryWindow = function(){
+    $scope.openPrintCandidatesWindow = function(){
+	  var url = '#/candidatesPrint';
+	  localStorageService.add('candidatesList',$scope.candidatesList);
+      localStorageService.add('property',$scope.property);
+      localStorageService.add('isOwnerCandidates', $scope.isOwnerCandidates);
+      localStorageService.add('isAddressCandidates', $scope.isAddressCandidates);
+      localStorageService.add('isPartialFolioCandidates', $scope.isPartialFolioCandidates);
+      localStorageService.add('isSubDivisionCandidates', $scope.isSubDivisionCandidates);
+	  localStorageService.add('ownerName', $scope.ownerName);
+	  localStorageService.add('address', $scope.address);
+	  localStorageService.add('suite', $scope.suite);
+	  localStorageService.add('subDivision', $scope.subDivision);
+	  localStorageService.add('folio', $scope.folio);
+
+	  $window.open(url,'name','height=1000, width=840, location=0, scrollbars=yes');
+	};
+	
+	$scope.openReportSummaryWindow = function(){
       var url = '#/report/summary';
       localStorageService.add('property',$scope.property);
       localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
