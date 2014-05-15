@@ -692,8 +692,7 @@ angular.module('propertySearchApp')
     // Public API
     return {
       Property: Property,
-      isPropertyValid: isPropertyValid,
-      additionalInfoFromGIS: additionalInfoFromGIS
+      isPropertyValid: isPropertyValid
     };
     
     
