@@ -57,7 +57,7 @@
       <ul class="nav nav-tabs">
         <li ng-class="{active: isActiveSearchTab('Address')}"><a ng-click="setActiveSearchTab('Address')" id="t-address">Address</a></li>
         <li ng-class="{active: isActiveSearchTab('Owner')}"><a ng-click="setActiveSearchTab('Owner')" id="t-owner">Owner Name</a></li>
-        <li ng-class="{active: isActiveSearchTab('Division')}"><a ng-click="setActiveSearchTab('Division')" id="t-owner">Sub Division</a></li>
+        <li ng-class="{active: isActiveSearchTab('Division')}" class="hidden-xs"><a ng-click="setActiveSearchTab('Division')" id="t-owner">Sub Division</a></li>
         <li ng-class="{active: isActiveSearchTab('Folio')}"><a ng-click="setActiveSearchTab('Folio')" id="t-folio">Folio</a></li>
       </ul>
 
@@ -275,7 +275,7 @@
                 <div style="display:inline" ng-hide="mapState == 'BigMap'">
                   <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle layer-drop" data-toggle="dropdown">Map View <span class="caret"></span></button>
-                      <ul class="dropdown-menu layer-ul" role="menu">
+                      <ul class="dropdown-menu keep_open layer-ul" role="menu">
                       	<li>Choose your desired view below.</li>
                         <li class="divider"></li>
                         <li><span class="map-view" ng-click="mapToggleAerialOn()">Aerial Map</span></li>
@@ -287,6 +287,16 @@
                         <li class="divider"></li>
                       	<li><span class="map-view" ng-click="showStreetView()">Google Street View</span></li>
                         <li class="divider"></li>
+                        <li>View previous year aerials</li>
+                        <li>
+                          <select class="form-control" id="year-aerial">
+                            <option>2012</option>
+                            <option>2011</option>
+                            <option>2010</option>
+                            <option>2009</option>
+                            <option>2008</option>
+                          </select>
+                        </li>
                       </ul>
                   </div>
                 </div>
