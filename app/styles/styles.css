@@ -147,6 +147,13 @@ div.search_area .tab-content {
     display:none;
 }
 
+#year-aerial {
+	font-size: 11px;
+	height: auto;
+	padding: 3px 5px;
+	margin-top: 7px;
+}
+
 /*
 .lc_container {padding:10px; width:100%; position:absolute; z-index:500}
 */
