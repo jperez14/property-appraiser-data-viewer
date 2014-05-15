@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .factory('propertyService', ['$log', 'utils', 'paConfiguration', 'esriGisService',function ($log, utils, paConfig, esriGisService) {
+  .factory('propertyService', ['$log', 'utils', 'paConfiguration', function ($log, utils, paConfig) {
 
     var Property = function(data) {
 
@@ -686,101 +686,7 @@ angular.module('propertySearchApp')
     };
 
 
-    /*
-     * TODO: This function needs and can be broken up. 
-     * additionalInfoFromGis: To build the additionalInfo data is made
-     * out of 3 pieces, collected in different places, which takes as
-     * a base the original additionalInfo coming from the PA.
-     * 1. paConfiguration.additionalInfoLayers: Data that needs to come from a GIS polygon layer.
-     * Intersection of the property of xy, with the layer, will give
-     * the attributes (the data). Special cases
-     *   a. Zoning: If first 2 digits of folio are 30 then query a
-     *   layer, otherwise query some other layer.
-     *   b. Zoning Land Use: To get the description, once you have the
-     *   land use code you can query the description layer.
-     * 2. paConfiguration.additionalInfoUrls: Data that needs a url 
-     * which needs to be built dynamically with certain params, like
-     * x, y and address
-     * 3. Static data that it is already in the
-     * property.additionalInfo.infoList. If the value is other than
-     * COUNTYGIS, this is the flag that says to take the data as is.
-     */
-    var additionalInfoFromGIS = function($scope ,property){
-      var x = property.location.x;
-      var y = property.location.y;
-      var folio = property.propertyInfo.folioNumber;
 
-      // Zoning, choose between layers depending on start of folio 30.
-      var folioMatch = /^30/
-
-      var additionalInfoLayers = _.map(paConfig.additionalInfoLayers, function(data){
-        var cloneData = _.clone(data);
-        if(data.label === 'Zoning'){
-          if(folioMatch.test(folio))
-            cloneData.url = data.url + '4';              
-          else
-            cloneData.url = data.url + '5';              
-        }
-        return cloneData;
-      });
-
-
-
-      return esriGisService.getFeatureFromPointMultiLayerIntersection($scope, additionalInfoLayers, x, y).then(function(additionalInfoData){
-
-       //create map  with key is label of layer and value is the attribute. 
-       var additionalInfoGIS =  _.object(_.keys(additionalInfoData), 
-                 _.map(_.values(additionalInfoData), function(value, index){
-                   var attribute = additionalInfoLayers[index].attributes[0];
-                   if(!utils.isUndefinedOrNull(value))
-                     return value.attributes[attribute];
-                   else
-                     return "NONE";
-                 }));
-        $log.debug("propertyService:additionalInfoFromGIS", additionalInfoGIS);
-
-        //Iterate over additionalInfo and map data into the model
-        var additionalInfo = _.map(property.additionalInfo.infoList, function(info){
-          var infoTmp = _.clone(info);
-          if(additionalInfoGIS[infoTmp.key])
-            infoTmp.value = additionalInfoGIS[infoTmp.key];
-          if(paConfig.additionalInfoUrls[infoTmp.key]){
-            var paramString = "";
-            var additionalInfoUrl = paConfig.additionalInfoUrls[infoTmp.key];
-            paramString = _.reduce(additionalInfoUrl.params, function(memo, paramValue, paramKey){
-              var tmpParamValue = paramValue; 
-              if(paramKey === 'x')
-                tmpParamValue = property.location.x; 
-              if(paramKey === 'y')
-                tmpParamValue = property.location.y;
-              if(paramKey === 'address') {
-                if(!utils.isUndefinedOrNull(property.siteAddresses[0]))
-                  tmpParamValue = property.siteAddresses[0].address;  
-                else
-                  tmpParamValue = "";
-              }
-              if(paramKey === 'paramvalue'){
-                if(!utils.isUndefinedOrNull(property.siteAddresses[0]))
-                  tmpParamValue = property.siteAddresses[0].address;  
-                else
-                  tmpParamValue = "";
-              }
-
-              return memo + paramKey + '=' + tmpParamValue + '&'; 
-            }, '?');
-
-            infoTmp.value = paConfig.additionalInfoUrls[infoTmp.key].url + paramString;
-            infoTmp.isUrl = true;
-          }
-
-          return infoTmp;
-        });
-        $log.debug("propertyService:additionalInfoFromGIS:additionalInfo", additionalInfo);
-        return additionalInfo;
-      });
-
-
-    };
     
 
     // Public API

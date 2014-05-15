@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'esriGisService', 'propertyService', 'paConfiguration', function($resource, $q, $log, candidate, esriGisLocatorService, esriGisService, propertyService, paConfig){
+  .service('propertySearchService', ['$resource', '$q', '$log', 'candidate', 'esriGisLocatorService', 'esriGisService', 'propertyService', 'paConfiguration', 'utils', function($resource, $q, $log, candidate, esriGisLocatorService, esriGisService, propertyService, paConfig, utils){
     
     var urlBase = paConfig.urlPropertyAppraiser;
 
@@ -112,15 +112,13 @@ angular.module('propertySearchApp')
                     "to":to,
                     "Operation":'GetOwners',
                     "enPoint":endPoint};
-
+      
       var deferred = $q.defer();
-      var candidatesList = PropertyResource.candidatesByOwner(params, 
-	                                                      function(){
-		                                                deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
-		                                              },
-		                                              function(response){
-		                                                deferred.reject(response);
-	                                                      });
+      var candidatesList = PropertyResource.candidatesByOwner(params, function(){
+        deferred.resolve(candidate.getCandidatesFromPaData(candidatesList));
+      }, function(response){
+        deferred.reject(response);
+      });
 
       return deferred.promise.then(function(candidatesList){
 	return candidatesList;
@@ -282,111 +280,160 @@ angular.module('propertySearchApp')
 
 
 
+    /**
+     * additionalInfoList - array of additinalInfo strings as
+     * configured in paConfig.additionalInfoUrls
+     * x - x coordinate of property
+     * y - y coordinate of property
+     * address - address of the property.
+     * builds additionalInfo objects which have the form
+     * {key:'label', value:'http://someurl', isUrl:true}
+     * It looks at the configuration on paConfig.additionalInfoUrls
+     * and builds a url.
+     * return - map where the key is the additionalInfo string passed
+     * value is the created addtionalInfo object shown above.
+     **/
+    var buildAdditionalInfoUrls = function(additionalInfoList, x, y, address){
+      
+      var additionalInfo = _.map(additionalInfoList, function(info){
 
-//    var candidatesByAddressFromEsri = function(candidateAddress){
-//      var promise = esriGisLocatorService.locator20(candidateAddress);
-//      return promise.then(
-//        function(data){
-//          var candidates = candidate.getCandidatesFromEsriData(data);
-//          $log.debug("propertySearchService:candidatesByAddressFromEsri esri candidates are ", candidateAddress, candidates);
-//          return candidates;
-//        }, function(error){
-//          $log.error("propertySearchService:candidatesByAddressFromEsri ", error);
-//          var candidates = candidate.candidatesFromEsriData({error:true});
-//          return $q.reject(candidates);
-//        });
-//    };
-//
-//
-//
-//
-//    var candidatesByAddressFromEsri2 = function(candidateAddress){
-//      var promise = candidatesByAddressFromEsri(candidateAddress);
-//      return promise.then(function(candidates){
-//
-//        if(candidates.found){
-//          var folios = _.pluck(candidates.candidates, 'folio');
-//          return propertiesByFolios(folios).then(function(properties){
-//            return candidate.getCandidatesFromProperties(properties);
-//          });          
-//        } else {
-//          var x = candidates.candidates[0].location.x;
-//          var y = candidates.candidates[0].location.y;
-//          var url = paConfig.urlMunicipalityLayer;
-//          // get features from circle
-//          var featuresPromise = esriGisService.featuresInCircle(x, y, 100, url, false);
-//          featuresPromise.then(function(featureSet){
-//            console.log("FEATURESET", featureSet);
-//          });
-//          
-//        }
-//
-//
-//      });
-//    };
-//
-//
-//
-//    var candidatesByAddress = function(address, unit, from, to){
-//      var promise = candidatesByAddressFromPA(address, unit, from, to);
-//      
-//      return promise.then(function(result){
-//	if(result.completed == true) {
-//          return result;
-//	}
-////        else
-////          return $q.reject({error:{}, message:result.message})
-//	else {
-//          var message = result.message;
-//          return candidatesByAddressFromEsri2(address).then(function(result){
-//            if(result.candidates.length == 0)
-//              result.message = message;
-//            return result;
-//          },function(error){
-//            return $q.reject({error:error, message:"The request failed. Please try again later"});
-//          });
-//	}
-//      }, function(error){
-//            return $q.reject({error:error, message:"The request failed. Please try again later"});
-//      });
-//
-//    };
+        var infoTmp = {key:info};
+        
+        // build the url based on hte params configuration.
+        if(paConfig.additionalInfoUrls[info]){
+          var paramString = "";
+          var additionalInfoUrl = paConfig.additionalInfoUrls[info];
+          paramString = _.reduce(additionalInfoUrl.params, function(memo, paramValue, paramKey){
+            var tmpParamValue = paramValue; 
+
+            if(paramKey === 'x')
+              tmpParamValue = x; 
+            else if(paramKey === 'y')
+              tmpParamValue = y;
+            else if(paramKey === 'address' || paramKey === 'paramvalue') {
+              tmpParamValue = address;
+            }
+
+            return memo + paramKey + '=' + tmpParamValue + '&'; 
+          }, '?');
+
+          infoTmp.value = paConfig.additionalInfoUrls[infoTmp.key].url + paramString;
+          infoTmp.isUrl = true;
+        }
+
+        return infoTmp;
+
+      });
+
+      return _.object(additionalInfoList, additionalInfo);
+
+    };
+
+
+    /**
+     * additionalInfoList - array of additinalInfo strings as
+     * configured in additionalInfoLayers
+     * x - x coordinate of property
+     * y - y coordinate of property
+     * folio - folio of the property.
+     * builds additionalInfo objects which have the form
+     * {key:'label', value:'some value', isUrl:false}
+     * It looks at the configuration on paConfig.additionalInfoUrls
+     * and populates the value based on some property on the layer.
+     * The property is configured in paConfig.additionalInfoLayers
+     * return - map where the key is the additionalInfo string passed
+     * value is the created addtionalInfo object shown above.
+     **/
+    var buildAdditionalInfoLayers = function($scope, additionalInfoList, x, y, folio){
+      
+      var folioMatch = /^30/
+      // Build the layers needed.
+      var additionalInfoLayers = _.map(additionalInfoList, function(info){
+        var clone = _.clone(paConfig.additionalInfoLayers[info]);
+        // url for zoning is different for municipalities.
+        if(clone.label === 'Zoning'){
+          if(!folioMatch.test(folio))
+            clone.url = paConfig.additionalInfoLayers['ZoningMunicipalities'].url;
+        }
+        return clone;
+      });
+
+      return esriGisService.getFeatureFromPointMultiLayerIntersection(
+        $scope, additionalInfoLayers, x, y).then(function(additionalInfoData){
+
+          var data = _.object(_.map(additionalInfoData, function (value, key) {
+            var attribute = paConfig.additionalInfoLayers[key].attributes[0];
+            var tmp = {key:key, value:null, isUrl:false};
+            if(!utils.isUndefinedOrNull(value))
+              tmp.value = value.attributes[attribute];
+            else
+              tmp.value = "NONE";
+
+            return [key, tmp];
+
+          }));
+          
+          return data;
+          
+        });
+      
+    };
+
+
+    /*
+     * Building the additionalInfo data is made
+     * out of 3 pieces, collected in different places, which takes as
+     * a base the original additionalInfo coming from the PA.
+     * 1. paConfiguration.additionalInfoLayers: Data that needs to come from a GIS polygon layer.
+     * Intersection of the property of xy, with the layer, will give
+     * the attributes (the data). Special cases
+     *   a. Zoning: If first 2 digits of folio are 30 then query a
+     *   layer, otherwise query some other layer.
+     *   b. Zoning Land Use: To get the description, once you have the
+     *   land use code you can query the description layer.
+     * 2. paConfiguration.additionalInfoUrls: Data that needs a url 
+     * which needs to be built dynamically with certain params, like
+     * x, y and address
+     * 3. Static data that it is already in the
+     * property.additionalInfo.infoList. If the value is other than
+     * COUNTYGIS, this is the flag that says to take the data as is.
+     */
+    var buildAdditionalInfo = function($scope, property){
+
+      // setup parameters
+      var x = property.location.x;
+      var y = property.location.y;
+      var folio = property.propertyInfo.folioNumber;
+      var address = "";
+      if(!utils.isUndefinedOrNull(property.siteAddresses[0]))
+        address = property.siteAddresses[0].address;  
+
+      var additionalInfoList  = _.pluck(property.additionalInfo.infoList, "key")
+      // define the list of additionalInfo urls required
+      var additionalInfoUrlsList = _.intersection(_.keys(paConfig.additionalInfoUrls), 
+                                                  additionalInfoList);
+
+      // define the list of additionalInfo layers required
+      var additionalInfoLayersList = _.intersection(_.keys(paConfig.additionalInfoLayers), 
+                                                  additionalInfoList);
+
+      var result1 = buildAdditionalInfoUrls(additionalInfoUrlsList, x, y, address);
+
+      return buildAdditionalInfoLayers($scope, additionalInfoLayersList, x, y, folio)
+        .then(function(result2){
+          return _.map(property.additionalInfo.infoList, function(info){
+            if(result1[info.key])
+              return result1[info.key];
+            else if (result2[info.key])
+              return result2[info.key];
+            else return info;
+          });
+          
+        });
+    };
     
 
-//*****************************************************************
-//    var getCandidatesByAddressFromEsri_1 = function(address){
-//      var promise = esriGisLocatorService.locator20(candidateAddress);
-//      return promise.then(
-//        function(data){
-//          if(data.found){
-//            return candidate.getCandidatesFromEsriData(data.cadidates);
-//          }else{
-//            return noEsriCandidateRoute(data.candidates);
-//          }
-//        }, function(error){
-//          var candidates = candidate.candidatesFromEsriData({error:true});
-//          return $q.reject(candidates);
-//        });
-//    }
-//
-//    var noEsriCandidateRoute = function(candidates){
-//      return esriGisService.featuresInCircle(x, y, 100, url, false)
-//      .then(propertiesFromCandidates);
-//    }
-//
-//    var populateCandidatesWithOwnerData_1 = function(candidates){
-//      var folios = _.pluck(candidates.candidates, 'folio');
-//      var promise = propertiesByFolios(folios);
-//
-//      return promise.then(function(properties){
-//        return candidate.getCandidatesFromProperties(properties);
-//      });
-//      
-//    }
 
-//    getCandidatesByAddressFromEsri_1("someAddress")
-//    .then(populateCandidatesWithOwnerData_1, getFeaturesInCircle)
-//    .
 
     // public API
     return {getPropertyByFolio:propertyByFolio,
@@ -397,7 +444,9 @@ angular.module('propertySearchApp')
         getCandidatesByAddressFromPA:candidatesByAddressFromPA,
 	    getCandidatesByAddress:candidatesByAddress,
 	    getCandidatesByPartialFolio:candidatesByPartialFolio,
-	    getHasValidStreetName:hasValidStreetName
+	    getHasValidStreetName:hasValidStreetName,
+            buildAdditionalInfoUrls:buildAdditionalInfoUrls,
+            buildAdditionalInfo:buildAdditionalInfo
            };
 
   }]);

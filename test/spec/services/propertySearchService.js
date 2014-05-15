@@ -95,7 +95,7 @@ describe('Service: propertySearchService', function () {
     });
 
     $httpBackend.flush();
-    $rootScope.$apply();
+
   });
 
   it('propertyByFolio folio does not exist, returns an error message', function(){
@@ -107,23 +107,36 @@ describe('Service: propertySearchService', function () {
     });
 
     $httpBackend.flush();
-    $rootScope.$apply();
+
   });
 
   it('propertyByOwnerName callback executed', function() {
-    var candidatesList = propertySearchService.getCandidatesByOwner('Michael Sarasti', 1, 200, function(candidates){
+    
+    var promise = propertySearchService.getCandidatesByOwner('Michael Sarasti', 1, 200);
+    promise.then(function(candidatesList){
       expect(candidatesList.candidates[0].folio).toBe("0123456789012");
-      expect(candidatesList.candidates[0].firstOwner).toBe("Barack Obama");
+      expect(candidatesList.candidates[0].firstOwner).toBe("Barack Obamo");
+    },function(error){
+      expect(true).toBe(false);
     });
+
     $httpBackend.flush();
+
   });
 
   it('propertyByAddress callback executed', function() {
-    var candidatesList = propertySearchService.getCandidatesByAddress('7244 SW 72 St', '', 1, 200, function(candidates){
+
+    var promise = propertySearchService.getCandidatesByAddressFromPA('7244 SW 72 St', '', 1, 200);
+    promise.then(function(candidatesList){
+      console.log("The candidates List is ", candidatesList);
       expect(candidatesList.candidates[0].siteAddress).toBe("10 DOWNING ST");
-      expect(candidatesList.candidates[0].secondOwner).toBe("George Bush");
+      expect(candidatesList.candidates[0].secondOwner).toBe("George Bush");      
+    },function(error){
+      expect(true).toBe(false);
     });
+
     $httpBackend.flush();
+
   });
 
   it('propertiesByFolios gets several properties in order', function(){
@@ -225,5 +238,81 @@ describe('Service: propertySearchService', function () {
     $rootScope.$apply();
   });
 
+
+  it('lets build url for additional info - Community Services Near Property', function(){
+    
+    var additionalInfoList = ['Community Services Near Property'];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result['Community Services Near Property'].isUrl).toBe(true);
+    expect(result['Community Services Near Property'].key).
+      toBe('Community Services Near Property');
+    var url = 'http://gisweb.miamidade.gov/communityservices/CommunityServicesAll.html?x=4&y=5&bufferDistance=5&address=11826 sw 97th ST&';
+    expect(result['Community Services Near Property'].value).toBe(url);
+  });
+
+  it('lets build url for additional info - Community Services Application', function(){
+    
+    var additionalInfoList = ['Community Services Application'];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result['Community Services Application'].isUrl).toBe(true);
+    expect(result['Community Services Application'].key).
+      toBe('Community Services Application');
+    var url = 'http://gisweb.miamidade.gov/communityservices?address=11826 sw 97th ST&';
+    expect(result['Community Services Application'].value).toBe(url);
+  });
+
+  it('lets build url for additional info - Business Incentives', function(){
+    
+    var additionalInfoList = ['Business Incentives'];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result['Business Incentives'].isUrl).toBe(true);
+    expect(result['Business Incentives'].key).
+      toBe('Business Incentives');
+    var url = 'http://gisweb.miamidade.gov/businessincentive/default.aspx?searchType=address&paramvalue=11826 sw 97th ST&';
+    expect(result['Business Incentives'].value).toBe(url);
+  });
+
+  it('lets build url for additional info - Environmental Considerations', function(){
+    
+    var additionalInfoList = ['Environmental Considerations'];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result['Environmental Considerations'].isUrl).toBe(true);
+    expect(result['Environmental Considerations'].key).
+      toBe('Environmental Considerations');
+    var url = 'http://gisweb.miamidade.gov/environmentalconsiderations/default.aspx?searchtype=address&paramvalue=11826 sw 97th ST&';
+    expect(result['Environmental Considerations'].value).toBe(url);
+  });
+
+  it('buildAdditionalInfoUrls - Empty array should return an empty map', function(){
+    
+    var additionalInfoList = [];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result).toEqual({});
+  });
+
+  it('buildAdditionalInfoUrls - Empty array should return an empty map', function(){
+    
+    var additionalInfoList = [];
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result).toEqual({});
+  });
+
+  it('buildAdditionalInfoUrls - null list of additional info should return an empty map', function(){
+    
+    var additionalInfoList = null;
+    var result = propertySearchService.buildAdditionalInfoUrls(additionalInfoList, 
+                                                               4, 5, '11826 sw 97th ST');
+    expect(result).toEqual({});
+  });
+
+
+
+  
 
 });

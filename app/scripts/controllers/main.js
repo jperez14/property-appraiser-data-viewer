@@ -645,9 +645,11 @@ angular.module('propertySearchApp')
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
           });
-          propertyService.additionalInfoFromGIS($scope, $scope.property).then(function(additionalInfo){
-            $scope.property.additionalInfo.infoList = additionalInfo;
-          });
+          propertySearchService.buildAdditionalInfo($scope, $scope.property)
+            .then(function(additionalInfo){
+              $scope.property.additionalInfo.infoList = additionalInfo;
+            });
+
         })['catch'](function(error){
           $log.error("getPropertyByXY:catch", error);
         });
@@ -667,9 +669,11 @@ angular.module('propertySearchApp')
           _.each($scope.layers, function(layer){
             $scope.turnLayerOnOff(layer);
           });
-          propertyService.additionalInfoFromGIS($scope, $scope.property).then(function(additionalInfo){
-            $scope.property.additionalInfo.infoList = additionalInfo;
-          });
+          propertySearchService.buildAdditionalInfo($scope, $scope.property)
+            .then(function(additionalInfo){
+              $scope.property.additionalInfo.infoList = additionalInfo;
+            });
+
         })['catch'](function(error){
           $log.error("getPropertyByFolio:catch", error);
         });
