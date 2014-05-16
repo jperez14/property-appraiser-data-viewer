@@ -151,6 +151,9 @@
         <div class="col-md-3 col-sm-3 col-xs-12 prev-search" ng-show="previousCandidatesInfo">
           <a ng-click="populatePreviousCandidates()">Back to Search Results</a>
         </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 prev-search" ng-show="candidatesList">
+          <a ng-click="openPrintCandidatesWindow()"> Print Candidates</a>
+        </div>
 
 
       </div> <!-- end row -->
@@ -546,11 +549,6 @@
     </div>
     
     <div ng-include="'views/disclaimer.html'"></div>
-    
-    
-    <div ng-show="property" class="hidden-links">
-    	<a href="http://gisweb.miamidade.gov/PropertySearch/default.html?folio={{property.propertyInfo.folioNumber}}" target="_blank">&nbsp;</a><a href="http://gisims2.miamidade.gov/myhome/propmap.asp?app=propmap&cmd=FINDFOLIO&folio={{property.propertyInfo.folioNumber}}" target="_blank">&nbsp;</a>
-    </div>
 	
   </div>
   

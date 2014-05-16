@@ -1,0 +1,128 @@
+<html>
+
+<style type="text/css">
+
+body{
+	background-color:#fff;
+	font-size:10px;
+}
+
+table{
+	width: 100%;
+	border-bottom: 1px solid #333;
+	padding: 15px 0;
+	margin: 15px 0;
+}
+
+td{
+	vertical-align: top;
+}
+
+#print-header{
+	padding: 15px 0 50px 0;
+}
+
+@media print {
+	.print-button {
+		display: none;
+	}
+}
+
+@page{
+	margin:30px 30px 0 30px;
+} 
+
+.pageBreak{
+    page-break-inside: avoid;
+}
+
+.header{
+	border: 0;
+	margin-left: -10px;
+}
+
+</style>
+
+
+	<body>
+	<p style="text-align:right; padding-top:10px;" class="print-button"><button ng-click="doPrint()">Print</button></p>
+
+	<div class="header">
+  	<img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+	</div>
+
+		<div >
+			<div id="print-header">
+				<h2 style="float:left; margin-bottom:5px; font-size:24px;">Matching Results: {{candidatesList.total}}</h2>
+			<!--	<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the Folio number to view property details.</p>-->
+			</div>
+
+			<div ng-repeat="candidate in candidatesList.candidates">
+
+				<table class="pageBreak">
+					<col width="10%">
+					<col width="25%">
+					<col width="65%">
+					<tr>
+						<td class="number">{{$index + 1}}</td>
+						<td><strong>FOLIO:</strong></td>
+						<td>{{candidate.folio | folioMask}} {{showFolioStatus(candidate.status)}}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><strong>Sub-Division:</strong></td>
+						<td>{{candidate.subdivisionDescription}}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><strong>OWNER:</strong></td>
+						<td>{{candidate.firstOwner}}<div ng-show="candidate.secondOwner">{{candidate.secondOwner}}</div></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><strong>ADDRESS:</strong></td>
+						<td>{{candidate.siteAddress}}<br>{{getRenamedMunicipality(candidate.municipality)}}</td>
+					</tr>
+					<tr>
+						<td colspan="3">&nbsp;</td>
+					</tr>
+				</table>
+
+			</div>
+
+		</div>
+		
+		<div class="modal fade" id="load-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" loading-widget>
+		  <div class="modal-dialog">
+			<div class="modal-content">
+
+			  <div class="modal-body">
+
+				<div id="loadingWidget" class="row-fluid ui-corner-all"> <!-- loading-widget > -->
+				  <div class="loadingContent">
+					<img alt="Loading Content" src="images/ajax-loader.gif" />
+				  </div>
+				</div>
+
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			  </div>
+
+			  <div class="modal-body">
+				<div>{{errorMsg}}</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+	</body>
+</html>
