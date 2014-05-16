@@ -289,13 +289,13 @@
                         <li class="divider"></li>
                         <li>View previous year aerials</li>
                         <li>
-                          <select class="form-control" id="year-aerial">
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
-                            <option>2009</option>
-                            <option>2008</option>
+
+                          <select ng-model="aerialYear"
+                                  ng-options="year for year in
+                                  aerialYears" ng-change="openAerialsWindow()">
+                            <option value="">-- choose year --</option>
                           </select>
+
                         </li>
                       </ul>
                   </div>

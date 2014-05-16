@@ -239,6 +239,9 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("aerial").hide();
     }
     
+    $scope.aerialYears = _.keys(paConfig.aerials);
+    $scope.aerialYear = "";
+
     $scope.folio = "";
     $scope.property = null;//SharedData.property;
     $scope.propertySiteAddress = "";
@@ -956,6 +959,15 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog("The request failed. Please try again later");
       });
 
+    };
+
+    $scope.openAerialsWindow = function(){
+      var url = '#/aerials/' + $scope.aerialYear;
+      localStorageService.add('property',$scope.property);
+      localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
+
+      $window.open(url, '_blank');
+      
     };
 
     $scope.openPictometryWindow = function(){
