@@ -17,6 +17,7 @@ angular.module('propertySearchApp')
 		  $scope.folio = gisProperty.folio.substr(0,9);
 		else
 		  $scope.folio = gisProperty.folio;
+		$scope.previousCandidatesInfo = null;
 		$scope.searchByFolio();
       }, function(error){
         $log.error("mapDoubleClicked", error);
@@ -762,6 +763,7 @@ angular.module('propertySearchApp')
 		    $scope.getCandidateFolio(result.candidates[0].folio, false);
 		  }
 		  else if(result.candidates.length > 1) {
+            $scope.previousCandidatesInfo = null;
             $scope.mapState = "NoMap";
 	        $scope.candidatesList = result;
 		  }
@@ -805,6 +807,7 @@ angular.module('propertySearchApp')
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
           }
 	  else if(result.candidates.length > 1){
+	    $scope.previousCandidatesInfo = null;
             $scope.mapState = "NoMap";
 	    $scope.candidatesList = result;
 	  }
@@ -907,6 +910,7 @@ angular.module('propertySearchApp')
 	  $scope.getCandidateFolio(result.candidates[0].folio, false);
         }
 	else if(result.candidates.length > 1) {
+	  $scope.previousCandidatesInfo = null;
           $scope.mapState = "NoMap";
 	  $scope.candidatesList = result;
 	}
@@ -936,6 +940,7 @@ angular.module('propertySearchApp')
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1) {
+	    $scope.previousCandidatesInfo = null;
 	    $scope.property = null;
         $scope.mapState = "NoMap";
 	    $scope.candidatesList = result;
