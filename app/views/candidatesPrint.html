@@ -4,7 +4,7 @@
 
 body{
 	background-color:#fff;
-	font-size:11px;
+	font-size:10px;
 }
 
 table{
@@ -32,21 +32,34 @@ td{
 	margin:30px 30px 0 30px;
 } 
 
+.pageBreak{
+    page-break-inside: avoid;
+}
+
+.header{
+	border: 0;
+	margin-left: -10px;
+}
+
 </style>
 
 
 	<body>
 	<p style="text-align:right; padding-top:10px;" class="print-button"><button ng-click="doPrint()">Print</button></p>
 
+	<div class="header">
+  	<img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+	</div>
+
 		<div >
 			<div id="print-header">
-				<h2 style="float:left; margin-bottom:5px;">Matching Results: {{candidatesList.total}}</h2>
+				<h2 style="float:left; margin-bottom:5px; font-size:24px;">Matching Results: {{candidatesList.total}}</h2>
 			<!--	<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the Folio number to view property details.</p>-->
 			</div>
 
 			<div ng-repeat="candidate in candidatesList.candidates">
 
-				<table>
+				<table class="pageBreak">
 					<col width="10%">
 					<col width="25%">
 					<col width="65%">
