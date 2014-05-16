@@ -265,6 +265,23 @@ angular.module('propertySearchApp')
       "36": "CUTLER BAY"
     };
     
+    var folioStatus = function(status) {
+      if(status != undefined) {
+        if(status != null && status != "AC Active")
+          return "("+ status.substr(2).trim() +")";
+        else
+          return "";
+      }
+      else
+	    return "";
+	};
+	
+	var renamedMunicipality = function(municipality) {
+      if(municipality.toUpperCase() === 'UNINCORPORATED COUNTY')
+	    return "Miami";
+      else
+	    return municipality;
+	};
 
     // Public API
     return {
@@ -273,7 +290,9 @@ angular.module('propertySearchApp')
       candidatesFromEsriCandidates: candidatesFromEsriCandidates,
       getCandidatesFromProperties: candidatesFromProperties,
       getCandidatesFromPaData: candidatesFromPaData,
-      getCandidatesFromEsriData: candidatesFromEsriData
+      getCandidatesFromEsriData: candidatesFromEsriData,
+	  getFolioStatus: folioStatus,
+	  getRenamedMunicipality: renamedMunicipality
     };
     
     
