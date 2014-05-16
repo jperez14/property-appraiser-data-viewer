@@ -18,6 +18,7 @@ angular.module('propertySearchApp', ['ngResource', 'ngRoute', 'LocalStorageModul
       .when('/aerials/:year?',{
         templateUrl: 'views/aerials/aerials.html',
         controller: 'AerialsCtrl'
+      })
       .when('/candidatesPrint',{
         templateUrl: 'views/candidatesPrint.html',
         controller: 'CandidatesCtrl'
