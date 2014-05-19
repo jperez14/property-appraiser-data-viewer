@@ -48,8 +48,8 @@ angular.module('propertySearchApp')
       $scope.showErrorDialog("Unable to print now. Please try again later");
     }
 	
-	//if($scope.candidatesList.candidates.length < $scope.candidatesList.total && $scope.candidatesList.length < 1000){
-	if($scope.tempCandidatesList.candidates.length < 1000){
+	if($scope.tempCandidatesList.candidates.length < $scope.tempCandidatesList.total){
+	//if($scope.tempCandidatesList.candidates.length < 1000){
       $scope.loader = true;
 	  if($scope.isOwnerCandidates == "true") {
         propertySearchService.getCandidatesByOwner($scope.ownerName, $scope.fromPage, $scope.toPage).then(promiseSuccess, promiseError);
@@ -63,6 +63,9 @@ angular.module('propertySearchApp')
 	  else if($scope.isSubDivisionCandidates == "true") {
         propertySearchService.getCandidatesBySubDivision($scope.subDivision, $scope.fromPage, $scope.toPage).then(promiseSuccess, promiseError);
 	  }
+	}
+	else {
+	  $scope.candidatesList = $scope.tempCandidatesList;
 	}
 
 	$scope.showFolioStatus = function(status) {
