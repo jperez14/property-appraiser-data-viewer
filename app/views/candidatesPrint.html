@@ -26,7 +26,9 @@ td{
 	.print-button {
 		display: none;
 	}
+
 }
+
 
 @page{
 	margin:30px 30px 0 30px;
@@ -47,9 +49,9 @@ td{
 	<body>
 	<p style="text-align:right; padding-top:10px;" class="print-button"><button ng-click="doPrint()">Print</button></p>
 
-	<div class="header">
-  	<img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
-	</div>
+		<div class="header onlyprint">
+	  	<img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+		</div>
 
 		<div >
 			<div id="print-header">
@@ -57,35 +59,44 @@ td{
 			<!--	<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the Folio number to view property details.</p>-->
 			</div>
 
+				<table>
+					<colgroup>
+						<col width="8%">
+						<col width="23%">
+						<col width="23%">
+						<col width="27%">
+						<col width="19%">
+					</colgroup>
+						<tr style="font-weight:bold;">
+								<td>&nbsp;</td>
+								<td>Folio</td>
+								<td>Sub-Division</td>
+								<td>Owner</td>
+								<td>Address</td>
+						</tr>
+
+				</table>
+
 			<div ng-repeat="candidate in candidatesList.candidates">
 
 				<table class="pageBreak">
-					<col width="10%">
-					<col width="25%">
-					<col width="65%">
+
+					<colgroup>
+						<col width="8%">
+						<col width="23%">	
+						<col width="23%">
+						<col width="27%">
+						<col width="19%">
+					</colgroup>
+
 					<tr>
 						<td class="number">{{$index + 1}}</td>
-						<td><strong>FOLIO:</strong></td>
 						<td>{{candidate.folio | folioMask}} {{showFolioStatus(candidate.status)}}</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><strong>Sub-Division:</strong></td>
 						<td>{{candidate.subdivisionDescription}}</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><strong>OWNER:</strong></td>
 						<td>{{candidate.firstOwner}}<div ng-show="candidate.secondOwner">{{candidate.secondOwner}}</div></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td><strong>ADDRESS:</strong></td>
 						<td>{{candidate.siteAddress}}<br>{{getRenamedMunicipality(candidate.municipality)}}</td>
 					</tr>
-					<tr>
-						<td colspan="3">&nbsp;</td>
-					</tr>
+
 				</table>
 
 			</div>
