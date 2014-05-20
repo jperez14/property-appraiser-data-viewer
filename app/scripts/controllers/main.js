@@ -17,6 +17,7 @@ angular.module('propertySearchApp')
 		  $scope.folio = gisProperty.folio.substr(0,9);
 		else
 		  $scope.folio = gisProperty.folio;
+		$scope.previousCandidatesInfo = null;
 		$scope.searchByFolio();
       }, function(error){
         $log.error("mapDoubleClicked", error);
@@ -239,6 +240,9 @@ angular.module('propertySearchApp')
       $scope.map.getLayer("aerial").hide();
     }
     
+    $scope.aerialYears = _.keys(paConfig.aerials);
+    $scope.aerialYear = "";
+
     $scope.folio = "";
     $scope.property = null;//SharedData.property;
     $scope.propertySiteAddress = "";
@@ -759,6 +763,7 @@ angular.module('propertySearchApp')
 		    $scope.getCandidateFolio(result.candidates[0].folio, false);
 		  }
 		  else if(result.candidates.length > 1) {
+            $scope.previousCandidatesInfo = null;
             $scope.mapState = "NoMap";
 	        $scope.candidatesList = result;
 		  }
@@ -802,6 +807,7 @@ angular.module('propertySearchApp')
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
           }
 	  else if(result.candidates.length > 1){
+	    $scope.previousCandidatesInfo = null;
             $scope.mapState = "NoMap";
 	    $scope.candidatesList = result;
 	  }
@@ -904,6 +910,7 @@ angular.module('propertySearchApp')
 	  $scope.getCandidateFolio(result.candidates[0].folio, false);
         }
 	else if(result.candidates.length > 1) {
+	  $scope.previousCandidatesInfo = null;
           $scope.mapState = "NoMap";
 	  $scope.candidatesList = result;
 	}
@@ -933,6 +940,7 @@ angular.module('propertySearchApp')
 	    $scope.getCandidateFolio(result.candidates[0].folio, false);
 	  }
 	  else if(result.candidates.length > 1) {
+	    $scope.previousCandidatesInfo = null;
 	    $scope.property = null;
         $scope.mapState = "NoMap";
 	    $scope.candidatesList = result;
@@ -951,6 +959,15 @@ angular.module('propertySearchApp')
 	$scope.showErrorDialog("The request failed. Please try again later");
       });
 
+    };
+
+    $scope.openAerialsWindow = function(){
+      var url = '#/aerials/' + $scope.aerialYear;
+      localStorageService.add('property',$scope.property);
+      localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
+
+      $window.open(url, '_blank');
+      
     };
 
     $scope.openPictometryWindow = function(){

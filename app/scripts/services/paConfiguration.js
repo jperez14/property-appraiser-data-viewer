@@ -15,6 +15,17 @@ angular.module('propertySearchApp')
     urlMunicipalityLayer:"http://gisweb.miamidade.gov/ArcGIS/rest/services/MD_PA_PropertySearch/MapServer/2",
     urlGeometryService:"http://gisweb.miamidade.gov/ArcGIS/rest/services/Geometry/GeometryServer/",
     urlLocatorService:"http://gisws.miamidade.gov/ArcGIS/rest/services/MDC_Locators/",
+    aerials:{
+             '2012':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Orthos2012/ImageServer',
+             '2010':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2010/ImageServer',
+             '2009':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/PhotoScience2009/ImageServer',
+             '2008':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/AerialsExpress2008/ImageServer',
+            '2007':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2007/ImageServer',
+             '2006':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2006/ImageServer',
+             '2005':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2005/ImageServer',
+             '2003':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2003/ImageServer',
+             '2001':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert2001/ImageServer',
+             '1999':'http://imageserverintra.miamidade.gov/ArcGIS/rest/services/Woolpert1999/ImageServer'},
     additionalInfoUrls:{
       'Community Services Near Property':{label:'Community Services Near Property',
                                           url:'http://gisweb.miamidade.gov/communityservices/CommunityServicesAll.html',
