@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', 'propertyService', function ($scope, $q, $window, $routeParams, $log, localStorageService, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData, propertyService) {
+  .controller('MainCtrl', ['$scope', '$q', '$window', '$routeParams', '$log', 'localStorageService', 'utils', 'propertySearchService', 'esriGisService', 'esriGisGeometryService', 'candidate', 'paConfiguration', 'SharedDataService', 'propertyService', function ($scope, $q, $window, $routeParams, $log, localStorageService, utils, propertySearchService, esriGisService, esriGisGeometryService, candidate, paConfig, SharedData, propertyService) {
 
     // IMPORTANT - Do not move
     $scope.mapClicked = function(event){
@@ -966,11 +966,7 @@ angular.module('propertySearchApp')
       localStorageService.add('property',$scope.property);
       localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
 
-      //$window.open(url, '_blank');
-      //alert('Are you trying to go to '+ url);
-      $('#aerial_link').attr('href',url);
-      $('#aerial_link')[0].click();
-
+      if (!_.isEmpty($scope.aerialYear)) {$window.open(url, '_blank')};
       
     };
 

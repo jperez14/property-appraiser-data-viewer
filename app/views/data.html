@@ -291,14 +291,14 @@
                       	<li><span class="map-view" ng-click="showStreetView()">Google Street View</span></li>
                         <li class="divider"></li>
                         <li>View previous year aerials</li>
-                        <li style="display:none"><a href="#" target="_blank" id="aerial_link">previous aerial</a></li>
                         <li style="padding-top:5px;">
                           
-                          <select ng-model="aerialYear" ng-options="year for year in aerialYears" ng-change="openAerialsWindow()">
+                          <select ng-model="aerialYear" ng-options="year for year in aerialYears">
                             <option value="">-- choose year --</option>
                           </select>
-                          
-
+                        </li>
+                        <li style="padding-top:8px;">
+                         <button type="button" class="btn btn-default btn-xs" style="font-size:11px;" ng-click="openAerialsWindow()">Go to Aerial</button>
                         </li>
                       </ul>
                   </div>
