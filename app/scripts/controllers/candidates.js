@@ -80,5 +80,10 @@ angular.module('propertySearchApp')
       window.print();
     };
 	
+    $scope.getCurrentDate = function() {
+      var dt = new Date();
+      return dt.getMonth() + 1 + '/' + dt.getDate() + '/' + dt.getFullYear();
+    };
+
   }
   ]);
