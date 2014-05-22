@@ -1,11 +1,17 @@
 'use strict';
 
 angular.module('propertySearchApp')
-  .controller('AerialsCtrl', ['$scope', '$routeParams', 'localStorageService', 'paConfiguration','esriGisService', function ($scope, $routeParams, localStorageService, paConfig, esriGisService){
+  .controller('AerialsCtrl', ['$scope', '$routeParams', '$log' ,'localStorageService', 'paConfiguration','esriGisService', 'utils', function ($scope, $routeParams, $log,localStorageService, paConfig, esriGisService, utils){
 
 
     $scope.property = localStorageService.get('property');
     $scope.mapReference = localStorageService.get('map');
+
+    $scope.drawEndHandler  = function (geometry){
+      $log.debug("DrawEndHandler: completed.");
+      $scope.drawToolBar.deactivate();
+      $scope.map.setExtent(geometry);
+    };
 
     function initMap(){
 
@@ -20,6 +26,15 @@ angular.module('propertySearchApp')
       $scope.map = map;
 
       map.on('load',function(){
+//        $log.debug("OnLoad is called");
+        map.enableRubberBandZoom();
+        map.disableScrollWheelZoom();
+        map.hideZoomSlider();
+        map.disableDoubleClickZoom();
+
+        $scope.navToolBar  = new esri.toolbars.Navigation(map);
+        $scope.drawToolBar = new esri.toolbars.Draw(map);
+        dojo.connect($scope.drawToolBar, "onDrawEnd", $scope.drawEndHandler);
 
         map.resize();
 
@@ -37,8 +52,6 @@ angular.module('propertySearchApp')
 
           var pointGraphic = esriGisService.getGraphicMarkerFromXY(geometry.x, geometry.y)
           $scope.map.getLayer("parcelPoint").add(pointGraphic);
-
-	  //$scope.map.centerAndZoom(geometry, $scope.mapReference.level);
         }
 
       });
@@ -66,6 +79,40 @@ angular.module('propertySearchApp')
     });
 
 
+
+    $scope.mapActivateZoomInBox = function (){
+      $scope.drawToolBar.activate(esri.toolbars.Draw.EXTENT);
+    };
+
+
+
+    $scope.mapZoomIn = function(){
+      var extent=$scope.map.extent;
+      $scope.map.setExtent(extent.expand(0.5));
+    };
+
+    $scope.mapZoomOut = function(){
+      var extent=$scope.map.extent;
+      $scope.map.setExtent(extent.expand(2));
+      var mapLevel = $scope.map.getLevel();
+      if (mapLevel == 8) 
+        $scope.map.setLevel(mapLevel - 1);
+    };
+
+    $scope.mapZoomToProperty = function(){
+      $scope.map.setExtent(new esri.geometry.Extent($scope.mapReference.extent));
+    };
+    
+    $scope.mapZoomToFullExtent = function(){
+      $scope.map.setExtent(new esri.geometry.Extent(paConfig.initialExtentJson));
+      if(!utils.isUndefinedOrNull($scope.property.location)){
+        var geometry = {"x":$scope.property.location.x, 
+                        "y":$scope.property.location.y, 
+                        "spatialReference":{"wkid":2236}};
+        $scope.map.centerAt(geometry);
+      }
+
+    };
 
 }]);
 

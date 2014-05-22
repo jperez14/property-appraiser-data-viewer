@@ -1,1 +1,78 @@
+<style>
+html,body,.container,#aerialmap {
+	height: 100%;
+	max-width: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #FFF;
+	overflow: hidden;
+}
+</style>
+
+<div class="header">
+  <img src="images/print-banner.jpg" class="img-responsive" alt="Miami-Dade County Property Appraiser">
+</div>
+
+
+<div>Aerial Year: {{yearParam}}<div>
+<div>Folio: {{property.propertyInfo.folioNumber | folioMask}}<div>
+<div>
+  <span>Address:</span>
+  <span>{{property.siteAddresses[0].streetNumber}}</span>
+  <span>{{property.siteAddresses[0].streetPrefix}}</span>
+  <span>{{property.siteAddresses[0].streetName}}</span>
+  <span>{{property.siteAddresses[0].streetSuffix}}</span>
+  <span>{{property.siteAddresses[0].streetSuffixDirection}}</span>
+  <span>{{property.siteAddresses[0].street.unit}}</span>
+  <span>{{property.siteAddresses[0].street.city}}</span>
+</div>
+
+<div id="aerialmap">
+
+	<div class="lc_container">
+		<span class="map-button mb-zoomin" ng-click="mapZoomIn()"
+			data-toggle="tooltip" data-placement="top" title="Zoom in on the map"></span>
+		<span class="map-button mb-zoomout" ng-click="mapZoomOut()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom out on the map"></span> 
+                <span class="map-button mb-zoombox" ng-click="mapActivateZoomInBox()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom map to a drawn area"></span> 
+                <span class="map-button mb-fullextent" ng-click="mapZoomToFullExtent()"
+			data-toggle="tooltip" data-placement="top"
+			title="Zoom out to full extent"></span>
+                <span class="map-button mb-initial" ng-click="mapZoomToProperty()"
+			data-toggle="tooltip" data-placement="top"
+			title="Return to property"></span>
+	</div>
+
+	<div class="north-icon">
+
+		<div class="img-container">
+			<img src="images/north.png" width="31" height="26" alt="North">
+		</div>
+
+		<div id="scale-container">
+			<span>2013 Aerial Photography</span>
+		</div>
+
+	</div>
+
+
+</div>
+
+<!-- end map_area -->
+
+
+
+
+
+
+
+<!--
 <div id='aerialmap'>
+-->

@@ -61,7 +61,6 @@ angular.module('propertySearchApp')
         map.enableRubberBandZoom();
         map.disableScrollWheelZoom();
         map.hideZoomSlider();
-        console.log("DOUBLE CLICK", map.theDoubleClickZoom);
         map.disableDoubleClickZoom();
         
         $scope.navToolBar  = new esri.toolbars.Navigation(map);
