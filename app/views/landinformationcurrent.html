@@ -24,8 +24,8 @@
 
 		<tr ng-repeat="land in property.land[property.rollYear1].landLines">
 			<td>{{land.landUse}}</td>
-            <td class="text-center">{{land.muniZone}}</td>
-			<td class="text-center">{{land.zone}}</td>
+            <td class="text-center">{{land.muniZone}} - {{land.muniZoneDesc}}</td>
+			<td class="text-center">{{land.zone}} - {{land.paZoneDesc}}</td>
 			<td class="text-center">{{land.unitType}}</td>
 			<td class="text-right fixed-width">{{land.units | number:2}}</td>
 

@@ -291,13 +291,13 @@
                       	<li><span class="map-view" ng-click="showStreetView()">Google Street View</span></li>
                         <li class="divider"></li>
                         <li>View previous year aerials</li>
-                        <li>
-
-                          <select ng-model="aerialYear"
-                                  ng-options="year for year in
-                                  aerialYears" ng-change="openAerialsWindow()">
+                        <li style="display:none"><a href="#" target="_blank" id="aerial_link">previous aerial</a></li>
+                        <li style="padding-top:5px;">
+                          
+                          <select ng-model="aerialYear" ng-options="year for year in aerialYears" ng-change="openAerialsWindow()">
                             <option value="">-- choose year --</option>
                           </select>
+                          
 
                         </li>
                       </ul>
@@ -358,18 +358,18 @@
       
       <ul class="row">
 
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://www.miamidade.gov/pa/online_tools.asp" target="_blank">Additional Online Tools</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Comparable "> <a class="hover_pointer" ng-click="openComparableSales()">Comparable Sales</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/moreTools.png" width="16" height="16" alt="Additional Online Tools"> <a href="http://gisweb.miamidade.gov/environmentalconsiderations/default.aspx?searchtype=address&paramvalue={{propertySiteAddress}}" target="_blank">Environmental Considerations</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/glossary.png" width="16" height="16" alt="Glossary"> <a href="http://www.miamidade.gov/pa/glossary.asp" target="_blank">Glossary</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/cards.png" width="16" height="16" alt="Property Record Cards"> <a href="http://www.miamidade.gov/PaPortal/PRC/CreatePRCmain.aspx" target="_blank">Property Record Cards</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/help.png" width="16" height="16" alt="Property Search Help"> <a href="http://www.miamidade.gov/pa/property-search-help.asp" target="_blank">Property Search Help</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/report-homestead-fraud.png" width="16" height="16" alt="Report Discrepancies"> <a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">Report Discrepancies</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/report-homestead-fraud.png" width="16" height="16" alt="Report Homestead Fraud"> <a href="http://www.miamidade.gov/paportal/HomesteadFraud/HomesteadFraud.aspx" target="_blank">Report Homestead Fraud</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/compare.png" width="16" height="16" alt="Tax Comparison"> <a href="http://www.miamidade.gov/PAPortal/Taxes/TaxComparison.aspx?folio={{property.propertyInfo.folioNumber}}" target="_blank">Tax Comparison</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/estimator.png" width="16" height="16" alt="Tax Estimator"> <a href="http://www.miamidade.gov/PAPortal/Taxes/TaxEstimator.aspx" target="_blank">Tax Estimator</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="TRIM Notice"> <a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{property.propertyInfo.folioNumber}}" target="_blank">TRIM Notice</a></li>
-        <li class="col-md-3 col-sm-4 col-xs-6"><img src="images/sales.png" width="16" height="16" alt="View Taxes"> <a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{property.propertyInfo.folioNumber}}" target="_blank">View Taxes</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a class="hover_pointer" ng-click="openComparableSales()">Comparable Sales</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/pa/glossary.asp" target="_blank">Glossary</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/pa/tax_estimator/non_advalorem_pop_up.asp?Fol={{property.propertyInfo.folioNumber}}" target="_blank">Non-Ad Valorem Assessments</li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/pa/online_tools.asp" target="_blank">PA Additional Online Tools</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/PaPortal/PRC/CreatePRCmain.aspx" target="_blank">Property Record Cards</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/pa/property-search-help.asp" target="_blank">Property Search Help</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/pa/email/ASP/formNew.asp" target="_blank">Report Discrepancies</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/paportal/HomesteadFraud/HomesteadFraud.aspx" target="_blank">Report Homestead Fraud</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/PAPortal/Taxes/TaxComparison.aspx?folio={{property.propertyInfo.folioNumber}}" target="_blank">Tax Comparison</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/PAPortal/Taxes/TaxEstimator.aspx" target="_blank">Tax Estimator</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="http://www.miamidade.gov/paportal/trimpdf/MakeTrim.aspx?FolSrch={{property.propertyInfo.folioNumber}}" target="_blank">TRIM Notice</a></li>
+        <li class="col-md-3 col-sm-4 col-xs-6"><a href="https://www.miamidade.county-taxes.com/public/real_estate/parcels/{{property.propertyInfo.folioNumber}}" target="_blank">View Taxes</a></li>
 
       </ul>
       
@@ -498,7 +498,6 @@
         <div ng-show="property" ng-include="'views/legaldescription.html'"></div>
         <!-- <div ng-show="showFullListOfOwners()" ng-include="'views/ownerinformation.html'"></div> -->
         <!-- <div ng-show="showFullListOfSiteAddresses()" ng-include="'views/siteaddress.html'"></div> -->
-        <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
       </div>
 
 	<div class="col-md-12">
@@ -544,6 +543,7 @@
           </div>
         </div>
         
+        <div ng-show="property" ng-include="'views/additionalinformation.html'"></div>
       </div>
 
     </div>

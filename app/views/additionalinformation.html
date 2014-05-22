@@ -1,28 +1,64 @@
-<div class="table-responsive">
-	<table class="table table-condensed table-striped">
-		<tr>
-			<th class="tableHeader" colspan="2">Additional Information</th>
-		</tr>
-		<tr ng-show="true">
-			<td colspan="2">
-				<div class="table-message">
-					<div ng-repeat="header in property.additionalInfo.headers">{{header}}</div>
-				</div>
-			</td>
-		</tr>
-		<tr ng-repeat="info in property.additionalInfo.infoList">
-			<td><strong>{{info.key}}:</strong></td>
-			<td ng-show="info.isUrl == true">
-				<a ng-href="{{info.value}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
-			</td>
-			<td ng-show="info.isUrl == false">{{info.value}}</td>
-		</tr>
-		<tr ng-show="true">
-			<td colspan="2">
-				<div class="table-message">
-					<div ng-repeat="footer in property.additionalInfo.footers track by $index">{{footer}}</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-</div>
+
+		<table class="table table-condensed">
+			<tr>
+				<th class="tableHeader" colspan="2">Additional Information</th>
+			</tr>
+			<tr ng-show="true">
+				<td colspan="2">
+					<div class="table-message">
+						<div ng-repeat="header in property.additionalInfo.headers">{{header}}</div>
+					</div>
+				</td>
+			</tr>
+			<tr ng-show="true">
+				<td colspan="2">
+
+					<div class="col-md-6">
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<tr>
+									<td class="table-section" colspan="2">Group 01</td>
+								</tr>
+								<tr ng-repeat="info in property.additionalInfo.infoList">
+									<td><strong>{{info.key}}:</strong></td>
+									<td ng-show="info.isUrl == true">
+										<a ng-href="{{info.value}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
+									</td>
+									<td ng-show="info.isUrl == false">{{info.value}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<tr>
+									<td class="table-section" colspan="2">Group 02</td>
+								</tr>
+								<tr ng-repeat="info in property.additionalInfo.infoList">
+									<td><strong>{{info.key}}:</strong></td>
+									<td ng-show="info.isUrl == true">
+										<a ng-href="{{info.value}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
+									</td>
+									<td ng-show="info.isUrl == false">{{info.value}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					
+				</td>
+			</tr>
+
+			<tr ng-show="true">
+				<td colspan="2">
+					<div class="table-message">
+						<div ng-repeat="footer in property.additionalInfo.footers track by $index">{{footer}}</div>
+					</div>
+				</td>
+			</tr>
+
+		</table>
+
+
+

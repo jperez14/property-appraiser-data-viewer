@@ -34,6 +34,10 @@ td{
 	margin:30px 30px 0 30px;
 } 
 
+.generated-date{
+	text-align:right;
+}
+
 .pageBreak{
     page-break-inside: avoid;
 }
@@ -59,6 +63,7 @@ td{
 			<!--	<p style="clear:both; padding:5px 0; border-bottom:1px solid #fff; border-top:1px solid #fff;">Click on the Folio number to view property details.</p>-->
 			</div>
 
+			<div class="generated-date"><p>Generated On : {{getCurrentDate()}}</p></div>
 				<table>
 					<colgroup>
 						<col width="8%">
