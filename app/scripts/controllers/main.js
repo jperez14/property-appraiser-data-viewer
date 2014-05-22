@@ -966,7 +966,11 @@ angular.module('propertySearchApp')
       localStorageService.add('property',$scope.property);
       localStorageService.add('map', {level:$scope.map.getLevel(), extent:$scope.map.extent});
 
-      $window.open(url, '_blank');
+      //$window.open(url, '_blank');
+      //alert('Are you trying to go to '+ url);
+      $('#aerial_link').attr('href',url);
+      $('#aerial_link')[0].click();
+
       
     };
 
